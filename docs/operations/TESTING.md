@@ -37,7 +37,7 @@ Set `MASTERMIND_TEST_POSTGRES_URL` and `MASTERMIND_TEST_REDIS_URL` to isolated t
 ## Browser and accessibility
 
 ```bash
-pnpm exec playwright install chromium webkit
+pnpm --filter @mastermind/web exec playwright install chromium webkit
 pnpm test:e2e
 pnpm test:a11y
 ```
