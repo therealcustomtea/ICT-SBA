@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Cipherboard mark">
+  <rect width="64" height="64" fill="#8b5719"/>
+  <circle cx="21" cy="21" r="7" fill="#ec654b"/>
+  <path d="M36 14h14v14H36z" fill="#f2c14e"/>
+  <path d="m14 43 7-7 7 7-7 7z" fill="#4ea4b7"/>
+  <circle cx="43" cy="43" r="7" fill="none" stroke="#fff" stroke-width="4"/>
+</svg>

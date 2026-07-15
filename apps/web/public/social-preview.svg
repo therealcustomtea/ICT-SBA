@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" role="img" aria-labelledby="title description">
+  <title id="title">Cipherboard</title>
+  <desc id="description">Think in patterns. Break the code.</desc>
+  <rect width="1200" height="630" fill="#fbfaf7"/>
+  <path d="M0 0h32v630H0z" fill="#8b5719"/>
+  <g transform="translate(94 84)">
+    <rect width="72" height="72" rx="16" fill="#8b5719"/>
+    <circle cx="24" cy="24" r="9" fill="#ec654b"/>
+    <path d="M41 15h17v17H41z" fill="#f2c14e"/>
+    <path d="m15 50 9-9 9 9-9 9z" fill="#4ea4b7"/>
+    <circle cx="49" cy="49" r="9" fill="none" stroke="#fff" stroke-width="5"/>
+  </g>
+  <text x="194" y="137" fill="#312b26" font-family="ui-sans-serif, system-ui, sans-serif" font-size="38" font-weight="750">Cipherboard</text>
+  <text x="94" y="282" fill="#312b26" font-family="Georgia, serif" font-size="76" font-weight="650">Think in patterns.</text>
+  <text x="94" y="370" fill="#312b26" font-family="Georgia, serif" font-size="76" font-weight="650">Break the code.</text>
+  <g transform="translate(815 135)">
+    <rect width="335" height="360" rx="26" fill="#302a25"/>
+    <g transform="translate(48 52)">
+      <circle cx="24" cy="24" r="20" fill="#dc5c49"/><path d="M84 4h40v40H84z" fill="#efbd4c"/><path d="m164 24 20-20 20 20-20 20z" fill="#55a4b2"/><circle cx="244" cy="24" r="19" fill="none" stroke="#faf7ef" stroke-width="8"/>
+      <circle cx="24" cy="102" r="20" fill="#55a4b2"/><circle cx="104" cy="102" r="20" fill="#dc5c49"/><path d="M164 82h40v40h-40z" fill="#efbd4c"/><circle cx="244" cy="102" r="19" fill="none" stroke="#faf7ef" stroke-width="8"/>
+      <path d="M4 180h40v40H4z" fill="#efbd4c"/><path d="m84 200 20-20 20 20-20 20z" fill="#55a4b2"/><circle cx="184" cy="200" r="20" fill="#dc5c49"/><circle cx="244" cy="200" r="19" fill="none" stroke="#faf7ef" stroke-width="8"/>
+      <path d="m4 278 20-20 20 20-20 20z" fill="#55a4b2"/><path d="M84 258h40v40H84z" fill="#efbd4c"/><circle cx="184" cy="278" r="19" fill="none" stroke="#faf7ef" stroke-width="8"/><circle cx="244" cy="278" r="20" fill="#dc5c49"/>
+    </g>
+  </g>
+</svg>
