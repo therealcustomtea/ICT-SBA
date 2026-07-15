@@ -1,0 +1,4 @@
+packages:
+  - 'apps/web'
+  - 'packages/api_client'
+  - 'packages/shared_config'

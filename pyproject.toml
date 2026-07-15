@@ -1,0 +1,80 @@
+[build-system]
+requires = ["setuptools==80.9.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "mastermind-logic-lab"
+version = "0.1.0"
+description = "Canonical Mastermind engine, production API, and SBA command-line application"
+requires-python = ">=3.12,<3.15"
+dependencies = [
+  "alembic==1.16.4",
+  "asyncpg==0.30.0",
+  "cryptography==49.0.0",
+  "fastapi==0.139.0",
+  "httpx==0.28.1",
+  "prometheus-client==0.22.1",
+  "pydantic==2.11.7",
+  "pydantic-settings==2.10.1",
+  "pyjwt[crypto]==2.13.0",
+  "redis==6.2.0",
+  "sqlalchemy[asyncio]==2.0.41",
+  "structlog==25.4.0",
+  "uvicorn[standard]==0.35.0",
+]
+
+[project.optional-dependencies]
+dev = [
+  "aiosqlite==0.21.0",
+  "hypothesis==6.136.3",
+  "mypy==1.17.0",
+  "pytest==9.1.1",
+  "pytest-asyncio==1.4.0",
+  "pytest-cov==7.1.0",
+  "ruff==0.12.3",
+]
+
+[project.scripts]
+mastermind = "mastermind_cli.__main__:main"
+mastermind-retention = "mastermind_api.retention:main"
+
+[tool.setuptools]
+packages = ["mastermind_core", "mastermind_api", "mastermind_api.routers", "mastermind_cli"]
+package-dir = { mastermind_core = "packages/mastermind_core/mastermind_core", mastermind_api = "apps/api/mastermind_api", "mastermind_api.routers" = "apps/api/mastermind_api/routers", mastermind_cli = "apps/cli/mastermind_cli" }
+
+[tool.pytest.ini_options]
+addopts = "--strict-config --strict-markers"
+asyncio_mode = "auto"
+testpaths = ["tests"]
+pythonpath = ["packages/mastermind_core", "apps/api", "apps/cli"]
+markers = ["postgres: requires a PostgreSQL integration database"]
+
+[tool.ruff]
+target-version = "py312"
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM", "ASYNC", "S", "RUF"]
+ignore = ["S101", "B008"]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**/*.py" = ["S105", "S106", "S311", "S607"]
+"apps/api/alembic/**/*.py" = ["E501", "S608"]
+"apps/api/mastermind_api/config.py" = ["S105"]
+"packages/mastermind_core/mastermind_core/engine.py" = ["S311"]
+"packages/mastermind_core/mastermind_core/models.py" = ["S105"]
+
+[tool.mypy]
+python_version = "3.12"
+strict = true
+plugins = ["pydantic.mypy"]
+packages = ["mastermind_core", "mastermind_api", "mastermind_cli"]
+mypy_path = ["packages/mastermind_core", "apps/api", "apps/cli"]
+
+[tool.coverage.run]
+branch = true
+source = ["packages/mastermind_core/mastermind_core", "apps/api/mastermind_api", "apps/cli/mastermind_cli"]
+
+[tool.coverage.report]
+show_missing = true
+skip_covered = true
