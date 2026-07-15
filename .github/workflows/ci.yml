@@ -155,7 +155,6 @@ jobs:
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
           node-version: '24.18.0'
-          cache: pnpm
       - run: npm install --global pnpm@10.28.2
       - name: Verify frozen Node dependencies
         run: pnpm install --frozen-lockfile
@@ -233,7 +232,6 @@ jobs:
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
           node-version: '24.18.0'
-          cache: pnpm
       - uses: supabase/setup-cli@ab058987d8d6c725971f6cf9d0b5c98467e30bd1 # v1.7.1
         with:
           version: 2.101.0

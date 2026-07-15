@@ -26,12 +26,9 @@ function identifiers(value: unknown): string[] {
 
 function authLinkFrom(values: string[]): string | null {
   for (const source of values) {
-    const decoded = source
-      .replaceAll('&amp;', '&')
-      .replaceAll('&#x3D;', '=')
-      .replaceAll('&#61;', '=')
-      .replaceAll('=3D', '=')
-      .replace(/=\r?\n/g, '');
+    const decoded = source.replace(/&amp;|&#x3D;|&#61;|=3D|=\r?\n/g, (value) =>
+      value === '&amp;' ? '&' : value.startsWith('=\r') || value.startsWith('=\n') ? '' : '=',
+    );
     for (const candidate of decoded.match(/https?:\/\/[^\s"'<>]+/g) ?? []) {
       if (candidate.includes('/auth/v1/verify') && candidate.includes('token=')) return candidate;
     }
