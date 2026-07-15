@@ -22,5 +22,10 @@
   },
   "devDependencies": {
     "prettier": "3.9.5"
+  },
+  "pnpm": {
+    "overrides": {
+      "postcss": "8.5.19"
+    }
   }
 }
