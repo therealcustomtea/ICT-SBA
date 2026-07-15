@@ -1,0 +1,291 @@
+name: Deploy
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: Protected target environment
+        required: true
+        type: choice
+        options: [preview, staging, production]
+      ref:
+        description: Reviewed Git ref to deploy
+        required: true
+        default: main
+
+permissions:
+  contents: read
+
+concurrency:
+  group: deploy-${{ inputs.environment }}
+  cancel-in-progress: false
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    environment: ${{ inputs.environment }}
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+        with:
+          ref: ${{ inputs.ref }}
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Resolve and authorize checked-out source
+        id: source
+        run: |
+          source_sha="$(git rev-parse HEAD)"
+          git diff --quiet
+          git diff --cached --quiet
+          if [[ "${{ inputs.environment }}" != 'preview' ]]; then
+            git show-ref --verify --quiet refs/remotes/origin/main
+            git merge-base --is-ancestor "$source_sha" origin/main
+          fi
+          echo "sha=$source_sha" >> "$GITHUB_OUTPUT"
+      - name: Validate browser-safe launch configuration
+        env:
+          NEXT_PUBLIC_API_ORIGIN: ${{ vars.NEXT_PUBLIC_API_ORIGIN }}
+          NEXT_PUBLIC_PRODUCT_ORIGIN: ${{ vars.NEXT_PUBLIC_PRODUCT_ORIGIN }}
+          NEXT_PUBLIC_SUPABASE_URL: ${{ vars.NEXT_PUBLIC_SUPABASE_URL }}
+          NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: ${{ vars.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY }}
+          NEXT_PUBLIC_PRODUCT_NAME: ${{ vars.NEXT_PUBLIC_PRODUCT_NAME }}
+          NEXT_PUBLIC_SUPPORT_EMAIL: ${{ vars.NEXT_PUBLIC_SUPPORT_EMAIL }}
+          NEXT_PUBLIC_LEGAL_ENTITY: ${{ vars.NEXT_PUBLIC_LEGAL_ENTITY }}
+          NEXT_PUBLIC_JURISDICTION: ${{ vars.NEXT_PUBLIC_JURISDICTION }}
+          NEXT_PUBLIC_POLICY_DATE: ${{ vars.NEXT_PUBLIC_POLICY_DATE }}
+        run: |
+          python - <<'PY'
+          import base64
+          import binascii
+          import datetime as dt
+          import json
+          import os
+          import re
+          from urllib.parse import urlsplit
+
+          required = (
+              "NEXT_PUBLIC_API_ORIGIN",
+              "NEXT_PUBLIC_PRODUCT_ORIGIN",
+              "NEXT_PUBLIC_SUPABASE_URL",
+              "NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY",
+              "NEXT_PUBLIC_PRODUCT_NAME",
+              "NEXT_PUBLIC_SUPPORT_EMAIL",
+              "NEXT_PUBLIC_LEGAL_ENTITY",
+              "NEXT_PUBLIC_JURISDICTION",
+              "NEXT_PUBLIC_POLICY_DATE",
+          )
+          missing = [name for name in required if not os.environ.get(name, "").strip()]
+          if missing:
+              raise SystemExit(f"Missing deployment variables: {', '.join(missing)}")
+
+          for name in (
+              "NEXT_PUBLIC_API_ORIGIN",
+              "NEXT_PUBLIC_PRODUCT_ORIGIN",
+              "NEXT_PUBLIC_SUPABASE_URL",
+          ):
+              parsed = urlsplit(os.environ[name])
+              if (
+                  parsed.scheme != "https"
+                  or not parsed.hostname
+                  or parsed.username
+                  or parsed.password
+                  or parsed.query
+                  or parsed.fragment
+                  or parsed.path not in {"", "/"}
+              ):
+                  raise SystemExit(f"{name} must be an exact public HTTPS origin")
+
+          support_email = os.environ["NEXT_PUBLIC_SUPPORT_EMAIL"]
+          if (
+              re.fullmatch(r"\S+@\S+\.\S+", support_email) is None
+              or support_email.lower().endswith(".invalid")
+          ):
+              raise SystemExit("NEXT_PUBLIC_SUPPORT_EMAIL must be a monitored non-placeholder address")
+          for name in (
+              "NEXT_PUBLIC_PRODUCT_NAME",
+              "NEXT_PUBLIC_LEGAL_ENTITY",
+              "NEXT_PUBLIC_JURISDICTION",
+          ):
+              if os.environ[name] != os.environ[name].strip():
+                  raise SystemExit(f"{name} must not contain surrounding whitespace")
+          policy_date = os.environ["NEXT_PUBLIC_POLICY_DATE"]
+          try:
+              parsed_policy_date = dt.date.fromisoformat(policy_date)
+          except ValueError as exc:
+              raise SystemExit("NEXT_PUBLIC_POLICY_DATE must be an ISO date") from exc
+          if not re.fullmatch(r"\d{4}-\d{2}-\d{2}", policy_date) or str(parsed_policy_date) != policy_date:
+              raise SystemExit("NEXT_PUBLIC_POLICY_DATE must be an ISO date")
+
+          publishable_key = os.environ["NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY"]
+          key_is_public = False
+          if publishable_key.startswith("sb_publishable_"):
+              key_is_public = len(publishable_key) >= 24 and not any(
+                  character.isspace() for character in publishable_key
+              )
+          elif publishable_key.count(".") == 2:
+              try:
+                  payload = publishable_key.split(".")[1]
+                  payload += "=" * (-len(payload) % 4)
+                  role = json.loads(base64.urlsafe_b64decode(payload))["role"]
+              except (binascii.Error, KeyError, UnicodeDecodeError, ValueError, json.JSONDecodeError):
+                  role = None
+              key_is_public = role in {"anon", "authenticated"}
+          if not key_is_public:
+              raise SystemExit("NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY must be a public browser key")
+          PY
+      - uses: docker/setup-buildx-action@8d2750c68a42422c14e847fe6c8ac0403b4cbd6f # v3
+      - uses: docker/login-action@c94ce9fb468520275223c153574b00df6fe4bcc9 # v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Resolve immutable image names
+        id: images
+        run: |
+          repository="$(printf '%s' "$GITHUB_REPOSITORY" | tr '[:upper:]' '[:lower:]')"
+          environment="${{ inputs.environment }}"
+          source_sha="${{ steps.source.outputs.sha }}"
+          echo "api_tag=ghcr.io/${repository}-api:${environment}-${source_sha}" >> "$GITHUB_OUTPUT"
+          echo "web_tag=ghcr.io/${repository}-web:${environment}-${source_sha}" >> "$GITHUB_OUTPUT"
+      - name: Build and push API
+        id: api_build
+        uses: docker/build-push-action@10e90e3645eae34f1e60eeb005ba3a3d33f178e8 # v6
+        with:
+          context: .
+          file: infra/docker/api.Dockerfile
+          push: true
+          tags: ${{ steps.images.outputs.api_tag }}
+          provenance: true
+          sbom: true
+      - name: Build and push web
+        id: web_build
+        uses: docker/build-push-action@10e90e3645eae34f1e60eeb005ba3a3d33f178e8 # v6
+        with:
+          context: .
+          file: infra/docker/web.Dockerfile
+          push: true
+          tags: ${{ steps.images.outputs.web_tag }}
+          provenance: true
+          sbom: true
+          build-args: |
+            NEXT_PUBLIC_API_ORIGIN=${{ vars.NEXT_PUBLIC_API_ORIGIN }}
+            NEXT_PUBLIC_PRODUCT_ORIGIN=${{ vars.NEXT_PUBLIC_PRODUCT_ORIGIN }}
+            NEXT_PUBLIC_SUPABASE_URL=${{ vars.NEXT_PUBLIC_SUPABASE_URL }}
+            NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=${{ vars.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY }}
+            NEXT_PUBLIC_PRODUCT_NAME=${{ vars.NEXT_PUBLIC_PRODUCT_NAME }}
+            NEXT_PUBLIC_SUPPORT_EMAIL=${{ vars.NEXT_PUBLIC_SUPPORT_EMAIL }}
+            NEXT_PUBLIC_LEGAL_ENTITY=${{ vars.NEXT_PUBLIC_LEGAL_ENTITY }}
+            NEXT_PUBLIC_JURISDICTION=${{ vars.NEXT_PUBLIC_JURISDICTION }}
+            NEXT_PUBLIC_POLICY_DATE=${{ vars.NEXT_PUBLIC_POLICY_DATE }}
+      - name: Resolve digest-pinned deployment references
+        id: release_images
+        env:
+          API_TAG: ${{ steps.images.outputs.api_tag }}
+          API_DIGEST: ${{ steps.api_build.outputs.digest }}
+          WEB_TAG: ${{ steps.images.outputs.web_tag }}
+          WEB_DIGEST: ${{ steps.web_build.outputs.digest }}
+        run: |
+          if [[ ! "$API_DIGEST" =~ ^sha256:[0-9a-f]{64}$ ]]; then
+            echo 'API build did not return a sha256 digest.' >&2
+            exit 1
+          fi
+          if [[ ! "$WEB_DIGEST" =~ ^sha256:[0-9a-f]{64}$ ]]; then
+            echo 'Web build did not return a sha256 digest.' >&2
+            exit 1
+          fi
+          echo "api=${API_TAG}@${API_DIGEST}" >> "$GITHUB_OUTPUT"
+          echo "web=${WEB_TAG}@${WEB_DIGEST}" >> "$GITHUB_OUTPUT"
+      - name: Scan API release image
+        uses: aquasecurity/trivy-action@b6643a29fecd7f34b3597bc6acb0a98b03d33ff8 # v0.33.1
+        with:
+          scan-type: image
+          image-ref: ${{ steps.release_images.outputs.api }}
+          scanners: vuln,secret
+          severity: HIGH,CRITICAL
+          ignore-unfixed: true
+          exit-code: '1'
+      - name: Scan web release image
+        uses: aquasecurity/trivy-action@b6643a29fecd7f34b3597bc6acb0a98b03d33ff8 # v0.33.1
+        with:
+          scan-type: image
+          image-ref: ${{ steps.release_images.outputs.web }}
+          scanners: vuln,secret
+          severity: HIGH,CRITICAL
+          ignore-unfixed: true
+          exit-code: '1'
+      - name: Configure pinned SSH host identity
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.DEPLOY_SSH_PRIVATE_KEY }}
+          SSH_KNOWN_HOST: ${{ secrets.DEPLOY_SSH_KNOWN_HOST }}
+        run: |
+          install -d -m 700 ~/.ssh
+          install -m 600 /dev/null ~/.ssh/id_ed25519
+          printf '%s' "$SSH_PRIVATE_KEY" > ~/.ssh/id_ed25519
+          printf '%s\n' "$SSH_KNOWN_HOST" > ~/.ssh/known_hosts
+      - name: Migrate and deploy
+        env:
+          DEPLOY_HOST: ${{ secrets.DEPLOY_HOST }}
+          DEPLOY_USER: ${{ secrets.DEPLOY_USER }}
+          DEPLOY_PATH: ${{ vars.DEPLOY_PATH }}
+          RUNTIME_ENV_FILE: ${{ vars.RUNTIME_ENV_FILE }}
+          MIGRATOR_ENV_FILE: ${{ vars.MIGRATOR_ENV_FILE }}
+          POSTGRES_CA_FILE: ${{ vars.POSTGRES_CA_FILE }}
+          RELEASE_SHA: ${{ steps.source.outputs.sha }}
+          API_IMAGE: ${{ steps.release_images.outputs.api }}
+          WEB_IMAGE: ${{ steps.release_images.outputs.web }}
+        run: |
+          if [[ ! "$DEPLOY_HOST" =~ ^[A-Za-z0-9.-]+$ ]]; then
+            echo 'DEPLOY_HOST has an unsupported format.' >&2
+            exit 1
+          fi
+          if [[ ! "$DEPLOY_USER" =~ ^[A-Za-z_][A-Za-z0-9_-]*$ ]]; then
+            echo 'DEPLOY_USER has an unsupported format.' >&2
+            exit 1
+          fi
+          if [[ ! "$RELEASE_SHA" =~ ^[0-9a-f]{40}$ ]]; then
+            echo 'RELEASE_SHA must be the full checked-out commit SHA.' >&2
+            exit 1
+          fi
+          for path_name in DEPLOY_PATH RUNTIME_ENV_FILE MIGRATOR_ENV_FILE POSTGRES_CA_FILE; do
+            path_value="${!path_name}"
+            if [[ ! "$path_value" =~ ^/[A-Za-z0-9._/-]+$ ]]; then
+              echo "${path_name} must be an absolute path without shell metacharacters." >&2
+              exit 1
+            fi
+          done
+          compose_candidate="${DEPLOY_PATH}/infra/docker/compose.production.yml.${RELEASE_SHA}.pending"
+          scp infra/docker/compose.production.yml \
+            "${DEPLOY_USER}@${DEPLOY_HOST}:${compose_candidate}"
+          ssh "${DEPLOY_USER}@${DEPLOY_HOST}" bash -s -- \
+            "$DEPLOY_PATH" "$RUNTIME_ENV_FILE" "$MIGRATOR_ENV_FILE" "$POSTGRES_CA_FILE" "$RELEASE_SHA" "$API_IMAGE" "$WEB_IMAGE" <<'REMOTE'
+          set -euo pipefail
+          deploy_path="$1"
+          runtime_env_file="$2"
+          migrator_env_file="$3"
+          postgres_ca_file="$4"
+          release_sha="$5"
+          api_image="$6"
+          web_image="$7"
+          if [[ ! -f "$postgres_ca_file" || ! -r "$postgres_ca_file" || ! -s "$postgres_ca_file" ]]; then
+            echo 'POSTGRES_CA_FILE must be a readable, non-empty provider CA file.' >&2
+            exit 1
+          fi
+          compose_candidate="${deploy_path}/infra/docker/compose.production.yml.${release_sha}.pending"
+          export RUNTIME_ENV_FILE="$runtime_env_file"
+          export MIGRATOR_ENV_FILE="$migrator_env_file"
+          export POSTGRES_CA_FILE="$postgres_ca_file"
+          export MASTERMIND_RELEASE="$release_sha"
+          export API_IMAGE="$api_image"
+          export WEB_IMAGE="$web_image"
+          docker compose -f "$compose_candidate" --profile release config --quiet
+          mv "$compose_candidate" "${deploy_path}/infra/docker/compose.production.yml"
+          cd "$deploy_path"
+          docker compose -f infra/docker/compose.production.yml --profile release config --quiet
+          docker compose -f infra/docker/compose.production.yml pull api web
+          docker compose -f infra/docker/compose.production.yml --profile release run --rm migrate
+          docker compose -f infra/docker/compose.production.yml up -d --no-build api web
+          curl --fail --silent --retry 12 --retry-delay 5 http://127.0.0.1:8000/health/ready >/dev/null
+          curl --fail --silent --retry 12 --retry-delay 5 http://127.0.0.1:3000/ >/dev/null
+          REMOTE

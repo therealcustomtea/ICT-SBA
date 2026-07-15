@@ -1,0 +1,405 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  python:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:17.5-alpine@sha256:6567bca8d7bc8c82c5922425a0baee57be8402df92bae5eacad5f01ae9544daa
+        env:
+          POSTGRES_DB: mastermind_test
+          POSTGRES_USER: mastermind
+          POSTGRES_PASSWORD: mastermind_test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U mastermind -d mastermind_test"
+          --health-interval 5s
+          --health-timeout 3s
+          --health-retries 20
+      redis:
+        image: redis:7.4.5-alpine@sha256:bb186d083732f669da90be8b0f975a37812b15e913465bb14d845db72a4e3e08
+        ports:
+          - 6379:6379
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 5s
+          --health-timeout 3s
+          --health-retries 20
+    env:
+      MASTERMIND_ENVIRONMENT: test
+      MASTERMIND_DATABASE_URL: postgresql+asyncpg://mastermind:mastermind_test@127.0.0.1:5432/mastermind_test
+      MASTERMIND_REDIS_URL: redis://127.0.0.1:6379/0
+      MASTERMIND_TEST_POSTGRES_URL: postgresql+asyncpg://mastermind:mastermind_test@127.0.0.1:5432/mastermind_test
+      MASTERMIND_TEST_REDIS_URL: redis://127.0.0.1:6379/15
+      MASTERMIND_SUPABASE_URL: https://test.supabase.co
+      MASTERMIND_SECRET_ENCRYPTION_KEYS: '{"v1":"MDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDA="}'
+      MASTERMIND_SECRET_ACTIVE_KEY_VERSION: v1
+      MASTERMIND_DAILY_HMAC_KEY: ci-only-daily-hmac-material-32-bytes-minimum
+      MASTERMIND_PUBLIC_IDENTIFIER_HMAC_KEY: ci-only-identifier-hmac-material-32-bytes
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: '3.13.14'
+      - uses: astral-sh/setup-uv@d0cc045d04ccac9d8b7881df0226f9e82c39688e # v6
+        with:
+          version: '0.11.23'
+          enable-cache: true
+      - name: Verify frozen Python dependencies
+        run: uv sync --all-extras --frozen
+      - name: Ruff format
+        run: uv run ruff format --check .
+      - name: Ruff lint
+        run: uv run ruff check .
+      - name: Mypy
+        run: uv run mypy .
+      - name: Production-config API import and startup smoke
+        env:
+          MASTERMIND_ENVIRONMENT: production
+          MASTERMIND_CONFIG_SCOPE: ci_validation
+          MASTERMIND_DATABASE_URL: postgresql+asyncpg://mastermind:ci-only@database.example.invalid/mastermind?ssl=verify-full&sslrootcert=system
+          MASTERMIND_REDIS_URL: rediss://cache.example.invalid/0
+          MASTERMIND_ALLOWED_ORIGINS: '["https://play.example.invalid"]'
+          MASTERMIND_SUPABASE_URL: https://auth.example.invalid
+          MASTERMIND_SUPABASE_SERVICE_ROLE_KEY: ci-only-service-role-material-32-bytes
+          MASTERMIND_SECRET_ENCRYPTION_KEYS: '{"v1":"MDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDA="}'
+          MASTERMIND_SECRET_ACTIVE_KEY_VERSION: v1
+          MASTERMIND_DAILY_HMAC_KEYS: '{"v1":"ci-only-daily-hmac-material-32-bytes-minimum"}'
+          MASTERMIND_DAILY_HMAC_ACTIVE_KEY_VERSION: v1
+          MASTERMIND_PUBLIC_IDENTIFIER_HMAC_KEY: ci-only-identifier-hmac-material-32-bytes
+          MASTERMIND_RELEASE: ci-${{ github.sha }}
+        run: |
+          uv run uvicorn mastermind_api.main:app \
+            --host 127.0.0.1 \
+            --port 8010 \
+            --lifespan off \
+            > /tmp/production-api-smoke.log 2>&1 &
+          api_pid=$!
+          trap 'kill "$api_pid" 2>/dev/null || true' EXIT
+          ready=false
+          for _ in $(seq 1 20); do
+            if curl --fail --silent http://127.0.0.1:8010/health/live >/dev/null; then
+              ready=true
+              break
+            fi
+            if ! kill -0 "$api_pid" 2>/dev/null; then
+              break
+            fi
+            sleep 0.25
+          done
+          if [[ "$ready" != true ]]; then
+            sed -n '1,240p' /tmp/production-api-smoke.log
+            exit 1
+          fi
+          kill "$api_pid"
+          wait "$api_pid" || true
+          trap - EXIT
+      - name: Migrate empty PostgreSQL database
+        run: uv run alembic -c apps/api/alembic.ini upgrade head
+      - name: Detect model/migration drift
+        run: uv run alembic -c apps/api/alembic.ini check
+      - name: Verify latest migration downgrade and restore
+        run: |
+          uv run alembic -c apps/api/alembic.ini downgrade -1
+          uv run alembic -c apps/api/alembic.ini upgrade head
+          uv run alembic -c apps/api/alembic.ini check
+      - name: Python tests and core branch coverage
+        run: >-
+          uv run pytest
+          --cov=packages/mastermind_core/mastermind_core
+          --cov-branch
+          --cov-report=term-missing
+          --cov-report=xml
+          --junitxml=python-test-results.xml
+          --cov-fail-under=95
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        if: always()
+        with:
+          name: python-coverage
+          path: |
+            coverage.xml
+            python-test-results.xml
+          if-no-files-found: ignore
+
+  web:
+    runs-on: ubuntu-latest
+    env:
+      NEXT_PUBLIC_API_ORIGIN: http://127.0.0.1:8000
+      NEXT_PUBLIC_PRODUCT_ORIGIN: http://127.0.0.1:3000
+      NEXT_PUBLIC_SUPABASE_URL: https://test.supabase.co
+      NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: sb_publishable_ci_validation_only
+      NEXT_PUBLIC_PRODUCT_NAME: Cipherboard
+      NEXT_PUBLIC_SUPPORT_EMAIL: support@example.invalid
+      NEXT_PUBLIC_LEGAL_ENTITY: CI Test Entity
+      NEXT_PUBLIC_JURISDICTION: CI
+      NEXT_PUBLIC_POLICY_DATE: '2026-07-15'
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: '24.18.0'
+          cache: pnpm
+      - run: npm install --global pnpm@10.28.2
+      - name: Verify frozen Node dependencies
+        run: pnpm install --frozen-lockfile
+      - name: TypeScript formatting
+        run: pnpm format:check
+      - name: Lint
+        run: pnpm lint
+      - name: Typecheck
+        run: pnpm typecheck
+      - name: Unit tests
+        run: pnpm test
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        if: always()
+        with:
+          name: web-coverage
+          path: apps/web/coverage
+          if-no-files-found: error
+      - name: Production build
+        run: pnpm build
+
+  e2e:
+    runs-on: ubuntu-latest
+    needs: [python, web]
+    services:
+      postgres:
+        image: postgres:17.5-alpine@sha256:6567bca8d7bc8c82c5922425a0baee57be8402df92bae5eacad5f01ae9544daa
+        env:
+          POSTGRES_DB: mastermind_e2e
+          POSTGRES_USER: mastermind
+          POSTGRES_PASSWORD: mastermind_e2e
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U mastermind -d mastermind_e2e"
+          --health-interval 5s
+          --health-timeout 3s
+          --health-retries 20
+      redis:
+        image: redis:7.4.5-alpine@sha256:bb186d083732f669da90be8b0f975a37812b15e913465bb14d845db72a4e3e08
+        ports:
+          - 6379:6379
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 5s
+          --health-timeout 3s
+          --health-retries 20
+    env:
+      MASTERMIND_ENVIRONMENT: test
+      MASTERMIND_DATABASE_URL: postgresql+asyncpg://mastermind:mastermind_e2e@127.0.0.1:5432/mastermind_e2e
+      MASTERMIND_REDIS_URL: redis://127.0.0.1:6379/0
+      MASTERMIND_ALLOWED_ORIGINS: '["http://127.0.0.1:3000"]'
+      MASTERMIND_SECRET_ENCRYPTION_KEYS: '{"v1":"MDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDA="}'
+      MASTERMIND_SECRET_ACTIVE_KEY_VERSION: v1
+      MASTERMIND_DAILY_HMAC_KEY: ci-only-daily-hmac-material-32-bytes-minimum
+      MASTERMIND_PUBLIC_IDENTIFIER_HMAC_KEY: ci-only-identifier-hmac-material-32-bytes
+      NEXT_PUBLIC_API_ORIGIN: http://127.0.0.1:8000
+      NEXT_PUBLIC_PRODUCT_ORIGIN: http://127.0.0.1:3000
+      NEXT_PUBLIC_PRODUCT_NAME: Cipherboard
+      NEXT_PUBLIC_SUPPORT_EMAIL: support@example.invalid
+      NEXT_PUBLIC_LEGAL_ENTITY: CI Test Entity
+      NEXT_PUBLIC_JURISDICTION: CI
+      NEXT_PUBLIC_POLICY_DATE: '2026-07-15'
+      PLAYWRIGHT_SKIP_WEBSERVER: '1'
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: '3.13.14'
+      - uses: astral-sh/setup-uv@d0cc045d04ccac9d8b7881df0226f9e82c39688e # v6
+        with:
+          version: '0.11.23'
+          enable-cache: true
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: '24.18.0'
+          cache: pnpm
+      - uses: supabase/setup-cli@ab058987d8d6c725971f6cf9d0b5c98467e30bd1 # v1.7.1
+        with:
+          version: 2.101.0
+      - run: npm install --global pnpm@10.28.2
+      - run: uv sync --all-extras --frozen
+      - run: pnpm install --frozen-lockfile
+      - name: Start local Supabase Auth
+        run: |
+          supabase start
+          supabase status -o env > /tmp/supabase.env
+          source /tmp/supabase.env
+          auth_origin="$(python - <<'PY'
+          import tomllib
+          from pathlib import Path
+
+          config = tomllib.loads(Path('supabase/config.toml').read_text())
+          print(f"http://127.0.0.1:{config['api']['port']}")
+          PY
+          )"
+          inbucket_origin="$(python - <<'PY'
+          import tomllib
+          from pathlib import Path
+
+          config = tomllib.loads(Path('supabase/config.toml').read_text())
+          print(f"http://127.0.0.1:{config['inbucket']['port']}")
+          PY
+          )"
+          publishable_key="${PUBLISHABLE_KEY:-${ANON_KEY:-}}"
+          service_role_key="${SERVICE_ROLE_KEY:-${SECRET_KEY:-}}"
+          test -n "$publishable_key"
+          test -n "$service_role_key"
+          curl --fail --silent "${auth_origin}/auth/v1/health" >/dev/null
+          echo "::add-mask::${service_role_key}"
+          {
+            echo "MASTERMIND_SUPABASE_URL=${auth_origin}"
+            echo "MASTERMIND_SUPABASE_SERVICE_ROLE_KEY=${service_role_key}"
+            echo "NEXT_PUBLIC_SUPABASE_URL=${auth_origin}"
+            echo "NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=${publishable_key}"
+            echo "PLAYWRIGHT_INBUCKET_URL=${inbucket_origin}"
+            echo "PLAYWRIGHT_ACCOUNT_DELETION_ENABLED=1"
+          } >> "$GITHUB_ENV"
+      - run: uv run alembic -c apps/api/alembic.ini upgrade head
+      - name: Start API and web
+        run: |
+          uv run uvicorn mastermind_api.main:app --host 127.0.0.1 --port 8000 > /tmp/api.log 2>&1 &
+          pnpm --filter @mastermind/web dev > /tmp/web.log 2>&1 &
+          for _ in $(seq 1 60); do
+            curl --fail --silent http://127.0.0.1:8000/health/ready >/dev/null \
+              && curl --fail --silent http://127.0.0.1:3000/ >/dev/null \
+              && exit 0
+            sleep 2
+          done
+          sed -n '1,240p' /tmp/api.log
+          sed -n '1,240p' /tmp/web.log
+          exit 1
+      - name: OpenAPI client drift
+        run: pnpm generate:api && git diff --exit-code -- packages/api_client/src/schema.ts
+      - run: pnpm exec playwright install --with-deps chromium webkit
+      - name: End-to-end and accessibility tests
+        run: pnpm test:e2e
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        if: always()
+        with:
+          name: playwright-report
+          path: apps/web/playwright-report
+          if-no-files-found: ignore
+
+  containers:
+    runs-on: ubuntu-latest
+    needs: [python, web]
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+        with:
+          persist-credentials: false
+      - uses: docker/setup-buildx-action@8d2750c68a42422c14e847fe6c8ac0403b4cbd6f # v3
+      - name: Validate Compose and service health
+        env:
+          POSTGRES_PASSWORD: ci-compose-only
+          MASTERMIND_SUPABASE_URL: https://test.supabase.co
+          MASTERMIND_SECRET_ENCRYPTION_KEYS: '{"v1":"MDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDA="}'
+          MASTERMIND_DAILY_HMAC_KEY: ci-only-daily-hmac-material-32-bytes-minimum
+          MASTERMIND_PUBLIC_IDENTIFIER_HMAC_KEY: ci-only-identifier-hmac-material-32-bytes
+          NEXT_PUBLIC_SUPABASE_URL: https://test.supabase.co
+          NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: sb_publishable_ci_validation_only
+        run: |
+          docker compose config --quiet
+          docker compose up -d postgres redis
+          for _ in $(seq 1 30); do
+            postgres_health="$(docker inspect --format '{{.State.Health.Status}}' "$(docker compose ps -q postgres)")"
+            redis_health="$(docker inspect --format '{{.State.Health.Status}}' "$(docker compose ps -q redis)")"
+            if [[ "$postgres_health" == healthy && "$redis_health" == healthy ]]; then
+              exit 0
+            fi
+            sleep 2
+          done
+          docker compose ps
+          exit 1
+      - name: Build API image
+        uses: docker/build-push-action@10e90e3645eae34f1e60eeb005ba3a3d33f178e8 # v6
+        with:
+          context: .
+          file: infra/docker/api.Dockerfile
+          push: false
+          load: true
+          tags: mastermind-api:ci
+          cache-from: type=gha,scope=api
+          cache-to: type=gha,mode=max,scope=api
+      - name: Build web image
+        uses: docker/build-push-action@10e90e3645eae34f1e60eeb005ba3a3d33f178e8 # v6
+        with:
+          context: .
+          file: infra/docker/web.Dockerfile
+          push: false
+          load: true
+          tags: mastermind-web:ci
+          build-args: |
+            NEXT_PUBLIC_API_ORIGIN=https://api.example.invalid
+            NEXT_PUBLIC_PRODUCT_ORIGIN=https://play.example.invalid
+            NEXT_PUBLIC_SUPABASE_URL=https://test.supabase.co
+            NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=sb_publishable_ci_validation_only
+            NEXT_PUBLIC_PRODUCT_NAME=Cipherboard
+            NEXT_PUBLIC_SUPPORT_EMAIL=support@example.com
+            NEXT_PUBLIC_LEGAL_ENTITY=CI Test Entity
+            NEXT_PUBLIC_JURISDICTION=CI
+            NEXT_PUBLIC_POLICY_DATE=2026-07-15
+          cache-from: type=gha,scope=web
+          cache-to: type=gha,mode=max,scope=web
+      - name: Smoke hardened production images
+        run: |
+          api_id="$(docker run -d --read-only --tmpfs /tmp:size=32m,mode=1777 \
+            --cap-drop ALL --security-opt no-new-privileges \
+            -p 127.0.0.1:18000:8000 \
+            -e CI=true \
+            -e GITHUB_ACTIONS=true \
+            -e MASTERMIND_ENVIRONMENT=production \
+            -e MASTERMIND_CONFIG_SCOPE=ci_validation \
+            -e 'MASTERMIND_DATABASE_URL=postgresql+asyncpg://mastermind:ci-only@database.example.invalid/mastermind?ssl=verify-full&sslrootcert=system' \
+            -e MASTERMIND_REDIS_URL=rediss://cache.example.invalid/0 \
+            -e 'MASTERMIND_ALLOWED_ORIGINS=["https://play.example.invalid"]' \
+            -e MASTERMIND_SUPABASE_URL=https://auth.example.invalid \
+            -e MASTERMIND_SUPABASE_SERVICE_ROLE_KEY=ci-only-service-role-material-32-bytes \
+            -e 'MASTERMIND_SECRET_ENCRYPTION_KEYS={"v1":"MDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDA="}' \
+            -e MASTERMIND_SECRET_ACTIVE_KEY_VERSION=v1 \
+            -e 'MASTERMIND_DAILY_HMAC_KEYS={"v1":"ci-only-daily-hmac-material-32-bytes-minimum"}' \
+            -e MASTERMIND_DAILY_HMAC_ACTIVE_KEY_VERSION=v1 \
+            -e MASTERMIND_PUBLIC_IDENTIFIER_HMAC_KEY=ci-only-identifier-hmac-material-32-bytes \
+            -e MASTERMIND_RELEASE=ci-${{ github.sha }} \
+            mastermind-api:ci uvicorn mastermind_api.main:app --host 0.0.0.0 --port 8000 --lifespan off)"
+          web_id="$(docker run -d --read-only --tmpfs /tmp:size=32m,mode=1777 \
+            --cap-drop ALL --security-opt no-new-privileges \
+            -p 127.0.0.1:13000:3000 mastermind-web:ci)"
+          trap 'docker rm -f "$api_id" "$web_id" >/dev/null 2>&1 || true' EXIT
+          for _ in $(seq 1 40); do
+            api_ready=false
+            web_ready=false
+            curl --fail --silent http://127.0.0.1:18000/health/live >/dev/null && api_ready=true
+            curl --fail --silent http://127.0.0.1:13000/en >/dev/null && web_ready=true
+            if [[ "$api_ready" == true && "$web_ready" == true ]]; then
+              break
+            fi
+            sleep 0.5
+          done
+          [[ "$api_ready" == true && "$web_ready" == true ]]
+          for container_id in "$api_id" "$web_id"; do
+            [[ "$(docker inspect --format '{{.Config.User}}' "$container_id")" == '10001:10001' ]]
+            [[ "$(docker inspect --format '{{.HostConfig.ReadonlyRootfs}}' "$container_id")" == true ]]
+            [[ "$(docker inspect --format '{{json .HostConfig.CapDrop}}' "$container_id")" == '["ALL"]' ]]
+            [[ "$(docker inspect --format '{{json .HostConfig.SecurityOpt}}' "$container_id")" == '["no-new-privileges"]' ]]
+          done

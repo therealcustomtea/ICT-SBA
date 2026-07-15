@@ -1,0 +1,72 @@
+name: mastermind-production
+
+services:
+  migrate:
+    profiles: ['release']
+    image: ${API_IMAGE:?Set API_IMAGE to an immutable release reference}
+    env_file:
+      - ${MIGRATOR_ENV_FILE:?Set MIGRATOR_ENV_FILE to the release-only migrator environment file}
+    volumes:
+      - type: bind
+        source: ${POSTGRES_CA_FILE:?Set POSTGRES_CA_FILE to the provider PostgreSQL CA bundle}
+        target: /run/secrets/cipherboard/postgres-ca.pem
+        read_only: true
+    environment:
+      MASTERMIND_CONFIG_SCOPE: migration
+    command: ['alembic', '-c', 'apps/api/alembic.ini', 'upgrade', 'head']
+    restart: 'no'
+    read_only: true
+    tmpfs:
+      - /tmp:size=32m,mode=1777
+    cap_drop: ['ALL']
+    security_opt:
+      - no-new-privileges:true
+
+  api:
+    image: ${API_IMAGE:?Set API_IMAGE to an immutable release reference}
+    env_file:
+      - ${RUNTIME_ENV_FILE:?Set RUNTIME_ENV_FILE to the secret-manager-rendered environment file}
+    volumes:
+      - type: bind
+        source: ${POSTGRES_CA_FILE:?Set POSTGRES_CA_FILE to the provider PostgreSQL CA bundle}
+        target: /run/secrets/cipherboard/postgres-ca.pem
+        read_only: true
+    environment:
+      MASTERMIND_RELEASE: ${MASTERMIND_RELEASE:?Set MASTERMIND_RELEASE to the deployed source SHA or image digest}
+    ports:
+      - '127.0.0.1:8000:8000'
+    init: true
+    restart: always
+    stop_grace_period: 30s
+    read_only: true
+    tmpfs:
+      - /tmp:size=64m,mode=1777
+    cap_drop: ['ALL']
+    security_opt:
+      - no-new-privileges:true
+    healthcheck:
+      test: ['CMD', 'python', '-c', "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/health/ready', timeout=2)"]
+      interval: 20s
+      timeout: 3s
+      start_period: 20s
+      retries: 3
+
+  web:
+    image: ${WEB_IMAGE:?Set WEB_IMAGE to an immutable release reference}
+    ports:
+      - '127.0.0.1:3000:3000'
+    init: true
+    restart: always
+    stop_grace_period: 20s
+    read_only: true
+    tmpfs:
+      - /tmp:size=64m,mode=1777
+    cap_drop: ['ALL']
+    security_opt:
+      - no-new-privileges:true
+    healthcheck:
+      test: ['CMD', 'node', '-e', "fetch('http://127.0.0.1:3000/').then(r=>{if(!r.ok)process.exit(1)}).catch(()=>process.exit(1))"]
+      interval: 20s
+      timeout: 3s
+      start_period: 30s
+      retries: 3
