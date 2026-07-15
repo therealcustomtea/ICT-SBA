@@ -44,6 +44,8 @@ pnpm test:a11y
 
 Browser evidence covers both locales, keyboard gameplay, semantic announcements, guest authentication, refresh/reconnect/offline behavior, responsive layouts, reduced motion, private-page indexing, account controls, admin denial, and two-client rooms. Complete the manual checklist in `docs/product/ACCESSIBILITY.md` before launch.
 
+In CI, Playwright owns the Next.js development server for the browser run so its HTTP and HMR lifecycles start and stop with the test process. The API and backing services are readied separately before Playwright starts.
+
 ## Containers, security, and load
 
 ```bash

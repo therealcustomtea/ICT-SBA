@@ -217,7 +217,6 @@ jobs:
       NEXT_PUBLIC_LEGAL_ENTITY: CI Test Entity
       NEXT_PUBLIC_JURISDICTION: CI
       NEXT_PUBLIC_POLICY_DATE: '2026-07-15'
-      PLAYWRIGHT_SKIP_WEBSERVER: '1'
     steps:
       - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
         with:
@@ -274,18 +273,14 @@ jobs:
             echo "PLAYWRIGHT_ACCOUNT_DELETION_ENABLED=1"
           } >> "$GITHUB_ENV"
       - run: uv run alembic -c apps/api/alembic.ini upgrade head
-      - name: Start API and web
+      - name: Start API
         run: |
           uv run uvicorn mastermind_api.main:app --host 127.0.0.1 --port 8000 > /tmp/api.log 2>&1 &
-          pnpm --filter @mastermind/web dev > /tmp/web.log 2>&1 &
           for _ in $(seq 1 60); do
-            curl --fail --silent http://127.0.0.1:8000/health/ready >/dev/null \
-              && curl --fail --silent http://127.0.0.1:3000/ >/dev/null \
-              && exit 0
+            curl --fail --silent http://127.0.0.1:8000/health/ready >/dev/null && exit 0
             sleep 2
           done
           sed -n '1,240p' /tmp/api.log
-          sed -n '1,240p' /tmp/web.log
           exit 1
       - name: OpenAPI client drift
         run: pnpm generate:api && git diff --exit-code -- packages/api_client/src/schema.ts
