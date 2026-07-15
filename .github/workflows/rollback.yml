@@ -1,0 +1,126 @@
+name: Roll back application images
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: Protected target environment
+        required: true
+        type: choice
+        options: [staging, production]
+      api_image:
+        description: Previous API image reference pinned by sha256 digest
+        required: true
+      web_image:
+        description: Previous web image reference pinned by sha256 digest
+        required: true
+      incident:
+        description: Incident/change record identifier
+        required: true
+
+permissions:
+  contents: read
+
+concurrency:
+  group: deploy-${{ inputs.environment }}
+  cancel-in-progress: false
+
+jobs:
+  rollback:
+    runs-on: ubuntu-latest
+    environment: ${{ inputs.environment }}
+    steps:
+      - name: Validate immutable references and incident
+        env:
+          API_IMAGE: ${{ inputs.api_image }}
+          WEB_IMAGE: ${{ inputs.web_image }}
+          INCIDENT: ${{ inputs.incident }}
+          TARGET_ENVIRONMENT: ${{ inputs.environment }}
+        run: |
+          image_pattern='^[a-z0-9.-]+(:[0-9]+)?/[a-z0-9._/-]+(:[A-Za-z0-9._-]+)?@sha256:[0-9a-f]{64}$'
+          if [[ ! "$API_IMAGE" =~ $image_pattern ]]; then
+            echo 'API image must be a digest-pinned registry reference.' >&2
+            exit 1
+          fi
+          if [[ ! "$WEB_IMAGE" =~ $image_pattern ]]; then
+            echo 'Web image must be a digest-pinned registry reference.' >&2
+            exit 1
+          fi
+          repository="$(printf '%s' "$GITHUB_REPOSITORY" | tr '[:upper:]' '[:lower:]')"
+          api_prefix="ghcr.io/${repository}-api:${TARGET_ENVIRONMENT}-"
+          web_prefix="ghcr.io/${repository}-web:${TARGET_ENVIRONMENT}-"
+          if [[ "$API_IMAGE" != "${api_prefix}"* || "$WEB_IMAGE" != "${web_prefix}"* ]]; then
+            echo 'Rollback images must be artifacts built for this repository and environment.' >&2
+            exit 1
+          fi
+          artifact_suffix_pattern='^[0-9a-f]{40}@sha256:[0-9a-f]{64}$'
+          if [[ ! "${API_IMAGE#"$api_prefix"}" =~ $artifact_suffix_pattern ]] \
+            || [[ ! "${WEB_IMAGE#"$web_prefix"}" =~ $artifact_suffix_pattern ]]; then
+            echo 'Rollback image tags must contain the original 40-character source SHA.' >&2
+            exit 1
+          fi
+          if [[ -z "$INCIDENT" ]]; then
+            echo 'An incident or change record is required.' >&2
+            exit 1
+          fi
+      - name: Configure pinned SSH host identity
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.DEPLOY_SSH_PRIVATE_KEY }}
+          SSH_KNOWN_HOST: ${{ secrets.DEPLOY_SSH_KNOWN_HOST }}
+        run: |
+          install -d -m 700 ~/.ssh
+          install -m 600 /dev/null ~/.ssh/id_ed25519
+          printf '%s' "$SSH_PRIVATE_KEY" > ~/.ssh/id_ed25519
+          printf '%s\n' "$SSH_KNOWN_HOST" > ~/.ssh/known_hosts
+      - name: Deploy previous compatible images
+        env:
+          DEPLOY_HOST: ${{ secrets.DEPLOY_HOST }}
+          DEPLOY_USER: ${{ secrets.DEPLOY_USER }}
+          DEPLOY_PATH: ${{ vars.DEPLOY_PATH }}
+          RUNTIME_ENV_FILE: ${{ vars.RUNTIME_ENV_FILE }}
+          MIGRATOR_ENV_FILE: ${{ vars.MIGRATOR_ENV_FILE }}
+          POSTGRES_CA_FILE: ${{ vars.POSTGRES_CA_FILE }}
+          API_IMAGE: ${{ inputs.api_image }}
+          WEB_IMAGE: ${{ inputs.web_image }}
+        run: |
+          if [[ ! "$DEPLOY_HOST" =~ ^[A-Za-z0-9.-]+$ ]]; then
+            echo 'DEPLOY_HOST has an unsupported format.' >&2
+            exit 1
+          fi
+          if [[ ! "$DEPLOY_USER" =~ ^[A-Za-z_][A-Za-z0-9_-]*$ ]]; then
+            echo 'DEPLOY_USER has an unsupported format.' >&2
+            exit 1
+          fi
+          for path_name in DEPLOY_PATH RUNTIME_ENV_FILE MIGRATOR_ENV_FILE POSTGRES_CA_FILE; do
+            path_value="${!path_name}"
+            if [[ ! "$path_value" =~ ^/[A-Za-z0-9._/-]+$ ]]; then
+              echo "${path_name} must be an absolute path without shell metacharacters." >&2
+              exit 1
+            fi
+          done
+          ssh "${DEPLOY_USER}@${DEPLOY_HOST}" bash -s -- \
+            "$DEPLOY_PATH" "$RUNTIME_ENV_FILE" "$MIGRATOR_ENV_FILE" "$POSTGRES_CA_FILE" "$API_IMAGE" "$WEB_IMAGE" <<'REMOTE'
+          set -euo pipefail
+          deploy_path="$1"
+          runtime_env_file="$2"
+          migrator_env_file="$3"
+          postgres_ca_file="$4"
+          api_image="$5"
+          web_image="$6"
+          if [[ ! -f "$postgres_ca_file" || ! -r "$postgres_ca_file" || ! -s "$postgres_ca_file" ]]; then
+            echo 'POSTGRES_CA_FILE must be a readable, non-empty provider CA file.' >&2
+            exit 1
+          fi
+          cd "$deploy_path"
+          export RUNTIME_ENV_FILE="$runtime_env_file"
+          export MIGRATOR_ENV_FILE="$migrator_env_file"
+          export POSTGRES_CA_FILE="$postgres_ca_file"
+          export MASTERMIND_RELEASE="${api_image##*@sha256:}"
+          export API_IMAGE="$api_image"
+          export WEB_IMAGE="$web_image"
+          docker compose -f infra/docker/compose.production.yml config --quiet
+          docker compose -f infra/docker/compose.production.yml pull api web
+          docker compose -f infra/docker/compose.production.yml up -d --no-build api web
+          curl --fail --silent --retry 12 --retry-delay 5 http://127.0.0.1:8000/health/ready >/dev/null
+          curl --fail --silent --retry 12 --retry-delay 5 http://127.0.0.1:3000/ >/dev/null
+          REMOTE
