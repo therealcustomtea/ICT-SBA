@@ -1,0 +1,12 @@
+.git
+.github
+.venv
+node_modules
+**/.next
+coverage
+htmlcov
+playwright-report
+test-results
+.env*
+!.env.example
+data
