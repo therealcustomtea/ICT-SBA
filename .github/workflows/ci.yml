@@ -289,7 +289,7 @@ jobs:
           exit 1
       - name: OpenAPI client drift
         run: pnpm generate:api && git diff --exit-code -- packages/api_client/src/schema.ts
-      - run: pnpm exec playwright install --with-deps chromium webkit
+      - run: pnpm --filter @mastermind/web exec playwright install --with-deps chromium webkit
       - name: End-to-end and accessibility tests
         run: pnpm test:e2e
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4

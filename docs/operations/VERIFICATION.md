@@ -57,7 +57,7 @@ uv run pytest tests/api/test_retention.py -m postgres
 ```bash
 pnpm --filter @mastermind/web test -- --coverage
 pnpm build
-pnpm exec playwright install chromium webkit
+pnpm --filter @mastermind/web exec playwright install chromium webkit
 pnpm test:e2e
 pnpm test:a11y
 ```
