@@ -767,8 +767,12 @@ export function DuelPanel({ roomId }: { roomId: string }) {
   const router = useRouter();
   // Keep navigation current without making connection state rerenders restart the socket.
   const routerRef = useRef(router);
-  // Continues the surrounding operation with this required value or expression.
-  routerRef.current = router;
+  // Calls useEffect with the supplied values.
+  useEffect(() => {
+    // Keeps the ref synchronized outside render so reconnects use the latest router.
+    routerRef.current = router;
+    // Supplies this item to the surrounding call or collection.
+  }, [router]);
   // Executes this line as the next step in the surrounding logic.
   const [room, setRoom] = useState<DuelRoom | null>(null);
   // Executes this line as the next step in the surrounding logic.
