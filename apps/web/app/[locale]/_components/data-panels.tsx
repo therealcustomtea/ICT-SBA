@@ -53,9 +53,11 @@ export function LeaderboardPanel({
     const endpoint =
       // Provides the period value to the surrounding call or element.
       period === 'daily'
-        ? // Executes this line as the next step in the surrounding logic.
+        ? // Continues the surrounding operation with this required value or expression.
+          // Executes this line as the next step in the surrounding logic.
           `/v1/daily/leaderboard?page=${page}&page_size=25`
-        : // Executes this line as the next step in the surrounding logic.
+        : // Continues the surrounding operation with this required value or expression.
+          // Executes this line as the next step in the surrounding logic.
           `/v1/leaderboards?period=${period}&page=${page}&page_size=25${difficulty ? `&difficulty=${difficulty}` : ''}`;
     // Executes this line as the next step in the surrounding logic.
     api<Leaderboard>(endpoint)
@@ -228,9 +230,11 @@ export function LeaderboardPanel({
                       <th scope="row">
                         {/* Executes this line as the next step in the surrounding logic. */}
                         {item.displayName === 'Anonymous breaker' || !item.displayName
-                          ? // Executes this line as the next step in the surrounding logic.
+                          ? // Continues the surrounding operation with this required value or expression.
+                            // Executes this line as the next step in the surrounding logic.
                             tc('anonymous')
-                          : // Executes this line as the next step in the surrounding logic.
+                          : // Continues the surrounding operation with this required value or expression.
+                            // Executes this line as the next step in the surrounding logic.
                             item.displayName}
                         {/* Closes the th interface element. */}
                       </th>
@@ -258,7 +262,8 @@ export function LeaderboardPanel({
                 {t('yourRank')}: {data.currentUserRank}
                 {/* Closes the p interface element. */}
               </p>
-            ) : // Executes this line as the next step in the surrounding logic.
+            ) : // Continues the surrounding operation with this required value or expression.
+            // Executes this line as the next step in the surrounding logic.
             null}
             {/* Renders the nav interface element or component. */}
             <nav className="pagination" aria-label={tc('page', { page: data.page })}>
@@ -312,7 +317,8 @@ export function LeaderboardPanel({
             </nav>
             {/* Closes the JSX fragment started above. */}
           </>
-        ) : // Executes this line as the next step in the surrounding logic.
+        ) : // Continues the surrounding operation with this required value or expression.
+        // Executes this line as the next step in the surrounding logic.
         null}
         {/* Closes the AsyncState interface element. */}
       </AsyncState>
@@ -482,7 +488,8 @@ export function ProfilePanel({ statsOnly = false }: { statsOnly?: boolean }) {
                   </Link>
                   {/* Closes the div interface element. */}
                 </div>
-              ) : // Executes this line as the next step in the surrounding logic.
+              ) : // Continues the surrounding operation with this required value or expression.
+              // Executes this line as the next step in the surrounding logic.
               null}
               {/* Renders the label interface element or component. */}
               <label>
@@ -542,25 +549,31 @@ export function ProfilePanel({ statsOnly = false }: { statsOnly?: boolean }) {
                   {error}
                   {/* Closes the p interface element. */}
                 </p>
-              ) : // Executes this line as the next step in the surrounding logic.
+              ) : // Continues the surrounding operation with this required value or expression.
+              // Executes this line as the next step in the surrounding logic.
               null}
               {/* Renders the button interface element or component. */}
               <button className="button primary" disabled={saveState === 'saving' || isGuest}>
                 {/* Executes this line as the next step in the surrounding logic. */}
                 {saveState === 'saving'
-                  ? // Executes this line as the next step in the surrounding logic.
+                  ? // Continues the surrounding operation with this required value or expression.
+                    // Executes this line as the next step in the surrounding logic.
                     tc('saving')
-                  : // Executes this line as the next step in the surrounding logic.
+                  : // Continues the surrounding operation with this required value or expression.
+                    // Executes this line as the next step in the surrounding logic.
                     saveState === 'saved'
-                    ? // Executes this line as the next step in the surrounding logic.
+                    ? // Continues the surrounding operation with this required value or expression.
+                      // Executes this line as the next step in the surrounding logic.
                       tc('saved')
-                    : // Executes this line as the next step in the surrounding logic.
+                    : // Continues the surrounding operation with this required value or expression.
+                      // Executes this line as the next step in the surrounding logic.
                       tc('save')}
                 {/* Closes the button interface element. */}
               </button>
               {/* Closes the form interface element. */}
             </form>
-          ) : // Executes this line as the next step in the surrounding logic.
+          ) : // Continues the surrounding operation with this required value or expression.
+          // Executes this line as the next step in the surrounding logic.
           null}
           {/* Renders the section interface element or component. */}
           <section className="stats-section" aria-labelledby="stats-heading">
@@ -596,9 +609,11 @@ export function ProfilePanel({ statsOnly = false }: { statsOnly?: boolean }) {
                 value={
                   // Executes this line as the next step in the surrounding logic.
                   stats.fastestEligibleSolve === null
-                    ? // Executes this line as the next step in the surrounding logic.
+                    ? /* Continues the surrounding operation with this required value or expression. */
+                      // Executes this line as the next step in the surrounding logic.
                       tc('unavailable')
-                    : // Executes this line as the next step in the surrounding logic.
+                    : /* Continues the surrounding operation with this required value or expression. */
+                      // Executes this line as the next step in the surrounding logic.
                       formatDuration(stats.fastestEligibleSolve)
                   // Closes the expression, call, or declaration started above.
                 }
@@ -619,7 +634,8 @@ export function ProfilePanel({ statsOnly = false }: { statsOnly?: boolean }) {
                 {/* Executes this line as the next step in the surrounding logic. */}
                 {t('viewAllStats')} →{/* Closes the Link interface element. */}
               </Link>
-            ) : // Executes this line as the next step in the surrounding logic.
+            ) : // Continues the surrounding operation with this required value or expression.
+            // Executes this line as the next step in the surrounding logic.
             null}
             {/* Closes the section interface element. */}
           </section>
@@ -733,7 +749,8 @@ export function ProfilePanel({ statsOnly = false }: { statsOnly?: boolean }) {
                 <p>{ta('logicWeekBody')}</p>
                 {/* Closes the div interface element. */}
               </div>
-            ) : // Executes this line as the next step in the surrounding logic.
+            ) : // Continues the surrounding operation with this required value or expression.
+            // Executes this line as the next step in the surrounding logic.
             null}
             {/* Renders the Link interface element or component. */}
             <Link className="text-link" href="/achievements">
@@ -764,9 +781,11 @@ export function ProfilePanel({ statsOnly = false }: { statsOnly?: boolean }) {
                       <strong>
                         {/* Executes this line as the next step in the surrounding logic. */}
                         {game.score === null
-                          ? // Executes this line as the next step in the surrounding logic.
+                          ? // Continues the surrounding operation with this required value or expression.
+                            // Executes this line as the next step in the surrounding logic.
                             '—'
-                          : // Executes this line as the next step in the surrounding logic.
+                          : // Continues the surrounding operation with this required value or expression.
+                            // Executes this line as the next step in the surrounding logic.
                             new Intl.NumberFormat(locale).format(game.score)}
                         {/* Closes the strong interface element. */}
                       </strong>
@@ -788,7 +807,8 @@ export function ProfilePanel({ statsOnly = false }: { statsOnly?: boolean }) {
           </section>
           {/* Closes the div interface element. */}
         </div>
-      ) : // Executes this line as the next step in the surrounding logic.
+      ) : // Continues the surrounding operation with this required value or expression.
+      // Executes this line as the next step in the surrounding logic.
       null}
       {/* Closes the AsyncState interface element. */}
     </AsyncState>
@@ -944,7 +964,8 @@ export function AchievementsPanel() {
                       />
                       {/* Closes the div interface element. */}
                     </div>
-                  ) : // Executes this line as the next step in the surrounding logic.
+                  ) : // Continues the surrounding operation with this required value or expression.
+                  // Executes this line as the next step in the surrounding logic.
                   null}
                   {/* Closes the div interface element. */}
                 </div>
@@ -956,7 +977,8 @@ export function AchievementsPanel() {
           })}
           {/* Closes the ul interface element. */}
         </ul>
-      ) : // Executes this line as the next step in the surrounding logic.
+      ) : // Continues the surrounding operation with this required value or expression.
+      // Executes this line as the next step in the surrounding logic.
       null}
       {/* Closes the AsyncState interface element. */}
     </AsyncState>
@@ -1009,9 +1031,11 @@ function difficultyLabel(
 ) {
   // Returns this result to the caller and ends the current function.
   return value && ['easy', 'normal', 'hard', 'expert', 'custom'].includes(value)
-    ? // Executes this line as the next step in the surrounding logic.
+    ? // Continues the surrounding operation with this required value or expression.
+      // Executes this line as the next step in the surrounding logic.
       t(value)
-    : // Executes this line as the next step in the surrounding logic.
+    : // Continues the surrounding operation with this required value or expression.
+      // Executes this line as the next step in the surrounding logic.
       fallback;
   // Closes the expression, call, or declaration started above.
 }
@@ -1029,9 +1053,11 @@ function modeLabel(
   return value &&
     // Executes this line as the next step in the surrounding logic.
     ['solo', 'daily', 'practice', 'pass_and_play', 'friend_challenge', 'duel'].includes(value)
-    ? // Executes this line as the next step in the surrounding logic.
+    ? // Continues the surrounding operation with this required value or expression.
+      // Executes this line as the next step in the surrounding logic.
       tg(`modes.${value}`)
-    : // Executes this line as the next step in the surrounding logic.
+    : // Continues the surrounding operation with this required value or expression.
+      // Executes this line as the next step in the surrounding logic.
       tc('unavailable');
   // Closes the expression, call, or declaration started above.
 }

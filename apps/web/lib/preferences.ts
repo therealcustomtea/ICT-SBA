@@ -60,17 +60,21 @@ export function loadPreferences(): Preferences {
       pegStyle:
         // Executes this line as the next step in the surrounding logic.
         value.pegStyle && pegStyles.has(value.pegStyle)
-          ? // Executes this line as the next step in the surrounding logic.
+          ? // Continues the surrounding operation with this required value or expression.
+            // Executes this line as the next step in the surrounding logic.
             value.pegStyle
-          : // Supplies this item to the surrounding call or collection.
+          : // Continues the surrounding operation with this required value or expression.
+            // Supplies this item to the surrounding call or collection.
             defaultPreferences.pegStyle,
       // Defines the reducedMotion field in the surrounding object or type.
       reducedMotion:
         // Executes this line as the next step in the surrounding logic.
         typeof value.reducedMotion === 'boolean'
-          ? // Executes this line as the next step in the surrounding logic.
+          ? // Continues the surrounding operation with this required value or expression.
+            // Executes this line as the next step in the surrounding logic.
             value.reducedMotion
-          : // Supplies this item to the surrounding call or collection.
+          : // Continues the surrounding operation with this required value or expression.
+            // Supplies this item to the surrounding call or collection.
             defaultPreferences.reducedMotion,
       // Defines the sound field in the surrounding object or type.
       sound: typeof value.sound === 'boolean' ? value.sound : defaultPreferences.sound,
@@ -110,13 +114,17 @@ export function applyPreferences(preferences: Preferences) {
   const resolvedTheme =
     // Executes this line as the next step in the surrounding logic.
     preferences.theme === 'system'
-      ? // Executes this line as the next step in the surrounding logic.
+      ? // Continues the surrounding operation with this required value or expression.
+        // Executes this line as the next step in the surrounding logic.
         matchMedia('(prefers-color-scheme: dark)').matches
-        ? // Executes this line as the next step in the surrounding logic.
+        ? // Continues the surrounding operation with this required value or expression.
+          // Executes this line as the next step in the surrounding logic.
           'dark'
-        : // Executes this line as the next step in the surrounding logic.
+        : // Continues the surrounding operation with this required value or expression.
+          // Executes this line as the next step in the surrounding logic.
           'light'
-      : // Executes this line as the next step in the surrounding logic.
+      : // Continues the surrounding operation with this required value or expression.
+        // Executes this line as the next step in the surrounding logic.
         preferences.theme;
   // Executes this line as the next step in the surrounding logic.
   root.dataset.theme = resolvedTheme;

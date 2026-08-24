@@ -11,10 +11,7 @@ import pytest
 from mastermind_api.auth import get_current_user
 
 # Imports selected names from `mastermind_api.models` for use in this module.
-from mastermind_api.models import GameAttempt, GameSession, LeaderboardEntry, UserAchievement
-
-# Imports selected names from `sqlalchemy` for use in this module.
-from sqlalchemy import func, select
+from mastermind_api.models import GameSession, LeaderboardEntry, UserAchievement
 
 # Imports selected names from `.conftest` for use in this module.
 from .conftest import APIContext, principal
@@ -152,13 +149,9 @@ async def test_create_secret_omission_attempt_idempotency_and_terminal(api: APIC
     # Acquires this asynchronous managed resource for the nested operation.
     async with api.sessions() as session:
         # Asserts this invariant so an unexpected test state fails immediately.
-        assert await session.scalar(select(func.count(GameAttempt.id))) == 1
+        assert len((await session.find_one(GameSession, {'public_id': game['id']})).attempts) == 1
         # Computes and stores `stored` for subsequent operations.
-        stored = await session.scalar(
-            # Calls `select` with the supplied values.
-            select(GameSession).where(GameSession.public_id == game["id"])
-            # Closes the multiline call, declaration, or collection started above.
-        )
+        stored = await session.find_one(GameSession, {'public_id': game['id']})
         # Asserts this invariant so an unexpected test state fails immediately.
         assert stored is not None
         # Asserts this invariant so an unexpected test state fails immediately.
@@ -170,7 +163,7 @@ async def test_create_secret_omission_attempt_idempotency_and_terminal(api: APIC
         # Asserts this invariant so an unexpected test state fails immediately.
         assert stored.invalid_submission_count == 1
         # Asserts this invariant so an unexpected test state fails immediately.
-        assert await session.scalar(select(func.count(UserAchievement.id))) == 0
+        assert await session.count(UserAchievement) == 0
 
 
 # Defines the `test_creation_idempotency_custom_unranked_and_bola` callable and its typed interface.
@@ -208,9 +201,9 @@ async def test_creation_idempotency_custom_unranked_and_bola(api: APIContext) ->
     # Acquires this asynchronous managed resource for the nested operation.
     async with api.sessions() as session:
         # Asserts this invariant so an unexpected test state fails immediately.
-        assert await session.scalar(select(func.count(GameSession.id))) == 1
+        assert await session.count(GameSession) == 1
         # Asserts this invariant so an unexpected test state fails immediately.
-        assert await session.scalar(select(func.count(LeaderboardEntry.id))) == 0
+        assert await session.count(LeaderboardEntry) == 0
 
 
 # Defines the `test_invalid_configuration_has_stable_error` callable and its typed interface.
@@ -275,9 +268,9 @@ async def test_anonymous_official_win_does_not_award_or_publish(
     # Acquires this asynchronous managed resource for the nested operation.
     async with api.sessions() as session:
         # Asserts this invariant so an unexpected test state fails immediately.
-        assert await session.scalar(select(func.count(UserAchievement.id))) == 0
+        assert await session.count(UserAchievement) == 0
         # Asserts this invariant so an unexpected test state fails immediately.
-        assert await session.scalar(select(func.count(LeaderboardEntry.id))) == 0
+        assert await session.count(LeaderboardEntry) == 0
 
 
 # Defines the `test_unranked_win_does_not_suppress_first_eligible_break` callable and its typed
@@ -316,18 +309,16 @@ async def test_unranked_win_does_not_suppress_first_eligible_break(
     # Acquires this asynchronous managed resource for the nested operation.
     async with api.sessions() as session:
         # Computes and stores `achievements` for subsequent operations.
-        achievements = set(
-            # Waits for this asynchronous operation to complete.
-            await session.scalars(
-                # Calls `select` with the supplied values.
-                select(UserAchievement.achievement_key).where(
-                    # Executes this statement as the next step in the surrounding logic.
-                    UserAchievement.user_id == api.current["principal"].user_id
-                    # Closes the multiline call, declaration, or collection started above.
-                )
-                # Closes the multiline call, declaration, or collection started above.
+        achievements = {
+            # Supplies this required nested value.
+            item.achievement_key
+            # Iterates over these values so each item receives the same processing.
+            for item in await session.find_many(
+                # Supplies this required nested value.
+                UserAchievement, {'user_id': api.current['principal'].user_id}
+            # Closes the multiline declaration, call, or collection opened above.
             )
-            # Closes the multiline call, declaration, or collection started above.
-        )
+        # Closes the multiline declaration, call, or collection opened above.
+        }
         # Asserts this invariant so an unexpected test state fails immediately.
         assert "first_break" in achievements

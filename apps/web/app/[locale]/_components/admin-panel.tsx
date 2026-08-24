@@ -626,7 +626,8 @@ export function AdminPanel() {
           </section>
           {/* Closes the div interface element. */}
         </div>
-      ) : // Executes this line as the next step in the surrounding logic.
+      ) : // Continues the surrounding operation with this required value or expression.
+      // Executes this line as the next step in the surrounding logic.
       null}
       {/* Closes the AsyncState interface element. */}
     </AsyncState>
@@ -868,7 +869,6 @@ function RecordSection({
         // Renders the p interface element or component.
         <p>{empty}</p>
       ) : (
-        // Executes this line as the next step in the surrounding logic.
         // Executes this line as the next step in the surrounding logic.
         children
         // Closes the expression, call, or declaration started above.

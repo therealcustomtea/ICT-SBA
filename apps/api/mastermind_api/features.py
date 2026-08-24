@@ -1,11 +1,11 @@
 # Defers type-annotation evaluation to support modern hints safely.
 from __future__ import annotations
 
-# Imports selected names from `sqlalchemy.ext.asyncio` for use in this module.
-from sqlalchemy.ext.asyncio import AsyncSession
-
 # Imports selected names from `.config` for use in this module.
 from .config import Settings
+
+# Imports the required names from `.database` for this module.
+from .database import MongoSession
 
 # Imports selected names from `.models` for use in this module.
 from .models import FeatureFlag
@@ -31,7 +31,7 @@ ENVIRONMENT_FLAGS = {
 
 
 # Defines the `feature_enabled` callable and its typed interface.
-async def feature_enabled(session: AsyncSession, settings: Settings, key: str) -> bool:
+async def feature_enabled(session: MongoSession, settings: Settings, key: str) -> bool:
     # Computes and stores `setting_name` for subsequent operations.
     setting_name = ENVIRONMENT_FLAGS.get(key)
     # Checks this condition before executing the nested branch.

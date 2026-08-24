@@ -25,9 +25,6 @@ from mastermind_api.models import FriendChallenge, GameSession, MultiplayerEvent
 # Imports selected names from `mastermind_api.services` for use in this module.
 from mastermind_api.services import utcnow
 
-# Imports selected names from `sqlalchemy` for use in this module.
-from sqlalchemy import select
-
 # Imports selected names from `.conftest` for use in this module.
 from .conftest import APIContext, principal
 
@@ -136,7 +133,7 @@ async def test_friend_invite_hash_revoke_expiry_and_replay(api: APIContext) -> N
     # Acquires this asynchronous managed resource for the nested operation.
     async with api.sessions() as session:
         # Computes and stores `stored` for subsequent operations.
-        stored = await session.scalar(select(FriendChallenge))
+        stored = await session.find_one(FriendChallenge, {})
         # Asserts this invariant so an unexpected test state fails immediately.
         assert stored is not None
         # Asserts this invariant so an unexpected test state fails immediately.
@@ -213,14 +210,12 @@ async def test_friend_invite_hash_revoke_expiry_and_replay(api: APIContext) -> N
         # Asserts this invariant so an unexpected test state fails immediately.
         assert first_challenge is not None
         # Computes and stores `expiring` for subsequent operations.
-        expiring = await session.scalar(
-            # Calls `select` with the supplied values.
-            select(FriendChallenge).where(
-                # Executes this statement as the next step in the surrounding logic.
-                FriendChallenge.share_code_hash != first_challenge.share_code_hash
-                # Closes the multiline call, declaration, or collection started above.
-            )
-            # Closes the multiline call, declaration, or collection started above.
+        expiring = await session.find_one(
+            # Supplies this required nested value.
+            FriendChallenge,
+            # Supplies this required nested value.
+            {'share_code_hash': {'$ne': first_challenge.share_code_hash}},
+        # Closes the multiline declaration, call, or collection opened above.
         )
         # Asserts this invariant so an unexpected test state fails immediately.
         assert expiring is not None
@@ -302,11 +297,7 @@ async def test_friend_results_follow_score_tie_breaks_and_keep_players_private(
     # Acquires this asynchronous managed resource for the nested operation.
     async with api.sessions() as session:
         # Computes and stores `games` for subsequent operations.
-        games = list(
-            # Waits for this asynchronous operation to complete.
-            await session.scalars(select(GameSession).where(GameSession.public_id.in_(game_ids)))
-            # Closes the multiline call, declaration, or collection started above.
-        )
+        games = await session.find_many(GameSession, {'public_id': {'$in': game_ids}})
         # Computes and stores `by_public_id` for subsequent operations.
         by_public_id = {game.public_id: game for game in games}
         # Higher score, fewer attempts, shorter time, earlier completion, then public ID.
@@ -579,16 +570,12 @@ async def test_room_code_hash_membership_and_one_use_ws_ticket(api: APIContext) 
     # Acquires this asynchronous managed resource for the nested operation.
     async with api.sessions() as session:
         # Computes and stores `stored_event` for subsequent operations.
-        stored_event = await session.scalar(
-            # Calls `select` with the supplied values.
-            select(MultiplayerEvent).where(
-                # Supplies this item to the surrounding call or collection.
-                MultiplayerEvent.room_id == uuid.UUID(room["id"]),
-                # Supplies this item to the surrounding call or collection.
-                MultiplayerEvent.event_type == "room_completed",
-                # Closes the multiline call, declaration, or collection started above.
-            )
-            # Closes the multiline call, declaration, or collection started above.
+        stored_event = await session.find_one(
+            # Supplies this required nested value.
+            MultiplayerEvent,
+            # Supplies this required nested value.
+            {'room_id': uuid.UUID(room['id']), 'event_type': 'room_completed'},
+        # Closes the multiline declaration, call, or collection opened above.
         )
         # Asserts this invariant so an unexpected test state fails immediately.
         assert stored_event is not None

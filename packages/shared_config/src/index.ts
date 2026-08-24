@@ -8,10 +8,6 @@ export const productConfig = {
   apiOrigin: process.env.NEXT_PUBLIC_API_ORIGIN ?? '',
   // Defines the productOrigin field in the surrounding object or type.
   productOrigin: process.env.NEXT_PUBLIC_PRODUCT_ORIGIN ?? '',
-  // Defines the supabaseUrl field in the surrounding object or type.
-  supabaseUrl: process.env.NEXT_PUBLIC_SUPABASE_URL ?? '',
-  // Defines the supabasePublishableKey field in the surrounding object or type.
-  supabasePublishableKey: process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY ?? '',
   // Defines the supportEmail field in the surrounding object or type.
   supportEmail: process.env.NEXT_PUBLIC_SUPPORT_EMAIL ?? 'support@example.invalid',
   // Defines the legalEntity field in the surrounding object or type.
@@ -56,39 +52,6 @@ function isExactHttpsOrigin(value: string): boolean {
   // Closes the expression, call, or declaration started above.
 }
 
-// Defines the isPublicSupabaseKey function and its callable behavior.
-function isPublicSupabaseKey(value: string): boolean {
-  // Checks this condition before running the nested branch.
-  if (value.startsWith('sb_secret_') || value.startsWith('sb_service_')) return false;
-  // Checks this condition before running the nested branch.
-  if (value.startsWith('sb_publishable_')) return value.length >= 24 && !/\s/.test(value);
-  // Computes and stores segments for subsequent operations.
-  const segments = value.split('.');
-  // Checks this condition before running the nested branch.
-  if (segments.length !== 3) return false;
-  // Computes and stores encodedPayload for subsequent operations.
-  const encodedPayload = segments[1];
-  // Checks this condition before running the nested branch.
-  if (!encodedPayload) return false;
-  // Starts an operation whose expected failures are handled below.
-  try {
-    // Computes and stores payload for subsequent operations.
-    const payload = JSON.parse(Buffer.from(encodedPayload, 'base64url').toString('utf8')) as {
-      // Executes this line as the next step in the surrounding logic.
-      role?: unknown;
-      // Closes the expression, call, or declaration started above.
-    };
-    // Returns this result to the caller and ends the current function.
-    return payload.role === 'anon' || payload.role === 'authenticated';
-    // Handles a failure from the protected operation.
-  } catch {
-    // Returns this result to the caller and ends the current function.
-    return false;
-    // Closes the expression, call, or declaration started above.
-  }
-  // Closes the expression, call, or declaration started above.
-}
-
 // Defines the isIsoDate function and its callable behavior.
 function isIsoDate(value: string): boolean {
   // Checks this condition before running the nested branch.
@@ -110,17 +73,15 @@ export function assertLaunchConfiguration(): void {
     NEXT_PUBLIC_API_ORIGIN: productConfig.apiOrigin,
     // Defines the NEXT_PUBLIC_PRODUCT_ORIGIN field in the surrounding object or type.
     NEXT_PUBLIC_PRODUCT_ORIGIN: productConfig.productOrigin,
-    // Defines the NEXT_PUBLIC_SUPABASE_URL field in the surrounding object or type.
-    NEXT_PUBLIC_SUPABASE_URL: productConfig.supabaseUrl,
-    // Defines the NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY field in the surrounding object or type.
-    NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: productConfig.supabasePublishableKey,
     // Defines the NEXT_PUBLIC_PRODUCT_NAME field in the surrounding object or type.
     NEXT_PUBLIC_PRODUCT_NAME: productConfig.name,
     // Defines the NEXT_PUBLIC_SUPPORT_EMAIL field in the surrounding object or type.
     NEXT_PUBLIC_SUPPORT_EMAIL: productConfig.supportEmail.toLowerCase().endsWith('.invalid')
-      ? // Executes this line as the next step in the surrounding logic.
+      ? // Continues the surrounding operation with this required value or expression.
+        // Executes this line as the next step in the surrounding logic.
         ''
-      : // Supplies this item to the surrounding call or collection.
+      : // Continues the surrounding operation with this required value or expression.
+        // Supplies this item to the surrounding call or collection.
         productConfig.supportEmail,
     // Defines the NEXT_PUBLIC_LEGAL_ENTITY field in the surrounding object or type.
     NEXT_PUBLIC_LEGAL_ENTITY: productConfig.legalEntity,
@@ -145,6 +106,7 @@ export function assertLaunchConfiguration(): void {
   const invalid = [
     // Executes this line as the next step in the surrounding logic.
     ...// Executes this line as the next step in the surrounding logic.
+    // Continues the surrounding operation with this required value or expression.
     (
       [
         // Supplies this item to the surrounding call or collection.
@@ -152,36 +114,34 @@ export function assertLaunchConfiguration(): void {
         // Supplies this item to the surrounding call or collection.
         ['NEXT_PUBLIC_PRODUCT_ORIGIN', productConfig.productOrigin],
         // Supplies this item to the surrounding call or collection.
-        ['NEXT_PUBLIC_SUPABASE_URL', productConfig.supabaseUrl],
         // Executes this line as the next step in the surrounding logic.
       ] as const
-    )
+    ) // Completes the origin tuple before applying the validation transforms.
       // Closes the expression, call, or declaration started above.
       // Executes this line as the next step in the surrounding logic.
       .filter(([, value]) => !isExactHttpsOrigin(value))
       // Supplies this item to the surrounding call or collection.
       .map(([key]) => key),
     // Executes this line as the next step in the surrounding logic.
-    ...(isPublicSupabaseKey(productConfig.supabasePublishableKey)
-      ? // Executes this line as the next step in the surrounding logic.
-        []
-      : // Supplies this item to the surrounding call or collection.
-        ['NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY']),
     // Supplies this item to the surrounding call or collection.
     ...(/^\S+@\S+\.\S+$/.test(productConfig.supportEmail) ? [] : ['NEXT_PUBLIC_SUPPORT_EMAIL']),
     // Supplies this item to the surrounding call or collection.
     ...(productConfig.name === productConfig.name.trim() ? [] : ['NEXT_PUBLIC_PRODUCT_NAME']),
     // Executes this line as the next step in the surrounding logic.
     ...(productConfig.legalEntity === productConfig.legalEntity.trim()
-      ? // Executes this line as the next step in the surrounding logic.
+      ? // Continues the surrounding operation with this required value or expression.
+        // Executes this line as the next step in the surrounding logic.
         []
-      : // Supplies this item to the surrounding call or collection.
+      : // Continues the surrounding operation with this required value or expression.
+        // Supplies this item to the surrounding call or collection.
         ['NEXT_PUBLIC_LEGAL_ENTITY']),
     // Executes this line as the next step in the surrounding logic.
     ...(productConfig.jurisdiction === productConfig.jurisdiction.trim()
-      ? // Executes this line as the next step in the surrounding logic.
+      ? // Continues the surrounding operation with this required value or expression.
+        // Executes this line as the next step in the surrounding logic.
         []
-      : // Supplies this item to the surrounding call or collection.
+      : // Continues the surrounding operation with this required value or expression.
+        // Supplies this item to the surrounding call or collection.
         ['NEXT_PUBLIC_JURISDICTION']),
     // Supplies this item to the surrounding call or collection.
     ...(isIsoDate(productConfig.policyDate) ? [] : ['NEXT_PUBLIC_POLICY_DATE']),

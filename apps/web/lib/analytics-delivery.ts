@@ -137,9 +137,11 @@ export async function deliverProductEvent<K extends keyof AnalyticsEventMap>(
 export function gameDifficulty(value: string | null): Difficulty {
   // Returns this result to the caller and ends the current function.
   return value === 'easy' || value === 'normal' || value === 'hard' || value === 'expert'
-    ? // Executes this line as the next step in the surrounding logic.
+    ? // Continues the surrounding operation with this required value or expression.
+      // Executes this line as the next step in the surrounding logic.
       value
-    : // Executes this line as the next step in the surrounding logic.
+    : // Continues the surrounding operation with this required value or expression.
+      // Executes this line as the next step in the surrounding logic.
       'custom';
   // Closes the expression, call, or declaration started above.
 }
@@ -156,9 +158,11 @@ export function gameMode(value: string): Mode {
     value === 'friend_challenge' ||
     // Provides the value value to the surrounding call or element.
     value === 'duel'
-    ? // Executes this line as the next step in the surrounding logic.
+    ? // Continues the surrounding operation with this required value or expression.
+      // Executes this line as the next step in the surrounding logic.
       value
-    : // Executes this line as the next step in the surrounding logic.
+    : // Continues the surrounding operation with this required value or expression.
+      // Executes this line as the next step in the surrounding logic.
       'solo';
   // Closes the expression, call, or declaration started above.
 }

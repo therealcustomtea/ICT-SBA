@@ -10,9 +10,6 @@ from fastapi import APIRouter, Depends, Request, status
 # Imports selected names from `redis.exceptions` for use in this module.
 from redis.exceptions import RedisError
 
-# Imports selected names from `sqlalchemy.ext.asyncio` for use in this module.
-from sqlalchemy.ext.asyncio import AsyncSession
-
 # Imports selected names from `..auth` for use in this module.
 from ..auth import AuthPrincipal, get_current_user
 
@@ -26,7 +23,7 @@ from ..config import Settings, get_settings
 from ..crypto import SecretCipher
 
 # Imports selected names from `..database` for use in this module.
-from ..database import get_session
+from ..database import MongoSession, get_session
 
 # Imports selected names from `..dependencies` for use in this module.
 from ..dependencies import get_cipher
@@ -62,7 +59,7 @@ async def create_game_route(
     # Provides the `principal` parameter or keyword argument.
     principal: AuthPrincipal = Depends(get_current_user),
     # Provides the `session` parameter or keyword argument.
-    session: AsyncSession = Depends(get_session),
+    session: MongoSession = Depends(get_session),
     # Provides the `cipher` parameter or keyword argument.
     cipher: SecretCipher = Depends(get_cipher),
     # Provides the `settings` parameter or keyword argument.
@@ -99,7 +96,7 @@ async def get_game_route(
     # Provides the `principal` parameter or keyword argument.
     principal: AuthPrincipal = Depends(get_current_user),
     # Provides the `session` parameter or keyword argument.
-    session: AsyncSession = Depends(get_session),
+    session: MongoSession = Depends(get_session),
     # Provides the `cipher` parameter or keyword argument.
     cipher: SecretCipher = Depends(get_cipher),
     # Completes the signature and declares the callable return type.
@@ -128,7 +125,7 @@ async def submit_attempt_route(
     # Provides the `principal` parameter or keyword argument.
     principal: AuthPrincipal = Depends(get_current_user),
     # Provides the `session` parameter or keyword argument.
-    session: AsyncSession = Depends(get_session),
+    session: MongoSession = Depends(get_session),
     # Provides the `cipher` parameter or keyword argument.
     cipher: SecretCipher = Depends(get_cipher),
     # Completes the signature and declares the callable return type.
@@ -189,7 +186,7 @@ async def abandon_game_route(
     # Provides the `principal` parameter or keyword argument.
     principal: AuthPrincipal = Depends(get_current_user),
     # Provides the `session` parameter or keyword argument.
-    session: AsyncSession = Depends(get_session),
+    session: MongoSession = Depends(get_session),
     # Provides the `cipher` parameter or keyword argument.
     cipher: SecretCipher = Depends(get_cipher),
     # Completes the signature and declares the callable return type.

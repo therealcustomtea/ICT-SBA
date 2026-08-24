@@ -79,9 +79,11 @@ export function AsyncState({
   children?: React.ReactNode;
   // Begins the nested block or object completed below.
 }) {
+  // Continues the surrounding operation with this required value or expression.
   {
     /* Checks this condition before running the nested branch. */
   }
+  // Guards the nested operation so it runs only when this condition is satisfied.
   if (state === 'ready') return <>{children}</>;
   // Checks this condition before running the nested branch.
   if (state === 'loading')

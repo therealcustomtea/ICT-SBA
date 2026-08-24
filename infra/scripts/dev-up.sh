@@ -7,7 +7,7 @@ set -euo pipefail
 cd "$(dirname "${BASH_SOURCE[0]}")/../.."
 
 # Iterates through these names for the repeated validation.
-for command_name in docker supabase uv pnpm; do
+for command_name in docker uv pnpm; do
   # Checks this condition before running the guarded branch.
   if ! command -v "${command_name}" >/dev/null 2>&1; then
     # Prints this status or error message for the operator.
@@ -82,11 +82,11 @@ fi
 unset _MASTERMIND_DOTENV_LOAD_COMPLETE
 
 # Iterates through these names for the repeated validation.
-for variable_name in MASTERMIND_SUPABASE_URL NEXT_PUBLIC_SUPABASE_URL NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY; do
+for variable_name in MASTERMIND_MONGODB_URL MASTERMIND_AUTH_SIGNING_KEY; do
   # Checks this condition before running the guarded branch.
   if [[ -z "${!variable_name:-}" ]]; then
     # Prints this status or error message for the operator.
-    echo "${variable_name} must be set in .env after running supabase status." >&2
+    echo "${variable_name} must be set in .env." >&2
     # Stops the script with this explicit process status.
     exit 1
   # Closes the conditional, loop, or function block started above.
@@ -94,12 +94,8 @@ for variable_name in MASTERMIND_SUPABASE_URL NEXT_PUBLIC_SUPABASE_URL NEXT_PUBLI
 # Closes the conditional, loop, or function block started above.
 done
 
-# Starts or queries the local Supabase development services.
-supabase start
 # Runs this container operation for the local development stack.
-docker compose up -d --wait postgres redis
-# Runs this Python project command through the locked environment.
-uv run alembic -c apps/api/alembic.ini upgrade head
+docker compose up -d --wait mongo redis mailpit
 
 # Executes this command as the next step in the script workflow.
 cleanup() {

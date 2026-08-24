@@ -32,9 +32,11 @@ export default defineConfig({
   },
   // Defines the webServer field in the surrounding object or type.
   webServer: process.env.PLAYWRIGHT_SKIP_WEBSERVER
-    ? // Executes this line as the next step in the surrounding logic.
+    ? // Continues the surrounding operation with this required value or expression.
+      // Executes this line as the next step in the surrounding logic.
       undefined
-    : // Begins the nested block or object completed below.
+    : // Continues the surrounding operation with this required value or expression.
+      // Begins the nested block or object completed below.
       {
         // Defines the command field in the surrounding object or type.
         command: `pnpm exec next dev --hostname 127.0.0.1 --port ${serverPort}`,

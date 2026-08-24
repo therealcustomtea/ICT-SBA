@@ -25,23 +25,20 @@ from typing import Any, Protocol
 # Imports selected names from `mastermind_core` for use in this module.
 from mastermind_core import GameConfig, GameStatus, LeaderboardEligibility, calculate_score
 
+# Imports the required names from `pymongo.errors` for this module.
+from pymongo.errors import PyMongoError
+
 # Imports selected names from `redis.asyncio` for use in this module.
 from redis.asyncio import Redis
 
 # Imports selected names from `redis.exceptions` for use in this module.
 from redis.exceptions import RedisError
 
-# Imports selected names from `sqlalchemy` for use in this module.
-from sqlalchemy import select
-
-# Imports selected names from `sqlalchemy.exc` for use in this module.
-from sqlalchemy.exc import IntegrityError, SQLAlchemyError
-
-# Imports selected names from `sqlalchemy.ext.asyncio` for use in this module.
-from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker
-
 # Imports selected names from `.config` for use in this module.
 from .config import get_settings
+
+# Imports the required names from `.database` for this module.
+from .database import MongoSession, MongoSessionFactory
 
 # Imports selected names from `.features` for use in this module.
 from .features import feature_enabled
@@ -190,11 +187,19 @@ class RedisBroker:
         async def pump() -> None:
             # Starts a protected operation whose expected failures are handled below.
             try:
-                # Iterates asynchronously through the supplied values.
-                async for message in pubsub.listen():
-                    # Checks this condition before executing the nested branch.
-                    if message["type"] != "message":
-                        # Skips the remaining work and advances to the next iteration.
+                # Poll below the shared Redis socket timeout so an idle room remains connected.
+                while True:
+                    # Polls Redis for the next room event without blocking indefinitely.
+                    message = await pubsub.get_message(
+                        # Skips subscription acknowledgements so callers receive room events.
+                        ignore_subscribe_messages=True,
+                        # Bounds each poll so cancellation and connection cleanup remain responsive.
+                        timeout=1.0,
+                        # Closes the bounded Redis polling call opened above.
+                    )
+                    # Skips empty polls so the subscription can continue waiting for an event.
+                    if message is None:
+                        # Returns to the polling boundary without attempting to decode absent data.
                         continue
                     # Computes and stores `value` for subsequent operations.
                     value = json.loads(message["data"])
@@ -325,7 +330,7 @@ def _event_envelope(
 # Defines the `record_room_event` callable and its typed interface.
 async def record_room_event(
     # Declares the typed `session` data field.
-    session: AsyncSession,
+    session: MongoSession,
     # Declares the typed `room` data field.
     room: MultiplayerRoom,
     # Declares the typed `event_type` data field.
@@ -360,7 +365,7 @@ async def record_room_event(
 # Defines the `award_duelist_if_eligible` callable and its typed interface.
 async def award_duelist_if_eligible(
     # Declares the typed `session` data field.
-    session: AsyncSession,
+    session: MongoSession,
     # Declares the typed `room` data field.
     room: MultiplayerRoom,
     # Completes the signature and declares the callable return type.
@@ -387,47 +392,41 @@ async def award_duelist_if_eligible(
         # Returns this result to the caller and ends the current function.
         return
     # Computes and stores `game_id` for subsequent operations.
-    game_id = await session.scalar(
-        # Calls `select` with the supplied values.
-        select(GameSession.id).where(
-            # Supplies this item to the surrounding call or collection.
-            GameSession.room_id == room.id,
-            # Supplies this item to the surrounding call or collection.
-            GameSession.owner_id == room.winner_id,
-            # Supplies this item to the surrounding call or collection.
-            GameSession.status == "won",
-            # Closes the multiline call, declaration, or collection started above.
-        )
-        # Closes the multiline call, declaration, or collection started above.
+    game = await session.find_one(
+        # Supplies this required nested value.
+        GameSession,
+        # Supplies this required nested value.
+        {'room_id': room.id, 'owner_id': room.winner_id, 'status': 'won'},
+    # Closes the multiline declaration, call, or collection opened above.
     )
-    # Checks this condition before executing the nested branch.
-    if game_id is None:
+    # Guards the nested operation so it runs only when this condition is satisfied.
+    if game is None:
         # Returns this result to the caller and ends the current function.
         return
-    # Starts a protected operation whose expected failures are handled below.
-    try:
-        # Acquires this asynchronous managed resource for the nested operation.
-        async with session.begin_nested():
-            # Calls `session.add` with the supplied values.
-            session.add(
-                # Calls `UserAchievement` with the supplied values.
-                UserAchievement(
-                    # Provides the `user_id` parameter or keyword argument.
-                    user_id=room.winner_id,
-                    # Provides the `achievement_key` parameter or keyword argument.
-                    achievement_key="duelist",
-                    # Provides the `game_id` parameter or keyword argument.
-                    game_id=game_id,
-                    # Closes the multiline call, declaration, or collection started above.
-                )
-                # Closes the multiline call, declaration, or collection started above.
+    # Stores `existing` because later steps depend on this value.
+    existing = await session.find_one(
+        # Supplies this required nested value.
+        UserAchievement,
+        # Supplies this required nested value.
+        {'user_id': room.winner_id, 'achievement_key': 'duelist'},
+    # Closes the multiline declaration, call, or collection opened above.
+    )
+    # Guards the nested operation so it runs only when this condition is satisfied.
+    if existing is None:
+        # Supplies this required nested value.
+        session.add(
+            # Supplies this required nested value.
+            UserAchievement(
+                # Stores `user_id` because later steps depend on this value.
+                user_id=room.winner_id,
+                # Stores `achievement_key` because later steps depend on this value.
+                achievement_key='duelist',
+                # Stores `game_id` because later steps depend on this value.
+                game_id=game.id,
+            # Closes the multiline declaration, call, or collection opened above.
             )
-            # Waits for this asynchronous operation to complete.
-            await session.flush()
-    # Handles the listed exception so failure remains controlled.
-    except IntegrityError:
-        # Provides the intentionally empty statement required by Python syntax.
-        pass
+        # Closes the multiline declaration, call, or collection opened above.
+        )
 
 
 # Defines the `_aware_utc` callable and its typed interface.
@@ -439,7 +438,7 @@ def _aware_utc(value: datetime) -> datetime:
 # Defines the `finalize_active_room_games` callable and its typed interface.
 async def finalize_active_room_games(
     # Declares the typed `session` data field.
-    session: AsyncSession,
+    session: MongoSession,
     # Declares the typed `room` data field.
     room: MultiplayerRoom,
     # Completes the signature and declares the callable return type.
@@ -448,27 +447,15 @@ async def finalize_active_room_games(
     """Close every remaining game when the authoritative room becomes terminal."""
 
     # Computes and stores `active_games` for subsequent operations.
-    active_games = (
-        # Waits for this asynchronous operation to complete.
-        await session.scalars(
-            # Calls `select` with the supplied values.
-            select(GameSession)
-            # Begins the nested block or multiline expression completed below.
-            .where(
-                # Supplies this item to the surrounding call or collection.
-                GameSession.room_id == room.id,
-                # Supplies this item to the surrounding call or collection.
-                GameSession.status == GameStatus.ACTIVE.value,
-                # Closes the multiline call, declaration, or collection started above.
-            )
-            # Executes this statement as the next step in the surrounding logic.
-            .order_by(GameSession.id)
-            # Executes this statement as the next step in the surrounding logic.
-            .with_for_update()
-            # Closes the multiline call, declaration, or collection started above.
-        )
-        # Executes this statement as the next step in the surrounding logic.
-    ).all()
+    active_games = await session.find_many(
+        # Supplies this required nested value.
+        GameSession,
+        # Supplies this required nested value.
+        {'room_id': room.id, 'status': GameStatus.ACTIVE.value},
+        # Stores `sort` because later steps depend on this value.
+        sort=[('_id', 1)],
+    # Closes the multiline declaration, call, or collection opened above.
+    )
     # Checks this condition before executing the nested branch.
     if not active_games:
         # Returns this result to the caller and ends the current function.
@@ -528,7 +515,7 @@ async def finalize_active_room_games(
 # Defines the `record_room_completion` callable and its typed interface.
 async def record_room_completion(
     # Declares the typed `session` data field.
-    session: AsyncSession,
+    session: MongoSession,
     # Declares the typed `room` data field.
     room: MultiplayerRoom,
     # Declares the typed `reason` data field.
@@ -540,16 +527,10 @@ async def record_room_completion(
     # Waits for this asynchronous operation to complete.
     await award_duelist_if_eligible(session, room)
     # Computes and stores `existing` for subsequent operations.
-    existing = await session.scalar(
-        # Calls `select` with the supplied values.
-        select(MultiplayerEvent.id).where(
-            # Supplies this item to the surrounding call or collection.
-            MultiplayerEvent.room_id == room.id,
-            # Supplies this item to the surrounding call or collection.
-            MultiplayerEvent.event_type == "room_completed",
-            # Closes the multiline call, declaration, or collection started above.
-        )
-        # Closes the multiline call, declaration, or collection started above.
+    existing = await session.find_one(
+        # Supplies this required nested value.
+        MultiplayerEvent, {'room_id': room.id, 'event_type': 'room_completed'}
+    # Closes the multiline declaration, call, or collection opened above.
     )
     # Checks this condition before executing the nested branch.
     if existing is not None:
@@ -580,7 +561,7 @@ async def record_room_completion(
 # Defines the `finalize_due_rooms_once` callable and its typed interface.
 async def finalize_due_rooms_once(
     # Declares the typed `session_factory` data field.
-    session_factory: async_sessionmaker[AsyncSession],
+    session_factory: MongoSessionFactory,
     # Declares the typed `broker` data field.
     broker: Broker,
     # Makes the following parameters keyword-only for clear call sites.
@@ -601,33 +582,25 @@ async def finalize_due_rooms_once(
     # Acquires this asynchronous managed resource for the nested operation.
     async with session_factory() as session:
         # Computes and stores `rooms` for subsequent operations.
-        rooms = (
-            # Waits for this asynchronous operation to complete.
-            await session.scalars(
-                # Calls `select` with the supplied values.
-                select(MultiplayerRoom)
-                # Begins the nested block or multiline expression completed below.
-                .where(
-                    # Supplies this item to the surrounding call or collection.
-                    MultiplayerRoom.status == "active",
-                    # Calls `MultiplayerRoom.winner_id.is_not` with the supplied values.
-                    MultiplayerRoom.winner_id.is_not(None),
-                    # Calls `MultiplayerRoom.tie_deadline.is_not` with the supplied values.
-                    MultiplayerRoom.tie_deadline.is_not(None),
-                    # Supplies this item to the surrounding call or collection.
-                    MultiplayerRoom.tie_deadline <= effective_now,
-                    # Closes the multiline call, declaration, or collection started above.
-                )
-                # Executes this statement as the next step in the surrounding logic.
-                .order_by(MultiplayerRoom.tie_deadline, MultiplayerRoom.id)
-                # Executes this statement as the next step in the surrounding logic.
-                .limit(limit)
-                # Executes this statement as the next step in the surrounding logic.
-                .with_for_update(skip_locked=True)
-                # Closes the multiline call, declaration, or collection started above.
-            )
-            # Executes this statement as the next step in the surrounding logic.
-        ).all()
+        rooms = await session.find_many(
+            # Supplies this required nested value.
+            MultiplayerRoom,
+            # Supplies this required nested value.
+            {
+                # Supplies this literal value to the surrounding declaration or call.
+                'status': 'active',
+                # Supplies this literal value to the surrounding declaration or call.
+                'winner_id': {'$ne': None},
+                # Supplies this literal value to the surrounding declaration or call.
+                'tie_deadline': {'$ne': None, '$lte': effective_now},
+            # Closes the multiline declaration, call, or collection opened above.
+            },
+            # Stores `sort` because later steps depend on this value.
+            sort=[('tie_deadline', 1), ('_id', 1)],
+            # Stores `limit` because later steps depend on this value.
+            limit=limit,
+        # Closes the multiline declaration, call, or collection opened above.
+        )
         # Iterates through the supplied values for the nested operation.
         for room in rooms:
             # Computes and stores `room.status` for subsequent operations.
@@ -653,7 +626,7 @@ async def finalize_due_rooms_once(
 # Defines the `cleanup_stale_presence_once` callable and its typed interface.
 async def cleanup_stale_presence_once(
     # Declares the typed `session_factory` data field.
-    session_factory: async_sessionmaker[AsyncSession],
+    session_factory: MongoSessionFactory,
     # Declares the typed `broker` data field.
     broker: Broker,
     # Makes the following parameters keyword-only for clear call sites.
@@ -678,33 +651,27 @@ async def cleanup_stale_presence_once(
     # Acquires this asynchronous managed resource for the nested operation.
     async with session_factory() as session:
         # Computes and stores `rows` for subsequent operations.
-        rows = (
-            # Waits for this asynchronous operation to complete.
-            await session.execute(
-                # Calls `select` with the supplied values.
-                select(MultiplayerMember, MultiplayerRoom)
-                # Executes this statement as the next step in the surrounding logic.
-                .join(MultiplayerRoom, MultiplayerRoom.id == MultiplayerMember.room_id)
-                # Begins the nested block or multiline expression completed below.
-                .where(
-                    # Calls `MultiplayerMember.connected.is_` with the supplied values.
-                    MultiplayerMember.connected.is_(True),
-                    # Supplies this item to the surrounding call or collection.
-                    MultiplayerMember.last_seen_at <= stale_before,
-                    # Calls `MultiplayerRoom.status.in_` with the supplied values.
-                    MultiplayerRoom.status.in_(["waiting", "active"]),
-                    # Closes the multiline call, declaration, or collection started above.
-                )
-                # Executes this statement as the next step in the surrounding logic.
-                .order_by(MultiplayerMember.last_seen_at, MultiplayerMember.id)
-                # Executes this statement as the next step in the surrounding logic.
-                .limit(limit)
-                # Executes this statement as the next step in the surrounding logic.
-                .with_for_update(skip_locked=True)
-                # Closes the multiline call, declaration, or collection started above.
-            )
-            # Executes this statement as the next step in the surrounding logic.
-        ).all()
+        members = await session.find_many(
+            # Supplies this required nested value.
+            MultiplayerMember,
+            # Supplies this required nested value.
+            {'connected': True, 'last_seen_at': {'$lte': stale_before}},
+            # Stores `sort` because later steps depend on this value.
+            sort=[('last_seen_at', 1), ('_id', 1)],
+            # Stores `limit` because later steps depend on this value.
+            limit=limit,
+        # Closes the multiline declaration, call, or collection opened above.
+        )
+        # Stores `rows` because later steps depend on this value.
+        rows = []
+        # Iterates over these values so each item receives the same processing.
+        for member in members:
+            # Stores `room` because later steps depend on this value.
+            room = await session.get(MultiplayerRoom, member.room_id)
+            # Guards the nested operation so it runs only when this condition is satisfied.
+            if room is not None and room.status in {'waiting', 'active'}:
+                # Supplies this required nested value.
+                rows.append((member, room))
         # Iterates through the supplied values for the nested operation.
         for member, room in rows:
             # Computes and stores `member.connected` for subsequent operations.
@@ -738,7 +705,7 @@ async def cleanup_stale_presence_once(
 # Defines the `room_finalization_worker` callable and its typed interface.
 async def room_finalization_worker(
     # Declares the typed `session_factory` data field.
-    session_factory: async_sessionmaker[AsyncSession],
+    session_factory: MongoSessionFactory,
     # Declares the typed `broker` data field.
     broker: Broker,
     # Makes the following parameters keyword-only for clear call sites.
@@ -752,7 +719,7 @@ async def room_finalization_worker(
     # Repeats the nested block while this condition remains true.
     while True:
         # Acquires this managed resource and guarantees cleanup afterward.
-        with suppress(SQLAlchemyError, RedisError, RuntimeError):
+        with suppress(PyMongoError, RedisError, RuntimeError):
             # Waits for this asynchronous operation to complete.
             await finalize_due_rooms_once(session_factory, broker)
             # Waits for this asynchronous operation to complete.

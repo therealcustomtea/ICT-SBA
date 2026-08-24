@@ -28,8 +28,6 @@ const navigation = [
   ['challenges', '/challenges/new'],
   // Supplies this item to the surrounding call or collection.
   ['rooms', '/rooms'],
-  // Supplies this item to the surrounding call or collection.
-  ['leaderboards', '/leaderboards'],
   // Executes this line as the next step in the surrounding logic.
 ] as const;
 
@@ -242,7 +240,8 @@ export function AppShell({ children }: { children: React.ReactNode }) {
           {t('authUnavailable')}
           {/* Closes the div interface element. */}
         </div>
-      ) : // Executes this line as the next step in the surrounding logic.
+      ) : // Continues the surrounding operation with this required value or expression.
+      // Executes this line as the next step in the surrounding logic.
       null}
       {/* Renders the ServiceWorkerRegister interface element or component. */}
       <ServiceWorkerRegister />

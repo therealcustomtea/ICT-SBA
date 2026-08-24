@@ -7,15 +7,6 @@ import structlog
 # Imports selected names from `fastapi` for use in this module.
 from fastapi import APIRouter, Depends, status
 
-# Imports selected names from `sqlalchemy.dialects.postgresql` for use in this module.
-from sqlalchemy.dialects.postgresql import insert as postgresql_insert
-
-# Imports selected names from `sqlalchemy.dialects.sqlite` for use in this module.
-from sqlalchemy.dialects.sqlite import insert as sqlite_insert
-
-# Imports selected names from `sqlalchemy.ext.asyncio` for use in this module.
-from sqlalchemy.ext.asyncio import AsyncSession
-
 # Imports selected names from `..auth` for use in this module.
 from ..auth import AuthPrincipal, get_current_user
 
@@ -23,7 +14,7 @@ from ..auth import AuthPrincipal, get_current_user
 from ..config import Settings, get_settings
 
 # Imports selected names from `..database` for use in this module.
-from ..database import get_session
+from ..database import MongoSession, document_to_bson, get_session
 
 # Imports selected names from `..errors` for use in this module.
 from ..errors import APIError
@@ -103,7 +94,7 @@ async def collect_event_route(
     # Provides the `principal` parameter or keyword argument.
     principal: AuthPrincipal = Depends(get_current_user),
     # Provides the `session` parameter or keyword argument.
-    session: AsyncSession = Depends(get_session),
+    session: MongoSession = Depends(get_session),
     # Provides the `settings` parameter or keyword argument.
     settings: Settings = Depends(get_settings),
     # Completes the signature and declares the callable return type.
@@ -136,36 +127,18 @@ async def collect_event_route(
         **{field: getattr(payload, field) for field in EVENT_FIELDS},
         # Closes the multiline call, declaration, or collection started above.
     }
-    # Computes and stores `dialect_name` for subsequent operations.
-    dialect_name = session.bind.dialect.name if session.bind is not None else ""
-    # Checks this condition before executing the nested branch.
-    if dialect_name == "postgresql":
-        # Waits for this asynchronous operation to complete.
-        await session.execute(
-            # Calls `postgresql_insert` with the supplied values.
-            postgresql_insert(ProductEvent)
-            # Executes this statement as the next step in the surrounding logic.
-            .values(**event_values)
-            # Executes this statement as the next step in the surrounding logic.
-            .on_conflict_do_nothing(index_elements=[ProductEvent.client_event_id])
-            # Closes the multiline call, declaration, or collection started above.
-        )
-    # Checks this alternative when previous conditions were false.
-    elif dialect_name == "sqlite":
-        # Waits for this asynchronous operation to complete.
-        await session.execute(
-            # Calls `sqlite_insert` with the supplied values.
-            sqlite_insert(ProductEvent)
-            # Executes this statement as the next step in the surrounding logic.
-            .values(**event_values)
-            # Executes this statement as the next step in the surrounding logic.
-            .on_conflict_do_nothing(index_elements=[ProductEvent.client_event_id])
-            # Closes the multiline call, declaration, or collection started above.
-        )
-    # Handles the remaining case not matched by earlier branches.
-    else:
-        # Raises this exception to report an invalid or failed operation.
-        raise APIError(503, "ANALYTICS_UNAVAILABLE", "Product analytics are unavailable.")
+    # Stores `event` because later steps depend on this value.
+    event = ProductEvent(**event_values)
+    # Performs this required operation before the surrounding flow continues.
+    await session.upsert_one(
+        # Supplies this required nested value.
+        ProductEvent,
+        # Supplies this required nested value.
+        {'client_event_id': payload.client_event_id},
+        # Supplies this required nested value.
+        {'$setOnInsert': document_to_bson(event)},
+    # Closes the multiline declaration, call, or collection opened above.
+    )
     # Waits for this asynchronous operation to complete.
     await session.commit()
     # Calls `structlog.get_logger` with the supplied values.

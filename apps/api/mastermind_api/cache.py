@@ -35,7 +35,7 @@ async def invalidate_leaderboard_cache(redis: Redis | None) -> None:
         await redis.incr(LEADERBOARD_CACHE_VERSION_KEY)
     # Handles the listed exception so failure remains controlled.
     except RedisError:
-        # PostgreSQL remains authoritative and cache entries have a short TTL;
+        # MongoDB remains authoritative and cache entries have a short TTL;
         # cache failure must not roll back an accepted attempt.
         # Returns this result to the caller and ends the current function.
         return

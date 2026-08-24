@@ -676,15 +676,18 @@ describe('production product flows', () => {
     };
     // Calls apiMock.mockImplementation with the supplied values.
     apiMock.mockImplementation(
+      // Continues the surrounding operation with this required value or expression.
       async (path: string, options?: RequestInit) =>
         // Executes this line as the next step in the surrounding logic.
         options?.method === 'POST' && path.endsWith('/ready')
-          ? // Begins the nested block or object completed below.
+          ? // Continues the surrounding operation with this required value or expression.
+            // Begins the nested block or object completed below.
             {
               // Supplies this item to the surrounding call or collection.
               ...waitingRoom,
               // Defines the members field in the surrounding object or type.
               members: waitingRoom.members.map(
+                // Continues the surrounding operation with this required value or expression.
                 (member) =>
                   // Supplies this item to the surrounding call or collection.
                   member.userId === 'user-1' ? { ...member, ready: true } : member,
@@ -692,7 +695,8 @@ describe('production product flows', () => {
               ),
               // Closes the expression, call, or declaration started above.
             }
-          : // Supplies this item to the surrounding call or collection.
+          : // Continues the surrounding operation with this required value or expression.
+            // Supplies this item to the surrounding call or collection.
             waitingRoom,
       // Closes the expression, call, or declaration started above.
     );
@@ -866,7 +870,7 @@ describe('production product flows', () => {
           // Defines the displayName field in the surrounding object or type.
           displayName: 'Lin',
           // Defines the connected field in the surrounding object or type.
-          connected: true,
+          connected: false,
           // Defines the ready field in the surrounding object or type.
           ready: true,
           // Defines the attemptsUsed field in the surrounding object or type.
@@ -895,16 +899,21 @@ describe('production product flows', () => {
     let currentGame = { ...game, mode: 'duel' };
     // Calls apiMock.mockImplementation with the supplied values.
     apiMock.mockImplementation(
+      // Continues the surrounding operation with this required value or expression.
       async (path: string) =>
         // Calls path.endsWith with the supplied values.
         path.endsWith('/ws-ticket')
-          ? // Executes this line as the next step in the surrounding logic.
+          ? // Continues the surrounding operation with this required value or expression.
+            // Executes this line as the next step in the surrounding logic.
             { ticket: 'private_ticket', expiresAt: new Date().toISOString() }
-          : // Executes this line as the next step in the surrounding logic.
+          : // Continues the surrounding operation with this required value or expression.
+            // Executes this line as the next step in the surrounding logic.
             path.startsWith('/v1/games/')
-            ? // Executes this line as the next step in the surrounding logic.
+            ? // Continues the surrounding operation with this required value or expression.
+              // Executes this line as the next step in the surrounding logic.
               currentGame
-            : // Supplies this item to the surrounding call or collection.
+            : // Continues the surrounding operation with this required value or expression.
+              // Supplies this item to the surrounding call or collection.
               currentRoom,
       // Closes the expression, call, or declaration started above.
     );
@@ -928,6 +937,8 @@ describe('production product flows', () => {
     connectedSocket.onopen?.();
     // Waits for this asynchronous operation to complete.
     await screen.findByText('Opponent progress');
+    // A connection-state rerender must not tear down and replace a healthy socket.
+    expect(FakeWebSocket.latest).toBe(connectedSocket);
     // Begins the nested block or object completed below.
     connectedSocket.onmessage?.({
       // Defines the data field in the surrounding object or type.
@@ -946,6 +957,7 @@ describe('production product flows', () => {
           eventSequence: 5,
           // Defines the members field in the surrounding object or type.
           members: activeRoom.members.map(
+            // Continues the surrounding operation with this required value or expression.
             (member) =>
               // Supplies this item to the surrounding call or collection.
               member.userId === 'user-2' ? { ...member, attemptsUsed: 3 } : member,
@@ -957,6 +969,26 @@ describe('production product flows', () => {
       }),
       // Executes this line as the next step in the surrounding logic.
     } as MessageEvent);
+    // The snapshot can be stale while the opponent's socket finishes connecting.
+    expect(await screen.findByText('Disconnected')).toBeVisible();
+    // Begins the nested block or object completed below.
+    connectedSocket.onmessage?.({
+      // Defines the data field in the surrounding object or type.
+      data: JSON.stringify({
+        // Defines the version field in the surrounding object or type.
+        version: 1,
+        // Presence is ephemeral and does not consume the durable room sequence.
+        sequence: null,
+        // Defines the type field in the surrounding object or type.
+        type: 'presence',
+        // Defines the payload field in the surrounding object or type.
+        payload: { userId: 'user-2', connected: true },
+        // Closes the expression, call, or declaration started above.
+      }),
+      // Closes the expression, call, or declaration started above.
+    } as MessageEvent);
+    // The live presence event must replace the stale disconnected snapshot state.
+    expect(await screen.findByText('Connected')).toBeVisible();
     // Begins the nested block or object completed below.
     connectedSocket.onmessage?.({
       // Defines the data field in the surrounding object or type.
@@ -1057,6 +1089,7 @@ describe('production product flows', () => {
     connectedSocket.onmessage?.(completedEvent);
     // Waits for this asynchronous operation to complete.
     await waitFor(
+      // Continues the surrounding operation with this required value or expression.
       () =>
         // Calls expect with the supplied values.
         expect(analyticsMock.mock.calls.filter(([name]) => name === 'duel_completed')).toHaveLength(

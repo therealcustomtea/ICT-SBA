@@ -179,7 +179,8 @@ export function DailyPanel() {
           />
           {/* Closes the div interface element. */}
         </div>
-      ) : // Executes this line as the next step in the surrounding logic.
+      ) : // Continues the surrounding operation with this required value or expression.
+      // Executes this line as the next step in the surrounding logic.
       null}
       {/* Closes the AsyncState interface element. */}
     </AsyncState>

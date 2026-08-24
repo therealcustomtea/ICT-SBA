@@ -19,12 +19,6 @@ from fastapi import APIRouter, Depends, Query, Request
 # Imports selected names from `redis.exceptions` for use in this module.
 from redis.exceptions import RedisError
 
-# Imports selected names from `sqlalchemy` for use in this module.
-from sqlalchemy import func, select
-
-# Imports selected names from `sqlalchemy.ext.asyncio` for use in this module.
-from sqlalchemy.ext.asyncio import AsyncSession
-
 # Imports selected names from `..auth` for use in this module.
 from ..auth import AuthPrincipal, get_current_user
 
@@ -38,7 +32,7 @@ from ..config import Settings, get_settings
 from ..crypto import SecretCipher
 
 # Imports selected names from `..database` for use in this module.
-from ..database import get_session
+from ..database import MongoSession, get_session
 
 # Imports selected names from `..dependencies` for use in this module.
 from ..dependencies import get_cipher
@@ -49,12 +43,13 @@ from ..errors import APIError
 # Imports selected names from `..features` for use in this module.
 from ..features import feature_enabled
 
+# Imports the required names from `..leaderboard_queries` for this module.
+from ..leaderboard_queries import ranked_leaderboard_page
+
 # Imports selected names from `..metrics` for use in this module.
 from ..metrics import LEADERBOARD_LATENCY
 
 # Imports selected names from `..models` for use in this module.
-from ..models import LeaderboardEntry, Profile
-
 # Imports selected names from `..rate_limit` for use in this module.
 from ..rate_limit import enforce_action_limit
 
@@ -85,7 +80,7 @@ LEADERBOARD_CACHE_SECONDS = 15
 
 
 # Defines the `require_daily` callable and its typed interface.
-async def require_daily(session: AsyncSession, settings: Settings) -> None:
+async def require_daily(session: MongoSession, settings: Settings) -> None:
     # Checks this condition before executing the nested branch.
     if not await feature_enabled(session, settings, "daily"):
         # Raises this exception to report an invalid or failed operation.
@@ -100,7 +95,7 @@ async def get_daily_route(
     # Provides the `_principal` parameter or keyword argument.
     _principal: AuthPrincipal = Depends(get_current_user),
     # Provides the `session` parameter or keyword argument.
-    session: AsyncSession = Depends(get_session),
+    session: MongoSession = Depends(get_session),
     # Provides the `settings` parameter or keyword argument.
     settings: Settings = Depends(get_settings),
     # Provides the `cipher` parameter or keyword argument.
@@ -143,7 +138,7 @@ async def start_daily_route(
     # Provides the `principal` parameter or keyword argument.
     principal: AuthPrincipal = Depends(get_current_user),
     # Provides the `session` parameter or keyword argument.
-    session: AsyncSession = Depends(get_session),
+    session: MongoSession = Depends(get_session),
     # Provides the `settings` parameter or keyword argument.
     settings: Settings = Depends(get_settings),
     # Provides the `cipher` parameter or keyword argument.
@@ -198,7 +193,7 @@ async def daily_leaderboard_route(
     # Provides the `principal` parameter or keyword argument.
     principal: AuthPrincipal = Depends(get_current_user),
     # Provides the `session` parameter or keyword argument.
-    session: AsyncSession = Depends(get_session),
+    session: MongoSession = Depends(get_session),
     # Provides the `settings` parameter or keyword argument.
     settings: Settings = Depends(get_settings),
     # Provides the `cipher` parameter or keyword argument.
@@ -213,66 +208,6 @@ async def daily_leaderboard_route(
     daily = await get_or_create_daily(session, settings, cipher)
     # Computes and stores `category` for subsequent operations.
     category = f"daily:{daily.id}"
-    # Computes and stores `rank_order` for subsequent operations.
-    rank_order = (
-        # Calls `LeaderboardEntry.score.desc` with the supplied values.
-        LeaderboardEntry.score.desc(),
-        # Supplies this item to the surrounding call or collection.
-        LeaderboardEntry.attempts_used,
-        # Supplies this item to the surrounding call or collection.
-        LeaderboardEntry.elapsed_seconds,
-        # Supplies this item to the surrounding call or collection.
-        LeaderboardEntry.completed_at,
-        # Supplies this item to the surrounding call or collection.
-        LeaderboardEntry.id,
-        # Closes the multiline call, declaration, or collection started above.
-    )
-    # Computes and stores `ranking` for subsequent operations.
-    ranking = func.row_number().over(order_by=rank_order).label("rank")
-    # Computes and stores `ranked` for subsequent operations.
-    ranked = (
-        # Calls `select` with the supplied values.
-        select(
-            # Supplies this item to the surrounding call or collection.
-            LeaderboardEntry.user_id,
-            # Supplies this item to the surrounding call or collection.
-            LeaderboardEntry.score,
-            # Supplies this item to the surrounding call or collection.
-            LeaderboardEntry.attempts_used,
-            # Supplies this item to the surrounding call or collection.
-            LeaderboardEntry.elapsed_seconds,
-            # Supplies this item to the surrounding call or collection.
-            LeaderboardEntry.completed_at,
-            # Supplies this item to the surrounding call or collection.
-            LeaderboardEntry.id,
-            # Supplies this item to the surrounding call or collection.
-            Profile.display_name,
-            # Supplies this item to the surrounding call or collection.
-            ranking,
-            # Closes the multiline call, declaration, or collection started above.
-        )
-        # Executes this statement as the next step in the surrounding logic.
-        .join(Profile, Profile.id == LeaderboardEntry.user_id)
-        # Begins the nested block or multiline expression completed below.
-        .where(
-            # Supplies this item to the surrounding call or collection.
-            LeaderboardEntry.category == category,
-            # Supplies this item to the surrounding call or collection.
-            LeaderboardEntry.review_status == "approved",
-            # Calls `LeaderboardEntry.invalidated_at.is_` with the supplied values.
-            LeaderboardEntry.invalidated_at.is_(None),
-            # Calls `Profile.deleted_at.is_` with the supplied values.
-            Profile.deleted_at.is_(None),
-            # Calls `Profile.is_banned.is_` with the supplied values.
-            Profile.is_banned.is_(False),
-            # Calls `Profile.public_leaderboards.is_` with the supplied values.
-            Profile.public_leaderboards.is_(True),
-            # Closes the multiline call, declaration, or collection started above.
-        )
-        # Executes this statement as the next step in the surrounding logic.
-        .subquery()
-        # Closes the multiline call, declaration, or collection started above.
-    )
     # Computes and stores `redis` for subsequent operations.
     redis = request.app.state.redis
     # Computes and stores `principal_cache_key` for subsequent operations.
@@ -304,28 +239,26 @@ async def daily_leaderboard_route(
             # Provides the intentionally empty statement required by Python syntax.
             pass
     # Computes and stores `rows` for subsequent operations.
-    rows = (
-        # Waits for this asynchronous operation to complete.
-        await session.execute(
-            # Calls `select` with the supplied values.
-            select(ranked)
-            # Executes this statement as the next step in the surrounding logic.
-            .order_by(ranked.c.rank, ranked.c.id)
-            # Executes this statement as the next step in the surrounding logic.
-            .offset((page - 1) * page_size)
-            # Executes this statement as the next step in the surrounding logic.
-            .limit(page_size)
-            # Closes the multiline call, declaration, or collection started above.
-        )
-        # Executes this statement as the next step in the surrounding logic.
-    ).all()
-    # Computes and stores `total` for subsequent operations.
-    total = await session.scalar(select(func.count()).select_from(ranked)) or 0
-    # Computes and stores `current_rank` for subsequent operations.
-    current_rank = await session.scalar(
-        # Calls `select` with the supplied values.
-        select(func.min(ranked.c.rank)).where(ranked.c.user_id == principal.user_id)
-        # Closes the multiline call, declaration, or collection started above.
+    rows, total, current_rank = await ranked_leaderboard_page(
+        # Supplies this required nested value.
+        session,
+        # Stores `match` because later steps depend on this value.
+        match={
+            # Supplies this literal value to the surrounding declaration or call.
+            'category': category,
+            # Supplies this literal value to the surrounding declaration or call.
+            'review_status': 'approved',
+            # Supplies this literal value to the surrounding declaration or call.
+            'invalidated_at': None,
+        # Closes the multiline declaration, call, or collection opened above.
+        },
+        # Stores `user_id` because later steps depend on this value.
+        user_id=principal.user_id,
+        # Stores `page` because later steps depend on this value.
+        page=page,
+        # Stores `page_size` because later steps depend on this value.
+        page_size=page_size,
+    # Closes the multiline declaration, call, or collection opened above.
     )
     # Computes and stores `response` for subsequent operations.
     response = PaginatedLeaderboard(
@@ -334,19 +267,19 @@ async def daily_leaderboard_route(
             # Calls `LeaderboardItem` with the supplied values.
             LeaderboardItem(
                 # Provides the `rank` parameter or keyword argument.
-                rank=row.rank,
+                rank=row['rank'],
                 # Provides the `display_name` parameter or keyword argument.
-                display_name=row.display_name or "Anonymous breaker",
+                display_name=row.get('display_name') or "Anonymous breaker",
                 # Provides the `score` parameter or keyword argument.
-                score=row.score,
+                score=row['score'],
                 # Provides the `attempts_used` parameter or keyword argument.
-                attempts_used=row.attempts_used,
+                attempts_used=row['attempts_used'],
                 # Provides the `elapsed_seconds` parameter or keyword argument.
-                elapsed_seconds=row.elapsed_seconds,
+                elapsed_seconds=row['elapsed_seconds'],
                 # Provides the `completed_at` parameter or keyword argument.
-                completed_at=row.completed_at,
+                completed_at=row['completed_at'],
                 # Provides the `is_current_user` parameter or keyword argument.
-                is_current_user=row.user_id == principal.user_id,
+                is_current_user=row['user_id'] == principal.user_id,
                 # Closes the multiline call, declaration, or collection started above.
             )
             # Iterates through the supplied values for the nested operation.

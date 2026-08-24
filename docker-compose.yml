@@ -1,121 +1,238 @@
+# Configures `name` because the surrounding service or tool depends on it.
 name: mastermind
 
+# Configures `services` because the surrounding service or tool depends on it.
 services:
-  postgres:
-    image: postgres:17.5-alpine@sha256:6567bca8d7bc8c82c5922425a0baee57be8402df92bae5eacad5f01ae9544daa
-    environment:
-      POSTGRES_DB: ${POSTGRES_DB:-mastermind}
-      POSTGRES_USER: ${POSTGRES_USER:-mastermind}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Run infra/scripts/bootstrap-local-env.sh first}
+  # Configures `mongo` because the surrounding service or tool depends on it.
+  mongo:
+    # Configures `image` because the surrounding service or tool depends on it.
+    image: mongo:8.0.14-noble
+    # Configures `command` because the surrounding service or tool depends on it.
+    command: ['mongod', '--replSet', 'rs0', '--bind_ip_all']
+    # Configures `ports` because the surrounding service or tool depends on it.
     ports:
-      - '127.0.0.1:5432:5432'
+      # Adds this required item to the surrounding configuration list.
+      - '127.0.0.1:27017:27017'
+    # Configures `volumes` because the surrounding service or tool depends on it.
     volumes:
-      - postgres-data:/var/lib/postgresql/data
+      # Adds this required item to the surrounding configuration list.
+      - mongo-data:/data/db
+    # Configures `healthcheck` because the surrounding service or tool depends on it.
     healthcheck:
-      test: ['CMD-SHELL', 'pg_isready -U "$${POSTGRES_USER}" -d "$${POSTGRES_DB}"']
+      # Configures `test` because the surrounding service or tool depends on it.
+      test:
+        # Continues the surrounding configuration with this required value.
+        [
+          # Continues the surrounding configuration with this required value.
+          'CMD-SHELL',
+          # Configures `mongosh --quiet --eval 'try { rs.status().ok } catch (_) { rs.initiate({_id` because the surrounding service or tool depends on it.
+          "mongosh --quiet --eval 'try { rs.status().ok } catch (_) { rs.initiate({_id:\"rs0\",members:[{_id:0,host:\"mongo:27017\"}]}).ok }' | grep 1",
+        # Closes the configuration collection opened above.
+        ]
+      # Configures `interval` because the surrounding service or tool depends on it.
       interval: 5s
-      timeout: 3s
-      retries: 20
+      # Configures `timeout` because the surrounding service or tool depends on it.
+      timeout: 5s
+      # Configures `retries` because the surrounding service or tool depends on it.
+      retries: 30
+    # Configures `restart` because the surrounding service or tool depends on it.
     restart: unless-stopped
+    # Configures `security_opt` because the surrounding service or tool depends on it.
     security_opt:
+      # Adds this required item to the surrounding configuration list.
       - no-new-privileges:true
 
+  # Configures `redis` because the surrounding service or tool depends on it.
   redis:
+    # Configures `image` because the surrounding service or tool depends on it.
     image: redis:7.4.5-alpine@sha256:bb186d083732f669da90be8b0f975a37812b15e913465bb14d845db72a4e3e08
+    # Configures `command` because the surrounding service or tool depends on it.
     command: ['redis-server', '--appendonly', 'yes', '--save', '60', '1000']
+    # Configures `ports` because the surrounding service or tool depends on it.
     ports:
+      # Adds this required item to the surrounding configuration list.
       - '127.0.0.1:6379:6379'
+    # Configures `volumes` because the surrounding service or tool depends on it.
     volumes:
+      # Adds this required item to the surrounding configuration list.
       - redis-data:/data
+    # Configures `healthcheck` because the surrounding service or tool depends on it.
     healthcheck:
+      # Configures `test` because the surrounding service or tool depends on it.
       test: ['CMD', 'redis-cli', 'ping']
+      # Configures `interval` because the surrounding service or tool depends on it.
       interval: 5s
+      # Configures `timeout` because the surrounding service or tool depends on it.
       timeout: 3s
+      # Configures `retries` because the surrounding service or tool depends on it.
       retries: 20
+    # Configures `restart` because the surrounding service or tool depends on it.
     restart: unless-stopped
+    # Configures `security_opt` because the surrounding service or tool depends on it.
     security_opt:
+      # Adds this required item to the surrounding configuration list.
       - no-new-privileges:true
 
-  migrate:
-    build:
-      context: .
-      dockerfile: infra/docker/api.Dockerfile
-    environment:
-      MASTERMIND_ENVIRONMENT: development
-      MASTERMIND_DATABASE_URL: postgresql+asyncpg://${POSTGRES_USER:-mastermind}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB:-mastermind}
-    command: ['alembic', '-c', 'apps/api/alembic.ini', 'upgrade', 'head']
-    depends_on:
-      postgres:
-        condition: service_healthy
-    restart: 'no'
+  # Configures `mailpit` because the surrounding service or tool depends on it.
+  mailpit:
+    # Configures `image` because the surrounding service or tool depends on it.
+    image: axllent/mailpit:v1.27.8
+    # Configures `ports` because the surrounding service or tool depends on it.
+    ports:
+      # Adds this required item to the surrounding configuration list.
+      - '127.0.0.1:1025:1025'
+      # Adds this required item to the surrounding configuration list.
+      - '127.0.0.1:8025:8025'
+    # Configures `restart` because the surrounding service or tool depends on it.
+    restart: unless-stopped
+    # Configures `security_opt` because the surrounding service or tool depends on it.
+    security_opt:
+      # Adds this required item to the surrounding configuration list.
+      - no-new-privileges:true
 
+  # Configures `api` because the surrounding service or tool depends on it.
   api:
+    # Configures `build` because the surrounding service or tool depends on it.
     build:
+      # Configures `context` because the surrounding service or tool depends on it.
       context: .
+      # Configures `dockerfile` because the surrounding service or tool depends on it.
       dockerfile: infra/docker/api.Dockerfile
+    # Configures `environment` because the surrounding service or tool depends on it.
     environment:
+      # Configures `MASTERMIND_ENVIRONMENT` because the surrounding service or tool depends on it.
       MASTERMIND_ENVIRONMENT: development
+      # Configures `MASTERMIND_RELEASE` because the surrounding service or tool depends on it.
       MASTERMIND_RELEASE: local-compose
-      MASTERMIND_DATABASE_URL: postgresql+asyncpg://${POSTGRES_USER:-mastermind}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB:-mastermind}
+      # Configures `MASTERMIND_MONGODB_URL` because the surrounding service or tool depends on it.
+      MASTERMIND_MONGODB_URL: ${MASTERMIND_MONGODB_URL:-mongodb://mongo:27017/?replicaSet=rs0}
+      # Configures `MASTERMIND_MONGODB_DATABASE` because the surrounding service or tool depends on it.
+      MASTERMIND_MONGODB_DATABASE: ${MASTERMIND_MONGODB_DATABASE:-mastermind}
+      # Configures `MASTERMIND_REDIS_URL` because the surrounding service or tool depends on it.
       MASTERMIND_REDIS_URL: redis://redis:6379/0
+      # Configures `MASTERMIND_ALLOWED_ORIGINS` because the surrounding service or tool depends on it.
       MASTERMIND_ALLOWED_ORIGINS: '["http://localhost:3000"]'
-      MASTERMIND_SUPABASE_URL: ${MASTERMIND_SUPABASE_URL:?Set a reachable hosted Supabase URL for the all-container path}
-      MASTERMIND_SUPABASE_SERVICE_ROLE_KEY: ${MASTERMIND_SUPABASE_SERVICE_ROLE_KEY:-}
-      MASTERMIND_SUPABASE_JWT_AUDIENCE: ${MASTERMIND_SUPABASE_JWT_AUDIENCE:-authenticated}
+      # Configures `MASTERMIND_PRODUCT_ORIGIN` because the surrounding service or tool depends on it.
+      MASTERMIND_PRODUCT_ORIGIN: http://localhost:3000
+      # Configures `MASTERMIND_AUTH_ISSUER` because the surrounding service or tool depends on it.
+      MASTERMIND_AUTH_ISSUER: http://localhost:8000
+      # Configures `MASTERMIND_AUTH_SIGNING_KEY` because the surrounding service or tool depends on it.
+      MASTERMIND_AUTH_SIGNING_KEY: ${MASTERMIND_AUTH_SIGNING_KEY:?Run infra/scripts/bootstrap-local-env.sh first}
+      # Configures `MASTERMIND_AUTH_COOKIE_NAME` because the surrounding service or tool depends on it.
+      MASTERMIND_AUTH_COOKIE_NAME: cipherboard_refresh
+      # Configures `MASTERMIND_AUTH_COOKIE_SECURE` because the surrounding service or tool depends on it.
+      MASTERMIND_AUTH_COOKIE_SECURE: 'false'
+      # Configures `MASTERMIND_SMTP_HOST` because the surrounding service or tool depends on it.
+      MASTERMIND_SMTP_HOST: mailpit
+      # Configures `MASTERMIND_SMTP_PORT` because the surrounding service or tool depends on it.
+      MASTERMIND_SMTP_PORT: '1025'
+      # Configures `MASTERMIND_SMTP_STARTTLS` because the surrounding service or tool depends on it.
+      MASTERMIND_SMTP_STARTTLS: 'false'
+      # Configures `MASTERMIND_SECRET_ENCRYPTION_KEYS` because the surrounding service or tool depends on it.
       MASTERMIND_SECRET_ENCRYPTION_KEYS: ${MASTERMIND_SECRET_ENCRYPTION_KEYS:?Run infra/scripts/bootstrap-local-env.sh first}
+      # Configures `MASTERMIND_SECRET_ACTIVE_KEY_VERSION` because the surrounding service or tool depends on it.
       MASTERMIND_SECRET_ACTIVE_KEY_VERSION: ${MASTERMIND_SECRET_ACTIVE_KEY_VERSION:-v1}
+      # Configures `MASTERMIND_DAILY_HMAC_KEY` because the surrounding service or tool depends on it.
       MASTERMIND_DAILY_HMAC_KEY: ${MASTERMIND_DAILY_HMAC_KEY:?Run infra/scripts/bootstrap-local-env.sh first}
+      # Configures `MASTERMIND_PUBLIC_IDENTIFIER_HMAC_KEY` because the surrounding service or tool depends on it.
       MASTERMIND_PUBLIC_IDENTIFIER_HMAC_KEY: ${MASTERMIND_PUBLIC_IDENTIFIER_HMAC_KEY:?Run infra/scripts/bootstrap-local-env.sh first}
+      # Configures `MASTERMIND_FEATURE_ANALYTICS` because the surrounding service or tool depends on it.
       MASTERMIND_FEATURE_ANALYTICS: 'false'
+    # Configures `ports` because the surrounding service or tool depends on it.
     ports:
+      # Adds this required item to the surrounding configuration list.
       - '127.0.0.1:8000:8000'
+    # Configures `depends_on` because the surrounding service or tool depends on it.
     depends_on:
-      postgres:
+      # Configures `mongo` because the surrounding service or tool depends on it.
+      mongo:
+        # Configures `condition` because the surrounding service or tool depends on it.
         condition: service_healthy
+      # Configures `redis` because the surrounding service or tool depends on it.
       redis:
+        # Configures `condition` because the surrounding service or tool depends on it.
         condition: service_healthy
-      migrate:
-        condition: service_completed_successfully
+      # Configures `mailpit` because the surrounding service or tool depends on it.
+      mailpit:
+        # Configures `condition` because the surrounding service or tool depends on it.
+        condition: service_started
+    # Configures `init` because the surrounding service or tool depends on it.
     init: true
+    # Configures `restart` because the surrounding service or tool depends on it.
     restart: unless-stopped
+    # Configures `read_only` because the surrounding service or tool depends on it.
     read_only: true
+    # Configures `tmpfs` because the surrounding service or tool depends on it.
     tmpfs:
+      # Adds this required item to the surrounding configuration list.
       - /tmp:size=64m,mode=1777
+    # Configures `cap_drop` because the surrounding service or tool depends on it.
     cap_drop: ['ALL']
+    # Configures `security_opt` because the surrounding service or tool depends on it.
     security_opt:
+      # Adds this required item to the surrounding configuration list.
       - no-new-privileges:true
 
+  # Configures `web` because the surrounding service or tool depends on it.
   web:
+    # Configures `build` because the surrounding service or tool depends on it.
     build:
+      # Configures `context` because the surrounding service or tool depends on it.
       context: .
+      # Configures `dockerfile` because the surrounding service or tool depends on it.
       dockerfile: infra/docker/web.Dockerfile
+      # Configures `args` because the surrounding service or tool depends on it.
       args:
+        # Configures `NEXT_PUBLIC_API_ORIGIN` because the surrounding service or tool depends on it.
         NEXT_PUBLIC_API_ORIGIN: http://localhost:8000
+        # Configures `NEXT_PUBLIC_PRODUCT_ORIGIN` because the surrounding service or tool depends on it.
         NEXT_PUBLIC_PRODUCT_ORIGIN: http://localhost:3000
-        NEXT_PUBLIC_SUPABASE_URL: ${NEXT_PUBLIC_SUPABASE_URL:?Set the Supabase browser URL}
-        NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: ${NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY:?Set the Supabase publishable key}
+        # Configures `NEXT_PUBLIC_PRODUCT_NAME` because the surrounding service or tool depends on it.
         NEXT_PUBLIC_PRODUCT_NAME: ${NEXT_PUBLIC_PRODUCT_NAME:-Cipherboard}
+        # Configures `NEXT_PUBLIC_SUPPORT_EMAIL` because the surrounding service or tool depends on it.
         NEXT_PUBLIC_SUPPORT_EMAIL: ${NEXT_PUBLIC_SUPPORT_EMAIL:-support@localhost.invalid}
+        # Configures `NEXT_PUBLIC_LEGAL_ENTITY` because the surrounding service or tool depends on it.
         NEXT_PUBLIC_LEGAL_ENTITY: ${NEXT_PUBLIC_LEGAL_ENTITY:-Local Development}
+        # Configures `NEXT_PUBLIC_JURISDICTION` because the surrounding service or tool depends on it.
         NEXT_PUBLIC_JURISDICTION: ${NEXT_PUBLIC_JURISDICTION:-Local Development}
+        # Configures `NEXT_PUBLIC_POLICY_DATE` because the surrounding service or tool depends on it.
         NEXT_PUBLIC_POLICY_DATE: ${NEXT_PUBLIC_POLICY_DATE:-2026-07-15}
+    # Configures `environment` because the surrounding service or tool depends on it.
     environment:
+      # Configures `NODE_ENV` because the surrounding service or tool depends on it.
       NODE_ENV: production
+      # Configures `VALIDATE_LAUNCH_CONFIGURATION` because the surrounding service or tool depends on it.
       VALIDATE_LAUNCH_CONFIGURATION: 'false'
+    # Configures `ports` because the surrounding service or tool depends on it.
     ports:
+      # Adds this required item to the surrounding configuration list.
       - '127.0.0.1:3000:3000'
+    # Configures `depends_on` because the surrounding service or tool depends on it.
     depends_on:
+      # Configures `api` because the surrounding service or tool depends on it.
       api:
+        # Configures `condition` because the surrounding service or tool depends on it.
         condition: service_healthy
+    # Configures `init` because the surrounding service or tool depends on it.
     init: true
+    # Configures `restart` because the surrounding service or tool depends on it.
     restart: unless-stopped
+    # Configures `read_only` because the surrounding service or tool depends on it.
     read_only: true
+    # Configures `tmpfs` because the surrounding service or tool depends on it.
     tmpfs:
+      # Adds this required item to the surrounding configuration list.
       - /tmp:size=64m,mode=1777
+    # Configures `cap_drop` because the surrounding service or tool depends on it.
     cap_drop: ['ALL']
+    # Configures `security_opt` because the surrounding service or tool depends on it.
     security_opt:
+      # Adds this required item to the surrounding configuration list.
       - no-new-privileges:true
 
+# Configures `volumes` because the surrounding service or tool depends on it.
 volumes:
-  postgres-data:
+  # Configures `mongo-data` because the surrounding service or tool depends on it.
+  mongo-data:
+  # Configures `redis-data` because the surrounding service or tool depends on it.
   redis-data:

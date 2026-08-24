@@ -1,5 +1,27 @@
 # Imports selected names from `.` for use in this module.
-from . import admin, analytics, challenges, daily, games, leaderboards, profile, rooms, support
+from . import (
+    # Supplies this required nested value.
+    admin,
+    # Supplies this required nested value.
+    analytics,
+    # Supplies this required nested value.
+    auth,
+    # Supplies this required nested value.
+    challenges,
+    # Supplies this required nested value.
+    daily,
+    # Supplies this required nested value.
+    games,
+    # Supplies this required nested value.
+    leaderboards,
+    # Supplies this required nested value.
+    profile,
+    # Supplies this required nested value.
+    rooms,
+    # Supplies this required nested value.
+    support,
+# Closes the multiline declaration, call, or collection opened above.
+)
 
 # Computes and stores `__all__` for subsequent operations.
 __all__ = [
@@ -7,6 +29,8 @@ __all__ = [
     "admin",
     # Supplies this item to the surrounding call or collection.
     "analytics",
+    # Supplies this literal value to the surrounding declaration or call.
+    "auth",
     # Supplies this item to the surrounding call or collection.
     "challenges",
     # Supplies this item to the surrounding call or collection.

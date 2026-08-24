@@ -206,9 +206,11 @@ function ChallengeResultBoard({
                 {results.items.map((item) => {
                   // Computes and stores playerToken for subsequent operations.
                   const playerToken = item.playerLabel.startsWith('Breaker ')
-                    ? // Executes this line as the next step in the surrounding logic.
+                    ? // Continues the surrounding operation with this required value or expression.
+                      // Executes this line as the next step in the surrounding logic.
                       item.playerLabel.slice('Breaker '.length)
-                    : // Executes this line as the next step in the surrounding logic.
+                    : // Continues the surrounding operation with this required value or expression.
+                      // Executes this line as the next step in the surrounding logic.
                       item.playerLabel;
                   // Computes and stores knownResult for subsequent operations.
                   const knownResult = [
@@ -226,9 +228,11 @@ function ChallengeResultBoard({
                     'expired',
                     // Executes this line as the next step in the surrounding logic.
                   ].includes(item.result)
-                    ? // Executes this line as the next step in the surrounding logic.
+                    ? // Continues the surrounding operation with this required value or expression.
+                      // Executes this line as the next step in the surrounding logic.
                       item.result
-                    : // Executes this line as the next step in the surrounding logic.
+                    : // Continues the surrounding operation with this required value or expression.
+                      // Executes this line as the next step in the surrounding logic.
                       null;
                   // Returns this result to the caller and ends the current function.
                   return (
@@ -266,9 +270,11 @@ function ChallengeResultBoard({
                       <td>
                         {/* Executes this line as the next step in the surrounding logic. */}
                         {item.elapsedSeconds === null
-                          ? // Executes this line as the next step in the surrounding logic.
+                          ? // Continues the surrounding operation with this required value or expression.
+                            // Executes this line as the next step in the surrounding logic.
                             tc('unavailable')
-                          : // Executes this line as the next step in the surrounding logic.
+                          : // Continues the surrounding operation with this required value or expression.
+                            // Executes this line as the next step in the surrounding logic.
                             formatChallengeDuration(item.elapsedSeconds)}
                         {/* Closes the td interface element. */}
                       </td>
@@ -334,7 +340,8 @@ function ChallengeResultBoard({
               </button>
               {/* Closes the nav interface element. */}
             </nav>
-          ) : // Executes this line as the next step in the surrounding logic.
+          ) : // Continues the surrounding operation with this required value or expression.
+          // Executes this line as the next step in the surrounding logic.
           null}
           {/* Closes the JSX fragment started above. */}
         </>
@@ -440,7 +447,8 @@ export function ChallengeCreator() {
   const selectedRules =
     // Provides the difficulty value to the surrounding call or element.
     difficulty === 'custom'
-      ? // Begins the nested block or object completed below.
+      ? // Continues the surrounding operation with this required value or expression.
+        // Begins the nested block or object completed below.
         {
           // Defines the colours field in the surrounding object or type.
           colours: colourIds.slice(0, colourCount),
@@ -452,7 +460,8 @@ export function ChallengeCreator() {
           duplicates: duplicatesAllowed,
           // Closes the expression, call, or declaration started above.
         }
-      : // Executes this line as the next step in the surrounding logic.
+      : // Continues the surrounding operation with this required value or expression.
+        // Executes this line as the next step in the surrounding logic.
         challengePresets[difficulty];
   // Computes and stores invalidCustom for subsequent operations.
   const invalidCustom = difficulty === 'custom' && !duplicatesAllowed && colourCount < codeLength;
@@ -568,7 +577,8 @@ export function ChallengeCreator() {
       const selection =
         // Provides the difficulty value to the surrounding call or element.
         difficulty === 'custom'
-          ? // Begins the nested block or object completed below.
+          ? // Continues the surrounding operation with this required value or expression.
+            // Begins the nested block or object completed below.
             {
               // Defines the config field in the surrounding object or type.
               config: {
@@ -592,7 +602,8 @@ export function ChallengeCreator() {
               },
               // Closes the expression, call, or declaration started above.
             }
-          : // Executes this line as the next step in the surrounding logic.
+          : // Continues the surrounding operation with this required value or expression.
+            // Executes this line as the next step in the surrounding logic.
             { difficulty };
       // Computes and stores challenge for subsequent operations.
       const challenge = await api<Challenge>('/v1/challenges', {
@@ -655,9 +666,11 @@ export function ChallengeCreator() {
   const shareUrl =
     // Executes this line as the next step in the surrounding logic.
     created && typeof window !== 'undefined'
-      ? // Executes this line as the next step in the surrounding logic.
+      ? // Continues the surrounding operation with this required value or expression.
+        // Executes this line as the next step in the surrounding logic.
         `${window.location.origin}${window.location.pathname.replace('/new', `/${created.shareCode}`)}`
-      : // Executes this line as the next step in the surrounding logic.
+      : // Continues the surrounding operation with this required value or expression.
+        // Executes this line as the next step in the surrounding logic.
         '';
   // Computes and stores copy for subsequent operations.
   const copy = async () => {
@@ -689,6 +702,7 @@ export function ChallengeCreator() {
       setCreated({ ...created, revoked: true });
       // Calls setOwnedChallenges with the supplied values.
       setOwnedChallenges(
+        // Continues the surrounding operation with this required value or expression.
         (current) =>
           // Calls current.map with the supplied values.
           current.map((item) => (item.id === created.id ? { ...item, revoked: true } : item)),
@@ -740,6 +754,7 @@ export function ChallengeCreator() {
       await api<void>(`/v1/challenges/${encodeURIComponent(challengeId)}`, { method: 'DELETE' });
       // Calls setOwnedChallenges with the supplied values.
       setOwnedChallenges(
+        // Continues the surrounding operation with this required value or expression.
         (current) =>
           // Calls current.map with the supplied values.
           current.map((item) => (item.id === challengeId ? { ...item, revoked: true } : item)),
@@ -792,13 +807,17 @@ export function ChallengeCreator() {
             const expired = new Date(item.expiresAt).getTime() <= renderedAt;
             // Computes and stores statusKey for subsequent operations.
             const statusKey = item.revoked
-              ? // Executes this line as the next step in the surrounding logic.
+              ? // Continues the surrounding operation with this required value or expression.
+                // Executes this line as the next step in the surrounding logic.
                 'statusRevoked'
-              : // Executes this line as the next step in the surrounding logic.
+              : // Continues the surrounding operation with this required value or expression.
+                // Executes this line as the next step in the surrounding logic.
                 expired
-                ? // Executes this line as the next step in the surrounding logic.
+                ? // Continues the surrounding operation with this required value or expression.
+                  // Executes this line as the next step in the surrounding logic.
                   'statusExpired'
-                : // Executes this line as the next step in the surrounding logic.
+                : // Continues the surrounding operation with this required value or expression.
+                  // Executes this line as the next step in the surrounding logic.
                   'statusActive';
             // Computes and stores result for subsequent operations.
             const result = ownedResults?.challengeId === item.id ? ownedResults : null;
@@ -870,7 +889,8 @@ export function ChallengeCreator() {
                         {revokingId === item.id ? t('revoking') : t('revoke')}
                         {/* Closes the button interface element. */}
                       </button>
-                    ) : // Executes this line as the next step in the surrounding logic.
+                    ) : // Continues the surrounding operation with this required value or expression.
+                    // Executes this line as the next step in the surrounding logic.
                     null}
                     {/* Closes the div interface element. */}
                   </div>
@@ -884,13 +904,15 @@ export function ChallengeCreator() {
                     {t('revokeError')}
                     {/* Closes the p interface element. */}
                   </p>
-                ) : // Executes this line as the next step in the surrounding logic.
+                ) : // Continues the surrounding operation with this required value or expression.
+                // Executes this line as the next step in the surrounding logic.
                 null}
                 {/* Executes this line as the next step in the surrounding logic. */}
                 {result?.state === 'loading' ? (
                   // Renders the p interface element or component.
                   <p role="status">{t('loadingResults')}</p>
-                ) : // Executes this line as the next step in the surrounding logic.
+                ) : // Continues the surrounding operation with this required value or expression.
+                // Executes this line as the next step in the surrounding logic.
                 result?.state === 'error' ? (
                   // Renders the p interface element or component.
                   <p className="inline-error" role="alert">
@@ -898,7 +920,8 @@ export function ChallengeCreator() {
                     {t('resultsError')}
                     {/* Closes the p interface element. */}
                   </p>
-                ) : // Executes this line as the next step in the surrounding logic.
+                ) : // Continues the surrounding operation with this required value or expression.
+                // Executes this line as the next step in the surrounding logic.
                 result?.data ? (
                   // Renders the section interface element or component.
                   <section aria-labelledby={`challenge-results-${item.id}`}>
@@ -916,7 +939,8 @@ export function ChallengeCreator() {
                     />
                     {/* Closes the section interface element. */}
                   </section>
-                ) : // Executes this line as the next step in the surrounding logic.
+                ) : // Continues the surrounding operation with this required value or expression.
+                // Executes this line as the next step in the surrounding logic.
                 null}
                 {/* Closes the li interface element. */}
               </li>
@@ -978,7 +1002,8 @@ export function ChallengeCreator() {
             </button>
             {/* Closes the nav interface element. */}
           </nav>
-        ) : // Executes this line as the next step in the surrounding logic.
+        ) : // Continues the surrounding operation with this required value or expression.
+        // Executes this line as the next step in the surrounding logic.
         null}
         {/* Closes the AsyncState interface element. */}
       </AsyncState>
@@ -1004,7 +1029,8 @@ export function ChallengeCreator() {
           {tc('tryAgain')}
           {/* Closes the button interface element. */}
         </button>
-      ) : // Executes this line as the next step in the surrounding logic.
+      ) : // Continues the surrounding operation with this required value or expression.
+      // Executes this line as the next step in the surrounding logic.
       null}
       {/* Closes the section interface element. */}
     </section>
@@ -1059,7 +1085,8 @@ export function ChallengeCreator() {
                 {t('revoke')}
                 {/* Closes the button interface element. */}
               </button>
-            ) : // Executes this line as the next step in the surrounding logic.
+            ) : // Continues the surrounding operation with this required value or expression.
+            // Executes this line as the next step in the surrounding logic.
             null}
             {/* Closes the div interface element. */}
           </div>
@@ -1101,7 +1128,8 @@ export function ChallengeCreator() {
               />
               {/* Closes the section interface element. */}
             </section>
-          ) : // Executes this line as the next step in the surrounding logic.
+          ) : // Continues the surrounding operation with this required value or expression.
+          // Executes this line as the next step in the surrounding logic.
           resultsError ? (
             // Renders the p interface element or component.
             <p className="quiet-note">{t('resultsError')}</p>
@@ -1123,7 +1151,8 @@ export function ChallengeCreator() {
               {error}
               {/* Closes the p interface element. */}
             </p>
-          ) : // Executes this line as the next step in the surrounding logic.
+          ) : // Continues the surrounding operation with this required value or expression.
+          // Executes this line as the next step in the surrounding logic.
           null}
           {/* Closes the section interface element. */}
         </section>
@@ -1342,11 +1371,13 @@ export function ChallengeCreator() {
                 {tp('invalidCustom')}
                 {/* Closes the p interface element. */}
               </p>
-            ) : // Executes this line as the next step in the surrounding logic.
+            ) : // Continues the surrounding operation with this required value or expression.
+            // Executes this line as the next step in the surrounding logic.
             null}
             {/* Closes the div interface element. */}
           </div>
-        ) : // Executes this line as the next step in the surrounding logic.
+        ) : // Continues the surrounding operation with this required value or expression.
+        // Executes this line as the next step in the surrounding logic.
         null}
         {/* Renders the fieldset interface element or component. */}
         <fieldset className="choice-group">
@@ -1464,12 +1495,15 @@ export function ChallengeCreator() {
                   onClick={() => {
                     // Calls setSecret with the supplied values.
                     setSecret(
+                      /* Continues the surrounding operation with this required value or expression. */
                       (current) =>
                         // Executes this line as the next step in the surrounding logic.
                         !selectedRules.duplicates && current.includes(colour)
-                          ? // Executes this line as the next step in the surrounding logic.
+                          ? /* Continues the surrounding operation with this required value or expression. */
+                            // Executes this line as the next step in the surrounding logic.
                             current
-                          : // Supplies this item to the surrounding call or collection.
+                          : /* Continues the surrounding operation with this required value or expression. */
+                            // Supplies this item to the surrounding call or collection.
                             [...current, colour].slice(0, selectedRules.length),
                       // Closes the expression, call, or declaration started above.
                     );
@@ -1513,7 +1547,8 @@ export function ChallengeCreator() {
             <small>{tg('serverAuthoritative')}</small>
             {/* Closes the fieldset interface element. */}
           </fieldset>
-        ) : // Executes this line as the next step in the surrounding logic.
+        ) : // Continues the surrounding operation with this required value or expression.
+        // Executes this line as the next step in the surrounding logic.
         null}
         {/* Renders the label interface element or component. */}
         <label className="check-row">
@@ -1547,7 +1582,8 @@ export function ChallengeCreator() {
             {error}
             {/* Closes the p interface element. */}
           </p>
-        ) : // Executes this line as the next step in the surrounding logic.
+        ) : // Continues the surrounding operation with this required value or expression.
+        // Executes this line as the next step in the surrounding logic.
         null}
         {/* Renders the button interface element or component. */}
         <button
@@ -1660,21 +1696,25 @@ export function ChallengePlayer({ shareCode }: { shareCode: string }) {
                   name:
                     // Executes this line as the next step in the surrounding logic.
                     challenge.creatorName === 'Anonymous breaker'
-                      ? // Executes this line as the next step in the surrounding logic.
+                      ? // Continues the surrounding operation with this required value or expression.
+                        // Executes this line as the next step in the surrounding logic.
                         tc('anonymous')
-                      : // Supplies this item to the surrounding call or collection.
+                      : // Continues the surrounding operation with this required value or expression.
+                        // Supplies this item to the surrounding call or collection.
                         challenge.creatorName,
                   // Closes the expression, call, or declaration started above.
                 })}
                 {/* Closes the p interface element. */}
               </p>
-            ) : // Executes this line as the next step in the surrounding logic.
+            ) : // Continues the surrounding operation with this required value or expression.
+            // Executes this line as the next step in the surrounding logic.
             null}
             {/* Executes this line as the next step in the surrounding logic. */}
             {challenge.id ? (
               // Renders the p interface element or component.
               <p>{t('completedCount', { count: challenge.completedCount })}</p>
-            ) : // Executes this line as the next step in the surrounding logic.
+            ) : // Continues the surrounding operation with this required value or expression.
+            // Executes this line as the next step in the surrounding logic.
             null}
             {/* Renders the h3 interface element or component. */}
             <h3>{t('rules')}</h3>
@@ -1726,7 +1766,8 @@ export function ChallengePlayer({ shareCode }: { shareCode: string }) {
           />
           {/* Closes the div interface element. */}
         </div>
-      ) : // Executes this line as the next step in the surrounding logic.
+      ) : // Continues the surrounding operation with this required value or expression.
+      // Executes this line as the next step in the surrounding logic.
       null}
       {/* Closes the AsyncState interface element. */}
     </AsyncState>

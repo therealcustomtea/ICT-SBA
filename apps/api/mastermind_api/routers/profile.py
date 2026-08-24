@@ -13,17 +13,8 @@ from fastapi import APIRouter, Depends, Query, Request, Response, status
 # Imports selected names from `mastermind_core` for use in this module.
 from mastermind_core import GameMode, LeaderboardEligibility
 
-# Imports selected names from `sqlalchemy` for use in this module.
-from sqlalchemy import func, select
-
-# Imports selected names from `sqlalchemy.ext.asyncio` for use in this module.
-from sqlalchemy.ext.asyncio import AsyncSession
-
-# Imports selected names from `sqlalchemy.orm` for use in this module.
-from sqlalchemy.orm import selectinload
-
 # Imports selected names from `..account` for use in this module.
-from ..account import SupabaseAdminClient, get_deletion_provider, process_account_deletion
+from ..account import process_account_deletion
 
 # Imports selected names from `..auth` for use in this module.
 from ..auth import AuthPrincipal, get_current_user
@@ -38,7 +29,7 @@ from ..config import Settings, get_settings
 from ..crypto import SecretCipher
 
 # Imports selected names from `..database` for use in this module.
-from ..database import get_session
+from ..database import DESCENDING, MongoSession, get_session
 
 # Imports selected names from `..dependencies` for use in this module.
 from ..dependencies import get_cipher
@@ -47,7 +38,7 @@ from ..dependencies import get_cipher
 from ..errors import APIError
 
 # Imports selected names from `..models` for use in this module.
-from ..models import DailyChallenge, GameAttempt, GameSession, UserAchievement
+from ..models import DailyChallenge, GameSession, UserAchievement
 
 # Imports selected names from `..rate_limit` for use in this module.
 from ..rate_limit import enforce_action_limit
@@ -102,7 +93,7 @@ async def get_profile_route(
     # Provides the `principal` parameter or keyword argument.
     principal: AuthPrincipal = Depends(get_current_user),
     # Provides the `session` parameter or keyword argument.
-    session: AsyncSession = Depends(get_session),
+    session: MongoSession = Depends(get_session),
     # Completes the signature and declares the callable return type.
 ) -> ProfileResponse:
     # Returns this result to the caller and ends the current function.
@@ -121,7 +112,7 @@ async def update_profile_route(
     # Provides the `principal` parameter or keyword argument.
     principal: AuthPrincipal = Depends(get_current_user),
     # Provides the `session` parameter or keyword argument.
-    session: AsyncSession = Depends(get_session),
+    session: MongoSession = Depends(get_session),
     # Completes the signature and declares the callable return type.
 ) -> ProfileResponse:
     # Waits for this asynchronous operation to complete.
@@ -212,31 +203,29 @@ async def get_games_route(
     # Provides the `principal` parameter or keyword argument.
     principal: AuthPrincipal = Depends(get_current_user),
     # Provides the `session` parameter or keyword argument.
-    session: AsyncSession = Depends(get_session),
+    session: MongoSession = Depends(get_session),
     # Provides the `cipher` parameter or keyword argument.
     cipher: SecretCipher = Depends(get_cipher),
     # Completes the signature and declares the callable return type.
 ) -> PaginatedGames:
     # Executes this statement as the next step in the surrounding logic.
-    base = select(GameSession).where(GameSession.owner_id == principal.user_id)
-    # Computes and stores `total` for subsequent operations.
-    total = await session.scalar(select(func.count()).select_from(base.subquery())) or 0
-    # Computes and stores `games` for subsequent operations.
-    games = (
-        # Waits for this asynchronous operation to complete.
-        await session.scalars(
-            # Calls `base.options` with the supplied values.
-            base.options(selectinload(GameSession.attempts))
-            # Executes this statement as the next step in the surrounding logic.
-            .order_by(GameSession.created_at.desc())
-            # Executes this statement as the next step in the surrounding logic.
-            .offset((page - 1) * page_size)
-            # Executes this statement as the next step in the surrounding logic.
-            .limit(page_size)
-            # Closes the multiline call, declaration, or collection started above.
-        )
-        # Executes this statement as the next step in the surrounding logic.
-    ).all()
+    owner_filter = {'owner_id': principal.user_id}
+    # Stores `total` because later steps depend on this value.
+    total = await session.count(GameSession, owner_filter)
+    # Stores `games` because later steps depend on this value.
+    games = await session.find_many(
+        # Supplies this required nested value.
+        GameSession,
+        # Supplies this required nested value.
+        owner_filter,
+        # Stores `sort` because later steps depend on this value.
+        sort=[('created_at', DESCENDING)],
+        # Stores `skip` because later steps depend on this value.
+        skip=(page - 1) * page_size,
+        # Stores `limit` because later steps depend on this value.
+        limit=page_size,
+    # Closes the multiline declaration, call, or collection opened above.
+    )
     # Returns this result to the caller and ends the current function.
     return PaginatedGames(
         # Provides the `items` parameter or keyword argument.
@@ -259,47 +248,23 @@ async def get_stats_route(
     # Provides the `principal` parameter or keyword argument.
     principal: AuthPrincipal = Depends(get_current_user),
     # Provides the `session` parameter or keyword argument.
-    session: AsyncSession = Depends(get_session),
+    session: MongoSession = Depends(get_session),
     # Completes the signature and declares the callable return type.
 ) -> StatsResponse:
     # Waits for this asynchronous operation to complete.
     await ensure_profile(session, principal)
     # Computes and stores `games` for subsequent operations.
-    games = (
-        # Waits for this asynchronous operation to complete.
-        await session.execute(
-            # Calls `select` with the supplied values.
-            select(
-                # Supplies this item to the surrounding call or collection.
-                GameSession.status,
-                # Supplies this item to the surrounding call or collection.
-                GameSession.mode,
-                # Supplies this item to the surrounding call or collection.
-                GameSession.difficulty,
-                # Supplies this item to the surrounding call or collection.
-                GameSession.attempts_used,
-                # Supplies this item to the surrounding call or collection.
-                GameSession.final_score,
-                # Supplies this item to the surrounding call or collection.
-                GameSession.elapsed_seconds,
-                # Supplies this item to the surrounding call or collection.
-                GameSession.ranked_eligibility,
-                # Supplies this item to the surrounding call or collection.
-                GameSession.created_at,
-                # Supplies this item to the surrounding call or collection.
-                GameSession.daily_challenge_id,
-                # Supplies this item to the surrounding call or collection.
-                DailyChallenge.challenge_date,
-                # Closes the multiline call, declaration, or collection started above.
-            )
-            # Executes this statement as the next step in the surrounding logic.
-            .outerjoin(DailyChallenge, DailyChallenge.id == GameSession.daily_challenge_id)
-            # Executes this statement as the next step in the surrounding logic.
-            .where(GameSession.owner_id == principal.user_id)
-            # Closes the multiline call, declaration, or collection started above.
-        )
-        # Executes this statement as the next step in the surrounding logic.
-    ).all()
+    games = await session.find_many(GameSession, {'owner_id': principal.user_id})
+    # Stores `daily_ids` because later steps depend on this value.
+    daily_ids = {game.daily_challenge_id for game in games if game.daily_challenge_id is not None}
+    # Stores `daily_dates_by_id` because later steps depend on this value.
+    daily_dates_by_id = {
+        # Supplies this required nested value.
+        daily.id: daily.challenge_date
+        # Iterates over these values so each item receives the same processing.
+        for daily in await session.find_many(DailyChallenge, {'_id': {'$in': list(daily_ids)}})
+    # Closes the multiline declaration, call, or collection opened above.
+    }
     # Computes and stores `played` for subsequent operations.
     played = sum(row.status in {"won", "lost", "abandoned"} for row in games)
     # Executes this statement as the next step in the surrounding logic.
@@ -329,37 +294,25 @@ async def get_stats_route(
             # Executes this statement as the next step in the surrounding logic.
             best[row.difficulty] = max(best.get(row.difficulty, 0), row.final_score)
     # Computes and stores `feedback` for subsequent operations.
-    feedback = await session.execute(
-        # Calls `select` with the supplied values.
-        select(
-            # Calls `func.coalesce` with the supplied values.
-            func.coalesce(func.sum(GameAttempt.black_pegs), 0),
-            # Calls `func.coalesce` with the supplied values.
-            func.coalesce(func.sum(GameAttempt.white_pegs), 0),
-            # Closes the multiline call, declaration, or collection started above.
-        )
-        # Executes this statement as the next step in the surrounding logic.
-        .join(GameSession, GameSession.id == GameAttempt.game_id)
-        # Executes this statement as the next step in the surrounding logic.
-        .where(GameSession.owner_id == principal.user_id)
-        # Closes the multiline call, declaration, or collection started above.
-    )
-    # Executes this statement as the next step in the surrounding logic.
-    black, white = feedback.one()
+    black = sum(attempt.black_pegs for game in games for attempt in game.attempts)
+    # Stores `white` because later steps depend on this value.
+    white = sum(attempt.white_pegs for game in games for attempt in game.attempts)
     # Computes and stores `achievements` for subsequent operations.
-    achievements = list(
-        # Waits for this asynchronous operation to complete.
-        await session.scalars(
-            # Calls `select` with the supplied values.
-            select(UserAchievement.achievement_key)
-            # Executes this statement as the next step in the surrounding logic.
-            .where(UserAchievement.user_id == principal.user_id)
-            # Executes this statement as the next step in the surrounding logic.
-            .order_by(UserAchievement.awarded_at)
-            # Closes the multiline call, declaration, or collection started above.
+    achievements = [
+        # Supplies this required nested value.
+        item.achievement_key
+        # Iterates over these values so each item receives the same processing.
+        for item in await session.find_many(
+            # Supplies this required nested value.
+            UserAchievement,
+            # Supplies this required nested value.
+            {'user_id': principal.user_id},
+            # Stores `sort` because later steps depend on this value.
+            sort=[('awarded_at', 1)],
+        # Closes the multiline declaration, call, or collection opened above.
         )
-        # Closes the multiline call, declaration, or collection started above.
-    )
+    # Closes the multiline declaration, call, or collection opened above.
+    ]
     # Computes and stores `mode_counts` for subsequent operations.
     mode_counts = Counter(row.mode for row in games)
     # Computes and stores `fastest` for subsequent operations.
@@ -371,25 +324,23 @@ async def get_stats_route(
         # Closes the multiline call, declaration, or collection started above.
     )
     # Computes and stores `daily_dates` for subsequent operations.
-    daily_dates = sorted(
-        # Begins the nested block or multiline expression completed below.
-        {
-            # Executes this statement as the next step in the surrounding logic.
-            row.challenge_date
-            # Iterates through the supplied values for the nested operation.
-            for row in games
-            # Checks this condition before executing the nested branch.
-            if row.mode == "daily"
-            # Executes this statement as the next step in the surrounding logic.
-            and row.status in {"won", "lost"}
-            # Executes this statement as the next step in the surrounding logic.
-            and row.challenge_date is not None
-            # Closes the multiline call, declaration, or collection started above.
-        },
-        # Provides the `reverse` parameter or keyword argument.
-        reverse=True,
-        # Closes the multiline call, declaration, or collection started above.
-    )
+    daily_date_values = {
+        # Supplies this required nested value.
+        challenge_date
+        # Iterates over these values so each item receives the same processing.
+        for row in games
+        # Guards the nested operation so it runs only when this condition is satisfied.
+        if row.mode == 'daily'
+        # Supplies this required nested value.
+        and row.status in {'won', 'lost'}
+        # Supplies this required nested value.
+        and row.daily_challenge_id is not None
+        # Supplies this required nested value.
+        and (challenge_date := daily_dates_by_id.get(row.daily_challenge_id)) is not None
+    # Closes the multiline declaration, call, or collection opened above.
+    }
+    # Stores `daily_dates` because later steps depend on this value.
+    daily_dates = sorted(daily_date_values, reverse=True)
     # Computes and stores `completed_daily_challenge_ids` for subsequent operations.
     completed_daily_challenge_ids = {
         # Executes this statement as the next step in the surrounding logic.
@@ -485,7 +436,7 @@ async def export_route(
     # Provides the `principal` parameter or keyword argument.
     principal: AuthPrincipal = Depends(get_current_user),
     # Provides the `session` parameter or keyword argument.
-    session: AsyncSession = Depends(get_session),
+    session: MongoSession = Depends(get_session),
     # Completes the signature and declares the callable return type.
 ) -> Response:
     # Waits for this asynchronous operation to complete.
@@ -537,12 +488,12 @@ async def delete_account_route(
     payload: DeleteAccountRequest,
     # Declares the typed `request` data field.
     request: Request,
+    # Declares this typed field so the surrounding contract is explicit.
+    response: Response,
     # Provides the `principal` parameter or keyword argument.
     principal: AuthPrincipal = Depends(get_current_user),
     # Provides the `session` parameter or keyword argument.
-    session: AsyncSession = Depends(get_session),
-    # Provides the `provider` parameter or keyword argument.
-    provider: SupabaseAdminClient = Depends(get_deletion_provider),
+    session: MongoSession = Depends(get_session),
     # Provides the `settings` parameter or keyword argument.
     settings: Settings = Depends(get_settings),
     # Completes the signature and declares the callable return type.
@@ -603,23 +554,29 @@ async def delete_account_route(
             "Sign in again before deleting your account.",
             # Closes the multiline call, declaration, or collection started above.
         )
-    # Computes and stores `authorization` for subsequent operations.
-    authorization = request.headers.get("authorization", "")
-    # Computes and stores `access_token` for subsequent operations.
-    access_token = authorization.removeprefix("Bearer ").strip()
-    # Checks this condition before executing the nested branch.
-    if not access_token:
-        # Raises this exception to report an invalid or failed operation.
-        raise APIError(401, "LIVE_SESSION_REQUIRED", "Sign in again before deleting your account.")
-    # Starts a protected operation whose expected failures are handled below.
+    # Starts an operation whose expected failures are handled below.
     try:
-        # Waits for this asynchronous operation to complete.
-        await process_account_deletion(session, principal, provider, access_token)
+        # Performs this required operation before the surrounding flow continues.
+        await process_account_deletion(session, principal)
     # Runs this cleanup block regardless of the protected result.
     finally:
         # Local privacy changes commit before the identity provider is contacted.
         # Invalidate cached public data even when provider cleanup is interrupted or must retry.
         # Waits for this asynchronous operation to complete.
         await invalidate_leaderboard_cache(request.app.state.redis)
+    # Supplies this required nested value.
+    response.delete_cookie(
+        # Supplies this required nested value.
+        settings.auth_cookie_name,
+        # Stores `path` because later steps depend on this value.
+        path='/v1/auth',
+        # Stores `secure` because later steps depend on this value.
+        secure=settings.auth_cookie_secure,
+        # Stores `httponly` because later steps depend on this value.
+        httponly=True,
+        # Stores `samesite` because later steps depend on this value.
+        samesite=settings.auth_cookie_samesite,
+    # Closes the multiline declaration, call, or collection opened above.
+    )
     # Returns this result to the caller and ends the current function.
     return DeleteAccountResponse(deleted=True)

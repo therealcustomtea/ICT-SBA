@@ -76,9 +76,11 @@ const duelPendingStorageKey = (roomId: string) => `cipherboard:duel-pending:${ro
 const analyticsRoomState = (status: string) =>
   // Provides the status value to the surrounding call or element.
   status === 'active' || status === 'completed' || status === 'expired' || status === 'terminated'
-    ? // Executes this line as the next step in the surrounding logic.
+    ? // Continues the surrounding operation with this required value or expression.
+      // Executes this line as the next step in the surrounding logic.
       status
-    : // Executes this line as the next step in the surrounding logic.
+    : // Continues the surrounding operation with this required value or expression.
+      // Executes this line as the next step in the surrounding logic.
       'waiting';
 // Computes and stores withReadyMembers for subsequent operations.
 const withReadyMembers = (room: Room): LobbyRoom => ({
@@ -305,7 +307,8 @@ export function RoomEntry() {
           {error}
           {/* Closes the p interface element. */}
         </p>
-      ) : // Executes this line as the next step in the surrounding logic.
+      ) : // Continues the surrounding operation with this required value or expression.
+      // Executes this line as the next step in the surrounding logic.
       null}
       {/* Closes the div interface element. */}
     </div>
@@ -328,6 +331,7 @@ export function RoomLobby({ roomId }: { roomId: string }) {
   const [room, setRoom] = useState<LobbyRoom | null>(null);
   // Executes this line as the next step in the surrounding logic.
   const [createdRoomCode] = useState<string | null>(
+    // Continues the surrounding operation with this required value or expression.
     () =>
       // Supplies this item to the surrounding call or collection.
       typeof window === 'undefined' ? null : sessionStorage.getItem(roomInviteStorageKey(roomId)),
@@ -389,9 +393,11 @@ export function RoomLobby({ roomId }: { roomId: string }) {
   const inviteUrl =
     // Executes this line as the next step in the surrounding logic.
     roomCode && typeof window !== 'undefined'
-      ? // Executes this line as the next step in the surrounding logic.
+      ? // Continues the surrounding operation with this required value or expression.
+        // Executes this line as the next step in the surrounding logic.
         `${window.location.origin}/${window.location.pathname.split('/')[1]}/rooms?code=${roomCode}`
-      : // Executes this line as the next step in the surrounding logic.
+      : // Continues the surrounding operation with this required value or expression.
+        // Executes this line as the next step in the surrounding logic.
         '';
   // Computes and stores copyInvite for subsequent operations.
   const copyInvite = async () => {
@@ -515,13 +521,17 @@ export function RoomLobby({ roomId }: { roomId: string }) {
                 >
                   {/* Executes this line as the next step in the surrounding logic. */}
                   {copyState === 'copied'
-                    ? // Executes this line as the next step in the surrounding logic.
+                    ? // Continues the surrounding operation with this required value or expression.
+                      // Executes this line as the next step in the surrounding logic.
                       tc('copied')
-                    : // Executes this line as the next step in the surrounding logic.
+                    : // Continues the surrounding operation with this required value or expression.
+                      // Executes this line as the next step in the surrounding logic.
                       copyState === 'error'
-                      ? // Executes this line as the next step in the surrounding logic.
+                      ? // Continues the surrounding operation with this required value or expression.
+                        // Executes this line as the next step in the surrounding logic.
                         tc('copyError')
-                      : // Executes this line as the next step in the surrounding logic.
+                      : // Continues the surrounding operation with this required value or expression.
+                        // Executes this line as the next step in the surrounding logic.
                         ''}
                   {/* Closes the p interface element. */}
                 </p>
@@ -549,9 +559,11 @@ export function RoomLobby({ roomId }: { roomId: string }) {
                   <span>
                     {/* Executes this line as the next step in the surrounding logic. */}
                     {member.displayName === 'Anonymous breaker'
-                      ? // Executes this line as the next step in the surrounding logic.
+                      ? // Continues the surrounding operation with this required value or expression.
+                        // Executes this line as the next step in the surrounding logic.
                         tc('anonymous')
-                      : // Executes this line as the next step in the surrounding logic.
+                      : // Continues the surrounding operation with this required value or expression.
+                        // Executes this line as the next step in the surrounding logic.
                         member.displayName}
                     {/* Closes the span interface element. */}
                   </span>
@@ -601,7 +613,8 @@ export function RoomLobby({ roomId }: { roomId: string }) {
                     {readyPending ? t('markingReady') : t('markReady')}
                     {/* Closes the button interface element. */}
                   </button>
-                ) : // Executes this line as the next step in the surrounding logic.
+                ) : // Continues the surrounding operation with this required value or expression.
+                // Executes this line as the next step in the surrounding logic.
                 currentMember?.ready ? (
                   // Renders the p interface element or component.
                   <p className="notice success" role="status">
@@ -609,7 +622,8 @@ export function RoomLobby({ roomId }: { roomId: string }) {
                     {t('youAreReady')}
                     {/* Closes the p interface element. */}
                   </p>
-                ) : // Executes this line as the next step in the surrounding logic.
+                ) : // Continues the surrounding operation with this required value or expression.
+                // Executes this line as the next step in the surrounding logic.
                 null}
                 {/* Closes the JSX fragment started above. */}
               </>
@@ -631,13 +645,15 @@ export function RoomLobby({ roomId }: { roomId: string }) {
                 {readyError}
                 {/* Closes the p interface element. */}
               </p>
-            ) : // Executes this line as the next step in the surrounding logic.
+            ) : // Continues the surrounding operation with this required value or expression.
+            // Executes this line as the next step in the surrounding logic.
             null}
             {/* Closes the section interface element. */}
           </section>
           {/* Closes the div interface element. */}
         </div>
-      ) : // Executes this line as the next step in the surrounding logic.
+      ) : // Continues the surrounding operation with this required value or expression.
+      // Executes this line as the next step in the surrounding logic.
       null}
       {/* Closes the AsyncState interface element. */}
     </AsyncState>
@@ -718,9 +734,11 @@ function loadPendingDuelGuess(roomId: string): PendingDuelGuess | null {
     ) as Partial<PendingDuelGuess> | null;
     // Returns this result to the caller and ends the current function.
     return pending && Array.isArray(pending.guess) && typeof pending.idempotencyKey === 'string'
-      ? // Executes this line as the next step in the surrounding logic.
+      ? // Continues the surrounding operation with this required value or expression.
+        // Executes this line as the next step in the surrounding logic.
         (pending as PendingDuelGuess)
-      : // Executes this line as the next step in the surrounding logic.
+      : // Continues the surrounding operation with this required value or expression.
+        // Executes this line as the next step in the surrounding logic.
         null;
     // Handles a failure from the protected operation.
   } catch {
@@ -747,6 +765,10 @@ export function DuelPanel({ roomId }: { roomId: string }) {
   const { user } = useSession();
   // Computes and stores router for subsequent operations.
   const router = useRouter();
+  // Keep navigation current without making connection state rerenders restart the socket.
+  const routerRef = useRef(router);
+  // Continues the surrounding operation with this required value or expression.
+  routerRef.current = router;
   // Executes this line as the next step in the surrounding logic.
   const [room, setRoom] = useState<DuelRoom | null>(null);
   // Executes this line as the next step in the surrounding logic.
@@ -858,7 +880,7 @@ export function DuelPanel({ roomId }: { roomId: string }) {
         // Checks this condition before running the nested branch.
         if (initial.status === 'waiting') {
           // Calls router.replace with the supplied values.
-          router.replace(`/rooms/${roomId}`);
+          routerRef.current.replace(`/rooms/${roomId}`);
           // Returns this result to the caller and ends the current function.
           return;
           // Closes the expression, call, or declaration started above.
@@ -1009,31 +1031,38 @@ export function DuelPanel({ roomId }: { roomId: string }) {
           if (event.type === 'presence' || event.type === 'opponent_progress')
             // Calls setRoom with the supplied values.
             setRoom(
+              // Continues the surrounding operation with this required value or expression.
               (current) =>
                 // Executes this line as the next step in the surrounding logic.
                 current
-                  ? // Begins the nested block or object completed below.
+                  ? // Continues the surrounding operation with this required value or expression.
+                    // Begins the nested block or object completed below.
                     {
                       // Supplies this item to the surrounding call or collection.
                       ...current,
                       // Defines the members field in the surrounding object or type.
                       members: current.members.map(
+                        // Continues the surrounding operation with this required value or expression.
                         (member) =>
                           // Executes this line as the next step in the surrounding logic.
                           member.userId === event.payload.userId
-                            ? // Begins the nested block or object completed below.
+                            ? // Continues the surrounding operation with this required value or expression.
+                              // Begins the nested block or object completed below.
                               {
                                 // Supplies this item to the surrounding call or collection.
                                 ...member,
                                 // Executes this line as the next step in the surrounding logic.
                                 ...('connected' in event.payload
-                                  ? // Executes this line as the next step in the surrounding logic.
+                                  ? // Continues the surrounding operation with this required value or expression.
+                                    // Executes this line as the next step in the surrounding logic.
                                     { connected: Boolean(event.payload.connected) }
-                                  : // Supplies this item to the surrounding call or collection.
+                                  : // Continues the surrounding operation with this required value or expression.
+                                    // Supplies this item to the surrounding call or collection.
                                     {}),
                                 // Executes this line as the next step in the surrounding logic.
                                 ...('attemptsUsed' in event.payload
-                                  ? // Begins the nested block or object completed below.
+                                  ? // Continues the surrounding operation with this required value or expression.
+                                    // Begins the nested block or object completed below.
                                     {
                                       // Defines the attemptsUsed field in the surrounding object or type.
                                       attemptsUsed: Number(event.payload.attemptsUsed),
@@ -1041,17 +1070,20 @@ export function DuelPanel({ roomId }: { roomId: string }) {
                                       completed: Boolean(event.payload.completed),
                                       // Closes the expression, call, or declaration started above.
                                     }
-                                  : // Supplies this item to the surrounding call or collection.
+                                  : // Continues the surrounding operation with this required value or expression.
+                                    // Supplies this item to the surrounding call or collection.
                                     {}),
                                 // Closes the expression, call, or declaration started above.
                               }
-                            : // Supplies this item to the surrounding call or collection.
+                            : // Continues the surrounding operation with this required value or expression.
+                              // Supplies this item to the surrounding call or collection.
                               member,
                         // Closes the expression, call, or declaration started above.
                       ),
                       // Closes the expression, call, or declaration started above.
                     }
-                  : // Supplies this item to the surrounding call or collection.
+                  : // Continues the surrounding operation with this required value or expression.
+                    // Supplies this item to the surrounding call or collection.
                     current,
               // Closes the expression, call, or declaration started above.
             );
@@ -1071,10 +1103,12 @@ export function DuelPanel({ roomId }: { roomId: string }) {
             };
             // Calls setGame with the supplied values.
             setGame(
+              // Continues the surrounding operation with this required value or expression.
               (current) =>
                 // Executes this line as the next step in the surrounding logic.
                 current
-                  ? // Begins the nested block or object completed below.
+                  ? // Continues the surrounding operation with this required value or expression.
+                    // Begins the nested block or object completed below.
                     {
                       // Supplies this item to the surrounding call or collection.
                       ...current,
@@ -1094,7 +1128,8 @@ export function DuelPanel({ roomId }: { roomId: string }) {
                       status: event.payload.status as Game['status'],
                       // Closes the expression, call, or declaration started above.
                     }
-                  : // Supplies this item to the surrounding call or collection.
+                  : // Continues the surrounding operation with this required value or expression.
+                    // Supplies this item to the surrounding call or collection.
                     current,
               // Closes the expression, call, or declaration started above.
             );
@@ -1173,7 +1208,7 @@ export function DuelPanel({ roomId }: { roomId: string }) {
       // Closes the expression, call, or declaration started above.
     };
     // Executes this line as the next step in the surrounding logic.
-  }, [analytics, api, roomId, router, t, tc, tg, user]);
+  }, [analytics, api, roomId, t, tc, tg, user]);
 
   // Calls useEffect with the supplied values.
   useEffect(() => {
@@ -1375,7 +1410,8 @@ export function DuelPanel({ roomId }: { roomId: string }) {
                   </div>
                   {/* Closes the div interface element. */}
                 </div>
-              ) : // Executes this line as the next step in the surrounding logic.
+              ) : // Continues the surrounding operation with this required value or expression.
+              // Executes this line as the next step in the surrounding logic.
               null}
               {/* Closes the section interface element. */}
             </section>
@@ -1449,17 +1485,23 @@ export function DuelPanel({ roomId }: { roomId: string }) {
                   <h3>
                     {/* Executes this line as the next step in the surrounding logic. */}
                     {room.status === 'completed'
-                      ? // Executes this line as the next step in the surrounding logic.
+                      ? // Continues the surrounding operation with this required value or expression.
+                        // Executes this line as the next step in the surrounding logic.
                         room.isTie
-                        ? // Executes this line as the next step in the surrounding logic.
+                        ? // Continues the surrounding operation with this required value or expression.
+                          // Executes this line as the next step in the surrounding logic.
                           t('resultTie')
-                        : // Executes this line as the next step in the surrounding logic.
+                        : // Continues the surrounding operation with this required value or expression.
+                          // Executes this line as the next step in the surrounding logic.
                           room.winnerId === user?.id
-                          ? // Executes this line as the next step in the surrounding logic.
+                          ? // Continues the surrounding operation with this required value or expression.
+                            // Executes this line as the next step in the surrounding logic.
                             t('resultWon')
-                          : // Executes this line as the next step in the surrounding logic.
+                          : // Continues the surrounding operation with this required value or expression.
+                            // Executes this line as the next step in the surrounding logic.
                             t('resultLost')
-                      : // Executes this line as the next step in the surrounding logic.
+                      : // Continues the surrounding operation with this required value or expression.
+                        // Executes this line as the next step in the surrounding logic.
                         tg(`result.${game.status}`)}
                     {/* Closes the h3 interface element. */}
                   </h3>
@@ -1495,7 +1537,8 @@ export function DuelPanel({ roomId }: { roomId: string }) {
                   {error}
                   {/* Closes the p interface element. */}
                 </p>
-              ) : // Executes this line as the next step in the surrounding logic.
+              ) : // Continues the surrounding operation with this required value or expression.
+              // Executes this line as the next step in the surrounding logic.
               null}
               {/* Renders the section interface element or component. */}
               <section className="opponent-status" aria-live="polite">
@@ -1509,9 +1552,11 @@ export function DuelPanel({ roomId }: { roomId: string }) {
                     <p>
                       {/* Executes this line as the next step in the surrounding logic. */}
                       {opponent.displayName === 'Anonymous breaker'
-                        ? // Executes this line as the next step in the surrounding logic.
+                        ? // Continues the surrounding operation with this required value or expression.
+                          // Executes this line as the next step in the surrounding logic.
                           tc('anonymous')
-                        : // Executes this line as the next step in the surrounding logic.
+                        : // Continues the surrounding operation with this required value or expression.
+                          // Executes this line as the next step in the surrounding logic.
                           opponent.displayName}
                       {/* Closes the p interface element. */}
                     </p>
@@ -1521,13 +1566,17 @@ export function DuelPanel({ roomId }: { roomId: string }) {
                     <p>
                       {/* Executes this line as the next step in the surrounding logic. */}
                       {opponent.completed
-                        ? // Executes this line as the next step in the surrounding logic.
+                        ? // Continues the surrounding operation with this required value or expression.
+                          // Executes this line as the next step in the surrounding logic.
                           t('opponentComplete')
-                        : // Executes this line as the next step in the surrounding logic.
+                        : // Continues the surrounding operation with this required value or expression.
+                          // Executes this line as the next step in the surrounding logic.
                           opponent.connected
-                          ? // Executes this line as the next step in the surrounding logic.
+                          ? // Continues the surrounding operation with this required value or expression.
+                            // Executes this line as the next step in the surrounding logic.
                             t('connected')
-                          : // Executes this line as the next step in the surrounding logic.
+                          : // Continues the surrounding operation with this required value or expression.
+                            // Executes this line as the next step in the surrounding logic.
                             t('disconnected')}
                       {/* Closes the p interface element. */}
                     </p>
@@ -1555,7 +1604,8 @@ export function DuelPanel({ roomId }: { roomId: string }) {
           </div>
           {/* Closes the div interface element. */}
         </div>
-      ) : // Executes this line as the next step in the surrounding logic.
+      ) : // Continues the surrounding operation with this required value or expression.
+      // Executes this line as the next step in the surrounding logic.
       null}
       {/* Closes the AsyncState interface element. */}
     </AsyncState>

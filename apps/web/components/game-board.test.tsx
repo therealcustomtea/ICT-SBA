@@ -188,6 +188,7 @@ describe('GameBoard accessibility', () => {
   it('supports keyboard-only play, announces feedback, and moves focus to the result', async () => {
     // Calls apiMock.mockImplementation with the supplied values.
     apiMock.mockImplementation(
+      // Continues the surrounding operation with this required value or expression.
       async (path: string) =>
         // Calls path.endsWith with the supplied values.
         path.endsWith('/attempts') ? wonGame : activeGame,
@@ -221,6 +222,7 @@ describe('GameBoard accessibility', () => {
       await user.keyboard(key);
       // Waits for this asynchronous operation to complete.
       await waitFor(
+        // Continues the surrounding operation with this required value or expression.
         () =>
           // Calls expect with the supplied values.
           expect(screen.getByRole('button', { name: `Position ${position}: empty` })).toHaveFocus(),
@@ -246,6 +248,7 @@ describe('GameBoard accessibility', () => {
     expect(await screen.findByRole('heading', { level: 2, name: 'Code broken' })).toBeVisible();
     // Computes and stores attemptRequests for subsequent operations.
     const attemptRequests = apiMock.mock.calls.filter(
+      // Continues the surrounding operation with this required value or expression.
       ([path]) =>
         // Calls String with the supplied values.
         String(path).endsWith('/attempts'),
@@ -461,6 +464,7 @@ describe('GameBoard accessibility', () => {
     await user.click(screen.getByRole('button', { name: 'Submit guess' }));
     // Waits for this asynchronous operation to complete.
     await waitFor(
+      // Continues the surrounding operation with this required value or expression.
       () =>
         // Calls expect with the supplied values.
         expect(
@@ -672,6 +676,7 @@ describe('GameBoard accessibility', () => {
     };
     // Calls apiMock.mockImplementation with the supplied values.
     apiMock.mockImplementation(
+      // Continues the surrounding operation with this required value or expression.
       async (path: string) =>
         // Calls path.endsWith with the supplied values.
         path.endsWith('/abandon') ? abandonedGame : activeGame,

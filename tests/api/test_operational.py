@@ -22,9 +22,6 @@ from mastermind_api.routers.leaderboards import weekly_period_start
 # Imports selected names from `redis.exceptions` for use in this module.
 from redis.exceptions import RedisError
 
-# Imports selected names from `sqlalchemy` for use in this module.
-from sqlalchemy import select
-
 # Imports selected names from `.conftest` for use in this module.
 from .conftest import APIContext
 
@@ -172,11 +169,7 @@ async def test_secret_recovery_failure_is_a_retryable_service_error(api: APICont
     # Acquires this asynchronous managed resource for the nested operation.
     async with api.sessions() as session:
         # Computes and stores `game` for subsequent operations.
-        game = await session.scalar(
-            # Calls `select` with the supplied values.
-            select(GameSession).where(GameSession.public_id == created.json()["id"])
-            # Closes the multiline call, declaration, or collection started above.
-        )
+        game = await session.find_one(GameSession, {'public_id': created.json()['id']})
         # Asserts this invariant so an unexpected test state fails immediately.
         assert game is not None
         # Computes and stores `game.secret_key_version` for subsequent operations.

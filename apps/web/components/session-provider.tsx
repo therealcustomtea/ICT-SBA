@@ -1,373 +1,412 @@
-// Selects the runtime or strict execution mode for this module.
+// Selects the execution mode required by this module.
 'use client';
 
-// Imports the dependency used by this module.
-import type { Session, User } from '@supabase/supabase-js';
-// Imports the dependency used by this module.
+// Imports the dependency required by the module implementation below.
 import {
-  // Supplies this item to the surrounding call or collection.
+  // Continues the surrounding operation with this required value or expression.
   createContext,
-  // Supplies this item to the surrounding call or collection.
+  // Continues the surrounding operation with this required value or expression.
   useCallback,
-  // Supplies this item to the surrounding call or collection.
+  // Continues the surrounding operation with this required value or expression.
   useContext,
-  // Supplies this item to the surrounding call or collection.
+  // Continues the surrounding operation with this required value or expression.
   useEffect,
-  // Supplies this item to the surrounding call or collection.
+  // Continues the surrounding operation with this required value or expression.
   useMemo,
-  // Supplies this item to the surrounding call or collection.
+  // Continues the surrounding operation with this required value or expression.
   useRef,
-  // Supplies this item to the surrounding call or collection.
+  // Continues the surrounding operation with this required value or expression.
   useState,
-  // Executes this line as the next step in the surrounding logic.
+  // Closes the expression, call, or declaration opened above.
 } from 'react';
-// Imports the dependency used by this module.
-import { createSupabaseBrowserClient, isSupabaseConfigured } from '@/lib/supabase';
-// Imports the dependency used by this module.
+// Imports the dependency required by the module implementation below.
 import { deliverProductEvent } from '@/lib/analytics-delivery';
 
-// Computes and stores pendingUpgradeKey for subsequent operations.
+// Stores `apiOrigin` because subsequent operations depend on this value.
+const apiOrigin = process.env.NEXT_PUBLIC_API_ORIGIN ?? 'http://localhost:8000';
+// Stores `pendingUpgradeKey` because subsequent operations depend on this value.
 const pendingUpgradeKey = 'cipherboard:pending-account-upgrade';
 
-// Defines the reportPendingUpgrade function and its callable behavior.
-function reportPendingUpgrade(nextSession: Session) {
-  // Checks this condition before running the nested branch.
-  if (nextSession.user.is_anonymous || sessionStorage.getItem(pendingUpgradeKey) !== 'true') return;
-  // Calls sessionStorage.removeItem with the supplied values.
-  sessionStorage.removeItem(pendingUpgradeKey);
-  // Computes and stores locale for subsequent operations.
-  const locale = window.location.pathname.split('/')[1] === 'zh-Hant' ? 'zh-Hant' : 'en';
-  // Begins the nested block or object completed below.
-  void deliverProductEvent(nextSession.access_token, locale, 'account_upgraded', {
-    // Defines the previousAnonymous field in the surrounding object or type.
-    previousAnonymous: true,
-    // Closes the expression, call, or declaration started above.
-  });
-  // Closes the expression, call, or declaration started above.
-}
-
-// Declares the SessionState data shape or implementation.
-type SessionState = {
-  // Defines the status field in the surrounding object or type.
-  status: 'loading' | 'ready' | 'error';
-  // Defines the session field in the surrounding object or type.
-  session: Session | null;
-  // Defines the user field in the surrounding object or type.
-  user: User | null;
-  // Defines the error field in the surrounding object or type.
-  error: string | null;
-  // Defines the isGuest field in the surrounding object or type.
-  isGuest: boolean;
-  // Defines the getAccessToken field in the surrounding object or type.
-  getAccessToken: () => Promise<string | null>;
-  // Defines the sendMagicLink field in the surrounding object or type.
-  sendMagicLink: (email: string) => Promise<void>;
-  // Defines the signOut field in the surrounding object or type.
-  signOut: () => Promise<void>;
-  // Closes the expression, call, or declaration started above.
+// Exports this declaration because other modules rely on its contract.
+export type AuthUser = {
+  // Defines this field so the surrounding object or type has an explicit contract.
+  id: string;
+  // Defines this field so the surrounding object or type has an explicit contract.
+  email: string | null;
+  // Defines this field so the surrounding object or type has an explicit contract.
+  is_anonymous: boolean;
+  // Defines this field so the surrounding object or type has an explicit contract.
+  mfa_enabled: boolean;
+  // Closes the expression, call, or declaration opened above.
 };
 
-// Computes and stores SessionContext for subsequent operations.
+// Exports this declaration because other modules rely on its contract.
+export type Session = {
+  // Defines this field so the surrounding object or type has an explicit contract.
+  access_token: string;
+  // Defines this field so the surrounding object or type has an explicit contract.
+  expires_at: number;
+  // Defines this field so the surrounding object or type has an explicit contract.
+  user: AuthUser;
+  // Closes the expression, call, or declaration opened above.
+};
+
+// Continues the surrounding operation with this required value or expression.
+type AuthSessionResponse = {
+  // Defines this field so the surrounding object or type has an explicit contract.
+  accessToken: string;
+  // Defines this field so the surrounding object or type has an explicit contract.
+  expiresIn: number;
+  // Defines this field so the surrounding object or type has an explicit contract.
+  user: AuthUser;
+  // Closes the expression, call, or declaration opened above.
+};
+
+// Continues the surrounding operation with this required value or expression.
+type SessionState = {
+  // Defines this field so the surrounding object or type has an explicit contract.
+  status: 'loading' | 'ready' | 'error';
+  // Defines this field so the surrounding object or type has an explicit contract.
+  session: Session | null;
+  // Defines this field so the surrounding object or type has an explicit contract.
+  user: AuthUser | null;
+  // Defines this field so the surrounding object or type has an explicit contract.
+  error: string | null;
+  // Defines this field so the surrounding object or type has an explicit contract.
+  isGuest: boolean;
+  // Defines this field so the surrounding object or type has an explicit contract.
+  getAccessToken: () => Promise<string | null>;
+  // Defines this field so the surrounding object or type has an explicit contract.
+  sendMagicLink: (email: string) => Promise<void>;
+  // Defines this field so the surrounding object or type has an explicit contract.
+  signOut: () => Promise<void>;
+  // Closes the expression, call, or declaration opened above.
+};
+
+// Stores `SessionContext` because subsequent operations depend on this value.
 const SessionContext = createContext<SessionState | null>(null);
 
-// Defines the createSessionGate function and its callable behavior.
-function createSessionGate() {
-  // Computes and stores resolve for subsequent operations.
-  let resolve!: (session: Session | null) => void;
-  // Computes and stores promise for subsequent operations.
-  const promise = new Promise<Session | null>((settle) => {
-    // Provides the resolve value to the surrounding call or element.
-    resolve = settle;
-    // Closes the expression, call, or declaration started above.
-  });
-  // Returns this result to the caller and ends the current function.
-  return { promise, resolve, settled: false };
-  // Closes the expression, call, or declaration started above.
+// Defines `toSession` as the callable responsible for this operation.
+function toSession(payload: AuthSessionResponse): Session {
+  // Returns the computed result and ends the current callable.
+  return {
+    // Defines this field so the surrounding object or type has an explicit contract.
+    access_token: payload.accessToken,
+    // Defines this field so the surrounding object or type has an explicit contract.
+    expires_at: Date.now() + payload.expiresIn * 1000,
+    // Defines this field so the surrounding object or type has an explicit contract.
+    user: payload.user,
+    // Closes the expression, call, or declaration opened above.
+  };
+  // Closes the expression, call, or declaration opened above.
 }
 
-// Exports this declaration for use by other modules.
-export function SessionProvider({ children }: { children: React.ReactNode }) {
-  // Computes and stores supabase for subsequent operations.
-  const supabase = useMemo(() => createSupabaseBrowserClient(), []);
-  // Executes this line as the next step in the surrounding logic.
-  const [status, setStatus] = useState<SessionState['status']>(
-    // Supplies this item to the surrounding call or collection.
-    isSupabaseConfigured ? 'loading' : 'error',
-    // Closes the expression, call, or declaration started above.
-  );
-  // Executes this line as the next step in the surrounding logic.
-  const [session, setSession] = useState<Session | null>(null);
-  // Computes and stores sessionRef for subsequent operations.
-  const sessionRef = useRef<Session | null>(null);
-  // Computes and stores sessionGateRef for subsequent operations.
-  const sessionGateRef = useRef<ReturnType<typeof createSessionGate> | null>(null);
-  // Executes this line as the next step in the surrounding logic.
-  sessionGateRef.current ??= createSessionGate();
-  // Executes this line as the next step in the surrounding logic.
-  const [error, setError] = useState<string | null>(
-    // Supplies this item to the surrounding call or collection.
-    isSupabaseConfigured ? null : 'AUTH_NOT_CONFIGURED',
-    // Closes the expression, call, or declaration started above.
-  );
+// Defines `authRequest` as the callable responsible for this operation.
+async function authRequest(path: string, init: RequestInit = {}): Promise<Response> {
+  // Returns the computed result and ends the current callable.
+  return fetch(`${apiOrigin}${path}`, {
+    // Continues the surrounding operation with this required value or expression.
+    ...init,
+    // Defines this field so the surrounding object or type has an explicit contract.
+    credentials: 'include',
+    // Defines this field so the surrounding object or type has an explicit contract.
+    headers: { 'Content-Type': 'application/json', ...init.headers },
+    // Closes the expression, call, or declaration opened above.
+  });
+  // Closes the expression, call, or declaration opened above.
+}
 
-  // Computes and stores applySession for subsequent operations.
-  const applySession = useCallback((nextSession: Session | null, settle = true) => {
-    // Executes this line as the next step in the surrounding logic.
+// Defines `sessionRequest` as the callable responsible for this operation.
+async function sessionRequest(path: '/v1/auth/guest' | '/v1/auth/refresh'): Promise<Session> {
+  // Stores `response` because subsequent operations depend on this value.
+  const response = await authRequest(path, { method: 'POST' });
+  // Guards the nested operation so it runs only when this condition is satisfied.
+  if (!response.ok)
+    // Throws this error so invalid state cannot continue silently.
+    throw new Error(response.status === 401 ? 'SESSION_EXPIRED' : 'AUTH_UNAVAILABLE');
+  // Returns the computed result and ends the current callable.
+  return toSession((await response.json()) as AuthSessionResponse);
+  // Closes the expression, call, or declaration opened above.
+}
+
+// Defines `reportPendingUpgrade` as the callable responsible for this operation.
+function reportPendingUpgrade(nextSession: Session) {
+  // Guards the nested operation so it runs only when this condition is satisfied.
+  if (nextSession.user.is_anonymous || sessionStorage.getItem(pendingUpgradeKey) !== 'true') return;
+  // Continues the surrounding operation with this required value or expression.
+  sessionStorage.removeItem(pendingUpgradeKey);
+  // Stores `locale` because subsequent operations depend on this value.
+  const locale = window.location.pathname.split('/')[1] === 'zh-Hant' ? 'zh-Hant' : 'en';
+  // Runs this required asynchronous effect without leaving it implicit.
+  void deliverProductEvent(nextSession.access_token, locale, 'account_upgraded', {
+    // Defines this field so the surrounding object or type has an explicit contract.
+    previousAnonymous: true,
+    // Closes the expression, call, or declaration opened above.
+  });
+  // Closes the expression, call, or declaration opened above.
+}
+
+// Exports this declaration because other modules rely on its contract.
+export function SessionProvider({ children }: { children: React.ReactNode }) {
+  // Continues the surrounding operation with this required value or expression.
+  const [status, setStatus] = useState<SessionState['status']>('loading');
+  // Continues the surrounding operation with this required value or expression.
+  const [session, setSession] = useState<Session | null>(null);
+  // Continues the surrounding operation with this required value or expression.
+  const [error, setError] = useState<string | null>(null);
+  // Stores `sessionRef` because subsequent operations depend on this value.
+  const sessionRef = useRef<Session | null>(null);
+  // Stores `initializationRef` because subsequent operations depend on this value.
+  const initializationRef = useRef<Promise<Session | null> | null>(null);
+  // Stores `refreshRef` because subsequent operations depend on this value.
+  const refreshRef = useRef<Promise<Session> | null>(null);
+
+  // Stores `applySession` because subsequent operations depend on this value.
+  const applySession = useCallback((nextSession: Session | null) => {
+    // Continues the surrounding operation with this required value or expression.
     sessionRef.current = nextSession;
-    // Calls setSession with the supplied values.
+    // Continues the surrounding operation with this required value or expression.
     setSession(nextSession);
-    // Computes and stores gate for subsequent operations.
-    const gate = sessionGateRef.current!;
-    // Checks this condition before running the nested branch.
-    if (settle && !gate.settled) {
-      // Executes this line as the next step in the surrounding logic.
-      gate.settled = true;
-      // Calls gate.resolve with the supplied values.
-      gate.resolve(nextSession);
-      // Closes the expression, call, or declaration started above.
-    }
-    // Executes this line as the next step in the surrounding logic.
+    // Closes the expression, call, or declaration opened above.
   }, []);
 
-  // Calls useEffect with the supplied values.
-  useEffect(() => {
-    // Checks this condition before running the nested branch.
-    if (!supabase || !isSupabaseConfigured) {
-      // Returns this result to the caller and ends the current function.
-      return;
-      // Closes the expression, call, or declaration started above.
-    }
-    // Computes and stores active for subsequent operations.
-    let active = true;
-    // Computes and stores initialize for subsequent operations.
-    const initialize = async () => {
-      // Executes this line as the next step in the surrounding logic.
-      const { data, error: sessionError } = await supabase.auth.getSession();
-      // Checks this condition before running the nested branch.
-      if (!active) return;
-      // Checks this condition before running the nested branch.
-      if (sessionError) {
-        // Calls setError with the supplied values.
-        setError(sessionError.code ?? 'AUTH_UNAVAILABLE');
-        // Calls setStatus with the supplied values.
-        setStatus('error');
-        // Calls applySession with the supplied values.
-        applySession(null);
-        // Returns this result to the caller and ends the current function.
-        return;
-        // Closes the expression, call, or declaration started above.
-      }
-      // Checks this condition before running the nested branch.
-      if (data.session) {
-        // Calls reportPendingUpgrade with the supplied values.
-        reportPendingUpgrade(data.session);
-        // Calls setError with the supplied values.
-        setError(null);
-        // Calls applySession with the supplied values.
-        applySession(data.session);
-        // Calls setStatus with the supplied values.
-        setStatus('ready');
-        // Returns this result to the caller and ends the current function.
-        return;
-        // Closes the expression, call, or declaration started above.
-      }
-      // Executes this line as the next step in the surrounding logic.
-      const { data: guestData, error: guestError } = await supabase.auth.signInAnonymously();
-      // Checks this condition before running the nested branch.
-      if (!active) return;
-      // Checks this condition before running the nested branch.
-      if (guestError) {
-        // Calls setError with the supplied values.
-        setError(guestError.code ?? 'GUEST_SIGN_IN_FAILED');
-        // Calls setStatus with the supplied values.
-        setStatus('error');
-        // Calls applySession with the supplied values.
-        applySession(null);
-        // Returns this result to the caller and ends the current function.
-        return;
-        // Closes the expression, call, or declaration started above.
-      }
-      // Calls setError with the supplied values.
-      setError(null);
-      // Calls applySession with the supplied values.
-      applySession(guestData.session);
-      // Calls setStatus with the supplied values.
-      setStatus('ready');
-      // Closes the expression, call, or declaration started above.
-    };
-    // Executes this line as the next step in the surrounding logic.
-    void initialize();
-    // Begins the nested block or object completed below.
-    const { data: listener } = supabase.auth.onAuthStateChange((_event, nextSession) => {
-      // Checks this condition before running the nested branch.
-      if (!active) return;
-      // Checks this condition before running the nested branch.
-      if (nextSession) reportPendingUpgrade(nextSession);
-      // Calls applySession with the supplied values.
-      applySession(nextSession, nextSession !== null);
-      // Calls setStatus with the supplied values.
-      setStatus(nextSession ? 'ready' : 'loading');
-      // Closes the expression, call, or declaration started above.
+  // Stores `refresh` because subsequent operations depend on this value.
+  const refresh = useCallback(async () => {
+    // Continues the surrounding operation with this required value or expression.
+    refreshRef.current ??= sessionRequest('/v1/auth/refresh').finally(() => {
+      // Continues the surrounding operation with this required value or expression.
+      refreshRef.current = null;
+      // Closes the expression, call, or declaration opened above.
     });
-    // Returns this result to the caller and ends the current function.
-    return () => {
-      // Provides the active value to the surrounding call or element.
-      active = false;
-      // Calls listener.subscription.unsubscribe with the supplied values.
-      listener.subscription.unsubscribe();
-      // Closes the expression, call, or declaration started above.
-    };
-    // Executes this line as the next step in the surrounding logic.
-  }, [applySession, supabase]);
+    // Stores `nextSession` because subsequent operations depend on this value.
+    const nextSession = await refreshRef.current;
+    // Continues the surrounding operation with this required value or expression.
+    reportPendingUpgrade(nextSession);
+    // Continues the surrounding operation with this required value or expression.
+    applySession(nextSession);
+    // Returns the computed result and ends the current callable.
+    return nextSession;
+    // Closes the expression, call, or declaration opened above.
+  }, [applySession]);
 
-  // Computes and stores getAccessToken for subsequent operations.
-  const getAccessToken = useCallback(async () => {
-    // Checks this condition before running the nested branch.
-    if (!supabase) return null;
-    // Checks this condition before running the nested branch.
-    if (sessionRef.current) return sessionRef.current.access_token;
-    // Waits for this asynchronous operation to complete.
-    await sessionGateRef.current!.promise;
-    // Computes and stores initializedSession for subsequent operations.
-    const initializedSession = sessionRef.current as Session | null;
-    // Checks this condition before running the nested branch.
-    if (initializedSession) return initializedSession.access_token;
-    // Executes this line as the next step in the surrounding logic.
-    const { data } = await supabase.auth.getSession();
-    // Returns this result to the caller and ends the current function.
-    return data.session?.access_token ?? null;
-    // Executes this line as the next step in the surrounding logic.
-  }, [supabase]);
-
-  // Computes and stores sendMagicLink for subsequent operations.
-  const sendMagicLink = useCallback(
-    // Begins the nested block or object completed below.
-    async (email: string) => {
-      // Checks this condition before running the nested branch.
-      if (!supabase) throw new Error('AUTH_NOT_CONFIGURED');
-      // Computes and stores locale for subsequent operations.
-      const locale = window.location.pathname.split('/')[1] === 'zh-Hant' ? 'zh-Hant' : 'en';
-      // Computes and stores redirectTo for subsequent operations.
-      const redirectTo = `${window.location.origin}/auth/callback?next=/${locale}/profile`;
-      // Checks this condition before running the nested branch.
-      if (session?.user.is_anonymous) {
-        // Executes this line as the next step in the surrounding logic.
-        const { error: upgradeError } = await supabase.auth.updateUser(
-          // Supplies this item to the surrounding call or collection.
-          { email },
-          // Supplies this item to the surrounding call or collection.
-          { emailRedirectTo: redirectTo },
-          // Closes the expression, call, or declaration started above.
-        );
-        // Checks this condition before running the nested branch.
-        if (!upgradeError) {
-          // Calls sessionStorage.setItem with the supplied values.
-          sessionStorage.setItem(pendingUpgradeKey, 'true');
-          // Returns this result to the caller and ends the current function.
-          return;
-          // Closes the expression, call, or declaration started above.
+  // Continues the surrounding operation with this required value or expression.
+  useEffect(() => {
+    // Stores `active` because subsequent operations depend on this value.
+    let active = true;
+    // Stores `initialize` because subsequent operations depend on this value.
+    const initialize = async () => {
+      // Starts an operation whose expected failures are handled below.
+      try {
+        // Stores `nextSession` because subsequent operations depend on this value.
+        let nextSession: Session;
+        // Starts an operation whose expected failures are handled below.
+        try {
+          // Continues the surrounding operation with this required value or expression.
+          nextSession = await refresh();
+          // Closes the expression, call, or declaration opened above.
+        } catch {
+          // Continues the surrounding operation with this required value or expression.
+          nextSession = await sessionRequest('/v1/auth/guest');
+          // Closes the expression, call, or declaration opened above.
         }
-        // Computes and stores accountAlreadyExists for subsequent operations.
-        const accountAlreadyExists = [
-          // Supplies this item to the surrounding call or collection.
-          'email_exists',
-          // Supplies this item to the surrounding call or collection.
-          'user_already_exists',
-          // Supplies this item to the surrounding call or collection.
-          'identity_already_exists',
-          // Executes this line as the next step in the surrounding logic.
-        ].includes(upgradeError.code ?? '');
-        // Checks this condition before running the nested branch.
-        if (!accountAlreadyExists && upgradeError.status !== 422) throw upgradeError;
-        // Closes the expression, call, or declaration started above.
+        // Guards the nested operation so it runs only when this condition is satisfied.
+        if (active) {
+          // Continues the surrounding operation with this required value or expression.
+          applySession(nextSession);
+          // Continues the surrounding operation with this required value or expression.
+          setError(null);
+          // Continues the surrounding operation with this required value or expression.
+          setStatus('ready');
+          // Closes the expression, call, or declaration opened above.
+        }
+        // Returns the computed result and ends the current callable.
+        return nextSession;
+        // Closes the expression, call, or declaration opened above.
+      } catch (cause) {
+        // Guards the nested operation so it runs only when this condition is satisfied.
+        if (active) {
+          // Continues the surrounding operation with this required value or expression.
+          applySession(null);
+          // Continues the surrounding operation with this required value or expression.
+          setError(cause instanceof Error ? cause.message : 'AUTH_UNAVAILABLE');
+          // Continues the surrounding operation with this required value or expression.
+          setStatus('error');
+          // Closes the expression, call, or declaration opened above.
+        }
+        // Returns the computed result and ends the current callable.
+        return null;
+        // Closes the expression, call, or declaration opened above.
       }
-      // Begins the nested block or object completed below.
-      const { error: otpError } = await supabase.auth.signInWithOtp({
-        // Supplies this item to the surrounding call or collection.
-        email,
-        // Defines the options field in the surrounding object or type.
-        options: { emailRedirectTo: redirectTo, shouldCreateUser: false },
-        // Closes the expression, call, or declaration started above.
+      // Closes the expression, call, or declaration opened above.
+    };
+    // Continues the surrounding operation with this required value or expression.
+    initializationRef.current = initialize();
+    // Returns the computed result and ends the current callable.
+    return () => {
+      // Continues the surrounding operation with this required value or expression.
+      active = false;
+      // Closes the expression, call, or declaration opened above.
+    };
+    // Closes the expression, call, or declaration opened above.
+  }, [applySession, refresh]);
+
+  // Continues the surrounding operation with this required value or expression.
+  useEffect(() => {
+    // Guards the nested operation so it runs only when this condition is satisfied.
+    if (!session) return;
+    // Stores `delay` because subsequent operations depend on this value.
+    const delay = Math.max(1_000, session.expires_at - Date.now() - 60_000);
+    // Stores `timer` because subsequent operations depend on this value.
+    const timer = window.setTimeout(() => {
+      // Runs this required asynchronous effect without leaving it implicit.
+      void refresh().catch(() => {
+        // Continues the surrounding operation with this required value or expression.
+        setError('SESSION_EXPIRED');
+        // Continues the surrounding operation with this required value or expression.
+        setStatus('error');
+        // Closes the expression, call, or declaration opened above.
       });
-      // Checks this condition before running the nested branch.
-      if (otpError) throw otpError;
-      // Closes the expression, call, or declaration started above.
-    },
-    // Supplies this item to the surrounding call or collection.
-    [session, supabase],
-    // Closes the expression, call, or declaration started above.
-  );
+      // Closes the expression, call, or declaration opened above.
+    }, delay);
+    // Returns the computed result and ends the current callable.
+    return () => window.clearTimeout(timer);
+    // Closes the expression, call, or declaration opened above.
+  }, [refresh, session]);
 
-  // Computes and stores signOut for subsequent operations.
-  const signOut = useCallback(async () => {
-    // Checks this condition before running the nested branch.
-    if (!supabase) return;
-    // Executes this line as the next step in the surrounding logic.
-    const { error: signOutError } = await supabase.auth.signOut({ scope: 'local' });
-    // Checks this condition before running the nested branch.
-    if (signOutError) throw signOutError;
-    // Executes this line as the next step in the surrounding logic.
-    const { data, error: guestError } = await supabase.auth.signInAnonymously();
-    // Checks this condition before running the nested branch.
-    if (guestError) {
-      // Calls setError with the supplied values.
-      setError(guestError.code ?? 'GUEST_SIGN_IN_FAILED');
-      // Calls setStatus with the supplied values.
-      setStatus('error');
-      // Throws this error to report an invalid or failed operation.
-      throw guestError;
-      // Closes the expression, call, or declaration started above.
+  // Stores `getAccessToken` because subsequent operations depend on this value.
+  const getAccessToken = useCallback(async () => {
+    // Stores `current` because subsequent operations depend on this value.
+    let current = sessionRef.current;
+    // Guards the nested operation so it runs only when this condition is satisfied.
+    if (!current && !initializationRef.current) await Promise.resolve();
+    // Guards the nested operation so it runs only when this condition is satisfied.
+    if (!current && initializationRef.current) current = await initializationRef.current;
+    // Guards the nested operation so it runs only when this condition is satisfied.
+    if (!current) return null;
+    // Guards the nested operation so it runs only when this condition is satisfied.
+    if (current.expires_at - Date.now() <= 60_000) {
+      // Starts an operation whose expected failures are handled below.
+      try {
+        // Continues the surrounding operation with this required value or expression.
+        current = await refresh();
+        // Closes the expression, call, or declaration opened above.
+      } catch {
+        // Returns the computed result and ends the current callable.
+        return null;
+        // Closes the expression, call, or declaration opened above.
+      }
+      // Closes the expression, call, or declaration opened above.
     }
-    // Calls setError with the supplied values.
-    setError(null);
-    // Calls applySession with the supplied values.
-    applySession(data.session);
-    // Calls setStatus with the supplied values.
-    setStatus('ready');
-    // Executes this line as the next step in the surrounding logic.
-  }, [applySession, supabase]);
+    // Returns the computed result and ends the current callable.
+    return current.access_token;
+    // Closes the expression, call, or declaration opened above.
+  }, [refresh]);
 
-  // Computes and stores value for subsequent operations.
-  const value = useMemo<SessionState>(
-    // Begins the nested block or object completed below.
-    () => ({
-      // Supplies this item to the surrounding call or collection.
-      status,
-      // Supplies this item to the surrounding call or collection.
-      session,
-      // Defines the user field in the surrounding object or type.
-      user: session?.user ?? null,
-      // Supplies this item to the surrounding call or collection.
-      error,
-      // Defines the isGuest field in the surrounding object or type.
-      isGuest: Boolean(session?.user?.is_anonymous),
-      // Supplies this item to the surrounding call or collection.
-      getAccessToken,
-      // Supplies this item to the surrounding call or collection.
-      sendMagicLink,
-      // Supplies this item to the surrounding call or collection.
-      signOut,
-      // Closes the expression, call, or declaration started above.
-    }),
-    // Supplies this item to the surrounding call or collection.
-    [status, session, error, getAccessToken, sendMagicLink, signOut],
-    // Closes the expression, call, or declaration started above.
+  // Stores `sendMagicLink` because subsequent operations depend on this value.
+  const sendMagicLink = useCallback(
+    // Continues the surrounding operation with this required value or expression.
+    async (email: string) => {
+      // Stores `accessToken` because subsequent operations depend on this value.
+      const accessToken = await getAccessToken();
+      // Guards the nested operation so it runs only when this condition is satisfied.
+      if (!accessToken) throw new Error('AUTH_UNAVAILABLE');
+      // Stores `locale` because subsequent operations depend on this value.
+      const locale = window.location.pathname.split('/')[1] === 'zh-Hant' ? 'zh-Hant' : 'en';
+      // Stores `response` because subsequent operations depend on this value.
+      const response = await authRequest('/v1/auth/email', {
+        // Defines this field so the surrounding object or type has an explicit contract.
+        method: 'POST',
+        // Defines this field so the surrounding object or type has an explicit contract.
+        headers: { Authorization: `Bearer ${accessToken}` },
+        // Defines this field so the surrounding object or type has an explicit contract.
+        body: JSON.stringify({ email, next: `/${locale}/profile` }),
+        // Closes the expression, call, or declaration opened above.
+      });
+      // Guards the nested operation so it runs only when this condition is satisfied.
+      if (!response.ok) {
+        // Stores `body` because subsequent operations depend on this value.
+        const body = (await response.json().catch(() => null)) as { code?: string } | null;
+        // Throws this error so invalid state cannot continue silently.
+        throw new Error(body?.code ?? 'MAGIC_LINK_FAILED');
+        // Closes the expression, call, or declaration opened above.
+      }
+      // Guards the nested operation so it runs only when this condition is satisfied.
+      if (sessionRef.current?.user.is_anonymous) sessionStorage.setItem(pendingUpgradeKey, 'true');
+      // Closes the expression, call, or declaration opened above.
+    },
+    // Continues the surrounding operation with this required value or expression.
+    [getAccessToken],
+    // Closes the expression, call, or declaration opened above.
   );
 
-  {
-    /* Returns this result to the caller and ends the current function. */
-  }
+  // Stores `signOut` because subsequent operations depend on this value.
+  const signOut = useCallback(async () => {
+    // Runs this required asynchronous effect without leaving it implicit.
+    await authRequest('/v1/auth/logout', { method: 'POST' });
+    // Starts an operation whose expected failures are handled below.
+    try {
+      // Stores `guestSession` because subsequent operations depend on this value.
+      const guestSession = await sessionRequest('/v1/auth/guest');
+      // Continues the surrounding operation with this required value or expression.
+      applySession(guestSession);
+      // Continues the surrounding operation with this required value or expression.
+      setError(null);
+      // Continues the surrounding operation with this required value or expression.
+      setStatus('ready');
+      // Closes the expression, call, or declaration opened above.
+    } catch (cause) {
+      // Continues the surrounding operation with this required value or expression.
+      applySession(null);
+      // Continues the surrounding operation with this required value or expression.
+      setError(cause instanceof Error ? cause.message : 'GUEST_SIGN_IN_FAILED');
+      // Continues the surrounding operation with this required value or expression.
+      setStatus('error');
+      // Throws this error so invalid state cannot continue silently.
+      throw cause;
+      // Closes the expression, call, or declaration opened above.
+    }
+    // Closes the expression, call, or declaration opened above.
+  }, [applySession]);
+
+  // Stores `value` because subsequent operations depend on this value.
+  const value = useMemo<SessionState>(
+    // Continues the surrounding operation with this required value or expression.
+    () => ({
+      // Continues the surrounding operation with this required value or expression.
+      status,
+      // Continues the surrounding operation with this required value or expression.
+      session,
+      // Defines this field so the surrounding object or type has an explicit contract.
+      user: session?.user ?? null,
+      // Continues the surrounding operation with this required value or expression.
+      error,
+      // Defines this field so the surrounding object or type has an explicit contract.
+      isGuest: Boolean(session?.user.is_anonymous),
+      // Continues the surrounding operation with this required value or expression.
+      getAccessToken,
+      // Continues the surrounding operation with this required value or expression.
+      sendMagicLink,
+      // Continues the surrounding operation with this required value or expression.
+      signOut,
+      // Closes the expression, call, or declaration opened above.
+    }),
+    // Continues the surrounding operation with this required value or expression.
+    [status, session, error, getAccessToken, sendMagicLink, signOut],
+    // Closes the expression, call, or declaration opened above.
+  );
+
+  // Returns the computed result and ends the current callable.
   return <SessionContext.Provider value={value}>{children}</SessionContext.Provider>;
-  // Closes the expression, call, or declaration started above.
+  // Closes the expression, call, or declaration opened above.
 }
 
-// Exports this declaration for use by other modules.
+// Exports this declaration because other modules rely on its contract.
 export function useSession(): SessionState {
-  // Computes and stores value for subsequent operations.
+  // Stores `value` because subsequent operations depend on this value.
   const value = useContext(SessionContext);
-  // Checks this condition before running the nested branch.
+  // Guards the nested operation so it runs only when this condition is satisfied.
   if (!value) throw new Error('useSession must be used inside SessionProvider');
-  // Returns this result to the caller and ends the current function.
+  // Returns the computed result and ends the current callable.
   return value;
-  // Closes the expression, call, or declaration started above.
+  // Closes the expression, call, or declaration opened above.
 }

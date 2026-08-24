@@ -7,9 +7,6 @@ import uuid
 # Imports selected names from `mastermind_api.models` for use in this module.
 from mastermind_api.models import ProductEvent
 
-# Imports selected names from `sqlalchemy` for use in this module.
-from sqlalchemy import func, select
-
 # Imports selected names from `.conftest` for use in this module.
 from .conftest import APIContext
 
@@ -99,9 +96,9 @@ async def test_analytics_insert_is_at_most_once_without_runtime_read_access(
     # Acquires this asynchronous managed resource for the nested operation.
     async with api.sessions() as session:
         # Asserts this invariant so an unexpected test state fails immediately.
-        assert await session.scalar(select(func.count(ProductEvent.id))) == 1
+        assert await session.count(ProductEvent) == 1
         # Computes and stores `event` for subsequent operations.
-        event = await session.scalar(select(ProductEvent))
+        event = await session.find_one(ProductEvent, {})
         # Asserts this invariant so an unexpected test state fails immediately.
         assert event is not None
         # Asserts this invariant so an unexpected test state fails immediately.

@@ -351,7 +351,8 @@ export function SettingsForm() {
           {error}
           {/* Closes the p interface element. */}
         </p>
-      ) : // Executes this line as the next step in the surrounding logic.
+      ) : // Continues the surrounding operation with this required value or expression.
+      // Executes this line as the next step in the surrounding logic.
       null}
       {/* Renders the button interface element or component. */}
       <button
@@ -446,7 +447,8 @@ export function AuthPanel({
             {t(callbackError === 'configuration' ? 'configurationError' : 'invalidCallback')}
             {/* Closes the p interface element. */}
           </p>
-        ) : // Executes this line as the next step in the surrounding logic.
+        ) : // Continues the surrounding operation with this required value or expression.
+        // Executes this line as the next step in the surrounding logic.
         null}
         {/* Executes this line as the next step in the surrounding logic. */}
         {state === 'sent' ? (
@@ -504,7 +506,8 @@ export function AuthPanel({
             {error}
             {/* Closes the p interface element. */}
           </p>
-        ) : // Executes this line as the next step in the surrounding logic.
+        ) : // Continues the surrounding operation with this required value or expression.
+        // Executes this line as the next step in the surrounding logic.
         null}
         {/* Executes this line as the next step in the surrounding logic. */}
         {!isGuest ? <Link href="/profile">{t('continue')}</Link> : null}
@@ -731,11 +734,13 @@ export function AccountPanel() {
                 {t('signInAgain')}
                 {/* Closes the Link interface element. */}
               </Link>
-            ) : // Executes this line as the next step in the surrounding logic.
+            ) : // Continues the surrounding operation with this required value or expression.
+            // Executes this line as the next step in the surrounding logic.
             null}
             {/* Closes the div interface element. */}
           </div>
-        ) : // Executes this line as the next step in the surrounding logic.
+        ) : // Continues the surrounding operation with this required value or expression.
+        // Executes this line as the next step in the surrounding logic.
         null}
         {/* Closes the form interface element. */}
       </form>
@@ -904,7 +909,8 @@ export function SupportForm() {
           {error}
           {/* Closes the p interface element. */}
         </p>
-      ) : // Executes this line as the next step in the surrounding logic.
+      ) : // Continues the surrounding operation with this required value or expression.
+      // Executes this line as the next step in the surrounding logic.
       null}
       {/* Renders the button interface element or component. */}
       <button className="button primary" disabled={state === 'sending'}>

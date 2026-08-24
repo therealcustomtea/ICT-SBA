@@ -7,12 +7,6 @@ import uuid
 # Imports selected names from `fastapi` for use in this module.
 from fastapi import APIRouter, Depends, Query, Request, Response, status
 
-# Imports selected names from `sqlalchemy` for use in this module.
-from sqlalchemy import case, func, select
-
-# Imports selected names from `sqlalchemy.ext.asyncio` for use in this module.
-from sqlalchemy.ext.asyncio import AsyncSession
-
 # Imports selected names from `..auth` for use in this module.
 from ..auth import AuthPrincipal, get_current_user
 
@@ -23,7 +17,7 @@ from ..config import Settings, get_settings
 from ..crypto import SecretCipher
 
 # Imports selected names from `..database` for use in this module.
-from ..database import get_session
+from ..database import DESCENDING, MongoSession, get_session
 
 # Imports selected names from `..dependencies` for use in this module.
 from ..dependencies import get_cipher
@@ -85,7 +79,7 @@ router = APIRouter(prefix="/v1/challenges", tags=["friend challenges"])
 
 
 # Defines the `require_challenges` callable and its typed interface.
-async def require_challenges(session: AsyncSession, settings: Settings) -> None:
+async def require_challenges(session: MongoSession, settings: Settings) -> None:
     # Checks this condition before executing the nested branch.
     if not await feature_enabled(session, settings, "friend_challenges"):
         # Raises this exception to report an invalid or failed operation.
@@ -106,7 +100,7 @@ async def challenge_results_route(
     # Provides the `principal` parameter or keyword argument.
     principal: AuthPrincipal = Depends(get_current_user),
     # Provides the `session` parameter or keyword argument.
-    session: AsyncSession = Depends(get_session),
+    session: MongoSession = Depends(get_session),
     # Provides the `settings` parameter or keyword argument.
     settings: Settings = Depends(get_settings),
     # Completes the signature and declares the callable return type.
@@ -118,93 +112,95 @@ async def challenge_results_route(
         # Raises this exception to report an invalid or failed operation.
         raise APIError(422, "INVALID_PAGE", "Use a positive page and a page size up to 100.")
     # Computes and stores `challenge` for subsequent operations.
-    challenge = await session.scalar(
-        # Calls `select` with the supplied values.
-        select(FriendChallenge).where(
-            # Supplies this item to the surrounding call or collection.
-            FriendChallenge.id == challenge_id,
-            # Supplies this item to the surrounding call or collection.
-            FriendChallenge.creator_id == principal.user_id,
-            # Closes the multiline call, declaration, or collection started above.
-        )
-        # Closes the multiline call, declaration, or collection started above.
+    challenge = await session.find_one(
+        # Supplies this required nested value.
+        FriendChallenge, {'_id': challenge_id, 'creator_id': principal.user_id}
+    # Closes the multiline declaration, call, or collection opened above.
     )
     # Checks this condition before executing the nested branch.
     if challenge is None:
         # Raises this exception to report an invalid or failed operation.
         raise APIError(404, "CHALLENGE_NOT_FOUND", "Challenge not found.")
     # Computes and stores `base` for subsequent operations.
-    base = select(GameSession).where(
-        # Supplies this item to the surrounding call or collection.
-        GameSession.friend_challenge_id == challenge.id,
-        # Calls `GameSession.completed_at.is_not` with the supplied values.
-        GameSession.completed_at.is_not(None),
-        # Closes the multiline call, declaration, or collection started above.
+    completed_filter = {
+        # Supplies this literal value to the surrounding declaration or call.
+        'friend_challenge_id': challenge.id,
+        # Supplies this literal value to the surrounding declaration or call.
+        'completed_at': {'$ne': None},
+    # Closes the multiline declaration, call, or collection opened above.
+    }
+    # Stores `total` because later steps depend on this value.
+    total = await session.count(GameSession, completed_filter)
+    # Stores `aggregate` because later steps depend on this value.
+    aggregate = await session.aggregate(
+        # Supplies this required nested value.
+        GameSession,
+        # Supplies this required nested value.
+        [
+            # Supplies this required nested value.
+            {'$match': completed_filter},
+            # Supplies this required nested value.
+            {
+                # Supplies this literal value to the surrounding declaration or call.
+                '$group': {
+                    # Supplies this literal value to the surrounding declaration or call.
+                    '_id': None,
+                    # Supplies this literal value to the surrounding declaration or call.
+                    'wins': {'$sum': {'$cond': [{'$eq': ['$status', 'won']}, 1, 0]}},
+                    # Supplies this literal value to the surrounding declaration or call.
+                    'average': {'$avg': '$attempts_used'},
+                # Closes the multiline declaration, call, or collection opened above.
+                }
+            # Closes the multiline declaration, call, or collection opened above.
+            },
+        # Closes the multiline declaration, call, or collection opened above.
+        ],
+    # Closes the multiline declaration, call, or collection opened above.
     )
-    # Computes and stores `total` for subsequent operations.
-    total = await session.scalar(select(func.count()).select_from(base.subquery())) or 0
-    # Computes and stores `aggregate` for subsequent operations.
-    aggregate = await session.execute(
-        # Calls `select` with the supplied values.
-        select(
-            # Calls `func.sum` with the supplied values.
-            func.sum(case((GameSession.status == "won", 1), else_=0)),
-            # Calls `func.avg` with the supplied values.
-            func.avg(GameSession.attempts_used),
-            # Begins the nested block or multiline expression completed below.
-        ).where(
-            # Supplies this item to the surrounding call or collection.
-            GameSession.friend_challenge_id == challenge.id,
-            # Calls `GameSession.completed_at.is_not` with the supplied values.
-            GameSession.completed_at.is_not(None),
-            # Closes the multiline call, declaration, or collection started above.
-        )
-        # Closes the multiline call, declaration, or collection started above.
-    )
-    # Executes this statement as the next step in the surrounding logic.
-    wins, average = aggregate.one()
+    # Stores `wins` because later steps depend on this value.
+    wins = aggregate[0]['wins'] if aggregate else 0
+    # Stores `average` because later steps depend on this value.
+    average = aggregate[0]['average'] if aggregate else None
     # Computes and stores `results` for subsequent operations.
-    results = (
-        # Waits for this asynchronous operation to complete.
-        await session.scalars(
-            # Calls `base.order_by` with the supplied values.
-            base.order_by(
-                # Calls `func.coalesce` with the supplied values.
-                func.coalesce(GameSession.final_score, 0).desc(),
-                # Calls `GameSession.attempts_used.asc` with the supplied values.
-                GameSession.attempts_used.asc(),
-                # Calls `GameSession.elapsed_seconds.asc` with the supplied values.
-                GameSession.elapsed_seconds.asc().nulls_last(),
-                # Calls `GameSession.completed_at.asc` with the supplied values.
-                GameSession.completed_at.asc(),
-                # Calls `GameSession.public_id.asc` with the supplied values.
-                GameSession.public_id.asc(),
-                # Closes the multiline call, declaration, or collection started above.
-            )
-            # Executes this statement as the next step in the surrounding logic.
-            .offset((page - 1) * page_size)
-            # Executes this statement as the next step in the surrounding logic.
-            .limit(page_size)
-            # Closes the multiline call, declaration, or collection started above.
-        )
-        # Executes this statement as the next step in the surrounding logic.
-    ).all()
-    # Computes and stores `all_scores` for subsequent operations.
-    all_scores = list(
-        # Waits for this asynchronous operation to complete.
-        await session.scalars(
-            # Calls `select` with the supplied values.
-            select(GameSession.final_score).where(
-                # Supplies this item to the surrounding call or collection.
-                GameSession.friend_challenge_id == challenge.id,
-                # Calls `GameSession.completed_at.is_not` with the supplied values.
-                GameSession.completed_at.is_not(None),
-                # Closes the multiline call, declaration, or collection started above.
-            )
-            # Closes the multiline call, declaration, or collection started above.
-        )
-        # Closes the multiline call, declaration, or collection started above.
+    results = await session.find_many(
+        # Supplies this required nested value.
+        GameSession,
+        # Supplies this required nested value.
+        completed_filter,
+        # Stores `sort` because later steps depend on this value.
+        sort=[
+            # Supplies this required nested value.
+            ('final_score', DESCENDING),
+            # Supplies this required nested value.
+            ('attempts_used', 1),
+            # Supplies this required nested value.
+            ('elapsed_seconds', 1),
+            # Supplies this required nested value.
+            ('completed_at', 1),
+            # Supplies this required nested value.
+            ('public_id', 1),
+        # Closes the multiline declaration, call, or collection opened above.
+        ],
+        # Stores `skip` because later steps depend on this value.
+        skip=(page - 1) * page_size,
+        # Stores `limit` because later steps depend on this value.
+        limit=page_size,
+    # Closes the multiline declaration, call, or collection opened above.
     )
+    # Computes and stores `all_scores` for subsequent operations.
+    all_scores = [
+        # Supplies this required nested value.
+        row.get('final_score')
+        # Iterates over these values so each item receives the same processing.
+        for row in await session.aggregate(
+            # Supplies this required nested value.
+            GameSession,
+            # Supplies this required nested value.
+            [{'$match': completed_filter}, {'$project': {'final_score': 1}}],
+        # Closes the multiline declaration, call, or collection opened above.
+        )
+    # Closes the multiline declaration, call, or collection opened above.
+    ]
     # Computes and stores `distribution` for subsequent operations.
     distribution = {"zero": 0, "1-999": 0, "1000-1499": 0, "1500+": 0}
     # Iterates through the supplied values for the nested operation.
@@ -291,7 +287,7 @@ async def create_challenge_route(
     # Provides the `principal` parameter or keyword argument.
     principal: AuthPrincipal = Depends(get_current_user),
     # Provides the `session` parameter or keyword argument.
-    session: AsyncSession = Depends(get_session),
+    session: MongoSession = Depends(get_session),
     # Provides the `cipher` parameter or keyword argument.
     cipher: SecretCipher = Depends(get_cipher),
     # Provides the `settings` parameter or keyword argument.
@@ -332,7 +328,7 @@ async def owned_challenges_route(
     # Provides the `principal` parameter or keyword argument.
     principal: AuthPrincipal = Depends(get_current_user),
     # Provides the `session` parameter or keyword argument.
-    session: AsyncSession = Depends(get_session),
+    session: MongoSession = Depends(get_session),
     # Provides the `settings` parameter or keyword argument.
     settings: Settings = Depends(get_settings),
     # Completes the signature and declares the callable return type.
@@ -340,63 +336,43 @@ async def owned_challenges_route(
     # Waits for this asynchronous operation to complete.
     await require_challenges(session, settings)
     # Computes and stores `completed_count` for subsequent operations.
-    completed_count = (
-        # Calls `select` with the supplied values.
-        select(func.count(GameSession.id))
-        # Begins the nested block or multiline expression completed below.
-        .where(
-            # Supplies this item to the surrounding call or collection.
-            GameSession.friend_challenge_id == FriendChallenge.id,
-            # Calls `GameSession.completed_at.is_not` with the supplied values.
-            GameSession.completed_at.is_not(None),
-            # Closes the multiline call, declaration, or collection started above.
-        )
-        # Executes this statement as the next step in the surrounding logic.
-        .correlate(FriendChallenge)
-        # Executes this statement as the next step in the surrounding logic.
-        .scalar_subquery()
-        # Closes the multiline call, declaration, or collection started above.
+    owner_filter = {'creator_id': principal.user_id}
+    # Stores `total` because later steps depend on this value.
+    total = await session.count(FriendChallenge, owner_filter)
+    # Stores `challenges` because later steps depend on this value.
+    challenges = await session.find_many(
+        # Supplies this required nested value.
+        FriendChallenge,
+        # Supplies this required nested value.
+        owner_filter,
+        # Stores `sort` because later steps depend on this value.
+        sort=[('created_at', DESCENDING), ('_id', 1)],
+        # Stores `skip` because later steps depend on this value.
+        skip=(page - 1) * page_size,
+        # Stores `limit` because later steps depend on this value.
+        limit=page_size,
+    # Closes the multiline declaration, call, or collection opened above.
     )
-    # Computes and stores `base` for subsequent operations.
-    base = select(FriendChallenge, completed_count.label("completed_count")).where(
-        # Executes this statement as the next step in the surrounding logic.
-        FriendChallenge.creator_id == principal.user_id
-        # Closes the multiline call, declaration, or collection started above.
-    )
-    # Computes and stores `total` for subsequent operations.
-    total = (
-        # Waits for this asynchronous operation to complete.
-        await session.scalar(
-            # Calls `select` with the supplied values.
-            select(func.count()).select_from(
-                # Calls `select` with the supplied values.
-                select(FriendChallenge.id)
-                # Executes this statement as the next step in the surrounding logic.
-                .where(FriendChallenge.creator_id == principal.user_id)
-                # Executes this statement as the next step in the surrounding logic.
-                .subquery()
-                # Closes the multiline call, declaration, or collection started above.
-            )
-            # Closes the multiline call, declaration, or collection started above.
+    # Stores `rows` because later steps depend on this value.
+    rows = [
+        # Supplies this required nested value.
+        (
+            # Supplies this required nested value.
+            challenge,
+            # Performs this required operation before the surrounding flow continues.
+            await session.count(
+                # Supplies this required nested value.
+                GameSession,
+                # Supplies this required nested value.
+                {'friend_challenge_id': challenge.id, 'completed_at': {'$ne': None}},
+            # Closes the multiline declaration, call, or collection opened above.
+            ),
+        # Closes the multiline declaration, call, or collection opened above.
         )
-        # Executes this statement as the next step in the surrounding logic.
-        or 0
-        # Closes the multiline call, declaration, or collection started above.
-    )
-    # Computes and stores `rows` for subsequent operations.
-    rows = (
-        # Waits for this asynchronous operation to complete.
-        await session.execute(
-            # Calls `base.order_by` with the supplied values.
-            base.order_by(FriendChallenge.created_at.desc(), FriendChallenge.id)
-            # Executes this statement as the next step in the surrounding logic.
-            .offset((page - 1) * page_size)
-            # Executes this statement as the next step in the surrounding logic.
-            .limit(page_size)
-            # Closes the multiline call, declaration, or collection started above.
-        )
-        # Executes this statement as the next step in the surrounding logic.
-    ).all()
+        # Iterates over these values so each item receives the same processing.
+        for challenge in challenges
+    # Closes the multiline declaration, call, or collection opened above.
+    ]
     # Returns this result to the caller and ends the current function.
     return PaginatedOwnedChallenges(
         # Computes and stores `items` for subsequent operations.
@@ -447,7 +423,7 @@ async def get_challenge_route(
     # Provides the `principal` parameter or keyword argument.
     principal: AuthPrincipal = Depends(get_current_user),
     # Provides the `session` parameter or keyword argument.
-    session: AsyncSession = Depends(get_session),
+    session: MongoSession = Depends(get_session),
     # Provides the `settings` parameter or keyword argument.
     settings: Settings = Depends(get_settings),
     # Completes the signature and declares the callable return type.
@@ -490,7 +466,7 @@ async def start_challenge_route(
     # Provides the `principal` parameter or keyword argument.
     principal: AuthPrincipal = Depends(get_current_user),
     # Provides the `session` parameter or keyword argument.
-    session: AsyncSession = Depends(get_session),
+    session: MongoSession = Depends(get_session),
     # Provides the `cipher` parameter or keyword argument.
     cipher: SecretCipher = Depends(get_cipher),
     # Provides the `settings` parameter or keyword argument.
@@ -556,7 +532,7 @@ async def revoke_challenge_route(
     # Provides the `principal` parameter or keyword argument.
     principal: AuthPrincipal = Depends(get_current_user),
     # Provides the `session` parameter or keyword argument.
-    session: AsyncSession = Depends(get_session),
+    session: MongoSession = Depends(get_session),
     # Provides the `settings` parameter or keyword argument.
     settings: Settings = Depends(get_settings),
     # Completes the signature and declares the callable return type.
@@ -580,16 +556,10 @@ async def revoke_challenge_route(
         # Closes the multiline call, declaration, or collection started above.
     )
     # Computes and stores `challenge` for subsequent operations.
-    challenge = await session.scalar(
-        # Calls `select` with the supplied values.
-        select(FriendChallenge).where(
-            # Supplies this item to the surrounding call or collection.
-            FriendChallenge.id == challenge_id,
-            # Supplies this item to the surrounding call or collection.
-            FriendChallenge.creator_id == principal.user_id,
-            # Closes the multiline call, declaration, or collection started above.
-        )
-        # Closes the multiline call, declaration, or collection started above.
+    challenge = await session.find_one(
+        # Supplies this required nested value.
+        FriendChallenge, {'_id': challenge_id, 'creator_id': principal.user_id}
+    # Closes the multiline declaration, call, or collection opened above.
     )
     # Checks this condition before executing the nested branch.
     if challenge is None:

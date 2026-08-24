@@ -39,9 +39,11 @@ const nextConfig: NextConfig = {
           { key: 'Cross-Origin-Opener-Policy', value: 'same-origin' },
           // Executes this line as the next step in the surrounding logic.
           ...(process.env.NODE_ENV === 'production'
-            ? // Executes this line as the next step in the surrounding logic.
+            ? // Continues the surrounding operation with this required value or expression.
+              // Executes this line as the next step in the surrounding logic.
               [{ key: 'Strict-Transport-Security', value: 'max-age=31536000; includeSubDomains' }]
-            : // Supplies this item to the surrounding call or collection.
+            : // Continues the surrounding operation with this required value or expression.
+              // Supplies this item to the surrounding call or collection.
               []),
           // Closes the expression, call, or declaration started above.
         ],

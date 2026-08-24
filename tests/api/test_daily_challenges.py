@@ -1,6 +1,9 @@
 # Defers type-annotation evaluation to support modern hints safely.
 from __future__ import annotations
 
+# Imports the required names from `dataclasses` for this module.
+from dataclasses import fields
+
 # Imports selected names from `datetime` for use in this module.
 from datetime import date
 
@@ -15,9 +18,6 @@ from mastermind_api.services import get_or_create_daily
 
 # Imports selected names from `mastermind_core` for use in this module.
 from mastermind_core import derive_daily_secret, get_preset
-
-# Imports selected names from `sqlalchemy` for use in this module.
-from sqlalchemy import select
 
 # Imports selected names from `.conftest` for use in this module.
 from .conftest import APIContext
@@ -79,15 +79,11 @@ async def test_daily_consistency_official_uniqueness_and_practice_replay(api: AP
     # Acquires this asynchronous managed resource for the nested operation.
     async with api.sessions() as session:
         # Computes and stores `rows` for subsequent operations.
-        rows = (
-            # Waits for this asynchronous operation to complete.
-            await session.scalars(
-                # Calls `select` with the supplied values.
-                select(GameSession).where(GameSession.owner_id == api.current["principal"].user_id)
-                # Closes the multiline call, declaration, or collection started above.
-            )
-            # Executes this statement as the next step in the surrounding logic.
-        ).all()
+        rows = await session.find_many(
+            # Supplies this required nested value.
+            GameSession, {'owner_id': api.current['principal'].user_id}
+        # Closes the multiline declaration, call, or collection opened above.
+        )
         # Asserts this invariant so an unexpected test state fails immediately.
         assert sum(row.daily_challenge_id is not None for row in rows) == 1
 
@@ -112,7 +108,7 @@ async def test_daily_rollover_has_distinct_definition_without_persisted_secret(
         # Asserts this invariant so an unexpected test state fails immediately.
         assert "daily_hmac_v1" in first.public_id
         # Computes and stores `columns` for subsequent operations.
-        columns = set(DailyChallenge.__table__.columns.keys())
+        columns = {item.name for item in fields(DailyChallenge)}
         # Asserts this invariant so an unexpected test state fails immediately.
         assert "encrypted_secret" not in columns
         # Asserts this invariant so an unexpected test state fails immediately.

@@ -22,6 +22,7 @@ export function useProductAnalytics() {
     <K extends keyof AnalyticsEventMap>(eventName: K, fields: AnalyticsEventMap[K]) => {
       // Executes this line as the next step in the surrounding logic.
       void getAccessToken().then(
+        // Continues the surrounding operation with this required value or expression.
         (token) =>
           // Calls deliverProductEvent with the supplied values.
           deliverProductEvent(token, locale === 'zh-Hant' ? 'zh-Hant' : 'en', eventName, fields),

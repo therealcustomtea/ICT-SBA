@@ -43,24 +43,19 @@ from mastermind_core import DomainError
 # Imports selected names from `prometheus_client` for use in this module.
 from prometheus_client import CONTENT_TYPE_LATEST, generate_latest
 
+# Imports the required names from `pymongo.errors` for this module.
+from pymongo.errors import DuplicateKeyError, PyMongoError
+
 # Imports selected names from `redis.asyncio` for use in this module.
 from redis.asyncio import Redis
 
 # Imports selected names from `redis.exceptions` for use in this module.
 from redis.exceptions import RedisError
 
-# Imports selected names from `sqlalchemy` for use in this module.
-from sqlalchemy import text
-
-# Imports selected names from `sqlalchemy.exc` for use in this module.
-from sqlalchemy.exc import IntegrityError, SQLAlchemyError
-
 # Imports selected names from `starlette.types` for use in this module.
 from starlette.types import ASGIApp, Message, Receive, Scope, Send
 
 # Imports selected names from `.account` for use in this module.
-from .account import SupabaseAdminClient, account_deletion_retry_worker
-
 # Imports selected names from `.client_ip` for use in this module.
 from .client_ip import trusted_client_ip
 
@@ -68,7 +63,19 @@ from .client_ip import trusted_client_ip
 from .config import Settings, get_settings
 
 # Imports selected names from `.database` for use in this module.
-from .database import SessionFactory, engine
+from .database import (
+    # Supplies this required nested value.
+    SessionFactory,
+    # Supplies this required nested value.
+    close_database,
+    # Supplies this required nested value.
+    configure_database,
+    # Supplies this required nested value.
+    database_ready,
+    # Supplies this required nested value.
+    initialize_database,
+    # Closes the multiline declaration, call, or collection opened above.
+)
 
 # Imports selected names from `.error_reporting` for use in this module.
 from .error_reporting import ErrorReporter
@@ -124,6 +131,8 @@ from .routers import (
     admin,
     # Supplies this item to the surrounding call or collection.
     analytics,
+    # Supplies this required nested value.
+    auth,
     # Supplies this item to the surrounding call or collection.
     challenges,
     # Supplies this item to the surrounding call or collection.
@@ -271,6 +280,8 @@ def _rate_limit_subject(request: Request) -> str | None:
 def create_app(settings: Settings | None = None) -> FastAPI:
     # Computes and stores `config` for subsequent operations.
     config = settings or get_settings()
+    # Supplies this required nested value.
+    configure_database(config)
     # Calls `configure_logging` with the supplied values.
     configure_logging(config.log_level)
 
@@ -278,6 +289,8 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     @asynccontextmanager
     # Defines the `lifespan` callable and its typed interface.
     async def lifespan(app: FastAPI) -> AsyncIterator[None]:
+        # Performs this required operation before the surrounding flow continues.
+        await initialize_database()
         # Computes and stores `redis` for subsequent operations.
         redis: Redis | None = (
             # Calls `Redis.from_url` with the supplied values.
@@ -362,32 +375,12 @@ def create_app(settings: Settings | None = None) -> FastAPI:
         app.state.error_reporter = ErrorReporter(config)
         # Computes and stores `app.state.error_reporting_tasks` for subsequent operations.
         app.state.error_reporting_tasks = set()
-        # Computes and stores `deletion_worker` for subsequent operations.
-        deletion_worker = None
         # Computes and stores `finalization_worker` for subsequent operations.
         finalization_worker = None
         # Computes and stores `app.state.room_finalization_tasks` for subsequent operations.
         app.state.room_finalization_tasks = set()
         # Checks this condition before executing the nested branch.
         if config.environment in {"production", "staging"}:
-            # Computes and stores `deletion_worker` for subsequent operations.
-            deletion_worker = asyncio.create_task(
-                # Calls `account_deletion_retry_worker` with the supplied values.
-                account_deletion_retry_worker(
-                    # Supplies this item to the surrounding call or collection.
-                    SessionFactory,
-                    # Calls `SupabaseAdminClient` with the supplied values.
-                    SupabaseAdminClient(
-                        # Supplies this item to the surrounding call or collection.
-                        config.supabase_url,
-                        # Supplies this item to the surrounding call or collection.
-                        config.supabase_service_role_key,
-                        # Closes the multiline call, declaration, or collection started above.
-                    ),
-                    # Closes the multiline call, declaration, or collection started above.
-                )
-                # Closes the multiline call, declaration, or collection started above.
-            )
             # Computes and stores `finalization_worker` for subsequent operations.
             finalization_worker = asyncio.create_task(
                 # Calls `room_finalization_worker` with the supplied values.
@@ -416,14 +409,6 @@ def create_app(settings: Settings | None = None) -> FastAPI:
             await asyncio.gather(*finalization_tasks, return_exceptions=True)
             # Calls `finalization_tasks.clear` with the supplied values.
             finalization_tasks.clear()
-        # Checks this condition before executing the nested branch.
-        if deletion_worker is not None:
-            # Calls `deletion_worker.cancel` with the supplied values.
-            deletion_worker.cancel()
-            # Acquires this managed resource and guarantees cleanup afterward.
-            with suppress(asyncio.CancelledError):
-                # Waits for this asynchronous operation to complete.
-                await deletion_worker
         # Computes and stores `reporting_tasks` for subsequent operations.
         reporting_tasks: set[asyncio.Task[None]] = app.state.error_reporting_tasks
         # Checks this condition before executing the nested branch.
@@ -438,6 +423,8 @@ def create_app(settings: Settings | None = None) -> FastAPI:
         if redis and not isinstance(app.state.broker, RedisBroker):
             # Waits for this asynchronous operation to complete.
             await redis.aclose()
+        # Performs this required operation before the surrounding flow continues.
+        await close_database()
 
     # Computes and stores `app` for subsequent operations.
     app = FastAPI(
@@ -468,7 +455,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
         # Provides the `allow_origins` parameter or keyword argument.
         allow_origins=list(config.allowed_origins),
         # Provides the `allow_credentials` parameter or keyword argument.
-        allow_credentials=False,
+        allow_credentials=True,
         # Provides the `allow_methods` parameter or keyword argument.
         allow_methods=["GET", "POST", "PATCH", "DELETE", "OPTIONS"],
         # Computes and stores `allow_headers` for subsequent operations.
@@ -747,9 +734,9 @@ def create_app(settings: Settings | None = None) -> FastAPI:
 
     # Applies `@app.exception_handler(IntegrityError)` to configure the declaration immediately
     # below.
-    @app.exception_handler(IntegrityError)
+    @app.exception_handler(DuplicateKeyError)
     # Defines the `integrity_error_handler` callable and its typed interface.
-    async def integrity_error_handler(request: Request, exc: IntegrityError) -> JSONResponse:
+    async def integrity_error_handler(request: Request, exc: DuplicateKeyError) -> JSONResponse:
         # Calls `structlog.get_logger` with the supplied values.
         structlog.get_logger().warning("database_conflict", request_id=request.state.request_id)
         # Returns this result to the caller and ends the current function.
@@ -835,18 +822,8 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     @app.get("/health/ready", include_in_schema=False)
     # Defines the `ready` callable and its typed interface.
     async def ready(request: Request) -> JSONResponse:
-        # Computes and stores `database_ready` for subsequent operations.
-        database_ready = True
-        # Starts a protected operation whose expected failures are handled below.
-        try:
-            # Acquires this asynchronous managed resource for the nested operation.
-            async with engine.connect() as connection:
-                # Waits for this asynchronous operation to complete.
-                await connection.execute(text("SELECT 1"))
-        # Handles the listed exception so failure remains controlled.
-        except SQLAlchemyError:
-            # Computes and stores `database_ready` for subsequent operations.
-            database_ready = False
+        # Stores `mongo_ready` because later steps depend on this value.
+        mongo_ready = await database_ready()
         # Computes and stores `redis_required` for subsequent operations.
         redis_required = config.environment in {"production", "staging"}
         # Computes and stores `redis` for subsequent operations.
@@ -868,11 +845,11 @@ def create_app(settings: Settings | None = None) -> FastAPI:
         # Computes and stores `request.app.state.redis_ready` for subsequent operations.
         request.app.state.redis_ready = redis_ready
         # Calls `DEPENDENCY_READY.labels` with the supplied values.
-        DEPENDENCY_READY.labels("postgresql").set(1 if database_ready else 0)
+        DEPENDENCY_READY.labels("mongodb").set(1 if mongo_ready else 0)
         # Calls `DEPENDENCY_READY.labels` with the supplied values.
         DEPENDENCY_READY.labels("redis").set(1 if redis_ready else 0)
         # Computes and stores `healthy` for subsequent operations.
-        healthy = database_ready and (redis_ready or not redis_required)
+        healthy = mongo_ready and (redis_ready or not redis_required)
         # Returns this result to the caller and ends the current function.
         return JSONResponse(
             # Begins the nested block or multiline expression completed below.
@@ -880,7 +857,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
                 # Associates the `status` key with its value.
                 "status": "ok" if healthy else "degraded",
                 # Associates the `database` key with its value.
-                "database": "ok" if database_ready else "unavailable",
+                "database": "ok" if mongo_ready else "unavailable",
                 # Associates the `redis` key with its value.
                 "redis": "ok" if redis_ready else "unavailable",
                 # Associates the `release` key with its value.
@@ -903,32 +880,25 @@ def create_app(settings: Settings | None = None) -> FastAPI:
             raise APIError(404, "NOT_FOUND", "Not found.")
         # Starts a protected operation whose expected failures are handled below.
         try:
-            # Acquires this asynchronous managed resource for the nested operation.
-            async with engine.connect() as connection:
-                # Computes and stores `active_games` for subsequent operations.
-                active_games = await connection.scalar(
-                    # Calls `text` with the supplied values.
-                    text("SELECT count(*) FROM game_sessions WHERE status = 'active'")
-                    # Closes the multiline call, declaration, or collection started above.
-                )
-                # Computes and stores `active_rooms` for subsequent operations.
-                active_rooms = await connection.scalar(
-                    # Calls `text` with the supplied values.
-                    text(
-                        # Executes this statement as the next step in the surrounding logic.
-                        "SELECT count(*) FROM multiplayer_rooms "
-                        # Executes this statement as the next step in the surrounding logic.
-                        "WHERE status IN ('waiting', 'active')"
-                        # Closes the multiline call, declaration, or collection started above.
-                    )
-                    # Closes the multiline call, declaration, or collection started above.
+            # Scopes this resource so acquisition and cleanup remain paired.
+            async with SessionFactory() as session:
+                # Imports the required names from `.models` for this module.
+                from .models import GameSession, MultiplayerRoom
+
+                # Stores `active_games` because later steps depend on this value.
+                active_games = await session.count(GameSession, {'status': 'active'})
+                # Stores `active_rooms` because later steps depend on this value.
+                active_rooms = await session.count(
+                    # Supplies this required nested value.
+                    MultiplayerRoom, {'status': {'$in': ['waiting', 'active']}}
+                # Closes the multiline declaration, call, or collection opened above.
                 )
                 # Calls `ACTIVE_GAMES.set` with the supplied values.
                 ACTIVE_GAMES.set(int(active_games or 0))
                 # Calls `ACTIVE_ROOMS.set` with the supplied values.
                 ACTIVE_ROOMS.set(int(active_rooms or 0))
         # Handles the listed exception so failure remains controlled.
-        except SQLAlchemyError:
+        except PyMongoError:
             # Readiness exposes database failure. Metrics remain scrapeable so
             # the failure itself does not blind operators.
             # Calls `ACTIVE_GAMES.set` with the supplied values.
@@ -939,6 +909,8 @@ def create_app(settings: Settings | None = None) -> FastAPI:
         return Response(generate_latest(), media_type=CONTENT_TYPE_LATEST)
 
     # Calls `app.include_router` with the supplied values.
+    app.include_router(auth.router)
+    # Supplies this required nested value.
     app.include_router(games.router)
     # Calls `app.include_router` with the supplied values.
     app.include_router(daily.router)

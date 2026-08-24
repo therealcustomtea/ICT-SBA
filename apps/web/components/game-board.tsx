@@ -281,11 +281,13 @@ export function GameBoard({
           const stored = JSON.parse(localStorage.getItem(storageKey) ?? '[]') as string[];
           // Returns this result to the caller and ends the current function.
           return (
+            // Continues the surrounding operation with this required value or expression.
             stored
               // Executes this line as the next step in the surrounding logic.
               .filter((color) => nextGame.config.colours.includes(color))
               // Executes this line as the next step in the surrounding logic.
               .slice(0, nextGame.config.codeLength)
+            // Closes the expression, call, or declaration opened above.
           );
           // Handles a failure from the protected operation.
         } catch {
@@ -556,13 +558,17 @@ export function GameBoard({
       const leaderboardEndpoint =
         // Executes this line as the next step in the surrounding logic.
         game.mode === 'daily'
-          ? // Executes this line as the next step in the surrounding logic.
+          ? // Continues the surrounding operation with this required value or expression.
+            // Executes this line as the next step in the surrounding logic.
             '/v1/daily/leaderboard?page=1&page_size=1'
-          : // Executes this line as the next step in the surrounding logic.
+          : // Continues the surrounding operation with this required value or expression.
+            // Executes this line as the next step in the surrounding logic.
             game.ranked && game.difficulty
-            ? // Executes this line as the next step in the surrounding logic.
+            ? // Continues the surrounding operation with this required value or expression.
+              // Executes this line as the next step in the surrounding logic.
               `/v1/leaderboards?period=all-time&difficulty=${encodeURIComponent(game.difficulty)}&page=1&page_size=1`
-            : // Executes this line as the next step in the surrounding logic.
+            : // Continues the surrounding operation with this required value or expression.
+              // Executes this line as the next step in the surrounding logic.
               null;
       // Executes this line as the next step in the surrounding logic.
       const [statsResult, leaderboardResult] = await Promise.allSettled([
@@ -594,13 +600,15 @@ export function GameBoard({
         newAchievements:
           // Executes this line as the next step in the surrounding logic.
           achievementBaselineRef.current && stats
-            ? // Executes this line as the next step in the surrounding logic.
+            ? // Continues the surrounding operation with this required value or expression.
+              // Executes this line as the next step in the surrounding logic.
               (stats.achievements ?? []).filter(
                 // Supplies this item to the surrounding call or collection.
                 (achievement) => !achievementBaselineRef.current?.has(achievement),
                 // Closes the expression, call, or declaration started above.
               )
-            : // Supplies this item to the surrounding call or collection.
+            : // Continues the surrounding operation with this required value or expression.
+              // Supplies this item to the surrounding call or collection.
               [],
         // Closes the expression, call, or declaration started above.
       });
@@ -726,9 +734,11 @@ export function GameBoard({
       existingPending.attemptsUsed === game.attemptsUsed &&
       // Calls JSON.stringify with the supplied values.
       JSON.stringify(existingPending.guess) === JSON.stringify(guess)
-        ? // Executes this line as the next step in the surrounding logic.
+        ? // Continues the surrounding operation with this required value or expression.
+          // Executes this line as the next step in the surrounding logic.
           existingPending
-        : // Begins the nested block or object completed below.
+        : // Continues the surrounding operation with this required value or expression.
+          // Begins the nested block or object completed below.
           {
             // Defines the gameId field in the surrounding object or type.
             gameId: game.id,
@@ -1134,7 +1144,8 @@ export function GameBoard({
             {error}
             {/* Closes the p interface element. */}
           </p>
-        ) : // Executes this line as the next step in the surrounding logic.
+        ) : // Continues the surrounding operation with this required value or expression.
+        // Executes this line as the next step in the surrounding logic.
         null}
         {/* Closes the section interface element. */}
       </section>
@@ -1149,6 +1160,7 @@ export function GameBoard({
   const rowComplete = Array.from(
     // Creates one entry for every position required by the active code.
     { length: game.config.codeLength },
+    // Continues the surrounding operation with this required value or expression.
     (_, index) =>
       // Calls Boolean with the supplied values.
       Boolean(row[index]),
@@ -1286,7 +1298,8 @@ export function GameBoard({
               </span>
               {/* Closes the div interface element. */}
             </div>
-          ) : // Executes this line as the next step in the surrounding logic.
+          ) : // Continues the surrounding operation with this required value or expression.
+          // Executes this line as the next step in the surrounding logic.
           null}
           {/* Closes the div interface element. */}
         </div>
@@ -1382,7 +1395,8 @@ export function GameBoard({
                 {t('offlinePreserved')}
                 {/* Closes the p interface element. */}
               </p>
-            ) : // Executes this line as the next step in the surrounding logic.
+            ) : // Continues the surrounding operation with this required value or expression.
+            // Executes this line as the next step in the surrounding logic.
             null}
             {/* Executes this line as the next step in the surrounding logic. */}
             {syncing ? (
@@ -1392,7 +1406,8 @@ export function GameBoard({
                 {t('syncingState')}
                 {/* Closes the p interface element. */}
               </p>
-            ) : // Executes this line as the next step in the surrounding logic.
+            ) : // Continues the surrounding operation with this required value or expression.
+            // Executes this line as the next step in the surrounding logic.
             null}
             {/* Executes this line as the next step in the surrounding logic. */}
             {online && syncRequired && !syncing ? (
@@ -1402,7 +1417,8 @@ export function GameBoard({
                 {t('retrySync')}
                 {/* Closes the button interface element. */}
               </button>
-            ) : // Executes this line as the next step in the surrounding logic.
+            ) : // Continues the surrounding operation with this required value or expression.
+            // Executes this line as the next step in the surrounding logic.
             null}
             {/* Executes this line as the next step in the surrounding logic. */}
             {error ? (
@@ -1412,7 +1428,8 @@ export function GameBoard({
                 {error}
                 {/* Closes the p interface element. */}
               </p>
-            ) : // Executes this line as the next step in the surrounding logic.
+            ) : // Continues the surrounding operation with this required value or expression.
+            // Executes this line as the next step in the surrounding logic.
             null}
             {/* Renders the button interface element or component. */}
             <button
@@ -1486,7 +1503,8 @@ export function GameBoard({
                 {tr('personalBest')}
                 {/* Closes the p interface element. */}
               </p>
-            ) : // Executes this line as the next step in the surrounding logic.
+            ) : // Continues the surrounding operation with this required value or expression.
+            // Executes this line as the next step in the surrounding logic.
             null}
             {/* Executes this line as the next step in the surrounding logic. */}
             {resultDetails?.rank ? (
@@ -1496,7 +1514,8 @@ export function GameBoard({
                 {tr('rank')}: {resultDetails.rank}
                 {/* Closes the p interface element. */}
               </p>
-            ) : // Executes this line as the next step in the surrounding logic.
+            ) : // Continues the surrounding operation with this required value or expression.
+            // Executes this line as the next step in the surrounding logic.
             null}
             {/* Executes this line as the next step in the surrounding logic. */}
             {resultDetails?.newAchievements.length ? (
@@ -1520,7 +1539,8 @@ export function GameBoard({
                 </ul>
                 {/* Closes the section interface element. */}
               </section>
-            ) : // Executes this line as the next step in the surrounding logic.
+            ) : // Continues the surrounding operation with this required value or expression.
+            // Executes this line as the next step in the surrounding logic.
             null}
             {/* Executes this line as the next step in the surrounding logic. */}
             {game.secret ? (
@@ -1554,7 +1574,8 @@ export function GameBoard({
                 </div>
                 {/* Closes the div interface element. */}
               </div>
-            ) : // Executes this line as the next step in the surrounding logic.
+            ) : // Continues the surrounding operation with this required value or expression.
+            // Executes this line as the next step in the surrounding logic.
             null}
             {/* Executes this line as the next step in the surrounding logic. */}
             {game.scoreBreakdown ? (
@@ -1586,7 +1607,8 @@ export function GameBoard({
                 </div>
                 {/* Closes the dl interface element. */}
               </dl>
-            ) : // Executes this line as the next step in the surrounding logic.
+            ) : // Continues the surrounding operation with this required value or expression.
+            // Executes this line as the next step in the surrounding logic.
             null}
             {/* Renders the p interface element or component. */}
             <p className="quiet-note">{tr('shareSafe')}</p>
@@ -1598,7 +1620,8 @@ export function GameBoard({
                 {error}
                 {/* Closes the p interface element. */}
               </p>
-            ) : // Executes this line as the next step in the surrounding logic.
+            ) : // Continues the surrounding operation with this required value or expression.
+            // Executes this line as the next step in the surrounding logic.
             null}
             {/* Renders the div interface element or component. */}
             <div className="result-actions">

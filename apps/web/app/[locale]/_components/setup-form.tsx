@@ -103,9 +103,11 @@ export function SetupForm() {
   const selectedRules =
     // Provides the difficulty value to the surrounding call or element.
     difficulty === 'custom'
-      ? // Executes this line as the next step in the surrounding logic.
+      ? // Continues the surrounding operation with this required value or expression.
+        // Executes this line as the next step in the surrounding logic.
         { colourCount, codeLength, maxAttempts, duplicatesAllowed }
-      : // Executes this line as the next step in the surrounding logic.
+      : // Continues the surrounding operation with this required value or expression.
+        // Executes this line as the next step in the surrounding logic.
         presets[difficulty];
   // Computes and stores activeColours for subsequent operations.
   const activeColours = colourIds.slice(0, selectedRules.colourCount);
@@ -188,7 +190,8 @@ export function SetupForm() {
       idempotencyKey: creationKeyRef.current,
       // Executes this line as the next step in the surrounding logic.
       ...(needsConfig
-        ? // Begins the nested block or object completed below.
+        ? // Continues the surrounding operation with this required value or expression.
+          // Begins the nested block or object completed below.
           {
             // Defines the config field in the surrounding object or type.
             config: {
@@ -212,7 +215,8 @@ export function SetupForm() {
             },
             // Closes the expression, call, or declaration started above.
           }
-        : // Supplies this item to the surrounding call or collection.
+        : // Continues the surrounding operation with this required value or expression.
+          // Supplies this item to the surrounding call or collection.
           { difficulty }),
       // Supplies this item to the surrounding call or collection.
       ...(mode === 'pass_and_play' ? { secret: confirmedSecretRef.current } : {}),
@@ -489,11 +493,13 @@ export function SetupForm() {
               {t('invalidCustom')}
               {/* Closes the p interface element. */}
             </p>
-          ) : // Executes this line as the next step in the surrounding logic.
+          ) : // Continues the surrounding operation with this required value or expression.
+          // Executes this line as the next step in the surrounding logic.
           null}
           {/* Closes the div interface element. */}
         </div>
-      ) : // Executes this line as the next step in the surrounding logic.
+      ) : // Continues the surrounding operation with this required value or expression.
+      // Executes this line as the next step in the surrounding logic.
       null}
 
       {/* Executes this line as the next step in the surrounding logic. */}
@@ -524,9 +530,11 @@ export function SetupForm() {
                   aria-label={
                     // Executes this line as the next step in the surrounding logic.
                     colour
-                      ? // Executes this line as the next step in the surrounding logic.
+                      ? /* Continues the surrounding operation with this required value or expression. */
+                        // Executes this line as the next step in the surrounding logic.
                         t('secretPositionFilled', { position: index + 1 })
-                      : // Executes this line as the next step in the surrounding logic.
+                      : /* Continues the surrounding operation with this required value or expression. */
+                        // Executes this line as the next step in the surrounding logic.
                         t('secretPositionEmpty', { position: index + 1 })
                     // Closes the expression, call, or declaration started above.
                   }
@@ -586,7 +594,8 @@ export function SetupForm() {
           </button>
           {/* Closes the fieldset interface element. */}
         </fieldset>
-      ) : // Executes this line as the next step in the surrounding logic.
+      ) : // Continues the surrounding operation with this required value or expression.
+      // Executes this line as the next step in the surrounding logic.
       null}
 
       {/* Executes this line as the next step in the surrounding logic. */}
@@ -607,7 +616,8 @@ export function SetupForm() {
           </button>
           {/* Closes the section interface element. */}
         </section>
-      ) : // Executes this line as the next step in the surrounding logic.
+      ) : // Continues the surrounding operation with this required value or expression.
+      // Executes this line as the next step in the surrounding logic.
       null}
 
       {/* Executes this line as the next step in the surrounding logic. */}
@@ -618,7 +628,8 @@ export function SetupForm() {
           {error}
           {/* Closes the p interface element. */}
         </p>
-      ) : // Executes this line as the next step in the surrounding logic.
+      ) : // Continues the surrounding operation with this required value or expression.
+      // Executes this line as the next step in the surrounding logic.
       null}
       {/* Renders the button interface element or component. */}
       <button
@@ -644,17 +655,23 @@ export function SetupForm() {
       >
         {/* Executes this line as the next step in the surrounding logic. */}
         {submitting
-          ? // Executes this line as the next step in the surrounding logic.
+          ? // Continues the surrounding operation with this required value or expression.
+            // Executes this line as the next step in the surrounding logic.
             t('starting')
-          : // Executes this line as the next step in the surrounding logic.
+          : // Continues the surrounding operation with this required value or expression.
+            // Executes this line as the next step in the surrounding logic.
             mode === 'pass_and_play' && passAndPlayPhase === 'entry'
-            ? // Executes this line as the next step in the surrounding logic.
+            ? // Continues the surrounding operation with this required value or expression.
+              // Executes this line as the next step in the surrounding logic.
               t('confirmSecret')
-            : // Executes this line as the next step in the surrounding logic.
+            : // Continues the surrounding operation with this required value or expression.
+              // Executes this line as the next step in the surrounding logic.
               mode === 'pass_and_play'
-              ? // Executes this line as the next step in the surrounding logic.
+              ? // Continues the surrounding operation with this required value or expression.
+                // Executes this line as the next step in the surrounding logic.
                 t('beginBreakerTurn')
-              : // Executes this line as the next step in the surrounding logic.
+              : // Continues the surrounding operation with this required value or expression.
+                // Executes this line as the next step in the surrounding logic.
                 t('start')}
         {/* Closes the button interface element. */}
       </button>

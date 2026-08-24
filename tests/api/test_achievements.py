@@ -10,9 +10,6 @@ import pytest
 # Imports selected names from `mastermind_api.models` for use in this module.
 from mastermind_api.models import UserAchievement
 
-# Imports selected names from `sqlalchemy` for use in this module.
-from sqlalchemy import select
-
 # Imports selected names from `.conftest` for use in this module.
 from .conftest import APIContext
 
@@ -84,16 +81,18 @@ async def test_comeback_is_awarded_on_the_final_available_attempt(
     # Acquires this asynchronous managed resource for the nested operation.
     async with api.sessions() as session:
         # Computes and stores `achievement` for subsequent operations.
-        achievement = await session.scalar(
-            # Calls `select` with the supplied values.
-            select(UserAchievement).where(
-                # Supplies this item to the surrounding call or collection.
-                UserAchievement.user_id == api.current["principal"].user_id,
-                # Supplies this item to the surrounding call or collection.
-                UserAchievement.achievement_key == "comeback",
-                # Closes the multiline call, declaration, or collection started above.
-            )
-            # Closes the multiline call, declaration, or collection started above.
+        achievement = await session.find_one(
+            # Supplies this required nested value.
+            UserAchievement,
+            # Supplies this required nested value.
+            {
+                # Supplies this literal value to the surrounding declaration or call.
+                'user_id': api.current['principal'].user_id,
+                # Supplies this literal value to the surrounding declaration or call.
+                'achievement_key': 'comeback',
+            # Closes the multiline declaration, call, or collection opened above.
+            },
+        # Closes the multiline declaration, call, or collection opened above.
         )
     # Asserts this invariant so an unexpected test state fails immediately.
     assert achievement is not None

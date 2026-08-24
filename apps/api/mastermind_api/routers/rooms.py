@@ -43,15 +43,6 @@ from pydantic import ValidationError
 # Imports selected names from `redis.exceptions` for use in this module.
 from redis.exceptions import RedisError
 
-# Imports selected names from `sqlalchemy` for use in this module.
-from sqlalchemy import select
-
-# Imports selected names from `sqlalchemy.ext.asyncio` for use in this module.
-from sqlalchemy.ext.asyncio import AsyncSession
-
-# Imports selected names from `sqlalchemy.orm` for use in this module.
-from sqlalchemy.orm import selectinload
-
 # Imports selected names from `..auth` for use in this module.
 from ..auth import AuthPrincipal, get_current_user
 
@@ -65,7 +56,7 @@ from ..config import Settings, get_settings
 from ..crypto import SecretCipher
 
 # Imports selected names from `..database` for use in this module.
-from ..database import SessionFactory, get_session
+from ..database import MongoSession, SessionFactory, get_session
 
 # Imports selected names from `..dependencies` for use in this module.
 from ..dependencies import get_cipher
@@ -295,8 +286,13 @@ async def _refresh_connection(
 ) -> None:
     # Computes and stores `now` for subsequent operations.
     now = int(time.time())
+    # Computes and stores the oldest score that still represents a live connection.
+    cutoff = now - settings.websocket_connection_ttl_seconds
     # Computes and stores `pipeline` for subsequent operations.
     pipeline = redis.pipeline(transaction=True)
+    # Removes abandoned sockets before extending the lifetime of the connection sets.
+    pipeline.zremrangebyscore(user_key, '-inf', cutoff)
+    pipeline.zremrangebyscore(ip_key, '-inf', cutoff)
     # Calls `pipeline.zadd` with the supplied values.
     pipeline.zadd(user_key, {token: now}, xx=True)
     # Calls `pipeline.zadd` with the supplied values.
@@ -319,20 +315,26 @@ async def _release_connection(
     ip_key: str,
     # Declares the typed `token` data field.
     token: str,
+    # Declares the typed `settings` data field.
+    settings: Settings,
     # Completes the signature and declares the callable return type.
 ) -> int:
+    # Computes and stores the oldest score that still represents a live connection.
+    cutoff = int(time.time()) - settings.websocket_connection_ttl_seconds
     # Computes and stores `script` for subsequent operations.
     script = """
+    redis.call('ZREMRANGEBYSCORE', KEYS[1], '-inf', ARGV[2])
+    redis.call('ZREMRANGEBYSCORE', KEYS[2], '-inf', ARGV[2])
     redis.call('ZREM', KEYS[1], ARGV[1])
     redis.call('ZREM', KEYS[2], ARGV[1])
     return redis.call('ZCARD', KEYS[1])
     """
     # Returns this result to the caller and ends the current function.
-    return int(await redis.eval(script, 2, user_key, ip_key, token))
+    return int(await redis.eval(script, 2, user_key, ip_key, token, cutoff))
 
 
 # Defines the `require_rooms` callable and its typed interface.
-async def require_rooms(session: AsyncSession, settings: Settings) -> None:
+async def require_rooms(session: MongoSession, settings: Settings) -> None:
     # Checks this condition before executing the nested branch.
     if not await feature_enabled(session, settings, "multiplayer"):
         # Raises this exception to report an invalid or failed operation.
@@ -466,7 +468,7 @@ async def create_websocket_ticket_route(
     # Provides the `principal` parameter or keyword argument.
     principal: AuthPrincipal = Depends(get_current_user),
     # Provides the `session` parameter or keyword argument.
-    session: AsyncSession = Depends(get_session),
+    session: MongoSession = Depends(get_session),
     # Provides the `settings` parameter or keyword argument.
     settings: Settings = Depends(get_settings),
     # Completes the signature and declares the callable return type.
@@ -553,7 +555,7 @@ async def create_room_route(
     # Provides the `principal` parameter or keyword argument.
     principal: AuthPrincipal = Depends(get_current_user),
     # Provides the `session` parameter or keyword argument.
-    session: AsyncSession = Depends(get_session),
+    session: MongoSession = Depends(get_session),
     # Provides the `cipher` parameter or keyword argument.
     cipher: SecretCipher = Depends(get_cipher),
     # Provides the `settings` parameter or keyword argument.
@@ -610,7 +612,7 @@ async def join_room_route(
     # Provides the `principal` parameter or keyword argument.
     principal: AuthPrincipal = Depends(get_current_user),
     # Provides the `session` parameter or keyword argument.
-    session: AsyncSession = Depends(get_session),
+    session: MongoSession = Depends(get_session),
     # Provides the `cipher` parameter or keyword argument.
     cipher: SecretCipher = Depends(get_cipher),
     # Provides the `settings` parameter or keyword argument.
@@ -655,7 +657,7 @@ async def ready_room_route(
     # Provides the `principal` parameter or keyword argument.
     principal: AuthPrincipal = Depends(get_current_user),
     # Provides the `session` parameter or keyword argument.
-    session: AsyncSession = Depends(get_session),
+    session: MongoSession = Depends(get_session),
     # Provides the `cipher` parameter or keyword argument.
     cipher: SecretCipher = Depends(get_cipher),
     # Provides the `settings` parameter or keyword argument.
@@ -706,7 +708,7 @@ async def get_room_route(
     # Provides the `principal` parameter or keyword argument.
     principal: AuthPrincipal = Depends(get_current_user),
     # Provides the `session` parameter or keyword argument.
-    session: AsyncSession = Depends(get_session),
+    session: MongoSession = Depends(get_session),
     # Provides the `settings` parameter or keyword argument.
     settings: Settings = Depends(get_settings),
     # Completes the signature and declares the callable return type.
@@ -724,7 +726,7 @@ async def get_room_route(
 # Defines the `_record_event` callable and its typed interface.
 async def _record_event(
     # Declares the typed `session` data field.
-    session: AsyncSession,
+    session: MongoSession,
     # Declares the typed `room` data field.
     room: MultiplayerRoom,
     # Declares the typed `event_type` data field.
@@ -740,7 +742,7 @@ async def _record_event(
 # Defines the `_room_completion_event` callable and its typed interface.
 async def _room_completion_event(
     # Declares the typed `session` data field.
-    session: AsyncSession,
+    session: MongoSession,
     # Declares the typed `room` data field.
     room: MultiplayerRoom,
     # Declares the typed `reason` data field.
@@ -754,7 +756,7 @@ async def _room_completion_event(
 # Defines the `_lock_duel_attempt_state` callable and its typed interface.
 async def _lock_duel_attempt_state(
     # Declares the typed `session` data field.
-    session: AsyncSession,
+    session: MongoSession,
     # Declares the typed `room_id` data field.
     room_id: uuid.UUID,
     # Declares the typed `principal` data field.
@@ -791,20 +793,10 @@ async def _lock_duel_attempt_state(
         # Raises this exception to report an invalid or failed operation.
         raise APIError(409, "ROOM_NOT_ACTIVE", "This room is not accepting guesses.")
     # Computes and stores `game` for subsequent operations.
-    game = await session.scalar(
-        # Calls `select` with the supplied values.
-        select(GameSession)
-        # Executes this statement as the next step in the surrounding logic.
-        .options(selectinload(GameSession.attempts))
-        # Begins the nested block or multiline expression completed below.
-        .where(
-            # Supplies this item to the surrounding call or collection.
-            GameSession.room_id == room_id,
-            # Supplies this item to the surrounding call or collection.
-            GameSession.owner_id == principal.user_id,
-            # Closes the multiline call, declaration, or collection started above.
-        )
-        # Closes the multiline call, declaration, or collection started above.
+    game = await session.find_one(
+        # Supplies this required nested value.
+        GameSession, {'room_id': room_id, 'owner_id': principal.user_id}
+    # Closes the multiline declaration, call, or collection opened above.
     )
     # Checks this condition before executing the nested branch.
     if game is None:
@@ -817,7 +809,7 @@ async def _lock_duel_attempt_state(
 # Defines the `_submit_duel_attempt_transaction` callable and its typed interface.
 async def _submit_duel_attempt_transaction(
     # Declares the typed `session` data field.
-    session: AsyncSession,
+    session: MongoSession,
     # Declares the typed `room_id` data field.
     room_id: uuid.UUID,
     # Declares the typed `principal` data field.
@@ -909,15 +901,13 @@ async def _submit_duel_attempt_transaction(
         # Computes and stores `room.status` for subsequent operations.
         room.status = "completed"
     # Computes and stores `game_states` for subsequent operations.
-    game_states = (
-        # Waits for this asynchronous operation to complete.
-        await session.execute(
-            # Calls `select` with the supplied values.
-            select(GameSession.owner_id, GameSession.status).where(GameSession.room_id == room_id)
-            # Closes the multiline call, declaration, or collection started above.
-        )
-        # Executes this statement as the next step in the surrounding logic.
-    ).all()
+    game_states = [
+        # Supplies this required nested value.
+        (game.owner_id, game.status)
+        # Iterates over these values so each item receives the same processing.
+        for game in await session.find_many(GameSession, {'room_id': room_id})
+    # Closes the multiline declaration, call, or collection opened above.
+    ]
     # Computes and stores `terminal_statuses` for subsequent operations.
     terminal_statuses = {"won", "lost", "abandoned", "expired"}
     # Computes and stores `completed_reason` for subsequent operations.
@@ -1009,11 +999,7 @@ async def _finalize_room_after_tie_window(
     # Acquires this asynchronous managed resource for the nested operation.
     async with SessionFactory() as session:
         # Computes and stores `room` for subsequent operations.
-        room = await session.scalar(
-            # Calls `select` with the supplied values.
-            select(MultiplayerRoom).where(MultiplayerRoom.id == room_id).with_for_update()
-            # Closes the multiline call, declaration, or collection started above.
-        )
+        room = await session.get(MultiplayerRoom, room_id)
         # Checks this condition before executing the nested branch.
         if (
             # Executes this statement as the next step in the surrounding logic.
@@ -1189,16 +1175,12 @@ async def room_events(websocket: WebSocket, room_id: uuid.UUID) -> None:
             # Returns this result to the caller and ends the current function.
             return
         # Computes and stores `member_exists` for subsequent operations.
-        member_exists = await session.scalar(
-            # Calls `select` with the supplied values.
-            select(MultiplayerMember).where(
-                # Supplies this item to the surrounding call or collection.
-                MultiplayerMember.room_id == room.id,
-                # Supplies this item to the surrounding call or collection.
-                MultiplayerMember.user_id == principal.user_id,
-                # Closes the multiline call, declaration, or collection started above.
-            )
-            # Closes the multiline call, declaration, or collection started above.
+        member_exists = await session.find_one(
+            # Supplies this required nested value.
+            MultiplayerMember,
+            # Supplies this required nested value.
+            {'room_id': room.id, 'user_id': principal.user_id},
+        # Closes the multiline declaration, call, or collection opened above.
         )
         # Checks this condition before executing the nested branch.
         if member_exists is None:
@@ -1270,7 +1252,7 @@ async def room_events(websocket: WebSocket, room_id: uuid.UUID) -> None:
             # Supplies this item to the surrounding call or collection.
             allowed,
             # Supplies this item to the surrounding call or collection.
-            user_connection_count,
+            _user_connection_count,
             # Supplies this item to the surrounding call or collection.
             user_connection_key,
             # Supplies this item to the surrounding call or collection.
@@ -1329,6 +1311,8 @@ async def room_events(websocket: WebSocket, room_id: uuid.UUID) -> None:
                 ip_connection_key,
                 # Supplies this item to the surrounding call or collection.
                 connection_token,
+                # Supplies this item to the surrounding call or collection.
+                settings,
                 # Closes the multiline call, declaration, or collection started above.
             )
         # Waits for this asynchronous operation to complete.
@@ -1361,6 +1345,8 @@ async def room_events(websocket: WebSocket, room_id: uuid.UUID) -> None:
                     ip_connection_key,
                     # Supplies this item to the surrounding call or collection.
                     connection_token,
+                    # Supplies this item to the surrounding call or collection.
+                    settings,
                     # Closes the multiline call, declaration, or collection started above.
                 )
             # Waits for this asynchronous operation to complete.
@@ -1368,16 +1354,12 @@ async def room_events(websocket: WebSocket, room_id: uuid.UUID) -> None:
             # Returns this result to the caller and ends the current function.
             return
         # Computes and stores `member` for subsequent operations.
-        member = await presence_session.scalar(
-            # Calls `select` with the supplied values.
-            select(MultiplayerMember).where(
-                # Supplies this item to the surrounding call or collection.
-                MultiplayerMember.room_id == room.id,
-                # Supplies this item to the surrounding call or collection.
-                MultiplayerMember.user_id == principal.user_id,
-                # Closes the multiline call, declaration, or collection started above.
-            )
-            # Closes the multiline call, declaration, or collection started above.
+        member = await presence_session.find_one(
+            # Supplies this required nested value.
+            MultiplayerMember,
+            # Supplies this required nested value.
+            {'room_id': room.id, 'user_id': principal.user_id},
+        # Closes the multiline declaration, call, or collection opened above.
         )
         # Checks this condition before executing the nested branch.
         if member is None:
@@ -1399,6 +1381,8 @@ async def room_events(websocket: WebSocket, room_id: uuid.UUID) -> None:
                     ip_connection_key,
                     # Supplies this item to the surrounding call or collection.
                     connection_token,
+                    # Supplies this item to the surrounding call or collection.
+                    settings,
                     # Closes the multiline call, declaration, or collection started above.
                 )
             # Waits for this asynchronous operation to complete.
@@ -1409,22 +1393,14 @@ async def room_events(websocket: WebSocket, room_id: uuid.UUID) -> None:
         member.connected = True
         # Computes and stores `member.last_seen_at` for subsequent operations.
         member.last_seen_at = utcnow()
-        # Computes and stores `connected` for subsequent operations.
-        connected = None
-        # Checks this condition before executing the nested branch.
-        if user_connection_count == 1:
-            # Computes and stores `connected` for subsequent operations.
-            connected = await _record_event(
-                # Supplies this item to the surrounding call or collection.
-                presence_session,
-                # Supplies this item to the surrounding call or collection.
-                room,
-                # Supplies this item to the surrounding call or collection.
-                "presence",
-                # Supplies this item to the surrounding call or collection.
-                {"userId": str(principal.user_id), "connected": True},
-                # Closes the multiline call, declaration, or collection started above.
-            )
+        # Broadcasts every successful connection so observers recover from stale presence state.
+        connected = _server_event(
+            # Supplies this item to the surrounding call or collection.
+            "presence",
+            # Supplies this item to the surrounding call or collection.
+            {"userId": str(principal.user_id), "connected": True},
+            # Closes the multiline call, declaration, or collection started above.
+        )
         # Waits for this asynchronous operation to complete.
         await presence_session.commit()
         # Computes and stores `snapshot` for subsequent operations.
@@ -1441,28 +1417,22 @@ async def room_events(websocket: WebSocket, room_id: uuid.UUID) -> None:
         # Acquires this asynchronous managed resource for the nested operation.
         async with SessionFactory() as replay_session:
             # Computes and stores `replay_events` for subsequent operations.
-            replay_events = list(
-                # Waits for this asynchronous operation to complete.
-                await replay_session.scalars(
-                    # Calls `select` with the supplied values.
-                    select(MultiplayerEvent)
-                    # Begins the nested block or multiline expression completed below.
-                    .where(
-                        # Supplies this item to the surrounding call or collection.
-                        MultiplayerEvent.room_id == room_id,
-                        # Supplies this item to the surrounding call or collection.
-                        MultiplayerEvent.sequence > after,
-                        # Supplies this item to the surrounding call or collection.
-                        MultiplayerEvent.sequence <= snapshot_sequence,
-                        # Closes the multiline call, declaration, or collection started above.
-                    )
-                    # Executes this statement as the next step in the surrounding logic.
-                    .order_by(MultiplayerEvent.sequence)
-                    # Executes this statement as the next step in the surrounding logic.
-                    .limit(MAX_REPLAY_EVENTS + 1)
-                    # Closes the multiline call, declaration, or collection started above.
-                )
-                # Closes the multiline call, declaration, or collection started above.
+            replay_events = await replay_session.find_many(
+                # Supplies this required nested value.
+                MultiplayerEvent,
+                # Supplies this required nested value.
+                {
+                    # Supplies this literal value to the surrounding declaration or call.
+                    'room_id': room_id,
+                    # Supplies this literal value to the surrounding declaration or call.
+                    'sequence': {'$gt': after, '$lte': snapshot_sequence},
+                # Closes the multiline declaration, call, or collection opened above.
+                },
+                # Stores `sort` because later steps depend on this value.
+                sort=[('sequence', 1)],
+                # Stores `limit` because later steps depend on this value.
+                limit=MAX_REPLAY_EVENTS + 1,
+            # Closes the multiline declaration, call, or collection opened above.
             )
             # Computes and stores `replay_gap` for subsequent operations.
             replay_gap = replay_gap or len(replay_events) > MAX_REPLAY_EVENTS
@@ -1646,16 +1616,12 @@ async def room_events(websocket: WebSocket, room_id: uuid.UUID) -> None:
                 # Acquires this asynchronous managed resource for the nested operation.
                 async with SessionFactory() as heartbeat_session:
                     # Computes and stores `heartbeat_member` for subsequent operations.
-                    heartbeat_member = await heartbeat_session.scalar(
-                        # Calls `select` with the supplied values.
-                        select(MultiplayerMember).where(
-                            # Supplies this item to the surrounding call or collection.
-                            MultiplayerMember.room_id == room_id,
-                            # Supplies this item to the surrounding call or collection.
-                            MultiplayerMember.user_id == principal.user_id,
-                            # Closes the multiline call, declaration, or collection started above.
-                        )
-                        # Closes the multiline call, declaration, or collection started above.
+                    heartbeat_member = await heartbeat_session.find_one(
+                        # Supplies this required nested value.
+                        MultiplayerMember,
+                        # Supplies this required nested value.
+                        {'room_id': room_id, 'user_id': principal.user_id},
+                    # Closes the multiline declaration, call, or collection opened above.
                     )
                     # Checks this condition before executing the nested branch.
                     if heartbeat_member:
@@ -1874,6 +1840,8 @@ async def room_events(websocket: WebSocket, room_id: uuid.UUID) -> None:
                 ip_connection_key,
                 # Supplies this item to the surrounding call or collection.
                 connection_token,
+                # Supplies this item to the surrounding call or collection.
+                settings,
                 # Closes the multiline call, declaration, or collection started above.
             )
         # Checks this condition before executing the nested branch.
@@ -1903,16 +1871,12 @@ async def room_events(websocket: WebSocket, room_id: uuid.UUID) -> None:
                 # Checks this condition before executing the nested branch.
                 if closing_room is not None:
                     # Computes and stores `close_member` for subsequent operations.
-                    close_member = await close_session.scalar(
-                        # Calls `select` with the supplied values.
-                        select(MultiplayerMember).where(
-                            # Supplies this item to the surrounding call or collection.
-                            MultiplayerMember.room_id == room_id,
-                            # Supplies this item to the surrounding call or collection.
-                            MultiplayerMember.user_id == principal.user_id,
-                            # Closes the multiline call, declaration, or collection started above.
-                        )
-                        # Closes the multiline call, declaration, or collection started above.
+                    close_member = await close_session.find_one(
+                        # Supplies this required nested value.
+                        MultiplayerMember,
+                        # Supplies this required nested value.
+                        {'room_id': room_id, 'user_id': principal.user_id},
+                    # Closes the multiline declaration, call, or collection opened above.
                     )
                     # Checks this condition before executing the nested branch.
                     if close_member:
@@ -1921,11 +1885,7 @@ async def room_events(websocket: WebSocket, room_id: uuid.UUID) -> None:
                         # Computes and stores `close_member.last_seen_at` for subsequent operations.
                         close_member.last_seen_at = utcnow()
                     # Computes and stores `disconnect_event` for subsequent operations.
-                    disconnect_event = await _record_event(
-                        # Supplies this item to the surrounding call or collection.
-                        close_session,
-                        # Supplies this item to the surrounding call or collection.
-                        closing_room,
+                    disconnect_event = _server_event(
                         # Supplies this item to the surrounding call or collection.
                         "presence",
                         # Supplies this item to the surrounding call or collection.

@@ -1023,23 +1023,31 @@ test.describe('real product flows', () => {
 
       // Computes and stores creatorResult for subsequent operations.
       const creatorResult = finalCreatorRoom!.isTie
-        ? // Executes this line as the next step in the surrounding logic.
+        ? // Continues the surrounding operation with this required value or expression.
+          // Executes this line as the next step in the surrounding logic.
           'The duel ended in a tie'
-        : // Executes this line as the next step in the surrounding logic.
+        : // Continues the surrounding operation with this required value or expression.
+          // Executes this line as the next step in the surrounding logic.
           finalCreatorRoom!.winnerId === creatorSession.profile.id
-          ? // Executes this line as the next step in the surrounding logic.
+          ? // Continues the surrounding operation with this required value or expression.
+            // Executes this line as the next step in the surrounding logic.
             'You won the duel'
-          : // Executes this line as the next step in the surrounding logic.
+          : // Continues the surrounding operation with this required value or expression.
+            // Executes this line as the next step in the surrounding logic.
             'Your opponent won the duel';
       // Computes and stores opponentResult for subsequent operations.
       const opponentResult = finalCreatorRoom!.isTie
-        ? // Executes this line as the next step in the surrounding logic.
+        ? // Continues the surrounding operation with this required value or expression.
+          // Executes this line as the next step in the surrounding logic.
           'The duel ended in a tie'
-        : // Executes this line as the next step in the surrounding logic.
+        : // Continues the surrounding operation with this required value or expression.
+          // Executes this line as the next step in the surrounding logic.
           finalCreatorRoom!.winnerId === opponentSession.profile.id
-          ? // Executes this line as the next step in the surrounding logic.
+          ? // Continues the surrounding operation with this required value or expression.
+            // Executes this line as the next step in the surrounding logic.
             'You won the duel'
-          : // Executes this line as the next step in the surrounding logic.
+          : // Continues the surrounding operation with this required value or expression.
+            // Executes this line as the next step in the surrounding logic.
             'Your opponent won the duel';
       // Waits for this asynchronous operation to complete.
       await Promise.all([

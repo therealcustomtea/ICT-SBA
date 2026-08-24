@@ -27,6 +27,4 @@ fi
 # Runs this container operation for the local development stack.
 docker compose down --volumes --remove-orphans
 # Runs this container operation for the local development stack.
-docker compose up -d --wait postgres redis
-# Runs this container operation for the local development stack.
-docker compose run --rm migrate
+docker compose up -d --wait mongo redis mailpit

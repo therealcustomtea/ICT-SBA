@@ -1,626 +1,462 @@
-# Defers type-annotation evaluation to support modern hints safely.
+# Defers annotation evaluation so modern type hints remain safe at runtime.
 from __future__ import annotations
 
-# Imports `base64` so the module can use that dependency.
+# Imports `base64` because this module uses that dependency.
 import base64
 
-# Imports `ipaddress` so the module can use that dependency.
-import ipaddress
-
-# Imports `json` so the module can use that dependency.
+# Imports `json` because this module uses that dependency.
 import json
 
-# Imports `os` so the module can use that dependency.
+# Imports `os` because this module uses that dependency.
 import os
 
-# Imports `re` so the module can use that dependency.
+# Imports `re` because this module uses that dependency.
 import re
 
-# Imports selected names from `functools` for use in this module.
+# Imports the required names from `functools` for this module.
 from functools import lru_cache
 
-# Imports selected names from `pathlib` for use in this module.
-from pathlib import PurePosixPath
-
-# Imports selected names from `typing` for use in this module.
+# Imports the required names from `typing` for this module.
 from typing import Literal
 
-# Imports selected names from `urllib.parse` for use in this module.
-from urllib.parse import parse_qs, urlparse
+# Imports the required names from `urllib.parse` for this module.
+from urllib.parse import urlparse
 
-# Imports selected names from `pydantic` for use in this module.
+# Imports the required names from `pydantic` for this module.
 from pydantic import Field, field_validator, model_validator
 
-# Imports selected names from `pydantic_settings` for use in this module.
+# Imports the required names from `pydantic_settings` for this module.
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
-
-# Defines the `postgres_verify_full_root_certificate` callable and its typed interface.
-def postgres_verify_full_root_certificate(value: str) -> str:
-    # Documents the purpose or contract of this module, class, or function.
-    """Return the explicit CA source for a verify-full asyncpg URL."""
-
-    # Computes and stores `parsed` for subsequent operations.
-    parsed = urlparse(value)
-    # Computes and stores `query` for subsequent operations.
-    query = parse_qs(parsed.query, keep_blank_values=True)
-    # Checks this condition before executing the nested branch.
-    if query.get("ssl") != ["verify-full"]:
-        # Raises this exception to report an invalid or failed operation.
-        raise ValueError(
-            # Executes this statement as the next step in the surrounding logic.
-            "Production PostgreSQL must verify TLS with the URL option ssl=verify-full."
-            # Closes the multiline call, declaration, or collection started above.
-        )
-    # Computes and stores `root_certificates` for subsequent operations.
-    root_certificates = query.get("sslrootcert")
-    # Checks this condition before executing the nested branch.
-    if root_certificates is None or len(root_certificates) != 1:
-        # Raises this exception to report an invalid or failed operation.
-        raise ValueError("Production PostgreSQL must configure exactly one sslrootcert CA source.")
-    # Computes and stores `root_certificate` for subsequent operations.
-    root_certificate = root_certificates[0]
-    # Checks this condition before executing the nested branch.
-    if root_certificate != "system" and not PurePosixPath(root_certificate).is_absolute():
-        # Raises this exception to report an invalid or failed operation.
-        raise ValueError(
-            # Executes this statement as the next step in the surrounding logic.
-            "Production PostgreSQL sslrootcert must be 'system' or an absolute CA path."
-            # Closes the multiline call, declaration, or collection started above.
-        )
-    # Returns this result to the caller and ends the current function.
-    return root_certificate
-
-
-# Defines the `validate_deployed_postgres_url` callable and its typed interface.
-def validate_deployed_postgres_url(value: str, *, allow_placeholder: bool = False) -> None:
-    # Documents the purpose or contract of this module, class, or function.
-    """Require a remote asyncpg endpoint with an explicit verified CA source."""
-
-    # Computes and stores `parsed` for subsequent operations.
-    parsed = urlparse(value)
-    # Checks this condition before executing the nested branch.
-    if parsed.scheme != "postgresql+asyncpg":
-        # Raises this exception to report an invalid or failed operation.
-        raise ValueError("Production requires PostgreSQL through the asyncpg driver.")
-    # Checks this condition before executing the nested branch.
-    if parsed.hostname in {None, "localhost", "127.0.0.1", "::1"}:
-        # Raises this exception to report an invalid or failed operation.
-        raise ValueError("Production PostgreSQL cannot use a local development host.")
-    # Calls `postgres_verify_full_root_certificate` with the supplied values.
-    postgres_verify_full_root_certificate(value)
-    # Checks this condition before executing the nested branch.
-    if not allow_placeholder and _uses_placeholder_endpoint(value):
-        # Raises this exception to report an invalid or failed operation.
-        raise ValueError("Production PostgreSQL cannot use a placeholder endpoint.")
-
-
-# Computes and stores `_PLACEHOLDER_HOSTS` for subsequent operations.
-_PLACEHOLDER_HOSTS = {
-    # Supplies this item to the surrounding call or collection.
-    "example.com",
-    # Supplies this item to the surrounding call or collection.
-    "example.net",
-    # Supplies this item to the surrounding call or collection.
-    "example.org",
-    # Supplies this item to the surrounding call or collection.
-    "localhost",
-    # Supplies this item to the surrounding call or collection.
-    "project.supabase.co",
-    # Supplies this item to the surrounding call or collection.
-    "test.supabase.co",
-    # Closes the multiline call, declaration, or collection started above.
-}
-# Computes and stores `_PLACEHOLDER_HOST_SUFFIXES` for subsequent operations.
-_PLACEHOLDER_HOST_SUFFIXES = (
-    # Supplies this item to the surrounding call or collection.
-    ".example",
-    # Supplies this item to the surrounding call or collection.
-    ".example.com",
-    # Supplies this item to the surrounding call or collection.
-    ".example.net",
-    # Supplies this item to the surrounding call or collection.
-    ".example.org",
-    # Supplies this item to the surrounding call or collection.
-    ".invalid",
-    # Supplies this item to the surrounding call or collection.
-    ".localhost",
-    # Supplies this item to the surrounding call or collection.
-    ".test",
-    # Closes the multiline call, declaration, or collection started above.
-)
-# Computes and stores `_PLACEHOLDER_SECRET_MARKERS` for subsequent operations.
-_PLACEHOLDER_SECRET_MARKERS = (
-    # Supplies this item to the surrounding call or collection.
-    "change-me",
-    # Supplies this item to the surrounding call or collection.
-    "changeme",
-    # Supplies this item to the surrounding call or collection.
-    "ci-only",
-    # Supplies this item to the surrounding call or collection.
-    "dummy",
-    # Supplies this item to the surrounding call or collection.
-    "example",
-    # Supplies this item to the surrounding call or collection.
-    "placeholder",
-    # Supplies this item to the surrounding call or collection.
-    "replace-me",
-    # Supplies this item to the surrounding call or collection.
-    "server-only",
-    # Supplies this item to the surrounding call or collection.
-    "service-role-material",
-    # Closes the multiline call, declaration, or collection started above.
+# Stores `_PLACEHOLDER_MARKERS` because later steps depend on this value.
+_PLACEHOLDER_MARKERS = (
+    # Supplies this literal value to the surrounding declaration or call.
+    'change-me',
+    # Supplies this literal value to the surrounding declaration or call.
+    'changeme',
+    # Supplies this literal value to the surrounding declaration or call.
+    'dummy',
+    # Supplies this literal value to the surrounding declaration or call.
+    'example',
+    # Supplies this literal value to the surrounding declaration or call.
+    'placeholder',
+    # Supplies this literal value to the surrounding declaration or call.
+    'replace-me',
+# Closes the multiline declaration, call, or collection opened above.
 )
 
 
-# Defines the `_uses_placeholder_endpoint` callable and its typed interface.
-def _uses_placeholder_endpoint(value: str) -> bool:
-    # Computes and stores `hostname` for subsequent operations.
-    hostname = (urlparse(value).hostname or "").lower().rstrip(".")
-    # Starts a protected operation whose expected failures are handled below.
-    try:
-        # Computes and stores `address` for subsequent operations.
-        address = ipaddress.ip_address(hostname)
-    # Handles the listed exception so failure remains controlled.
-    except ValueError:
-        # Computes and stores `address` for subsequent operations.
-        address = None
-    # Returns this result to the caller and ends the current function.
-    return bool(
-        # Executes this statement as the next step in the surrounding logic.
-        (address and (address.is_loopback or address.is_unspecified))
-        # Executes this statement as the next step in the surrounding logic.
-        or hostname in _PLACEHOLDER_HOSTS
-        # Executes this statement as the next step in the surrounding logic.
-        or hostname.endswith(_PLACEHOLDER_HOST_SUFFIXES)
-        # Closes the multiline call, declaration, or collection started above.
-    )
-
-
-# Defines the `_is_exact_https_origin` callable and its typed interface.
+# Defines this callable to implement the operation described by its name.
 def _is_exact_https_origin(value: str) -> bool:
-    # Computes and stores `parsed` for subsequent operations.
+    # Stores `parsed` because later steps depend on this value.
     parsed = urlparse(value)
-    # Returns this result to the caller and ends the current function.
+    # Returns the computed result and ends the current callable.
     return bool(
-        # Executes this statement as the next step in the surrounding logic.
-        parsed.scheme == "https"
-        # Executes this statement as the next step in the surrounding logic.
+        # Stores `parsed.scheme` because later steps depend on this value.
+        parsed.scheme == 'https'
+        # Supplies this required nested value.
         and parsed.hostname
-        # Executes this statement as the next step in the surrounding logic.
+        # Supplies this required nested value.
         and parsed.username is None
-        # Executes this statement as the next step in the surrounding logic.
+        # Supplies this required nested value.
         and parsed.password is None
-        # Executes this statement as the next step in the surrounding logic.
-        and parsed.path in {"", "/"}
-        # Executes this statement as the next step in the surrounding logic.
+        # Supplies this required nested value.
+        and parsed.path in {'', '/'}
+        # Supplies this required nested value.
         and not parsed.params
-        # Executes this statement as the next step in the surrounding logic.
+        # Supplies this required nested value.
         and not parsed.query
-        # Executes this statement as the next step in the surrounding logic.
+        # Supplies this required nested value.
         and not parsed.fragment
-        # Closes the multiline call, declaration, or collection started above.
+    # Closes the multiline declaration, call, or collection opened above.
     )
 
 
-# Defines the `_uses_placeholder_service_key` callable and its typed interface.
-def _uses_placeholder_service_key(value: str) -> bool:
-    # Computes and stores `normalized` for subsequent operations.
+# Defines this callable to implement the operation described by its name.
+def _looks_placeholder(value: str) -> bool:
+    # Stores `normalized` because later steps depend on this value.
     normalized = value.strip().lower()
-    # Returns this result to the caller and ends the current function.
-    return any(marker in normalized for marker in _PLACEHOLDER_SECRET_MARKERS) or (
-        # Calls `bool` with the supplied values.
+    # Returns the computed result and ends the current callable.
+    return any(marker in normalized for marker in _PLACEHOLDER_MARKERS) or (
+        # Supplies this required nested value.
         bool(normalized) and len(set(normalized)) == 1
-        # Closes the multiline call, declaration, or collection started above.
+    # Closes the multiline declaration, call, or collection opened above.
     )
 
 
-# Defines the `Settings` class and its related behavior.
+# Groups the state and behavior owned by `Settings`.
 class Settings(BaseSettings):
-    # Computes and stores `model_config` for subsequent operations.
+    # Stores `model_config` because later steps depend on this value.
     model_config = SettingsConfigDict(
-        # Provides the `env_file` parameter or keyword argument.
-        env_file=".env",
-        # Provides the `env_prefix` parameter or keyword argument.
-        env_prefix="MASTERMIND_",
-        # Provides the `case_sensitive` parameter or keyword argument.
+        # Stores `env_file` because later steps depend on this value.
+        env_file='.env',
+        # Stores `env_prefix` because later steps depend on this value.
+        env_prefix='MASTERMIND_',
+        # Stores `case_sensitive` because later steps depend on this value.
         case_sensitive=False,
-        # Provides the `extra` parameter or keyword argument.
-        extra="ignore",
-        # Closes the multiline call, declaration, or collection started above.
+        # Stores `extra` because later steps depend on this value.
+        extra='ignore',
+    # Closes the multiline declaration, call, or collection opened above.
     )
 
-    # Computes and stores `environment` for subsequent operations.
-    environment: Literal["development", "test", "staging", "production"] = "development"
-    # Computes and stores `product_name` for subsequent operations.
-    product_name: str = Field(default="Cipherboard", min_length=1, max_length=64)
-    # Computes and stores `database_url` for subsequent operations.
-    database_url: str = "postgresql+asyncpg://mastermind:mastermind@localhost:5432/mastermind"
-    # Computes and stores `redis_url` for subsequent operations.
-    redis_url: str | None = "redis://localhost:6379/0"
-    # Computes and stores `allowed_origins` for subsequent operations.
-    allowed_origins: tuple[str, ...] = ("http://localhost:3000",)
-    # Computes and stores `supabase_url` for subsequent operations.
-    supabase_url: str = ""
-    # Computes and stores `supabase_service_role_key` for subsequent operations.
-    supabase_service_role_key: str = ""
-    # Computes and stores `supabase_jwt_audience` for subsequent operations.
-    supabase_jwt_audience: str = "authenticated"
-    # Computes and stores `secret_encryption_keys` for subsequent operations.
-    secret_encryption_keys: str = ""
-    # Computes and stores `secret_active_key_version` for subsequent operations.
-    secret_active_key_version: str = "v1"
-    # Computes and stores `daily_hmac_key` for subsequent operations.
-    daily_hmac_key: str = ""
-    # Computes and stores `daily_hmac_keys` for subsequent operations.
-    daily_hmac_keys: str = ""
-    # Computes and stores `daily_hmac_active_key_version` for subsequent operations.
-    daily_hmac_active_key_version: str = "v1"
-    # Computes and stores `public_identifier_hmac_key` for subsequent operations.
-    public_identifier_hmac_key: str = ""
-    # Computes and stores `trusted_proxy_ips` for subsequent operations.
+    # Stores `environment` because later steps depend on this value.
+    environment: Literal['development', 'test', 'staging', 'production'] = 'development'
+    # Stores `product_name` because later steps depend on this value.
+    product_name: str = Field(default='Cipherboard', min_length=1, max_length=64)
+    # Stores `release` because later steps depend on this value.
+    release: str = 'development'
+
+    # Stores `mongodb_url` because later steps depend on this value.
+    mongodb_url: str = 'mongodb://localhost:27017/?replicaSet=rs0'
+    # Stores `mongodb_database` because later steps depend on this value.
+    mongodb_database: str = 'mastermind'
+    # Stores `redis_url` because later steps depend on this value.
+    redis_url: str | None = 'redis://localhost:6379/0'
+    # Stores `allowed_origins` because later steps depend on this value.
+    allowed_origins: tuple[str, ...] = ('http://localhost:3000',)
+    # Stores `product_origin` because later steps depend on this value.
+    product_origin: str = 'http://localhost:3000'
+    # Stores `trusted_proxy_ips` because later steps depend on this value.
     trusted_proxy_ips: tuple[str, ...] = ()
-    # Computes and stores `admin_recent_auth_seconds` for subsequent operations.
+
+    # Stores `auth_issuer` because later steps depend on this value.
+    auth_issuer: str = 'http://localhost:8000'
+    # Stores `auth_audience` because later steps depend on this value.
+    auth_audience: str = 'cipherboard-web'
+    # Stores `auth_signing_key` because later steps depend on this value.
+    auth_signing_key: str = ''
+    # Stores `auth_access_token_seconds` because later steps depend on this value.
+    auth_access_token_seconds: int = Field(default=600, ge=300, le=3600)
+    # Stores `auth_refresh_token_days` because later steps depend on this value.
+    auth_refresh_token_days: int = Field(default=30, ge=1, le=90)
+    # Stores `auth_email_token_seconds` because later steps depend on this value.
+    auth_email_token_seconds: int = Field(default=900, ge=300, le=3600)
+    # Stores `auth_cookie_name` because later steps depend on this value.
+    auth_cookie_name: str = 'cipherboard_refresh'
+    # Stores `auth_cookie_secure` because later steps depend on this value.
+    auth_cookie_secure: bool = False
+    # Stores `auth_cookie_samesite` because later steps depend on this value.
+    auth_cookie_samesite: Literal['lax', 'strict', 'none'] = 'lax'
+    # Stores `auth_email_sender` because later steps depend on this value.
+    auth_email_sender: str = 'Cipherboard <noreply@localhost.invalid>'
+    # Stores `smtp_host` because later steps depend on this value.
+    smtp_host: str = 'localhost'
+    # Stores `smtp_port` because later steps depend on this value.
+    smtp_port: int = Field(default=1025, ge=1, le=65535)
+    # Stores `smtp_username` because later steps depend on this value.
+    smtp_username: str = ''
+    # Stores `smtp_password` because later steps depend on this value.
+    smtp_password: str = ''
+    # Stores `smtp_starttls` because later steps depend on this value.
+    smtp_starttls: bool = False
+
+    # Stores `secret_encryption_keys` because later steps depend on this value.
+    secret_encryption_keys: str = ''
+    # Stores `secret_active_key_version` because later steps depend on this value.
+    secret_active_key_version: str = 'v1'
+    # Stores `daily_hmac_key` because later steps depend on this value.
+    daily_hmac_key: str = ''
+    # Stores `daily_hmac_keys` because later steps depend on this value.
+    daily_hmac_keys: str = ''
+    # Stores `daily_hmac_active_key_version` because later steps depend on this value.
+    daily_hmac_active_key_version: str = 'v1'
+    # Stores `public_identifier_hmac_key` because later steps depend on this value.
+    public_identifier_hmac_key: str = ''
+
+    # Stores `admin_recent_auth_seconds` because later steps depend on this value.
     admin_recent_auth_seconds: int = Field(default=900, ge=60, le=3600)
-    # Computes and stores `request_body_limit_bytes` for subsequent operations.
+    # Stores `request_body_limit_bytes` because later steps depend on this value.
     request_body_limit_bytes: int = Field(default=65_536, ge=1024, le=1_048_576)
-    # Computes and stores `request_timeout_seconds` for subsequent operations.
+    # Stores `request_timeout_seconds` because later steps depend on this value.
     request_timeout_seconds: int = Field(default=15, ge=1, le=120)
-    # Computes and stores `rate_limit_per_minute` for subsequent operations.
+    # Stores `rate_limit_per_minute` because later steps depend on this value.
     rate_limit_per_minute: int = Field(default=120, ge=10, le=10_000)
-    # Computes and stores `room_tie_window_ms` for subsequent operations.
+    # Stores `room_tie_window_ms` because later steps depend on this value.
     room_tie_window_ms: int = Field(default=250, ge=50, le=2000)
-    # Computes and stores `websocket_frame_limit_bytes` for subsequent operations.
+    # Stores `websocket_frame_limit_bytes` because later steps depend on this value.
     websocket_frame_limit_bytes: int = Field(default=4096, ge=1024, le=4096)
-    # Computes and stores `websocket_user_connection_limit` for subsequent operations.
+    # Stores `websocket_user_connection_limit` because later steps depend on this value.
     websocket_user_connection_limit: int = Field(default=3, ge=1, le=20)
-    # Computes and stores `websocket_ip_connection_limit` for subsequent operations.
+    # Stores `websocket_ip_connection_limit` because later steps depend on this value.
     websocket_ip_connection_limit: int = Field(default=20, ge=1, le=200)
-    # Computes and stores `websocket_connection_ttl_seconds` for subsequent operations.
+    # Stores `websocket_connection_ttl_seconds` because later steps depend on this value.
     websocket_connection_ttl_seconds: int = Field(default=90, ge=60, le=300)
-    # Computes and stores `config_scope` for subsequent operations.
-    config_scope: Literal["application", "migration", "ci_validation"] = "application"
-    # Computes and stores `release` for subsequent operations.
-    release: str = "development"
-    # Computes and stores `log_level` for subsequent operations.
-    log_level: str = "INFO"
-    # Computes and stores `metrics_enabled` for subsequent operations.
+    # Stores `log_level` because later steps depend on this value.
+    log_level: str = 'INFO'
+    # Stores `metrics_enabled` because later steps depend on this value.
     metrics_enabled: bool = True
-    # Computes and stores `error_reporting_url` for subsequent operations.
-    error_reporting_url: str = ""
-    # Computes and stores `error_reporting_token` for subsequent operations.
-    error_reporting_token: str = ""
-    # Computes and stores `feature_daily` for subsequent operations.
+    # Stores `error_reporting_url` because later steps depend on this value.
+    error_reporting_url: str = ''
+    # Stores `error_reporting_token` because later steps depend on this value.
+    error_reporting_token: str = ''
+    # Stores `feature_daily` because later steps depend on this value.
     feature_daily: bool = True
-    # Computes and stores `feature_leaderboards` for subsequent operations.
+    # Stores `feature_leaderboards` because later steps depend on this value.
     feature_leaderboards: bool = True
-    # Computes and stores `feature_friend_challenges` for subsequent operations.
+    # Stores `feature_friend_challenges` because later steps depend on this value.
     feature_friend_challenges: bool = True
-    # Computes and stores `feature_multiplayer` for subsequent operations.
+    # Stores `feature_multiplayer` because later steps depend on this value.
     feature_multiplayer: bool = True
-    # Computes and stores `feature_achievements` for subsequent operations.
+    # Stores `feature_achievements` because later steps depend on this value.
     feature_achievements: bool = True
-    # Computes and stores `feature_account_registration` for subsequent operations.
+    # Stores `feature_account_registration` because later steps depend on this value.
     feature_account_registration: bool = True
-    # Computes and stores `feature_analytics` for subsequent operations.
+    # Stores `feature_analytics` because later steps depend on this value.
     feature_analytics: bool = False
 
-    # Applies `@field_validator("database_url")` to configure the declaration immediately below.
-    @field_validator("database_url")
-    # Applies `@classmethod` to configure the declaration immediately below.
+    # Applies this decorator to configure the declaration immediately below.
+    @field_validator('auth_issuer')
+    # Applies this decorator to configure the declaration immediately below.
     @classmethod
-    # Defines the `normalize_database_scheme` callable and its typed interface.
-    def normalize_database_scheme(cls, value: str) -> str:
-        # Checks this condition before executing the nested branch.
-        if value.startswith("postgres://"):
-            # Returns this result to the caller and ends the current function.
-            return value.replace("postgres://", "postgresql+asyncpg://", 1)
-        # Checks this condition before executing the nested branch.
-        if value.startswith("postgresql://"):
-            # Returns this result to the caller and ends the current function.
-            return value.replace("postgresql://", "postgresql+asyncpg://", 1)
-        # Returns this result to the caller and ends the current function.
-        return value
+    # Defines this callable to implement the operation described by its name.
+    def normalize_auth_issuer(cls, value: str) -> str:
+        # Returns the computed result and ends the current callable.
+        return value.rstrip('/')
 
-    # Applies `@model_validator(mode="after")` to configure the declaration immediately below.
-    @model_validator(mode="after")
-    # Defines the `validate_production` callable and its typed interface.
-    def validate_production(self) -> Settings:
-        # Checks this condition before executing the nested branch.
+    # Applies this decorator to configure the declaration immediately below.
+    @model_validator(mode='after')
+    # Defines this callable to implement the operation described by its name.
+    def validate_configuration(self) -> Settings:
+        # Guards the nested operation so it runs only when this condition is satisfied.
         if bool(self.error_reporting_url) != bool(self.error_reporting_token):
-            # Raises this exception to report an invalid or failed operation.
+            # Raises this error so invalid state cannot continue silently.
             raise ValueError(
-                # Executes this statement as the next step in the surrounding logic.
-                "MASTERMIND_ERROR_REPORTING_URL and MASTERMIND_ERROR_REPORTING_TOKEN "
-                # Executes this statement as the next step in the surrounding logic.
-                "must be configured together."
-                # Closes the multiline call, declaration, or collection started above.
+                # Supplies this literal value to the surrounding declaration or call.
+                'MASTERMIND_ERROR_REPORTING_URL and MASTERMIND_ERROR_REPORTING_TOKEN '
+                # Supplies this literal value to the surrounding declaration or call.
+                'must be configured together.'
+            # Closes the multiline declaration, call, or collection opened above.
             )
-        # Checks this condition before executing the nested branch.
-        if self.error_reporting_url and not self.error_reporting_url.startswith("https://"):
-            # Raises this exception to report an invalid or failed operation.
-            raise ValueError("The error-reporting endpoint must use HTTPS.")
-        # Checks this condition before executing the nested branch.
+        # Guards the nested operation so it runs only when this condition is satisfied.
+        if self.error_reporting_url and not self.error_reporting_url.startswith('https://'):
+            # Raises this error so invalid state cannot continue silently.
+            raise ValueError('The error-reporting endpoint must use HTTPS.')
+        # Guards the nested operation so it runs only when this condition is satisfied.
+        if self.auth_cookie_samesite == 'none' and not self.auth_cookie_secure:
+            # Raises this error so invalid state cannot continue silently.
+            raise ValueError('SameSite=None authentication cookies must be Secure.')
+        # Guards the nested operation so it runs only when this condition is satisfied.
         if self.secret_encryption_keys:
-            # Computes and stores `encryption_keys` for subsequent operations.
-            encryption_keys = self.secret_encryption_keyring()
-            # Checks this condition before executing the nested branch.
-            if self.environment in {"staging", "production"} and any(
-                # Calls `len` with the supplied values.
-                len(key) != 32
-                # Continues the surrounding expression or operation.
-                for key in encryption_keys.values()
-                # Begins the nested block or multiline expression completed below.
-            ):
-                # Raises this exception to report an invalid or failed operation.
-                raise ValueError("Every deployed AES-GCM key must decode to exactly 32 bytes.")
-        # Checks this condition before executing the nested branch.
-        if self.config_scope == "migration":
-            # Checks this condition before executing the nested branch.
-            if self.environment not in {"staging", "production"}:
-                # Raises this exception to report an invalid or failed operation.
-                raise ValueError(
-                    # Executes this statement as the next step in the surrounding logic.
-                    "Migration-only configuration is restricted to deployed environments."
-                    # Closes the multiline call, declaration, or collection started above.
-                )
-            # Returns this result to the caller and ends the current function.
-            return self
-        # Executes this statement as the next step in the surrounding logic.
-        ci_validation = self.config_scope == "ci_validation"
-        # Checks this condition before executing the nested branch.
-        if ci_validation and (
-            # Executes this statement as the next step in the surrounding logic.
-            self.environment != "production"
-            # Executes this statement as the next step in the surrounding logic.
-            or os.getenv("CI", "").lower() != "true"
-            # Executes this statement as the next step in the surrounding logic.
-            or os.getenv("GITHUB_ACTIONS", "").lower() != "true"
-            # Executes this statement as the next step in the surrounding logic.
-            or re.fullmatch(r"ci-[0-9a-f]{40}", self.release) is None
-            # Begins the nested block or multiline expression completed below.
-        ):
-            # Raises this exception to report an invalid or failed operation.
-            raise ValueError(
-                # Executes this statement as the next step in the surrounding logic.
-                "CI-only configuration validation requires GitHub Actions production validation "
-                # Executes this statement as the next step in the surrounding logic.
-                "and a full ci-* commit release."
-                # Closes the multiline call, declaration, or collection started above.
+            # Supplies this required nested value.
+            self.secret_encryption_keyring()
+        # Guards the nested operation so it runs only when this condition is satisfied.
+        if self.environment in {'staging', 'production'}:
+            # Stores `required` because later steps depend on this value.
+            required = (
+                # Supplies this required nested value.
+                ('MASTERMIND_MONGODB_URL', self.mongodb_url),
+                # Supplies this required nested value.
+                ('MASTERMIND_REDIS_URL', self.redis_url or ''),
+                # Supplies this required nested value.
+                ('MASTERMIND_AUTH_SIGNING_KEY', self.auth_signing_key),
+                # Supplies this required nested value.
+                ('MASTERMIND_SECRET_ENCRYPTION_KEYS', self.secret_encryption_keys),
+                # Supplies this required nested value.
+                (
+                    # Supplies this literal value to the surrounding declaration or call.
+                    'MASTERMIND_DAILY_HMAC_KEYS or MASTERMIND_DAILY_HMAC_KEY',
+                    # Supplies this required nested value.
+                    self.daily_hmac_keys or self.daily_hmac_key,
+                # Closes the multiline declaration, call, or collection opened above.
+                ),
+                # Supplies this required nested value.
+                ('MASTERMIND_PUBLIC_IDENTIFIER_HMAC_KEY', self.public_identifier_hmac_key),
+                # Supplies this required nested value.
+                ('MASTERMIND_SMTP_HOST', self.smtp_host),
+            # Closes the multiline declaration, call, or collection opened above.
             )
-        # Checks this condition before executing the nested branch.
-        if self.environment in {"staging", "production"}:
-            # Computes and stores `missing` for subsequent operations.
-            missing = [
-                # Executes this statement as the next step in the surrounding logic.
-                name
-                # Iterates through the supplied values for the nested operation.
-                for name, value in (
-                    # Supplies this item to the surrounding call or collection.
-                    ("MASTERMIND_SUPABASE_URL", self.supabase_url),
-                    # Supplies this item to the surrounding call or collection.
-                    ("MASTERMIND_SUPABASE_SERVICE_ROLE_KEY", self.supabase_service_role_key),
-                    # Supplies this item to the surrounding call or collection.
-                    ("MASTERMIND_SECRET_ENCRYPTION_KEYS", self.secret_encryption_keys),
-                    # Begins the nested block or multiline expression completed below.
-                    (
-                        # Supplies this item to the surrounding call or collection.
-                        "MASTERMIND_DAILY_HMAC_KEYS or MASTERMIND_DAILY_HMAC_KEY",
-                        # Supplies this item to the surrounding call or collection.
-                        self.daily_hmac_keys or self.daily_hmac_key,
-                        # Closes the multiline call, declaration, or collection started above.
-                    ),
-                    # Supplies this item to the surrounding call or collection.
-                    ("MASTERMIND_PUBLIC_IDENTIFIER_HMAC_KEY", self.public_identifier_hmac_key),
-                    # Supplies this item to the surrounding call or collection.
-                    ("MASTERMIND_REDIS_URL", self.redis_url),
-                    # Closes the multiline call, declaration, or collection started above.
-                )
-                # Checks this condition before executing the nested branch.
-                if not value
-                # Closes the multiline call, declaration, or collection started above.
-            ]
-            # Checks this condition before executing the nested branch.
+            # Stores `missing` because later steps depend on this value.
+            missing = [name for name, value in required if not value]
+            # Guards the nested operation so it runs only when this condition is satisfied.
             if missing:
-                # Raises this exception to report an invalid or failed operation.
+                # Raises this error so invalid state cannot continue silently.
                 raise ValueError(f"Missing required production settings: {', '.join(missing)}")
-            # Checks this condition before executing the nested branch.
+            # Stores `parsed_mongo` because later steps depend on this value.
+            parsed_mongo = urlparse(self.mongodb_url)
+            # Stores `mongo_host` because later steps depend on this value.
+            mongo_host = (parsed_mongo.hostname or '').lower()
+            # Guards the nested operation so it runs only when this condition is satisfied.
+            if parsed_mongo.scheme not in {'mongodb', 'mongodb+srv'}:
+                # Raises this error so invalid state cannot continue silently.
+                raise ValueError('Production MongoDB must use a MongoDB connection string.')
+            # Guards the nested operation so it runs only when this condition is satisfied.
+            if mongo_host in {'', 'localhost', '127.0.0.1', '::1'}:
+                # Raises this error so invalid state cannot continue silently.
+                raise ValueError('Production MongoDB cannot use a local host.')
+            # Guards the nested operation so it runs only when this condition is satisfied.
+            if parsed_mongo.scheme == 'mongodb' and 'tls=true' not in self.mongodb_url.lower():
+                # Raises this error so invalid state cannot continue silently.
+                raise ValueError('Production MongoDB connections must enable TLS.')
+            # Guards the nested operation so it runs only when this condition is satisfied.
+            if not self.redis_url or not self.redis_url.startswith('rediss://'):
+                # Raises this error so invalid state cannot continue silently.
+                raise ValueError('Production Redis must use TLS.')
+            # Guards the nested operation so it runs only when this condition is satisfied.
             if any(not _is_exact_https_origin(origin) for origin in self.allowed_origins):
-                # Raises this exception to report an invalid or failed operation.
-                raise ValueError("Production CORS origins must be exact HTTPS origins.")
-            # Checks this condition before executing the nested branch.
-            if self.product_name.strip() != self.product_name:
-                # Raises this exception to report an invalid or failed operation.
-                raise ValueError("The product name cannot have surrounding whitespace.")
-            # Checks this condition before executing the nested branch.
-            if not _is_exact_https_origin(self.supabase_url):
-                # Raises this exception to report an invalid or failed operation.
-                raise ValueError("The production Supabase URL must be an exact HTTPS origin.")
-            # Calls `self.daily_hmac_keyring` with the supplied values.
-            self.daily_hmac_keyring()
-            # Calls `validate_deployed_postgres_url` with the supplied values.
-            validate_deployed_postgres_url(
-                # Supplies this item to the surrounding call or collection.
-                self.database_url,
-                # Provides the `allow_placeholder` parameter or keyword argument.
-                allow_placeholder=ci_validation,
-                # Closes the multiline call, declaration, or collection started above.
-            )
-            # Computes and stores `redis_host` for subsequent operations.
-            redis_host = urlparse(self.redis_url or "").hostname
-            # Checks this condition before executing the nested branch.
-            if not self.redis_url or not self.redis_url.startswith("rediss://"):
-                # Raises this exception to report an invalid or failed operation.
-                raise ValueError("Production Redis must use a TLS rediss URL.")
-            # Checks this condition before executing the nested branch.
-            if redis_host in {None, "localhost", "127.0.0.1", "::1"}:
-                # Raises this exception to report an invalid or failed operation.
-                raise ValueError("Production Redis cannot use a local development host.")
-            # Checks this condition before executing the nested branch.
-            if len(self.supabase_service_role_key) < 32:
-                # Raises this exception to report an invalid or failed operation.
-                raise ValueError("The production Supabase service credential is malformed.")
-            # Checks this condition before executing the nested branch.
-            if not ci_validation and (
-                # Calls `any` with the supplied values.
-                any(
-                    # Calls `_uses_placeholder_endpoint` with the supplied values.
-                    _uses_placeholder_endpoint(endpoint)
-                    # Iterates through the supplied values for the nested operation.
-                    for endpoint in (
-                        # Supplies this item to the surrounding call or collection.
-                        self.database_url,
-                        # Supplies this item to the surrounding call or collection.
-                        self.redis_url or "",
-                        # Supplies this item to the surrounding call or collection.
-                        self.supabase_url,
-                        # Supplies this item to the surrounding call or collection.
-                        self.error_reporting_url,
-                        # Supplies this item to the surrounding call or collection.
-                        *self.allowed_origins,
-                        # Closes the multiline call, declaration, or collection started above.
-                    )
-                    # Checks this condition before executing the nested branch.
-                    if endpoint
-                    # Closes the multiline call, declaration, or collection started above.
-                )
-                # Executes this statement as the next step in the surrounding logic.
-                or _uses_placeholder_service_key(self.supabase_service_role_key)
-                # Begins the nested block or multiline expression completed below.
+                # Raises this error so invalid state cannot continue silently.
+                raise ValueError('Production CORS origins must be exact HTTPS origins.')
+            # Guards the nested operation so it runs only when this condition is satisfied.
+            if not _is_exact_https_origin(self.auth_issuer):
+                # Raises this error so invalid state cannot continue silently.
+                raise ValueError('Production auth issuer must be an exact HTTPS origin.')
+            # Guards the nested operation so it runs only when this condition is satisfied.
+            if len(self.auth_signing_key.encode()) < 32 or _looks_placeholder(
+                # Supplies this required nested value.
+                self.auth_signing_key
+            # Closes the multiline declaration, call, or collection opened above.
             ):
-                # Raises this exception to report an invalid or failed operation.
+                # Raises this error so invalid state cannot continue silently.
                 raise ValueError(
-                    # Executes this statement as the next step in the surrounding logic.
-                    "Deployed configuration cannot contain placeholder endpoints or credentials."
-                    # Closes the multiline call, declaration, or collection started above.
+                    # Supplies this literal value to the surrounding declaration or call.
+                    'Production auth signing key must contain at least 32 random bytes.'
+                # Closes the multiline declaration, call, or collection opened above.
                 )
-            # Checks this condition before executing the nested branch.
-            if self.release in {"", "development", "latest"}:
-                # Raises this exception to report an invalid or failed operation.
-                raise ValueError("Production requires an immutable release identifier.")
-            # Checks this condition before executing the nested branch.
+            # Guards the nested operation so it runs only when this condition is satisfied.
             if len(self.public_identifier_hmac_key.encode()) < 32:
-                # Raises this exception to report an invalid or failed operation.
-                raise ValueError("The public identifier HMAC key must contain at least 32 bytes.")
-        # Returns this result to the caller and ends the current function.
+                # Raises this error so invalid state cannot continue silently.
+                raise ValueError('The public identifier HMAC key must contain at least 32 bytes.')
+            # Guards the nested operation so it runs only when this condition is satisfied.
+            if not self.auth_cookie_secure:
+                # Raises this error so invalid state cannot continue silently.
+                raise ValueError('Production authentication cookies must be Secure.')
+            # Guards the nested operation so it runs only when this condition is satisfied.
+            if self.release in {'', 'development', 'latest'}:
+                # Raises this error so invalid state cannot continue silently.
+                raise ValueError('Production requires an immutable release identifier.')
+        # Returns the computed result and ends the current callable.
         return self
 
-    # Defines the `secret_encryption_keyring` callable and its typed interface.
+    # Defines this callable to implement the operation described by its name.
     def secret_encryption_keyring(self) -> dict[str, bytes]:
-        # Documents the purpose or contract of this module, class, or function.
-        """Decode and validate every configured AES-GCM key version."""
-
-        # Starts a protected operation whose expected failures are handled below.
+        # Starts an operation whose expected failures are handled below.
         try:
-            # Computes and stores `encoded_keys` for subsequent operations.
+            # Stores `encoded_keys` because later steps depend on this value.
             encoded_keys = json.loads(self.secret_encryption_keys)
-        # Handles the listed exception so failure remains controlled.
+        # Converts this expected failure into the controlled behavior below.
         except json.JSONDecodeError as exc:
-            # Raises this exception to report an invalid or failed operation.
-            raise ValueError("The secret encryption keyring is malformed.") from exc
-        # Checks this condition before executing the nested branch.
+            # Raises this error so invalid state cannot continue silently.
+            raise ValueError('The secret encryption keyring is malformed.') from exc
+        # Guards the nested operation so it runs only when this condition is satisfied.
         if not isinstance(encoded_keys, dict) or not encoded_keys:
-            # Raises this exception to report an invalid or failed operation.
-            raise ValueError("The secret encryption keyring is malformed.")
-        # Computes and stores `keys` for subsequent operations.
+            # Raises this error so invalid state cannot continue silently.
+            raise ValueError('The secret encryption keyring is malformed.')
+        # Stores `keys` because later steps depend on this value.
         keys: dict[str, bytes] = {}
-        # Starts a protected operation whose expected failures are handled below.
+        # Starts an operation whose expected failures are handled below.
         try:
-            # Iterates through the supplied values for the nested operation.
+            # Iterates over these values so each item receives the same processing.
             for version, encoded_key in encoded_keys.items():
-                # Checks this condition before executing the nested branch.
+                # Guards the nested operation so it runs only when this condition is satisfied.
                 if not isinstance(version, str) or not version or not isinstance(encoded_key, str):
-                    # Raises this exception to report an invalid or failed operation.
+                    # Raises this error so invalid state cannot continue silently.
                     raise ValueError
-                # Executes this statement as the next step in the surrounding logic.
+                # Supplies this required nested value.
                 keys[version] = base64.b64decode(encoded_key, validate=True)
-        # Handles the listed exception so failure remains controlled.
+        # Converts this expected failure into the controlled behavior below.
         except (TypeError, ValueError) as exc:
-            # Raises this exception to report an invalid or failed operation.
-            raise ValueError("The secret encryption keyring is malformed.") from exc
-        # Checks this condition before executing the nested branch.
+            # Raises this error so invalid state cannot continue silently.
+            raise ValueError('The secret encryption keyring is malformed.') from exc
+        # Guards the nested operation so it runs only when this condition is satisfied.
         if self.secret_active_key_version not in keys:
-            # Raises this exception to report an invalid or failed operation.
-            raise ValueError("The active AES-GCM key version is absent from the keyring.")
-        # Checks this condition before executing the nested branch.
-        if any(len(key) not in {16, 24, 32} for key in keys.values()):
-            # Raises this exception to report an invalid or failed operation.
-            raise ValueError("Every AES-GCM key must decode to 16, 24, or 32 bytes.")
-        # Returns this result to the caller and ends the current function.
+            # Raises this error so invalid state cannot continue silently.
+            raise ValueError('The active AES-GCM key version is absent from the keyring.')
+        # Stores `expected_lengths` because later steps depend on this value.
+        expected_lengths = {32} if self.environment in {'staging', 'production'} else {16, 24, 32}
+        # Guards the nested operation so it runs only when this condition is satisfied.
+        if any(len(key) not in expected_lengths for key in keys.values()):
+            # Raises this error so invalid state cannot continue silently.
+            raise ValueError('Every AES-GCM key has an invalid length.')
+        # Returns the computed result and ends the current callable.
         return keys
 
-    # Defines the `daily_hmac_keyring` callable and its typed interface.
+    # Defines this callable to implement the operation described by its name.
     def daily_hmac_keyring(self) -> dict[str, bytes]:
-        # Documents the purpose or contract of this module, class, or function.
-        """Return the versioned daily derivation key ring.
-
-        ``daily_hmac_key`` remains a compatibility input for local environments and
-        maps to the configured active version. Deployed environments should use the
-        JSON key ring so an old version can overlap a rotation safely.
-        """
-
-        # Checks this condition before executing the nested branch.
+        # Guards the nested operation so it runs only when this condition is satisfied.
         if self.daily_hmac_keys:
-            # Starts a protected operation whose expected failures are handled below.
+            # Starts an operation whose expected failures are handled below.
             try:
-                # Computes and stores `decoded` for subsequent operations.
+                # Stores `decoded` because later steps depend on this value.
                 decoded = json.loads(self.daily_hmac_keys)
-            # Handles the listed exception so failure remains controlled.
+            # Converts this expected failure into the controlled behavior below.
             except json.JSONDecodeError as exc:
-                # Raises this exception to report an invalid or failed operation.
-                raise ValueError("The daily HMAC keyring is malformed.") from exc
-            # Checks this condition before executing the nested branch.
+                # Raises this error so invalid state cannot continue silently.
+                raise ValueError('The daily HMAC keyring is malformed.') from exc
+            # Guards the nested operation so it runs only when this condition is satisfied.
             if not isinstance(decoded, dict) or not decoded:
-                # Raises this exception to report an invalid or failed operation.
-                raise ValueError("The daily HMAC keyring is malformed.")
-            # Computes and stores `keys` for subsequent operations.
+                # Raises this error so invalid state cannot continue silently.
+                raise ValueError('The daily HMAC keyring is malformed.')
+            # Stores `keys` because later steps depend on this value.
             keys = {
-                # Calls `str` with the supplied values.
+                # Supplies this required nested value.
                 str(version): value.encode()
-                # Iterates through the supplied values for the nested operation.
+                # Iterates over these values so each item receives the same processing.
                 for version, value in decoded.items()
-                # Checks this condition before executing the nested branch.
+                # Guards the nested operation so it runs only when this condition is satisfied.
                 if isinstance(version, str) and isinstance(value, str)
-                # Closes the multiline call, declaration, or collection started above.
+            # Closes the multiline declaration, call, or collection opened above.
             }
-            # Checks this condition before executing the nested branch.
+            # Guards the nested operation so it runs only when this condition is satisfied.
             if len(keys) != len(decoded):
-                # Raises this exception to report an invalid or failed operation.
-                raise ValueError("The daily HMAC keyring is malformed.")
-        # Checks this alternative when previous conditions were false.
+                # Raises this error so invalid state cannot continue silently.
+                raise ValueError('The daily HMAC keyring is malformed.')
+        # Handles this alternative only when the earlier conditions did not match.
         elif self.daily_hmac_key:
-            # Computes and stores `keys` for subsequent operations.
+            # Stores `keys` because later steps depend on this value.
             keys = {self.daily_hmac_active_key_version: self.daily_hmac_key.encode()}
-        # Handles the remaining case not matched by earlier branches.
+        # Provides the fallback path when the preceding conditions do not match.
         else:
-            # Computes and stores `keys` for subsequent operations.
+            # Stores `keys` because later steps depend on this value.
             keys = {}
-        # Checks this condition before executing the nested branch.
+        # Guards the nested operation so it runs only when this condition is satisfied.
         if self.daily_hmac_active_key_version not in keys:
-            # Raises this exception to report an invalid or failed operation.
-            raise ValueError("The active daily HMAC key version is absent from the keyring.")
-        # Checks this condition before executing the nested branch.
+            # Raises this error so invalid state cannot continue silently.
+            raise ValueError('The active daily HMAC key version is absent from the keyring.')
+        # Guards the nested operation so it runs only when this condition is satisfied.
         if any(len(key) < 32 for key in keys.values()):
-            # Raises this exception to report an invalid or failed operation.
-            raise ValueError("Every daily HMAC key must contain at least 32 bytes.")
-        # Returns this result to the caller and ends the current function.
+            # Raises this error so invalid state cannot continue silently.
+            raise ValueError('Every daily HMAC key must contain at least 32 bytes.')
+        # Returns the computed result and ends the current callable.
         return keys
 
-    # Defines the `daily_hmac_key_for_version` callable and its typed interface.
+    # Defines this callable to implement the operation described by its name.
     def daily_hmac_key_for_version(self, version: str) -> bytes:
-        # Starts a protected operation whose expected failures are handled below.
+        # Starts an operation whose expected failures are handled below.
         try:
-            # Returns this result to the caller and ends the current function.
+            # Returns the computed result and ends the current callable.
             return self.daily_hmac_keyring()[version]
-        # Handles the listed exception so failure remains controlled.
+        # Converts this expected failure into the controlled behavior below.
         except KeyError as exc:
-            # Raises this exception to report an invalid or failed operation.
-            raise ValueError(f"Daily HMAC key version {version!r} is unavailable.") from exc
+            # Raises this error so invalid state cannot continue silently.
+            raise ValueError(f'Daily HMAC key version {version!r} is unavailable.') from exc
 
 
-# Applies `@lru_cache` to configure the declaration immediately below.
+# Applies this decorator to configure the declaration immediately below.
 @lru_cache
-# Defines the `get_settings` callable and its typed interface.
+# Defines this callable to implement the operation described by its name.
 def get_settings() -> Settings:
-    # Returns this result to the caller and ends the current function.
+    # Returns the computed result and ends the current callable.
     return Settings()
+
+
+# Defines this callable to implement the operation described by its name.
+def reset_settings_cache() -> None:
+    # Supplies this required nested value.
+    get_settings.cache_clear()
+
+
+# Defines this callable to implement the operation described by its name.
+def ci_environment() -> bool:
+    # Returns the computed result and ends the current callable.
+    return (
+        # Supplies this required nested value.
+        os.getenv('CI', '').lower() == 'true'
+        # Supplies this required nested value.
+        and os.getenv('GITHUB_ACTIONS', '').lower() == 'true'
+    # Closes the multiline declaration, call, or collection opened above.
+    )
+
+
+# Defines this callable to implement the operation described by its name.
+def immutable_ci_release(value: str) -> bool:
+    # Returns the computed result and ends the current callable.
+    return re.fullmatch(r'ci-[0-9a-f]{40}', value) is not None

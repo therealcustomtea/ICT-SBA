@@ -29,6 +29,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   ];
   // Returns this result to the caller and ends the current function.
   return ['en', 'zh-Hant'].flatMap(
+    // Continues the surrounding operation with this required value or expression.
     (locale) =>
       // Calls paths.map with the supplied values.
       paths.map((path) => ({

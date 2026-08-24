@@ -1,72 +1,117 @@
+# Configures `name` because the surrounding service or tool depends on it.
 name: mastermind-production
 
+# Configures `services` because the surrounding service or tool depends on it.
 services:
+  # Configures `migrate` because the surrounding service or tool depends on it.
   migrate:
+    # Configures `profiles` because the surrounding service or tool depends on it.
     profiles: ['release']
+    # Configures `image` because the surrounding service or tool depends on it.
     image: ${API_IMAGE:?Set API_IMAGE to an immutable release reference}
+    # Configures `env_file` because the surrounding service or tool depends on it.
     env_file:
-      - ${MIGRATOR_ENV_FILE:?Set MIGRATOR_ENV_FILE to the release-only migrator environment file}
-    volumes:
-      - type: bind
-        source: ${POSTGRES_CA_FILE:?Set POSTGRES_CA_FILE to the provider PostgreSQL CA bundle}
-        target: /run/secrets/cipherboard/postgres-ca.pem
-        read_only: true
-    environment:
-      MASTERMIND_CONFIG_SCOPE: migration
-    command: ['alembic', '-c', 'apps/api/alembic.ini', 'upgrade', 'head']
+      # Adds this required item to the surrounding configuration list.
+      - ${RUNTIME_ENV_FILE:?Set RUNTIME_ENV_FILE to the secret-manager-rendered environment file}
+    # Configures `command` because the surrounding service or tool depends on it.
+    command: ['mastermind-initialize']
+    # Configures `restart` because the surrounding service or tool depends on it.
     restart: 'no'
+    # Configures `read_only` because the surrounding service or tool depends on it.
     read_only: true
+    # Configures `tmpfs` because the surrounding service or tool depends on it.
     tmpfs:
+      # Adds this required item to the surrounding configuration list.
       - /tmp:size=32m,mode=1777
+    # Configures `cap_drop` because the surrounding service or tool depends on it.
     cap_drop: ['ALL']
+    # Configures `security_opt` because the surrounding service or tool depends on it.
     security_opt:
+      # Adds this required item to the surrounding configuration list.
       - no-new-privileges:true
 
+  # Configures `api` because the surrounding service or tool depends on it.
   api:
+    # Configures `image` because the surrounding service or tool depends on it.
     image: ${API_IMAGE:?Set API_IMAGE to an immutable release reference}
+    # Configures `env_file` because the surrounding service or tool depends on it.
     env_file:
+      # Adds this required item to the surrounding configuration list.
       - ${RUNTIME_ENV_FILE:?Set RUNTIME_ENV_FILE to the secret-manager-rendered environment file}
-    volumes:
-      - type: bind
-        source: ${POSTGRES_CA_FILE:?Set POSTGRES_CA_FILE to the provider PostgreSQL CA bundle}
-        target: /run/secrets/cipherboard/postgres-ca.pem
-        read_only: true
+    # Configures `environment` because the surrounding service or tool depends on it.
     environment:
+      # Configures `MASTERMIND_RELEASE` because the surrounding service or tool depends on it.
       MASTERMIND_RELEASE: ${MASTERMIND_RELEASE:?Set MASTERMIND_RELEASE to the deployed source SHA or image digest}
+    # Configures `ports` because the surrounding service or tool depends on it.
     ports:
+      # Adds this required item to the surrounding configuration list.
       - '127.0.0.1:8000:8000'
+    # Configures `init` because the surrounding service or tool depends on it.
     init: true
+    # Configures `restart` because the surrounding service or tool depends on it.
     restart: always
+    # Configures `stop_grace_period` because the surrounding service or tool depends on it.
     stop_grace_period: 30s
+    # Configures `read_only` because the surrounding service or tool depends on it.
     read_only: true
+    # Configures `tmpfs` because the surrounding service or tool depends on it.
     tmpfs:
+      # Adds this required item to the surrounding configuration list.
       - /tmp:size=64m,mode=1777
+    # Configures `cap_drop` because the surrounding service or tool depends on it.
     cap_drop: ['ALL']
+    # Configures `security_opt` because the surrounding service or tool depends on it.
     security_opt:
+      # Adds this required item to the surrounding configuration list.
       - no-new-privileges:true
+    # Configures `healthcheck` because the surrounding service or tool depends on it.
     healthcheck:
+      # Configures `test` because the surrounding service or tool depends on it.
       test: ['CMD', 'python', '-c', "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/health/ready', timeout=2)"]
+      # Configures `interval` because the surrounding service or tool depends on it.
       interval: 20s
+      # Configures `timeout` because the surrounding service or tool depends on it.
       timeout: 3s
+      # Configures `start_period` because the surrounding service or tool depends on it.
       start_period: 20s
+      # Configures `retries` because the surrounding service or tool depends on it.
       retries: 3
 
+  # Configures `web` because the surrounding service or tool depends on it.
   web:
+    # Configures `image` because the surrounding service or tool depends on it.
     image: ${WEB_IMAGE:?Set WEB_IMAGE to an immutable release reference}
+    # Configures `ports` because the surrounding service or tool depends on it.
     ports:
+      # Adds this required item to the surrounding configuration list.
       - '127.0.0.1:3000:3000'
+    # Configures `init` because the surrounding service or tool depends on it.
     init: true
+    # Configures `restart` because the surrounding service or tool depends on it.
     restart: always
+    # Configures `stop_grace_period` because the surrounding service or tool depends on it.
     stop_grace_period: 20s
+    # Configures `read_only` because the surrounding service or tool depends on it.
     read_only: true
+    # Configures `tmpfs` because the surrounding service or tool depends on it.
     tmpfs:
+      # Adds this required item to the surrounding configuration list.
       - /tmp:size=64m,mode=1777
+    # Configures `cap_drop` because the surrounding service or tool depends on it.
     cap_drop: ['ALL']
+    # Configures `security_opt` because the surrounding service or tool depends on it.
     security_opt:
+      # Adds this required item to the surrounding configuration list.
       - no-new-privileges:true
+    # Configures `healthcheck` because the surrounding service or tool depends on it.
     healthcheck:
+      # Configures `test` because the surrounding service or tool depends on it.
       test: ['CMD', 'node', '-e', "fetch('http://127.0.0.1:3000/').then(r=>{if(!r.ok)process.exit(1)}).catch(()=>process.exit(1))"]
+      # Configures `interval` because the surrounding service or tool depends on it.
       interval: 20s
+      # Configures `timeout` because the surrounding service or tool depends on it.
       timeout: 3s
+      # Configures `start_period` because the surrounding service or tool depends on it.
       start_period: 30s
+      # Configures `retries` because the surrounding service or tool depends on it.
       retries: 3

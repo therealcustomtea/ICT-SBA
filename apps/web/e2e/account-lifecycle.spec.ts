@@ -6,7 +6,7 @@ import { expect, test, type APIRequestContext } from '@playwright/test';
 import { apiOrigin, captureSession } from './helpers';
 
 // Computes and stores inbucketOrigin for subsequent operations.
-const inbucketOrigin = process.env.PLAYWRIGHT_INBUCKET_URL;
+const mailpitOrigin = process.env.PLAYWRIGHT_MAILPIT_URL;
 // Computes and stores deletionEnabled for subsequent operations.
 const deletionEnabled = process.env.PLAYWRIGHT_ACCOUNT_DELETION_ENABLED === '1';
 
@@ -54,6 +54,7 @@ function authLinkFrom(values: string[]): string | null {
     const decoded = source.replace(
       // Matches HTML and quoted-printable encodings used inside captured email links.
       /&amp;|&#x3D;|&#61;|=3D|=\r?\n/g,
+      // Continues the surrounding operation with this required value or expression.
       (value) =>
         // Provides the value value to the surrounding call or element.
         value === '&amp;' ? '&' : value.startsWith('=\r') || value.startsWith('=\n') ? '' : '=',
@@ -62,7 +63,9 @@ function authLinkFrom(values: string[]): string | null {
     // Iterates through these values for the nested operation.
     for (const candidate of decoded.match(/https?:\/\/[^\s"'<>]+/g) ?? []) {
       // Checks this condition before running the nested branch.
-      if (candidate.includes('/auth/v1/verify') && candidate.includes('token=')) return candidate;
+      if (candidate.includes('/v1/auth/email/verify') && candidate.includes('token='))
+        // Returns the computed result and ends the current callable.
+        return candidate;
       // Closes the expression, call, or declaration started above.
     }
     // Closes the expression, call, or declaration started above.
@@ -94,27 +97,26 @@ async function requestJson(request: APIRequestContext, url: string): Promise<unk
 // Defines the waitForAuthLink function and its callable behavior.
 async function waitForAuthLink(request: APIRequestContext, email: string): Promise<string> {
   // Computes and stores mailbox for subsequent operations.
-  const mailbox = email.split('@')[0]!;
   // Iterates through these values for the nested operation.
   for (let attempt = 0; attempt < 40; attempt += 1) {
     // Computes and stores lists for subsequent operations.
     const lists = // Waits for this asynchronous operation to complete.
+      // Runs this required asynchronous effect without leaving it implicit.
       (
-        await Promise.all([
-          // Calls requestJson with the supplied values.
-          requestJson(request, `${inbucketOrigin}/api/v1/mailbox/${encodeURIComponent(mailbox)}`),
-          // Calls requestJson with the supplied values.
-          requestJson(request, `${inbucketOrigin}/api/v1/messages`),
+        await /* Waits for all mailbox requests before filtering their results. */ Promise.all([
+          // Continues the surrounding operation with this required value or expression.
+          requestJson(request, `${mailpitOrigin}/api/v1/messages`),
           // Closes the expression, call, or declaration started above.
         ])
-      )
+      ) // Completes the collected mailbox results before the filter chain runs.
         // Executes this line as the next step in the surrounding logic.
         .filter((value): value is unknown => value !== null);
     // Computes and stores matchingLists for subsequent operations.
     const matchingLists = lists.filter(
+      // Continues the surrounding operation with this required value or expression.
       (value) =>
         // Calls stringValues with the supplied values.
-        stringValues(value).some((entry) => entry.includes(email) || entry.includes(mailbox)),
+        stringValues(value).some((entry) => entry.includes(email)),
       // Closes the expression, call, or declaration started above.
     );
     // Computes and stores values for subsequent operations.
@@ -126,17 +128,7 @@ async function waitForAuthLink(request: APIRequestContext, email: string): Promi
       // Calls ids.flatMap with the supplied values.
       ids.flatMap((id) => [
         // Calls requestJson with the supplied values.
-        requestJson(
-          // Supplies this item to the surrounding call or collection.
-          request,
-          // Supplies this item to the surrounding call or collection.
-          `${inbucketOrigin}/api/v1/mailbox/${encodeURIComponent(mailbox)}/${encodeURIComponent(id)}`,
-          // Closes the expression, call, or declaration started above.
-        ),
-        // Calls requestJson with the supplied values.
-        requestJson(request, `${inbucketOrigin}/api/v1/message/${encodeURIComponent(id)}`),
-        // Calls requestJson with the supplied values.
-        requestJson(request, `${inbucketOrigin}/api/v1/messages/${encodeURIComponent(id)}`),
+        requestJson(request, `${mailpitOrigin}/api/v1/message/${encodeURIComponent(id)}`),
         // Closes the expression, call, or declaration started above.
       ]),
       // Closes the expression, call, or declaration started above.
@@ -156,7 +148,7 @@ async function waitForAuthLink(request: APIRequestContext, email: string): Promi
     // Closes the expression, call, or declaration started above.
   }
   // Throws this error to report an invalid or failed operation.
-  throw new Error(`No local Supabase confirmation email arrived for ${email}.`);
+  throw new Error(`No local sign-in email arrived for ${email}.`);
   // Closes the expression, call, or declaration started above.
 }
 
@@ -171,7 +163,7 @@ test('guest upgrades in place, exports data, and permanently deletes the account
   // Calls test.skip with the supplied values.
   test.skip(Boolean(isMobile), 'The account lifecycle runs once in the desktop project.');
   // Calls test.skip with the supplied values.
-  test.skip(!inbucketOrigin, 'PLAYWRIGHT_INBUCKET_URL is required for the local Auth email flow.');
+  test.skip(!mailpitOrigin, 'PLAYWRIGHT_MAILPIT_URL is required for the local Auth email flow.');
   // Calls test.setTimeout with the supplied values.
   test.setTimeout(75_000);
 
@@ -200,9 +192,7 @@ test('guest upgrades in place, exports data, and permanently deletes the account
     // Returns this result to the caller and ends the current function.
     return (
       // Executes this line as the next step in the surrounding logic.
-      url.origin === new URL(process.env.NEXT_PUBLIC_SUPABASE_URL!).origin &&
-      // Executes this line as the next step in the surrounding logic.
-      ['/auth/v1/user', '/auth/v1/otp'].includes(url.pathname)
+      url.origin === new URL(apiOrigin).origin && url.pathname === '/v1/auth/email'
       // Closes the expression, call, or declaration started above.
     );
     // Closes the expression, call, or declaration started above.

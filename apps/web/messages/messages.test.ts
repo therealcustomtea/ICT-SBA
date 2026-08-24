@@ -13,6 +13,7 @@ function flatten(value: unknown, prefix = ''): Array<[string, string]> {
   if (!value || typeof value !== 'object') return [];
   // Returns this result to the caller and ends the current function.
   return Object.entries(value).flatMap(
+    // Continues the surrounding operation with this required value or expression.
     ([key, nested]) =>
       // Calls flatten with the supplied values.
       flatten(nested, prefix ? `${prefix}.${key}` : key),

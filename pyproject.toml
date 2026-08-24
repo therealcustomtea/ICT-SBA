@@ -1,80 +1,143 @@
+# Opens this configuration section so the following settings share its scope.
 [build-system]
+# Configures `requires` because the surrounding service or tool depends on it.
 requires = ["setuptools==80.9.0"]
+# Configures `build-backend` because the surrounding service or tool depends on it.
 build-backend = "setuptools.build_meta"
 
+# Opens this configuration section so the following settings share its scope.
 [project]
+# Configures `name` because the surrounding service or tool depends on it.
 name = "mastermind-logic-lab"
+# Configures `version` because the surrounding service or tool depends on it.
 version = "0.1.0"
-description = "Canonical Mastermind engine, production API, and SBA command-line application"
+# Configures `description` because the surrounding service or tool depends on it.
+description = "Canonical Mastermind engine, development API, and SBA command-line application"
+# Configures `requires-python` because the surrounding service or tool depends on it.
 requires-python = ">=3.12,<3.15"
+# Configures `dependencies` because the surrounding service or tool depends on it.
 dependencies = [
-  "alembic==1.16.4",
-  "asyncpg==0.30.0",
+  # Configures `cryptography` because the surrounding service or tool depends on it.
   "cryptography==49.0.0",
+  # Configures `fastapi` because the surrounding service or tool depends on it.
   "fastapi==0.139.0",
+  # Configures `httpx` because the surrounding service or tool depends on it.
   "httpx==0.28.1",
+  # Configures `prometheus-client` because the surrounding service or tool depends on it.
   "prometheus-client==0.22.1",
+  # Configures `pymongo` because the surrounding service or tool depends on it.
+  "pymongo==4.17.0",
+  # Configures `pydantic` because the surrounding service or tool depends on it.
   "pydantic==2.11.7",
+  # Configures `pydantic-settings` because the surrounding service or tool depends on it.
   "pydantic-settings==2.10.1",
+  # Configures `pyjwt[crypto]` because the surrounding service or tool depends on it.
   "pyjwt[crypto]==2.13.0",
+  # Configures `redis` because the surrounding service or tool depends on it.
   "redis==6.2.0",
-  "sqlalchemy[asyncio]==2.0.41",
+  # Configures `structlog` because the surrounding service or tool depends on it.
   "structlog==25.4.0",
+  # Configures `uvicorn[standard]` because the surrounding service or tool depends on it.
   "uvicorn[standard]==0.35.0",
+# Closes the configuration collection opened above.
 ]
 
+# Opens this configuration section so the following settings share its scope.
 [project.optional-dependencies]
+# Configures `dev` because the surrounding service or tool depends on it.
 dev = [
-  "aiosqlite==0.21.0",
+  # Configures `hypothesis` because the surrounding service or tool depends on it.
   "hypothesis==6.136.3",
+  # Configures `mypy` because the surrounding service or tool depends on it.
   "mypy==1.17.0",
+  # Configures `pytest` because the surrounding service or tool depends on it.
   "pytest==9.1.1",
+  # Configures `pytest-asyncio` because the surrounding service or tool depends on it.
   "pytest-asyncio==1.4.0",
+  # Configures `pytest-cov` because the surrounding service or tool depends on it.
   "pytest-cov==7.1.0",
+  # Configures `ruff` because the surrounding service or tool depends on it.
   "ruff==0.12.3",
+# Closes the configuration collection opened above.
 ]
 
+# Opens this configuration section so the following settings share its scope.
 [project.scripts]
+# Configures `mastermind` because the surrounding service or tool depends on it.
 mastermind = "mastermind_cli.__main__:main"
+# Configures `mastermind-initialize` because the surrounding service or tool depends on it.
+mastermind-initialize = "mastermind_api.database:main"
+# Configures `mastermind-retention` because the surrounding service or tool depends on it.
 mastermind-retention = "mastermind_api.retention:main"
 
+# Opens this configuration section so the following settings share its scope.
 [tool.setuptools]
+# Configures `packages` because the surrounding service or tool depends on it.
 packages = ["mastermind_core", "mastermind_api", "mastermind_api.routers", "mastermind_cli"]
+# Configures `package-dir` because the surrounding service or tool depends on it.
 package-dir = { mastermind_core = "packages/mastermind_core/mastermind_core", mastermind_api = "apps/api/mastermind_api", "mastermind_api.routers" = "apps/api/mastermind_api/routers", mastermind_cli = "apps/cli/mastermind_cli" }
 
+# Opens this configuration section so the following settings share its scope.
 [tool.pytest.ini_options]
+# Configures `addopts` because the surrounding service or tool depends on it.
 addopts = "--strict-config --strict-markers"
+# Configures `asyncio_mode` because the surrounding service or tool depends on it.
 asyncio_mode = "auto"
+# Configures `testpaths` because the surrounding service or tool depends on it.
 testpaths = ["tests"]
+# Configures `pythonpath` because the surrounding service or tool depends on it.
 pythonpath = ["packages/mastermind_core", "apps/api", "apps/cli"]
-markers = ["postgres: requires a PostgreSQL integration database"]
+# Configures `markers` because the surrounding service or tool depends on it.
+markers = ["mongodb: requires a MongoDB replica-set integration database"]
 
+# Opens this configuration section so the following settings share its scope.
 [tool.ruff]
+# Configures `target-version` because the surrounding service or tool depends on it.
 target-version = "py312"
+# Configures `line-length` because the surrounding service or tool depends on it.
 line-length = 100
 
+# Opens this configuration section so the following settings share its scope.
 [tool.ruff.lint]
+# Configures `select` because the surrounding service or tool depends on it.
 select = ["E", "F", "I", "UP", "B", "SIM", "ASYNC", "S", "RUF"]
+# Configures `ignore` because the surrounding service or tool depends on it.
 ignore = ["S101", "B008"]
 
+# Opens this configuration section so the following settings share its scope.
 [tool.ruff.lint.per-file-ignores]
+# Configures `tests/**/*.py` because the surrounding service or tool depends on it.
 "tests/**/*.py" = ["S105", "S106", "S311", "S607"]
-"apps/api/alembic/**/*.py" = ["E501", "S608"]
+# Configures `apps/api/mastermind_api/config.py` because the surrounding service or tool depends on it.
 "apps/api/mastermind_api/config.py" = ["S105"]
+# Configures `packages/mastermind_core/mastermind_core/engine.py` because the surrounding service or tool depends on it.
 "packages/mastermind_core/mastermind_core/engine.py" = ["S311"]
+# Configures `packages/mastermind_core/mastermind_core/models.py` because the surrounding service or tool depends on it.
 "packages/mastermind_core/mastermind_core/models.py" = ["S105"]
 
+# Opens this configuration section so the following settings share its scope.
 [tool.mypy]
+# Configures `python_version` because the surrounding service or tool depends on it.
 python_version = "3.12"
+# Configures `strict` because the surrounding service or tool depends on it.
 strict = true
+# Configures `plugins` because the surrounding service or tool depends on it.
 plugins = ["pydantic.mypy"]
+# Configures `packages` because the surrounding service or tool depends on it.
 packages = ["mastermind_core", "mastermind_api", "mastermind_cli"]
+# Configures `mypy_path` because the surrounding service or tool depends on it.
 mypy_path = ["packages/mastermind_core", "apps/api", "apps/cli"]
 
+# Opens this configuration section so the following settings share its scope.
 [tool.coverage.run]
+# Configures `branch` because the surrounding service or tool depends on it.
 branch = true
+# Configures `source` because the surrounding service or tool depends on it.
 source = ["packages/mastermind_core/mastermind_core", "apps/api/mastermind_api", "apps/cli/mastermind_cli"]
 
+# Opens this configuration section so the following settings share its scope.
 [tool.coverage.report]
+# Configures `show_missing` because the surrounding service or tool depends on it.
 show_missing = true
+# Configures `skip_covered` because the surrounding service or tool depends on it.
 skip_covered = true

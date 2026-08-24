@@ -10,9 +10,6 @@ import uuid
 # Imports selected names from `mastermind_api.models` for use in this module.
 from mastermind_api.models import GameSession, MultiplayerEvent, MultiplayerMember
 
-# Imports selected names from `sqlalchemy` for use in this module.
-from sqlalchemy import func, select
-
 # Imports selected names from `.conftest` for use in this module.
 from .conftest import APIContext, principal
 
@@ -55,11 +52,7 @@ async def test_room_starts_only_after_both_members_are_ready(api: APIContext) ->
     # Acquires this asynchronous managed resource for the nested operation.
     async with api.sessions() as session:
         # Computes and stores `game_count` for subsequent operations.
-        game_count = await session.scalar(
-            # Calls `select` with the supplied values.
-            select(func.count(GameSession.id)).where(GameSession.room_id == room_id)
-            # Closes the multiline call, declaration, or collection started above.
-        )
+        game_count = await session.count(GameSession, {'room_id': room_id})
         # Asserts this invariant so an unexpected test state fails immediately.
         assert game_count == 0
 
@@ -102,43 +95,25 @@ async def test_room_starts_only_after_both_members_are_ready(api: APIContext) ->
     # Acquires this asynchronous managed resource for the nested operation.
     async with api.sessions() as session:
         # Computes and stores `games` for subsequent operations.
-        games = (
-            # Waits for this asynchronous operation to complete.
-            await session.scalars(
-                # Calls `select` with the supplied values.
-                select(GameSession)
-                # Executes this statement as the next step in the surrounding logic.
-                .where(GameSession.room_id == room_id)
-                # Executes this statement as the next step in the surrounding logic.
-                .order_by(GameSession.owner_id)
-                # Closes the multiline call, declaration, or collection started above.
-            )
-            # Executes this statement as the next step in the surrounding logic.
-        ).all()
-        # Computes and stores `members` for subsequent operations.
-        members = (
-            # Waits for this asynchronous operation to complete.
-            await session.scalars(
-                # Calls `select` with the supplied values.
-                select(MultiplayerMember).where(MultiplayerMember.room_id == room_id)
-                # Closes the multiline call, declaration, or collection started above.
-            )
-            # Executes this statement as the next step in the surrounding logic.
-        ).all()
-        # Computes and stores `event_types` for subsequent operations.
-        event_types = list(
-            # Waits for this asynchronous operation to complete.
-            await session.scalars(
-                # Calls `select` with the supplied values.
-                select(MultiplayerEvent.event_type)
-                # Executes this statement as the next step in the surrounding logic.
-                .where(MultiplayerEvent.room_id == room_id)
-                # Executes this statement as the next step in the surrounding logic.
-                .order_by(MultiplayerEvent.sequence)
-                # Closes the multiline call, declaration, or collection started above.
-            )
-            # Closes the multiline call, declaration, or collection started above.
+        games = await session.find_many(
+            # Supplies this required nested value.
+            GameSession, {'room_id': room_id}, sort=[('owner_id', 1)]
+        # Closes the multiline declaration, call, or collection opened above.
         )
+        # Computes and stores `members` for subsequent operations.
+        members = await session.find_many(MultiplayerMember, {'room_id': room_id})
+        # Computes and stores `event_types` for subsequent operations.
+        event_types = [
+            # Supplies this required nested value.
+            event.event_type
+            # Iterates over these values so each item receives the same processing.
+            for event in await session.find_many(
+                # Supplies this required nested value.
+                MultiplayerEvent, {'room_id': room_id}, sort=[('sequence', 1)]
+            # Closes the multiline declaration, call, or collection opened above.
+            )
+        # Closes the multiline declaration, call, or collection opened above.
+        ]
     # Asserts this invariant so an unexpected test state fails immediately.
     assert len(games) == 2
     # Asserts this invariant so an unexpected test state fails immediately.

@@ -7,14 +7,11 @@ import hashlib
 # Imports selected names from `fastapi` for use in this module.
 from fastapi import APIRouter, Depends, Request, status
 
-# Imports selected names from `sqlalchemy.ext.asyncio` for use in this module.
-from sqlalchemy.ext.asyncio import AsyncSession
-
 # Imports selected names from `..auth` for use in this module.
 from ..auth import AuthPrincipal, get_current_user
 
 # Imports selected names from `..database` for use in this module.
-from ..database import get_session
+from ..database import MongoSession, get_session
 
 # Imports selected names from `..models` for use in this module.
 from ..models import SupportRequest
@@ -44,7 +41,7 @@ async def create_support_request_route(
     # Provides the `principal` parameter or keyword argument.
     principal: AuthPrincipal = Depends(get_current_user),
     # Provides the `session` parameter or keyword argument.
-    session: AsyncSession = Depends(get_session),
+    session: MongoSession = Depends(get_session),
     # Completes the signature and declares the callable return type.
 ) -> SupportRequestResponse:
     # Waits for this asynchronous operation to complete.

@@ -73,17 +73,8 @@ from mastermind_core import (
     # Closes the multiline call, declaration, or collection started above.
 )
 
-# Imports selected names from `sqlalchemy` for use in this module.
-from sqlalchemy import and_, delete, func, select, update
-
-# Imports selected names from `sqlalchemy.exc` for use in this module.
-from sqlalchemy.exc import IntegrityError
-
-# Imports selected names from `sqlalchemy.ext.asyncio` for use in this module.
-from sqlalchemy.ext.asyncio import AsyncSession
-
-# Imports selected names from `sqlalchemy.orm` for use in this module.
-from sqlalchemy.orm import selectinload
+# Imports the required names from `pymongo.errors` for this module.
+from pymongo.errors import DuplicateKeyError
 
 # Imports selected names from `.auth` for use in this module.
 from .auth import AuthPrincipal
@@ -93,6 +84,9 @@ from .config import Settings, get_settings
 
 # Imports selected names from `.crypto` for use in this module.
 from .crypto import SecretCipher
+
+# Imports the required names from `.database` for this module.
+from .database import MongoSession
 
 # Imports selected names from `.errors` for use in this module.
 from .errors import APIError
@@ -315,7 +309,7 @@ def resolve_config(
 
 
 # Defines the `ensure_profile` callable and its typed interface.
-async def ensure_profile(session: AsyncSession, principal: AuthPrincipal) -> Profile:
+async def ensure_profile(session: MongoSession, principal: AuthPrincipal) -> Profile:
     # Computes and stores `profile` for subsequent operations.
     profile = await session.get(Profile, principal.user_id)
     # Checks this condition before executing the nested branch.
@@ -329,7 +323,7 @@ async def ensure_profile(session: AsyncSession, principal: AuthPrincipal) -> Pro
             # Waits for this asynchronous operation to complete.
             await session.flush()
         # Handles the listed exception so failure remains controlled.
-        except IntegrityError:
+        except DuplicateKeyError:
             # Waits for this asynchronous operation to complete.
             await session.rollback()
             # Computes and stores `profile` for subsequent operations.
@@ -487,7 +481,7 @@ def _assert_game_creation_matches(
 # Defines the `load_owned_game` callable and its typed interface.
 async def load_owned_game(
     # Declares the typed `session` data field.
-    session: AsyncSession,
+    session: MongoSession,
     # Declares the typed `public_id` data field.
     public_id: str,
     # Declares the typed `principal` data field.
@@ -500,22 +494,12 @@ async def load_owned_game(
 ) -> GameSession:
     # Waits for this asynchronous operation to complete.
     await ensure_profile(session, principal)
-    # Computes and stores `query` for subsequent operations.
-    query = (
-        # Calls `select` with the supplied values.
-        select(GameSession)
-        # Executes this statement as the next step in the surrounding logic.
-        .options(selectinload(GameSession.attempts))
-        # Executes this statement as the next step in the surrounding logic.
-        .where(GameSession.public_id == public_id, GameSession.owner_id == principal.user_id)
-        # Closes the multiline call, declaration, or collection started above.
+    # Stores `game` because later steps depend on this value.
+    game = await session.find_one(
+        # Supplies this required nested value.
+        GameSession, {'public_id': public_id, 'owner_id': principal.user_id}
+    # Closes the multiline declaration, call, or collection opened above.
     )
-    # Checks this condition before executing the nested branch.
-    if for_update:
-        # Computes and stores `query` for subsequent operations.
-        query = query.with_for_update()
-    # Computes and stores `game` for subsequent operations.
-    game = await session.scalar(query)
     # Checks this condition before executing the nested branch.
     if game is None:
         # Raises this exception to report an invalid or failed operation.
@@ -611,7 +595,7 @@ def game_response(game: GameSession, cipher: SecretCipher) -> GameResponse:
 # Defines the `create_game` callable and its typed interface.
 async def create_game(
     # Declares the typed `session` data field.
-    session: AsyncSession,
+    session: MongoSession,
     # Declares the typed `principal` data field.
     principal: AuthPrincipal,
     # Declares the typed `request` data field.
@@ -663,20 +647,18 @@ async def create_game(
             # Closes the multiline call, declaration, or collection started above.
         )
         # Computes and stores `existing` for subsequent operations.
-        existing = await session.scalar(
-            # Calls `select` with the supplied values.
-            select(GameSession)
-            # Executes this statement as the next step in the surrounding logic.
-            .options(selectinload(GameSession.attempts))
-            # Begins the nested block or multiline expression completed below.
-            .where(
-                # Supplies this item to the surrounding call or collection.
-                GameSession.owner_id == principal.user_id,
-                # Supplies this item to the surrounding call or collection.
-                GameSession.creation_idempotency_key == request.idempotency_key,
-                # Closes the multiline call, declaration, or collection started above.
-            )
-            # Closes the multiline call, declaration, or collection started above.
+        existing = await session.find_one(
+            # Supplies this required nested value.
+            GameSession,
+            # Supplies this required nested value.
+            {
+                # Supplies this literal value to the surrounding declaration or call.
+                'owner_id': principal.user_id,
+                # Supplies this literal value to the surrounding declaration or call.
+                'creation_idempotency_key': request.idempotency_key,
+            # Closes the multiline declaration, call, or collection opened above.
+            },
+        # Closes the multiline declaration, call, or collection opened above.
         )
         # Checks this condition before executing the nested branch.
         if existing:
@@ -849,38 +831,34 @@ async def create_game(
         # Waits for this asynchronous operation to complete.
         await session.flush()
     # Handles the listed exception so failure remains controlled.
-    except IntegrityError:
+    except DuplicateKeyError:
         # Waits for this asynchronous operation to complete.
         await session.rollback()
         # Computes and stores `identity_filter` for subsequent operations.
-        identity_filter = None
+        identity_filter: dict[str, object] | None = None
         # Checks this condition before executing the nested branch.
         if request.idempotency_key:
             # Executes this statement as the next step in the surrounding logic.
-            identity_filter = GameSession.creation_idempotency_key == request.idempotency_key
+            identity_filter = {'creation_idempotency_key': request.idempotency_key}
         # Checks this alternative when previous conditions were false.
         elif daily_id is not None:
             # Executes this statement as the next step in the surrounding logic.
-            identity_filter = GameSession.daily_challenge_id == daily_id
+            identity_filter = {'daily_challenge_id': daily_id}
         # Checks this alternative when previous conditions were false.
         elif friend_id is not None:
             # Executes this statement as the next step in the surrounding logic.
-            identity_filter = GameSession.friend_challenge_id == friend_id
+            identity_filter = {'friend_challenge_id': friend_id}
         # Checks this alternative when previous conditions were false.
         elif room_id is not None:
             # Executes this statement as the next step in the surrounding logic.
-            identity_filter = GameSession.room_id == room_id
+            identity_filter = {'room_id': room_id}
         # Checks this condition before executing the nested branch.
         if identity_filter is not None:
             # Computes and stores `concurrent_game` for subsequent operations.
-            concurrent_game = await session.scalar(
-                # Calls `select` with the supplied values.
-                select(GameSession)
-                # Executes this statement as the next step in the surrounding logic.
-                .options(selectinload(GameSession.attempts))
-                # Executes this statement as the next step in the surrounding logic.
-                .where(GameSession.owner_id == principal.user_id, identity_filter)
-                # Closes the multiline call, declaration, or collection started above.
+            concurrent_game = await session.find_one(
+                # Supplies this required nested value.
+                GameSession, {'owner_id': principal.user_id, **identity_filter}
+            # Closes the multiline declaration, call, or collection opened above.
             )
             # Checks this condition before executing the nested branch.
             if concurrent_game:
@@ -927,7 +905,7 @@ async def create_game(
 # Defines the `submit_attempt` callable and its typed interface.
 async def submit_attempt(
     # Declares the typed `session` data field.
-    session: AsyncSession,
+    session: MongoSession,
     # Declares the typed `principal` data field.
     principal: AuthPrincipal,
     # Declares the typed `game_id` data field.
@@ -1095,7 +1073,7 @@ async def submit_attempt(
 # Defines the `abandon` callable and its typed interface.
 async def abandon(
     # Declares the typed `session` data field.
-    session: AsyncSession,
+    session: MongoSession,
     # Declares the typed `principal` data field.
     principal: AuthPrincipal,
     # Declares the typed `game_id` data field.
@@ -1162,24 +1140,16 @@ async def abandon(
     # Checks this condition before executing the nested branch.
     if game.mode == GameMode.DUEL.value and game.room_id is not None:
         # Computes and stores `room` for subsequent operations.
-        room = await session.scalar(
-            # Calls `select` with the supplied values.
-            select(MultiplayerRoom).where(MultiplayerRoom.id == game.room_id).with_for_update()
-            # Closes the multiline call, declaration, or collection started above.
-        )
+        room = await session.get(MultiplayerRoom, game.room_id)
         # Checks this condition before executing the nested branch.
         if room and room.status in {"waiting", "active"}:
             # Computes and stores `other_game` for subsequent operations.
-            other_game = await session.scalar(
-                # Calls `select` with the supplied values.
-                select(GameSession).where(
-                    # Supplies this item to the surrounding call or collection.
-                    GameSession.room_id == room.id,
-                    # Supplies this item to the surrounding call or collection.
-                    GameSession.owner_id != principal.user_id,
-                    # Closes the multiline call, declaration, or collection started above.
-                )
-                # Closes the multiline call, declaration, or collection started above.
+            other_game = await session.find_one(
+                # Supplies this required nested value.
+                GameSession,
+                # Supplies this required nested value.
+                {'room_id': room.id, 'owner_id': {'$ne': principal.user_id}},
+            # Closes the multiline declaration, call, or collection opened above.
             )
             # Checks this condition before executing the nested branch.
             if room.status == "active" and other_game is not None:
@@ -1241,7 +1211,7 @@ async def abandon(
             if completion_event is not None and room_events is not None:
                 # Calls `room_events.append` with the supplied values.
                 room_events.append((str(room.id), completion_event))
-    # Waits for this asynchronous operation to complete.
+    # Performs this required operation before the surrounding flow continues.
     await session.commit()
     # Returns this result to the caller and ends the current function.
     return game_response(game, cipher)
@@ -1250,7 +1220,7 @@ async def abandon(
 # Defines the `_finalize_game` callable and its typed interface.
 async def _finalize_game(
     # Declares the typed `session` data field.
-    session: AsyncSession,
+    session: MongoSession,
     # Declares the typed `game` data field.
     game: GameSession,
     # Declares the typed `principal` data field.
@@ -1324,7 +1294,7 @@ async def _finalize_game(
 # Defines the `_award_achievements` callable and its typed interface.
 async def _award_achievements(
     # Declares the typed `session` data field.
-    session: AsyncSession,
+    session: MongoSession,
     # Declares the typed `game` data field.
     game: GameSession,
     # Declares the typed `user_id` data field.
@@ -1348,22 +1318,24 @@ async def _award_achievements(
         # Begins the nested block or multiline expression completed below.
     ):
         # Computes and stores `won_count` for subsequent operations.
-        won_count = await session.scalar(
-            # Calls `select` with the supplied values.
-            select(func.count(GameSession.id)).where(
-                # Supplies this item to the surrounding call or collection.
-                GameSession.owner_id == user_id,
-                # Supplies this item to the surrounding call or collection.
-                GameSession.status == GameStatus.WON.value,
-                # Calls `GameSession.mode.in_` with the supplied values.
-                GameSession.mode.in_([GameMode.SOLO.value, GameMode.DAILY.value]),
-                # Supplies this item to the surrounding call or collection.
-                GameSession.ranked_eligibility == LeaderboardEligibility.ELIGIBLE.value,
-                # Supplies this item to the surrounding call or collection.
-                GameSession.id != game.id,
-                # Closes the multiline call, declaration, or collection started above.
-            )
-            # Closes the multiline call, declaration, or collection started above.
+        won_count = await session.count(
+            # Supplies this required nested value.
+            GameSession,
+            # Supplies this required nested value.
+            {
+                # Supplies this literal value to the surrounding declaration or call.
+                'owner_id': user_id,
+                # Supplies this literal value to the surrounding declaration or call.
+                'status': GameStatus.WON.value,
+                # Supplies this literal value to the surrounding declaration or call.
+                'mode': {'$in': [GameMode.SOLO.value, GameMode.DAILY.value]},
+                # Supplies this literal value to the surrounding declaration or call.
+                'ranked_eligibility': LeaderboardEligibility.ELIGIBLE.value,
+                # Supplies this literal value to the surrounding declaration or call.
+                '_id': {'$ne': game.id},
+            # Closes the multiline declaration, call, or collection opened above.
+            },
+        # Closes the multiline declaration, call, or collection opened above.
         )
         # Checks this condition before executing the nested branch.
         if not won_count:
@@ -1390,21 +1362,37 @@ async def _award_achievements(
         # Calls `keys.add` with the supplied values.
         keys.add("daily_debut")
         # Computes and stores `prior_daily_completions` for subsequent operations.
-        prior_daily_completions = await session.scalar(
-            # Calls `select` with the supplied values.
-            select(func.count(func.distinct(GameSession.daily_challenge_id))).where(
-                # Supplies this item to the surrounding call or collection.
-                GameSession.owner_id == user_id,
-                # Supplies this item to the surrounding call or collection.
-                GameSession.mode == GameMode.DAILY.value,
-                # Calls `GameSession.completed_at.is_not` with the supplied values.
-                GameSession.completed_at.is_not(None),
-                # Supplies this item to the surrounding call or collection.
-                GameSession.id != game.id,
-                # Closes the multiline call, declaration, or collection started above.
-            )
-            # Closes the multiline call, declaration, or collection started above.
+        daily_rows = await session.aggregate(
+            # Supplies this required nested value.
+            GameSession,
+            # Supplies this required nested value.
+            [
+                # Supplies this required nested value.
+                {
+                    # Supplies this literal value to the surrounding declaration or call.
+                    '$match': {
+                        # Supplies this literal value to the surrounding declaration or call.
+                        'owner_id': user_id,
+                        # Supplies this literal value to the surrounding declaration or call.
+                        'mode': GameMode.DAILY.value,
+                        # Supplies this literal value to the surrounding declaration or call.
+                        'completed_at': {'$ne': None},
+                        # Supplies this literal value to the surrounding declaration or call.
+                        '_id': {'$ne': game.id},
+                    # Closes the multiline declaration, call, or collection opened above.
+                    }
+                # Closes the multiline declaration, call, or collection opened above.
+                },
+                # Supplies this required nested value.
+                {'$group': {'_id': '$daily_challenge_id'}},
+                # Supplies this required nested value.
+                {'$count': 'total'},
+            # Closes the multiline declaration, call, or collection opened above.
+            ],
+        # Closes the multiline declaration, call, or collection opened above.
         )
+        # Stores `prior_daily_completions` because later steps depend on this value.
+        prior_daily_completions = daily_rows[0]['total'] if daily_rows else 0
         # Checks this condition before executing the nested branch.
         if (prior_daily_completions or 0) + 1 >= 7:
             # Calls `keys.add` with the supplied values.
@@ -1415,24 +1403,40 @@ async def _award_achievements(
         keys.add("challenger")
     # Iterates through the supplied values for the nested operation.
     for key in keys:
-        # Starts a protected operation whose expected failures are handled below.
-        try:
-            # Acquires this asynchronous managed resource for the nested operation.
-            async with session.begin_nested():
-                # Calls `session.add` with the supplied values.
-                session.add(UserAchievement(user_id=user_id, achievement_key=key, game_id=game.id))
-                # Waits for this asynchronous operation to complete.
-                await session.flush()
-        # Handles the listed exception so failure remains controlled.
-        except IntegrityError:
-            # Provides the intentionally empty statement required by Python syntax.
-            pass
+        # Stores `award` because later steps depend on this value.
+        award = UserAchievement(user_id=user_id, achievement_key=key, game_id=game.id)
+        # Performs this required operation before the surrounding flow continues.
+        await session.upsert_one(
+            # Supplies this required nested value.
+            UserAchievement,
+            # Supplies this required nested value.
+            {'user_id': user_id, 'achievement_key': key},
+            # Supplies this required nested value.
+            {
+                # Supplies this literal value to the surrounding declaration or call.
+                '$setOnInsert': {
+                    # Supplies this literal value to the surrounding declaration or call.
+                    '_id': award.id,
+                    # Supplies this literal value to the surrounding declaration or call.
+                    'user_id': user_id,
+                    # Supplies this literal value to the surrounding declaration or call.
+                    'achievement_key': key,
+                    # Supplies this literal value to the surrounding declaration or call.
+                    'awarded_at': award.awarded_at,
+                    # Supplies this literal value to the surrounding declaration or call.
+                    'game_id': game.id,
+                # Closes the multiline declaration, call, or collection opened above.
+                }
+            # Closes the multiline declaration, call, or collection opened above.
+            },
+        # Closes the multiline declaration, call, or collection opened above.
+        )
 
 
 # Defines the `get_or_create_daily` callable and its typed interface.
 async def get_or_create_daily(
     # Declares the typed `session` data field.
-    session: AsyncSession,
+    session: MongoSession,
     # Declares the typed `settings` data field.
     settings: Settings,
     # Declares the typed `cipher` data field.
@@ -1444,16 +1448,12 @@ async def get_or_create_daily(
     # Computes and stores `day` for subsequent operations.
     day = challenge_date or utcnow().date()
     # Computes and stores `existing` for subsequent operations.
-    existing = await session.scalar(
-        # Calls `select` with the supplied values.
-        select(DailyChallenge).where(
-            # Supplies this item to the surrounding call or collection.
-            DailyChallenge.challenge_date == day,
-            # Supplies this item to the surrounding call or collection.
-            DailyChallenge.rule_set_version == RULE_SET_VERSION,
-            # Closes the multiline call, declaration, or collection started above.
-        )
-        # Closes the multiline call, declaration, or collection started above.
+    existing = await session.find_one(
+        # Supplies this required nested value.
+        DailyChallenge,
+        # Supplies this required nested value.
+        {'challenge_date': day, 'rule_set_version': RULE_SET_VERSION},
+    # Closes the multiline declaration, call, or collection opened above.
     )
     # Checks this condition before executing the nested branch.
     if existing:
@@ -1506,20 +1506,16 @@ async def get_or_create_daily(
         # Waits for this asynchronous operation to complete.
         await session.commit()
     # Handles the listed exception so failure remains controlled.
-    except IntegrityError:
+    except DuplicateKeyError:
         # Waits for this asynchronous operation to complete.
         await session.rollback()
         # Computes and stores `concurrent` for subsequent operations.
-        concurrent = await session.scalar(
-            # Calls `select` with the supplied values.
-            select(DailyChallenge).where(
-                # Supplies this item to the surrounding call or collection.
-                DailyChallenge.challenge_date == day,
-                # Supplies this item to the surrounding call or collection.
-                DailyChallenge.rule_set_version == RULE_SET_VERSION,
-                # Closes the multiline call, declaration, or collection started above.
-            )
-            # Closes the multiline call, declaration, or collection started above.
+        concurrent = await session.find_one(
+            # Supplies this required nested value.
+            DailyChallenge,
+            # Supplies this required nested value.
+            {'challenge_date': day, 'rule_set_version': RULE_SET_VERSION},
+        # Closes the multiline declaration, call, or collection opened above.
         )
         # Checks this condition before executing the nested branch.
         if concurrent:
@@ -1534,7 +1530,7 @@ async def get_or_create_daily(
 # Defines the `start_daily` callable and its typed interface.
 async def start_daily(
     # Declares the typed `session` data field.
-    session: AsyncSession,
+    session: MongoSession,
     # Declares the typed `principal` data field.
     principal: AuthPrincipal,
     # Declares the typed `settings` data field.
@@ -1552,20 +1548,12 @@ async def start_daily(
     # Computes and stores `daily` for subsequent operations.
     daily = await get_or_create_daily(session, settings, cipher)
     # Computes and stores `existing` for subsequent operations.
-    existing = await session.scalar(
-        # Calls `select` with the supplied values.
-        select(GameSession)
-        # Executes this statement as the next step in the surrounding logic.
-        .options(selectinload(GameSession.attempts))
-        # Begins the nested block or multiline expression completed below.
-        .where(
-            # Supplies this item to the surrounding call or collection.
-            GameSession.owner_id == principal.user_id,
-            # Supplies this item to the surrounding call or collection.
-            GameSession.daily_challenge_id == daily.id,
-            # Closes the multiline call, declaration, or collection started above.
-        )
-        # Closes the multiline call, declaration, or collection started above.
+    existing = await session.find_one(
+        # Supplies this required nested value.
+        GameSession,
+        # Supplies this required nested value.
+        {'owner_id': principal.user_id, 'daily_challenge_id': daily.id},
+    # Closes the multiline declaration, call, or collection opened above.
     )
     # Checks this condition before executing the nested branch.
     if existing is not None and expire_game_record(existing, now=utcnow()):
@@ -1630,7 +1618,7 @@ async def start_daily(
 # Defines the `create_challenge` callable and its typed interface.
 async def create_challenge(
     # Declares the typed `session` data field.
-    session: AsyncSession,
+    session: MongoSession,
     # Declares the typed `principal` data field.
     principal: AuthPrincipal,
     # Declares the typed `request` data field.
@@ -1644,7 +1632,7 @@ async def create_challenge(
     # Waits for this asynchronous operation to complete.
     await ensure_profile(session, principal)
     # Waits for this asynchronous operation to complete.
-    await session.scalar(select(Profile).where(Profile.id == principal.user_id).with_for_update())
+    await session.get(Profile, principal.user_id)
     # Computes and stores `fingerprint` for subsequent operations.
     fingerprint = (
         # Calls `creation_request_fingerprint` with the supplied values.
@@ -1739,16 +1727,18 @@ async def create_challenge(
             # Closes the multiline call, declaration, or collection started above.
         )
         # Computes and stores `existing` for subsequent operations.
-        existing = await session.scalar(
-            # Calls `select` with the supplied values.
-            select(FriendChallenge).where(
-                # Supplies this item to the surrounding call or collection.
-                FriendChallenge.creator_id == principal.user_id,
-                # Supplies this item to the surrounding call or collection.
-                FriendChallenge.creation_idempotency_key == request.idempotency_key,
-                # Closes the multiline call, declaration, or collection started above.
-            )
-            # Closes the multiline call, declaration, or collection started above.
+        existing = await session.find_one(
+            # Supplies this required nested value.
+            FriendChallenge,
+            # Supplies this required nested value.
+            {
+                # Supplies this literal value to the surrounding declaration or call.
+                'creator_id': principal.user_id,
+                # Supplies this literal value to the surrounding declaration or call.
+                'creation_idempotency_key': request.idempotency_key,
+            # Closes the multiline declaration, call, or collection opened above.
+            },
+        # Closes the multiline declaration, call, or collection opened above.
         )
         # Checks this condition before executing the nested branch.
         if existing:
@@ -1767,18 +1757,20 @@ async def create_challenge(
             # Returns this result to the caller and ends the current function.
             return existing, share_code
     # Computes and stores `active_challenges` for subsequent operations.
-    active_challenges = await session.scalar(
-        # Calls `select` with the supplied values.
-        select(func.count(FriendChallenge.id)).where(
-            # Supplies this item to the surrounding call or collection.
-            FriendChallenge.creator_id == principal.user_id,
-            # Calls `FriendChallenge.revoked_at.is_` with the supplied values.
-            FriendChallenge.revoked_at.is_(None),
-            # Supplies this item to the surrounding call or collection.
-            FriendChallenge.expires_at > utcnow(),
-            # Closes the multiline call, declaration, or collection started above.
-        )
-        # Closes the multiline call, declaration, or collection started above.
+    active_challenges = await session.count(
+        # Supplies this required nested value.
+        FriendChallenge,
+        # Supplies this required nested value.
+        {
+            # Supplies this literal value to the surrounding declaration or call.
+            'creator_id': principal.user_id,
+            # Supplies this literal value to the surrounding declaration or call.
+            'revoked_at': None,
+            # Supplies this literal value to the surrounding declaration or call.
+            'expires_at': {'$gt': utcnow()},
+        # Closes the multiline declaration, call, or collection opened above.
+        },
+    # Closes the multiline declaration, call, or collection opened above.
     )
     # Computes and stores `challenge_limit` for subsequent operations.
     challenge_limit = (
@@ -1851,22 +1843,24 @@ async def create_challenge(
         # Waits for this asynchronous operation to complete.
         await session.commit()
     # Handles the listed exception so failure remains controlled.
-    except IntegrityError:
+    except DuplicateKeyError:
         # Waits for this asynchronous operation to complete.
         await session.rollback()
         # Checks this condition before executing the nested branch.
         if request.idempotency_key:
             # Computes and stores `concurrent` for subsequent operations.
-            concurrent = await session.scalar(
-                # Calls `select` with the supplied values.
-                select(FriendChallenge).where(
-                    # Supplies this item to the surrounding call or collection.
-                    FriendChallenge.creator_id == principal.user_id,
-                    # Supplies this item to the surrounding call or collection.
-                    FriendChallenge.creation_idempotency_key == request.idempotency_key,
-                    # Closes the multiline call, declaration, or collection started above.
-                )
-                # Closes the multiline call, declaration, or collection started above.
+            concurrent = await session.find_one(
+                # Supplies this required nested value.
+                FriendChallenge,
+                # Supplies this required nested value.
+                {
+                    # Supplies this literal value to the surrounding declaration or call.
+                    'creator_id': principal.user_id,
+                    # Supplies this literal value to the surrounding declaration or call.
+                    'creation_idempotency_key': request.idempotency_key,
+                # Closes the multiline declaration, call, or collection opened above.
+                },
+            # Closes the multiline declaration, call, or collection opened above.
             )
             # Checks this condition before executing the nested branch.
             if concurrent:
@@ -1893,7 +1887,7 @@ async def create_challenge(
 # Defines the `challenge_response` callable and its typed interface.
 async def challenge_response(
     # Declares the typed `session` data field.
-    session: AsyncSession,
+    session: MongoSession,
     # Declares the typed `challenge` data field.
     challenge: FriendChallenge,
     # Provides the `principal` parameter or keyword argument.
@@ -1905,16 +1899,12 @@ async def challenge_response(
     # Computes and stores `creator` for subsequent operations.
     creator = await session.get(Profile, challenge.creator_id)
     # Computes and stores `count` for subsequent operations.
-    count = await session.scalar(
-        # Calls `select` with the supplied values.
-        select(func.count(GameSession.id)).where(
-            # Supplies this item to the surrounding call or collection.
-            GameSession.friend_challenge_id == challenge.id,
-            # Calls `GameSession.completed_at.is_not` with the supplied values.
-            GameSession.completed_at.is_not(None),
-            # Closes the multiline call, declaration, or collection started above.
-        )
-        # Closes the multiline call, declaration, or collection started above.
+    count = await session.count(
+        # Supplies this required nested value.
+        GameSession,
+        # Supplies this required nested value.
+        {'friend_challenge_id': challenge.id, 'completed_at': {'$ne': None}},
+    # Closes the multiline declaration, call, or collection opened above.
     )
     # Executes this statement as the next step in the surrounding logic.
     is_owner = principal is not None and principal.user_id == challenge.creator_id
@@ -1951,7 +1941,7 @@ async def challenge_response(
 # Defines the `load_challenge` callable and its typed interface.
 async def load_challenge(
     # Declares the typed `session` data field.
-    session: AsyncSession,
+    session: MongoSession,
     # Supplies this item to the surrounding call or collection.
     share_code: str,
     # Supplies this item to the surrounding call or collection.
@@ -1959,14 +1949,10 @@ async def load_challenge(
     # Completes the signature and declares the callable return type.
 ) -> FriendChallenge:
     # Computes and stores `challenge` for subsequent operations.
-    challenge = await session.scalar(
-        # Calls `select` with the supplied values.
-        select(FriendChallenge).where(
-            # Executes this statement as the next step in the surrounding logic.
-            FriendChallenge.share_code_hash == identifier_hash(share_code, settings)
-            # Closes the multiline call, declaration, or collection started above.
-        )
-        # Closes the multiline call, declaration, or collection started above.
+    challenge = await session.find_one(
+        # Supplies this required nested value.
+        FriendChallenge, {'share_code_hash': identifier_hash(share_code, settings)}
+    # Closes the multiline declaration, call, or collection opened above.
     )
     # Checks this condition before executing the nested branch.
     if challenge is None:
@@ -1985,7 +1971,7 @@ async def load_challenge(
 # Defines the `start_challenge` callable and its typed interface.
 async def start_challenge(
     # Declares the typed `session` data field.
-    session: AsyncSession,
+    session: MongoSession,
     # Declares the typed `principal` data field.
     principal: AuthPrincipal,
     # Declares the typed `challenge` data field.
@@ -2001,20 +1987,12 @@ async def start_challenge(
     # Waits for this asynchronous operation to complete.
     await ensure_profile(session, principal)
     # Computes and stores `existing` for subsequent operations.
-    existing = await session.scalar(
-        # Calls `select` with the supplied values.
-        select(GameSession)
-        # Executes this statement as the next step in the surrounding logic.
-        .options(selectinload(GameSession.attempts))
-        # Begins the nested block or multiline expression completed below.
-        .where(
-            # Supplies this item to the surrounding call or collection.
-            GameSession.owner_id == principal.user_id,
-            # Supplies this item to the surrounding call or collection.
-            GameSession.friend_challenge_id == challenge.id,
-            # Closes the multiline call, declaration, or collection started above.
-        )
-        # Closes the multiline call, declaration, or collection started above.
+    existing = await session.find_one(
+        # Supplies this required nested value.
+        GameSession,
+        # Supplies this required nested value.
+        {'owner_id': principal.user_id, 'friend_challenge_id': challenge.id},
+    # Closes the multiline declaration, call, or collection opened above.
     )
     # Checks this condition before executing the nested branch.
     if existing is not None and expire_game_record(existing, now=utcnow()):
@@ -2069,7 +2047,7 @@ async def start_challenge(
 # Defines the `create_room` callable and its typed interface.
 async def create_room(
     # Declares the typed `session` data field.
-    session: AsyncSession,
+    session: MongoSession,
     # Declares the typed `principal` data field.
     principal: AuthPrincipal,
     # Declares the typed `difficulty` data field.
@@ -2099,16 +2077,18 @@ async def create_room(
         # Computes and stores `room_code` for subsequent operations.
         room_code = idempotent_invite_code("room", principal.user_id, idempotency_key, settings)
         # Computes and stores `existing` for subsequent operations.
-        existing = await session.scalar(
-            # Calls `select` with the supplied values.
-            select(MultiplayerRoom).where(
-                # Supplies this item to the surrounding call or collection.
-                MultiplayerRoom.owner_id == principal.user_id,
-                # Supplies this item to the surrounding call or collection.
-                MultiplayerRoom.creation_idempotency_key == idempotency_key,
-                # Closes the multiline call, declaration, or collection started above.
-            )
-            # Closes the multiline call, declaration, or collection started above.
+        existing = await session.find_one(
+            # Supplies this required nested value.
+            MultiplayerRoom,
+            # Supplies this required nested value.
+            {
+                # Supplies this literal value to the surrounding declaration or call.
+                'owner_id': principal.user_id,
+                # Supplies this literal value to the surrounding declaration or call.
+                'creation_idempotency_key': idempotency_key,
+            # Closes the multiline declaration, call, or collection opened above.
+            },
+        # Closes the multiline declaration, call, or collection opened above.
         )
         # Checks this condition before executing the nested branch.
         if existing:
@@ -2177,8 +2157,8 @@ async def create_room(
     # Starts a protected operation whose expected failures are handled below.
     try:
         # The models intentionally use identifiers instead of a write-side ORM
-        # relationship. Flush the parent explicitly so PostgreSQL cannot order the
-        # member insert ahead of its room foreign key.
+        # Persist the room before its first membership so later lookups never see
+        # a membership without its owning room.
         # Waits for this asynchronous operation to complete.
         await session.flush()
         # Calls `session.add` with the supplied values.
@@ -2188,22 +2168,24 @@ async def create_room(
         # Waits for this asynchronous operation to complete.
         await session.commit()
     # Handles the listed exception so failure remains controlled.
-    except IntegrityError:
+    except DuplicateKeyError:
         # Waits for this asynchronous operation to complete.
         await session.rollback()
         # Checks this condition before executing the nested branch.
         if idempotency_key:
             # Computes and stores `concurrent` for subsequent operations.
-            concurrent = await session.scalar(
-                # Calls `select` with the supplied values.
-                select(MultiplayerRoom).where(
-                    # Supplies this item to the surrounding call or collection.
-                    MultiplayerRoom.owner_id == principal.user_id,
-                    # Supplies this item to the surrounding call or collection.
-                    MultiplayerRoom.creation_idempotency_key == idempotency_key,
-                    # Closes the multiline call, declaration, or collection started above.
-                )
-                # Closes the multiline call, declaration, or collection started above.
+            concurrent = await session.find_one(
+                # Supplies this required nested value.
+                MultiplayerRoom,
+                # Supplies this required nested value.
+                {
+                    # Supplies this literal value to the surrounding declaration or call.
+                    'owner_id': principal.user_id,
+                    # Supplies this literal value to the surrounding declaration or call.
+                    'creation_idempotency_key': idempotency_key,
+                # Closes the multiline declaration, call, or collection opened above.
+                },
+            # Closes the multiline declaration, call, or collection opened above.
             )
             # Checks this condition before executing the nested branch.
             if concurrent:
@@ -2232,7 +2214,7 @@ async def create_room(
 # Defines the `_create_room_game` callable and its typed interface.
 async def _create_room_game(
     # Declares the typed `session` data field.
-    session: AsyncSession,
+    session: MongoSession,
     # Declares the typed `principal` data field.
     principal: AuthPrincipal,
     # Declares the typed `room` data field.
@@ -2278,7 +2260,7 @@ async def _create_room_game(
 # Defines the `join_room` callable and its typed interface.
 async def join_room(
     # Declares the typed `session` data field.
-    session: AsyncSession,
+    session: MongoSession,
     # Declares the typed `principal` data field.
     principal: AuthPrincipal,
     # Declares the typed `room_code` data field.
@@ -2292,14 +2274,10 @@ async def join_room(
     # Waits for this asynchronous operation to complete.
     await ensure_profile(session, principal)
     # Computes and stores `room` for subsequent operations.
-    room = await session.scalar(
-        # Calls `select` with the supplied values.
-        select(MultiplayerRoom)
-        # Executes this statement as the next step in the surrounding logic.
-        .where(MultiplayerRoom.room_code_hash == identifier_hash(room_code, settings))
-        # Executes this statement as the next step in the surrounding logic.
-        .with_for_update()
-        # Closes the multiline call, declaration, or collection started above.
+    room = await session.find_one(
+        # Supplies this required nested value.
+        MultiplayerRoom, {'room_code_hash': identifier_hash(room_code, settings)}
+    # Closes the multiline declaration, call, or collection opened above.
     )
     # Checks this condition before executing the nested branch.
     if room is None:
@@ -2310,23 +2288,13 @@ async def join_room(
         # Raises this exception to report an invalid or failed operation.
         raise APIError(410, "ROOM_EXPIRED", "This room has expired.")
     # Computes and stores `member` for subsequent operations.
-    member = await session.scalar(
-        # Calls `select` with the supplied values.
-        select(MultiplayerMember).where(
-            # Supplies this item to the surrounding call or collection.
-            MultiplayerMember.room_id == room.id,
-            # Supplies this item to the surrounding call or collection.
-            MultiplayerMember.user_id == principal.user_id,
-            # Closes the multiline call, declaration, or collection started above.
-        )
-        # Closes the multiline call, declaration, or collection started above.
+    member = await session.find_one(
+        # Supplies this required nested value.
+        MultiplayerMember, {'room_id': room.id, 'user_id': principal.user_id}
+    # Closes the multiline declaration, call, or collection opened above.
     )
     # Computes and stores `members_count` for subsequent operations.
-    members_count = await session.scalar(
-        # Calls `select` with the supplied values.
-        select(func.count(MultiplayerMember.id)).where(MultiplayerMember.room_id == room.id)
-        # Closes the multiline call, declaration, or collection started above.
-    )
+    members_count = await session.count(MultiplayerMember, {'room_id': room.id})
     # Checks this condition before executing the nested branch.
     if member is None:
         # Checks this condition before executing the nested branch.
@@ -2348,7 +2316,7 @@ async def join_room(
 # Defines the `ready_room` callable and its typed interface.
 async def ready_room(
     # Declares the typed `session` data field.
-    session: AsyncSession,
+    session: MongoSession,
     # Declares the typed `principal` data field.
     principal: AuthPrincipal,
     # Declares the typed `room_id` data field.
@@ -2369,20 +2337,10 @@ async def ready_room(
         # Raises this exception to report an invalid or failed operation.
         raise APIError(410, "ROOM_EXPIRED", "This room has expired.")
     # Computes and stores `member` for subsequent operations.
-    member = await session.scalar(
-        # Calls `select` with the supplied values.
-        select(MultiplayerMember)
-        # Begins the nested block or multiline expression completed below.
-        .where(
-            # Supplies this item to the surrounding call or collection.
-            MultiplayerMember.room_id == room.id,
-            # Supplies this item to the surrounding call or collection.
-            MultiplayerMember.user_id == principal.user_id,
-            # Closes the multiline call, declaration, or collection started above.
-        )
-        # Executes this statement as the next step in the surrounding logic.
-        .with_for_update()
-        # Closes the multiline call, declaration, or collection started above.
+    member = await session.find_one(
+        # Supplies this required nested value.
+        MultiplayerMember, {'room_id': room.id, 'user_id': principal.user_id}
+    # Closes the multiline declaration, call, or collection opened above.
     )
     # Checks this condition before executing the nested branch.
     if member is None:
@@ -2433,21 +2391,25 @@ async def ready_room(
         )
 
     # Computes and stores `member_rows` for subsequent operations.
-    member_rows = (
-        # Waits for this asynchronous operation to complete.
-        await session.execute(
-            # Calls `select` with the supplied values.
-            select(MultiplayerMember, Profile)
-            # Executes this statement as the next step in the surrounding logic.
-            .join(Profile, Profile.id == MultiplayerMember.user_id)
-            # Executes this statement as the next step in the surrounding logic.
-            .where(MultiplayerMember.room_id == room.id)
-            # Executes this statement as the next step in the surrounding logic.
-            .order_by(MultiplayerMember.joined_at, MultiplayerMember.id)
-            # Closes the multiline call, declaration, or collection started above.
-        )
-        # Executes this statement as the next step in the surrounding logic.
-    ).all()
+    room_members = await session.find_many(
+        # Supplies this required nested value.
+        MultiplayerMember,
+        # Supplies this required nested value.
+        {'room_id': room.id},
+        # Stores `sort` because later steps depend on this value.
+        sort=[('joined_at', 1), ('_id', 1)],
+    # Closes the multiline declaration, call, or collection opened above.
+    )
+    # Stores `member_rows` because later steps depend on this value.
+    member_rows = [
+        # Supplies this required nested value.
+        (room_member, profile)
+        # Iterates over these values so each item receives the same processing.
+        for room_member in room_members
+        # Guards the nested operation so it runs only when this condition is satisfied.
+        if (profile := await session.get(Profile, room_member.user_id)) is not None
+    # Closes the multiline declaration, call, or collection opened above.
+    ]
     # Checks this condition before executing the nested branch.
     if len(member_rows) == 2 and all(room_member.ready for room_member, _ in member_rows):
         # Computes and stores `config` for subsequent operations.
@@ -2465,15 +2427,9 @@ async def ready_room(
             # Closes the multiline call, declaration, or collection started above.
         )
         # Computes and stores `existing_owner_ids` for subsequent operations.
-        existing_owner_ids = set(
-            # Waits for this asynchronous operation to complete.
-            await session.scalars(
-                # Calls `select` with the supplied values.
-                select(GameSession.owner_id).where(GameSession.room_id == room.id)
-                # Closes the multiline call, declaration, or collection started above.
-            )
-            # Closes the multiline call, declaration, or collection started above.
-        )
+        existing_games = await session.find_many(GameSession, {'room_id': room.id})
+        # Stores `existing_owner_ids` because later steps depend on this value.
+        existing_owner_ids = {game.owner_id for game in existing_games}
         # Computes and stores `duel_started_at` for subsequent operations.
         duel_started_at = utcnow()
         # Iterates through the supplied values for the nested operation.
@@ -2516,16 +2472,10 @@ async def ready_room(
             )
             # Computes and stores `game.started_at` for subsequent operations.
             game.started_at = duel_started_at
-        # Waits for this asynchronous operation to complete.
-        await session.execute(
-            # Calls `update` with the supplied values.
-            update(GameSession)
-            # Executes this statement as the next step in the surrounding logic.
-            .where(GameSession.room_id == room.id)
-            # Executes this statement as the next step in the surrounding logic.
-            .values(started_at=duel_started_at)
-            # Closes the multiline call, declaration, or collection started above.
-        )
+        # Iterates over these values so each item receives the same processing.
+        for game in existing_games:
+            # Stores `game.started_at` because later steps depend on this value.
+            game.started_at = duel_started_at
         # Computes and stores `room.status` for subsequent operations.
         room.status = "active"
         # Calls `events.append` with the supplied values.
@@ -2553,7 +2503,7 @@ async def ready_room(
 # Defines the `load_room_for_member` callable and its typed interface.
 async def load_room_for_member(
     # Declares the typed `session` data field.
-    session: AsyncSession,
+    session: MongoSession,
     # Declares the typed `room_id` data field.
     room_id: uuid.UUID,
     # Declares the typed `principal` data field.
@@ -2566,22 +2516,14 @@ async def load_room_for_member(
 ) -> MultiplayerRoom:
     # Waits for this asynchronous operation to complete.
     await ensure_profile(session, principal)
-    # Computes and stores `query` for subsequent operations.
-    query = (
-        # Calls `select` with the supplied values.
-        select(MultiplayerRoom)
-        # Executes this statement as the next step in the surrounding logic.
-        .join(MultiplayerMember, MultiplayerMember.room_id == MultiplayerRoom.id)
-        # Executes this statement as the next step in the surrounding logic.
-        .where(MultiplayerRoom.id == room_id, MultiplayerMember.user_id == principal.user_id)
-        # Closes the multiline call, declaration, or collection started above.
+    # Stores `member` because later steps depend on this value.
+    member = await session.find_one(
+        # Supplies this required nested value.
+        MultiplayerMember, {'room_id': room_id, 'user_id': principal.user_id}
+    # Closes the multiline declaration, call, or collection opened above.
     )
-    # Checks this condition before executing the nested branch.
-    if for_update:
-        # Computes and stores `query` for subsequent operations.
-        query = query.with_for_update()
-    # Computes and stores `room` for subsequent operations.
-    room = await session.scalar(query)
+    # Stores `room` because later steps depend on this value.
+    room = await session.get(MultiplayerRoom, room_id) if member is not None else None
     # Checks this condition before executing the nested branch.
     if room is None:
         # Raises this exception to report an invalid or failed operation.
@@ -2590,14 +2532,8 @@ async def load_room_for_member(
     if ensure_aware(room.expires_at) <= utcnow():
         # Computes and stores `room.status` for subsequent operations.
         room.status = "expired"
-    # Executes this statement as the next step in the surrounding logic.
-    games_query = select(GameSession).where(GameSession.room_id == room.id).order_by(GameSession.id)
-    # Checks this condition before executing the nested branch.
-    if for_update:
-        # Computes and stores `games_query` for subsequent operations.
-        games_query = games_query.with_for_update()
-    # Computes and stores `games` for subsequent operations.
-    games = (await session.scalars(games_query)).all()
+    # Stores `games` because later steps depend on this value.
+    games = await session.find_many(GameSession, {'room_id': room.id}, sort=[('_id', 1)])
     # Checks this condition before executing the nested branch.
     if (
         # Executes this statement as the next step in the surrounding logic.
@@ -2667,7 +2603,7 @@ async def load_room_for_member(
 # Defines the `room_response` callable and its typed interface.
 async def room_response(
     # Declares the typed `session` data field.
-    session: AsyncSession,
+    session: MongoSession,
     # Declares the typed `room` data field.
     room: MultiplayerRoom,
     # Provides the `room_code` parameter or keyword argument.
@@ -2676,36 +2612,26 @@ async def room_response(
     viewer_id: uuid.UUID | None = None,
     # Completes the signature and declares the callable return type.
 ) -> RoomResponse:
-    # Computes and stores `rows` for subsequent operations.
-    rows = (
-        # Waits for this asynchronous operation to complete.
-        await session.execute(
-            # Calls `select` with the supplied values.
-            select(MultiplayerMember, Profile, GameSession)
-            # Executes this statement as the next step in the surrounding logic.
-            .join(Profile, Profile.id == MultiplayerMember.user_id)
-            # Begins the nested block or multiline expression completed below.
-            .outerjoin(
-                # Supplies this item to the surrounding call or collection.
-                GameSession,
-                # Calls `and_` with the supplied values.
-                and_(
-                    # Supplies this item to the surrounding call or collection.
-                    GameSession.room_id == MultiplayerMember.room_id,
-                    # Supplies this item to the surrounding call or collection.
-                    GameSession.owner_id == MultiplayerMember.user_id,
-                    # Closes the multiline call, declaration, or collection started above.
-                ),
-                # Closes the multiline call, declaration, or collection started above.
-            )
-            # Executes this statement as the next step in the surrounding logic.
-            .where(MultiplayerMember.room_id == room.id)
-            # Executes this statement as the next step in the surrounding logic.
-            .order_by(MultiplayerMember.joined_at)
-            # Closes the multiline call, declaration, or collection started above.
-        )
-        # Executes this statement as the next step in the surrounding logic.
-    ).all()
+    # Stores `room_members` because later steps depend on this value.
+    room_members = await session.find_many(
+        # Supplies this required nested value.
+        MultiplayerMember, {'room_id': room.id}, sort=[('joined_at', 1)]
+    # Closes the multiline declaration, call, or collection opened above.
+    )
+    # Stores `room_games` because later steps depend on this value.
+    room_games = await session.find_many(GameSession, {'room_id': room.id})
+    # Stores `games_by_owner` because later steps depend on this value.
+    games_by_owner = {game.owner_id: game for game in room_games}
+    # Stores `rows` because later steps depend on this value.
+    rows = [
+        # Supplies this required nested value.
+        (member, profile, games_by_owner.get(member.user_id))
+        # Iterates over these values so each item receives the same processing.
+        for member in room_members
+        # Guards the nested operation so it runs only when this condition is satisfied.
+        if (profile := await session.get(Profile, member.user_id)) is not None
+    # Closes the multiline declaration, call, or collection opened above.
+    ]
     # Computes and stores `members` for subsequent operations.
     members = [
         # Calls `RoomMemberResponse` with the supplied values.
@@ -2757,7 +2683,7 @@ async def room_response(
 
 
 # Defines the `profile_response` callable and its typed interface.
-async def profile_response(session: AsyncSession, principal: AuthPrincipal) -> ProfileResponse:
+async def profile_response(session: MongoSession, principal: AuthPrincipal) -> ProfileResponse:
     # Computes and stores `profile` for subsequent operations.
     profile = await ensure_profile(session, principal)
     # Waits for this asynchronous operation to complete.
@@ -2793,25 +2719,17 @@ def csv_safe(value: object) -> str:
 
 
 # Defines the `export_user_csv` callable and its typed interface.
-async def export_user_csv(session: AsyncSession, principal: AuthPrincipal) -> str:
+async def export_user_csv(session: MongoSession, principal: AuthPrincipal) -> str:
     # Computes and stores `profile` for subsequent operations.
     profile = await session.get(Profile, principal.user_id)
     # Computes and stores `player_name` for subsequent operations.
     player_name = profile.display_name if profile and profile.display_name else "Anonymous breaker"
     # Computes and stores `games` for subsequent operations.
-    games = (
-        # Waits for this asynchronous operation to complete.
-        await session.scalars(
-            # Calls `select` with the supplied values.
-            select(GameSession)
-            # Executes this statement as the next step in the surrounding logic.
-            .where(GameSession.owner_id == principal.user_id)
-            # Executes this statement as the next step in the surrounding logic.
-            .order_by(GameSession.created_at)
-            # Closes the multiline call, declaration, or collection started above.
-        )
-        # Executes this statement as the next step in the surrounding logic.
-    ).all()
+    games = await session.find_many(
+        # Supplies this required nested value.
+        GameSession, {'owner_id': principal.user_id}, sort=[('created_at', 1)]
+    # Closes the multiline declaration, call, or collection opened above.
+    )
     # Computes and stores `output` for subsequent operations.
     output = io.StringIO(newline="")
     # Computes and stores `writer` for subsequent operations.
@@ -2907,7 +2825,7 @@ def _csv_document(header: list[str], rows: list[list[object]]) -> str:
 
 
 # Defines the `export_user_archive` callable and its typed interface.
-async def export_user_archive(session: AsyncSession, principal: AuthPrincipal) -> bytes:
+async def export_user_archive(session: MongoSession, principal: AuthPrincipal) -> bytes:
     # Documents the purpose or contract of this module, class, or function.
     """Build a complete, secret-free, portable account export."""
     # Computes and stores `profile` for subsequent operations.
@@ -2917,73 +2835,47 @@ async def export_user_archive(session: AsyncSession, principal: AuthPrincipal) -
         # Raises this exception to report an invalid or failed operation.
         raise APIError(404, "PROFILE_NOT_FOUND", "Profile not found.")
     # Computes and stores `games` for subsequent operations.
-    games = (
-        # Waits for this asynchronous operation to complete.
-        await session.scalars(
-            # Calls `select` with the supplied values.
-            select(GameSession)
-            # Executes this statement as the next step in the surrounding logic.
-            .options(selectinload(GameSession.attempts))
-            # Executes this statement as the next step in the surrounding logic.
-            .where(GameSession.owner_id == principal.user_id)
-            # Executes this statement as the next step in the surrounding logic.
-            .order_by(GameSession.created_at)
-            # Closes the multiline call, declaration, or collection started above.
-        )
-        # Executes this statement as the next step in the surrounding logic.
-    ).all()
+    games = await session.find_many(
+        # Supplies this required nested value.
+        GameSession, {'owner_id': principal.user_id}, sort=[('created_at', 1)]
+    # Closes the multiline declaration, call, or collection opened above.
+    )
     # Computes and stores `achievements` for subsequent operations.
-    achievements = (
-        # Waits for this asynchronous operation to complete.
-        await session.execute(
-            # Calls `select` with the supplied values.
-            select(
-                # Supplies this item to the surrounding call or collection.
-                UserAchievement.achievement_key,
-                # Supplies this item to the surrounding call or collection.
-                UserAchievement.awarded_at,
-                # Supplies this item to the surrounding call or collection.
-                UserAchievement.game_id,
-                # Closes the multiline call, declaration, or collection started above.
-            )
-            # Executes this statement as the next step in the surrounding logic.
-            .where(UserAchievement.user_id == principal.user_id)
-            # Executes this statement as the next step in the surrounding logic.
-            .order_by(UserAchievement.awarded_at)
-            # Closes the multiline call, declaration, or collection started above.
-        )
-        # Executes this statement as the next step in the surrounding logic.
-    ).all()
+    achievement_documents = await session.find_many(
+        # Supplies this required nested value.
+        UserAchievement, {'user_id': principal.user_id}, sort=[('awarded_at', 1)]
+    # Closes the multiline declaration, call, or collection opened above.
+    )
+    # Stores `achievements` because later steps depend on this value.
+    achievements = [
+        # Supplies this required nested value.
+        (item.achievement_key, item.awarded_at, item.game_id)
+        # Iterates over these values so each item receives the same processing.
+        for item in achievement_documents
+    # Closes the multiline declaration, call, or collection opened above.
+    ]
     # Computes and stores `challenges` for subsequent operations.
-    challenges = (
-        # Waits for this asynchronous operation to complete.
-        await session.scalars(
-            # Calls `select` with the supplied values.
-            select(FriendChallenge)
-            # Executes this statement as the next step in the surrounding logic.
-            .where(FriendChallenge.creator_id == principal.user_id)
-            # Executes this statement as the next step in the surrounding logic.
-            .order_by(FriendChallenge.created_at)
-            # Closes the multiline call, declaration, or collection started above.
-        )
-        # Executes this statement as the next step in the surrounding logic.
-    ).all()
+    challenges = await session.find_many(
+        # Supplies this required nested value.
+        FriendChallenge, {'creator_id': principal.user_id}, sort=[('created_at', 1)]
+    # Closes the multiline declaration, call, or collection opened above.
+    )
     # Computes and stores `memberships` for subsequent operations.
-    memberships = (
-        # Waits for this asynchronous operation to complete.
-        await session.execute(
-            # Calls `select` with the supplied values.
-            select(MultiplayerMember, MultiplayerRoom)
-            # Executes this statement as the next step in the surrounding logic.
-            .join(MultiplayerRoom, MultiplayerRoom.id == MultiplayerMember.room_id)
-            # Executes this statement as the next step in the surrounding logic.
-            .where(MultiplayerMember.user_id == principal.user_id)
-            # Executes this statement as the next step in the surrounding logic.
-            .order_by(MultiplayerMember.joined_at)
-            # Closes the multiline call, declaration, or collection started above.
-        )
-        # Executes this statement as the next step in the surrounding logic.
-    ).all()
+    membership_documents = await session.find_many(
+        # Supplies this required nested value.
+        MultiplayerMember, {'user_id': principal.user_id}, sort=[('joined_at', 1)]
+    # Closes the multiline declaration, call, or collection opened above.
+    )
+    # Stores `memberships` because later steps depend on this value.
+    memberships = [
+        # Supplies this required nested value.
+        (member, room)
+        # Iterates over these values so each item receives the same processing.
+        for member in membership_documents
+        # Guards the nested operation so it runs only when this condition is satisfied.
+        if (room := await session.get(MultiplayerRoom, member.room_id)) is not None
+    # Closes the multiline declaration, call, or collection opened above.
+    ]
 
     # Computes and stores `profile_document` for subsequent operations.
     profile_document = {
@@ -3303,7 +3195,7 @@ async def export_user_archive(session: AsyncSession, principal: AuthPrincipal) -
 
 
 # Defines the `delete_account` callable and its typed interface.
-async def delete_account(session: AsyncSession, principal: AuthPrincipal) -> None:
+async def delete_account(session: MongoSession, principal: AuthPrincipal) -> None:
     # Computes and stores `profile` for subsequent operations.
     profile = await session.get(Profile, principal.user_id)
     # Checks this condition before executing the nested branch.
@@ -3325,59 +3217,53 @@ async def delete_account(session: AsyncSession, principal: AuthPrincipal) -> Non
     # Computes and stores `profile.deleted_at` for subsequent operations.
     profile.deleted_at = utcnow()
     # Waits for this asynchronous operation to complete.
-    await session.execute(
-        # Calls `update` with the supplied values.
-        update(LeaderboardEntry)
-        # Executes this statement as the next step in the surrounding logic.
-        .where(LeaderboardEntry.user_id == principal.user_id)
-        # Executes this statement as the next step in the surrounding logic.
-        .values(invalidated_at=utcnow(), review_status="deleted_account")
-        # Closes the multiline call, declaration, or collection started above.
+    await session.update_many(
+        # Supplies this required nested value.
+        LeaderboardEntry,
+        # Supplies this required nested value.
+        {'user_id': principal.user_id},
+        # Supplies this required nested value.
+        {'$set': {'invalidated_at': utcnow(), 'review_status': 'deleted_account'}},
+    # Closes the multiline declaration, call, or collection opened above.
     )
     # Waits for this asynchronous operation to complete.
-    await session.execute(
-        # Calls `update` with the supplied values.
-        update(FriendChallenge)
-        # Executes this statement as the next step in the surrounding logic.
-        .where(FriendChallenge.creator_id == principal.user_id)
-        # Begins the nested block or multiline expression completed below.
-        .values(
-            # Provides the `revoked_at` parameter or keyword argument.
-            revoked_at=func.coalesce(FriendChallenge.revoked_at, utcnow()),
-            # Provides the `title` parameter or keyword argument.
-            title=None,
-            # Provides the `show_creator_name` parameter or keyword argument.
-            show_creator_name=False,
-            # Closes the multiline call, declaration, or collection started above.
-        )
-        # Closes the multiline call, declaration, or collection started above.
+    await session.update_many(
+        # Supplies this required nested value.
+        FriendChallenge,
+        # Supplies this required nested value.
+        {'creator_id': principal.user_id},
+        # Supplies this required nested value.
+        {
+            # Supplies this literal value to the surrounding declaration or call.
+            '$set': {
+                # Supplies this literal value to the surrounding declaration or call.
+                'revoked_at': utcnow(),
+                # Supplies this literal value to the surrounding declaration or call.
+                'title': None,
+                # Supplies this literal value to the surrounding declaration or call.
+                'show_creator_name': False,
+            # Closes the multiline declaration, call, or collection opened above.
+            }
+        # Closes the multiline declaration, call, or collection opened above.
+        },
+    # Closes the multiline declaration, call, or collection opened above.
     )
     # Waits for this asynchronous operation to complete.
-    await session.execute(
-        # Calls `update` with the supplied values.
-        update(MultiplayerRoom)
-        # Begins the nested block or multiline expression completed below.
-        .where(
-            # Supplies this item to the surrounding call or collection.
-            MultiplayerRoom.owner_id == principal.user_id,
-            # Calls `MultiplayerRoom.status.in_` with the supplied values.
-            MultiplayerRoom.status.in_(["waiting", "active"]),
-            # Closes the multiline call, declaration, or collection started above.
-        )
-        # Executes this statement as the next step in the surrounding logic.
-        .values(status="terminated")
-        # Closes the multiline call, declaration, or collection started above.
+    await session.update_many(
+        # Supplies this required nested value.
+        MultiplayerRoom,
+        # Supplies this required nested value.
+        {'owner_id': principal.user_id, 'status': {'$in': ['waiting', 'active']}},
+        # Supplies this required nested value.
+        {'$set': {'status': 'terminated'}},
+    # Closes the multiline declaration, call, or collection opened above.
     )
     # Waits for this asynchronous operation to complete.
-    await session.execute(
-        # Calls `delete` with the supplied values.
-        delete(UserAchievement).where(UserAchievement.user_id == principal.user_id)
-        # Closes the multiline call, declaration, or collection started above.
-    )
+    await session.delete_many(UserAchievement, {'user_id': principal.user_id})
     # Waits for this asynchronous operation to complete.
-    await session.execute(delete(SupportRequest).where(SupportRequest.user_id == principal.user_id))
+    await session.delete_many(SupportRequest, {'user_id': principal.user_id})
     # Waits for this asynchronous operation to complete.
-    await session.execute(delete(AdminGrant).where(AdminGrant.user_id == principal.user_id))
+    await session.delete_many(AdminGrant, {'user_id': principal.user_id})
     # Calls `session.add` with the supplied values.
     session.add(
         # Calls `AuditEvent` with the supplied values.
@@ -3396,5 +3282,3 @@ async def delete_account(session: AsyncSession, principal: AuthPrincipal) -> Non
         )
         # Closes the multiline call, declaration, or collection started above.
     )
-    # Waits for this asynchronous operation to complete.
-    await session.commit()

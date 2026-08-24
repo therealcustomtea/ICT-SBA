@@ -1,7 +1,7 @@
 // Imports the dependency used by this module.
 import createMiddleware from 'next-intl/middleware';
 // Imports the dependency used by this module.
-import { NextRequest, NextResponse } from 'next/server';
+import { NextRequest } from 'next/server';
 // Imports the dependency used by this module.
 import { routing } from './i18n/routing';
 
@@ -36,15 +36,13 @@ export default function proxy(request: NextRequest) {
   // Computes and stores isDevelopment for subsequent operations.
   const isDevelopment = process.env.NODE_ENV === 'development';
   // Computes and stores apiOrigin for subsequent operations.
-  const apiOrigin = origin(process.env.NEXT_PUBLIC_API_ORIGIN);
-  // Computes and stores supabaseOrigin for subsequent operations.
-  const supabaseOrigin = origin(process.env.NEXT_PUBLIC_SUPABASE_URL);
+  const apiOrigin = origin(process.env.NEXT_PUBLIC_API_ORIGIN ?? 'http://localhost:8000');
   // Computes and stores productOrigin for subsequent operations.
   const productOrigin = origin(process.env.NEXT_PUBLIC_PRODUCT_ORIGIN);
   // Computes and stores socketOrigin for subsequent operations.
   const socketOrigin = apiOrigin?.replace(/^http/, 'ws') ?? null;
   // Computes and stores connectSources for subsequent operations.
-  const connectSources = ["'self'", apiOrigin, socketOrigin, supabaseOrigin]
+  const connectSources = ["'self'", apiOrigin, socketOrigin]
     // Executes this line as the next step in the surrounding logic.
     .filter(Boolean)
     // Executes this line as the next step in the surrounding logic.
@@ -96,11 +94,7 @@ export default function proxy(request: NextRequest) {
   // Computes and stores nextRequest for subsequent operations.
   const nextRequest = new NextRequest(request, { headers: requestHeaders });
   // Computes and stores response for subsequent operations.
-  const response = request.nextUrl.pathname.startsWith('/auth/callback')
-    ? // Executes this line as the next step in the surrounding logic.
-      NextResponse.next({ request: { headers: requestHeaders } })
-    : // Executes this line as the next step in the surrounding logic.
-      intlMiddleware(nextRequest);
+  const response = intlMiddleware(nextRequest);
   // Calls response.headers.set with the supplied values.
   response.headers.set('Content-Security-Policy', csp);
   // Checks this condition before running the nested branch.
