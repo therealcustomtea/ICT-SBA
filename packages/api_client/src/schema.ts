@@ -3,5328 +3,5328 @@
  * Do not make direct changes to the file.
  */
 
-// Exports this declaration for use by other modules.
+// Generated declaration: exports the paths interface for consumers of the OpenAPI contract.
 export interface paths {
-  // Begins the nested block or object completed below.
+  // Generated declaration: opens the object for the /v1/games property.
   '/v1/games': {
-    // Defines the parameters field in the surrounding object or type.
+    // Generated declaration: opens the object for the parameters property.
     parameters: {
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the query property.
       query?: never;
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the header property.
       header?: never;
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the path property.
       path?: never;
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the cookie property.
       cookie?: never;
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the get property.
     get?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the put property.
     put?: never;
     /** Create Game Route */
-    // Defines the post field in the surrounding object or type.
+    // Generated declaration: defines the generated type of the post property.
     post: operations['create_game_route_v1_games_post'];
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the delete property.
     delete?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the options property.
     options?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the head property.
     head?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the patch property.
     patch?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the trace property.
     trace?: never;
-    // Closes the expression, call, or declaration started above.
+    // Generated declaration: closes the generated declaration opened above.
   };
-  // Begins the nested block or object completed below.
+  // Generated declaration: opens the object for the /v1/games/{game_id} property.
   '/v1/games/{game_id}': {
-    // Defines the parameters field in the surrounding object or type.
+    // Generated declaration: opens the object for the parameters property.
     parameters: {
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the query property.
       query?: never;
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the header property.
       header?: never;
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the path property.
       path?: never;
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the cookie property.
       cookie?: never;
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
     /** Get Game Route */
-    // Defines the get field in the surrounding object or type.
+    // Generated declaration: defines the generated type of the get property.
     get: operations['get_game_route_v1_games__game_id__get'];
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the put property.
     put?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the post property.
     post?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the delete property.
     delete?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the options property.
     options?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the head property.
     head?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the patch property.
     patch?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the trace property.
     trace?: never;
-    // Closes the expression, call, or declaration started above.
+    // Generated declaration: closes the generated declaration opened above.
   };
-  // Begins the nested block or object completed below.
+  // Generated declaration: opens the object for the /v1/games/{game_id}/attempts property.
   '/v1/games/{game_id}/attempts': {
-    // Defines the parameters field in the surrounding object or type.
+    // Generated declaration: opens the object for the parameters property.
     parameters: {
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the query property.
       query?: never;
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the header property.
       header?: never;
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the path property.
       path?: never;
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the cookie property.
       cookie?: never;
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the get property.
     get?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the put property.
     put?: never;
     /** Submit Attempt Route */
-    // Defines the post field in the surrounding object or type.
+    // Generated declaration: defines the generated type of the post property.
     post: operations['submit_attempt_route_v1_games__game_id__attempts_post'];
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the delete property.
     delete?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the options property.
     options?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the head property.
     head?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the patch property.
     patch?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the trace property.
     trace?: never;
-    // Closes the expression, call, or declaration started above.
+    // Generated declaration: closes the generated declaration opened above.
   };
-  // Begins the nested block or object completed below.
+  // Generated declaration: opens the object for the /v1/games/{game_id}/abandon property.
   '/v1/games/{game_id}/abandon': {
-    // Defines the parameters field in the surrounding object or type.
+    // Generated declaration: opens the object for the parameters property.
     parameters: {
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the query property.
       query?: never;
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the header property.
       header?: never;
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the path property.
       path?: never;
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the cookie property.
       cookie?: never;
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the get property.
     get?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the put property.
     put?: never;
     /** Abandon Game Route */
-    // Defines the post field in the surrounding object or type.
+    // Generated declaration: defines the generated type of the post property.
     post: operations['abandon_game_route_v1_games__game_id__abandon_post'];
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the delete property.
     delete?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the options property.
     options?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the head property.
     head?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the patch property.
     patch?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the trace property.
     trace?: never;
-    // Closes the expression, call, or declaration started above.
+    // Generated declaration: closes the generated declaration opened above.
   };
-  // Begins the nested block or object completed below.
+  // Generated declaration: opens the object for the /v1/daily property.
   '/v1/daily': {
-    // Defines the parameters field in the surrounding object or type.
+    // Generated declaration: opens the object for the parameters property.
     parameters: {
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the query property.
       query?: never;
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the header property.
       header?: never;
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the path property.
       path?: never;
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the cookie property.
       cookie?: never;
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
     /** Get Daily Route */
-    // Defines the get field in the surrounding object or type.
+    // Generated declaration: defines the generated type of the get property.
     get: operations['get_daily_route_v1_daily_get'];
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the put property.
     put?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the post property.
     post?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the delete property.
     delete?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the options property.
     options?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the head property.
     head?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the patch property.
     patch?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the trace property.
     trace?: never;
-    // Closes the expression, call, or declaration started above.
+    // Generated declaration: closes the generated declaration opened above.
   };
-  // Begins the nested block or object completed below.
+  // Generated declaration: opens the object for the /v1/daily/start property.
   '/v1/daily/start': {
-    // Defines the parameters field in the surrounding object or type.
+    // Generated declaration: opens the object for the parameters property.
     parameters: {
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the query property.
       query?: never;
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the header property.
       header?: never;
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the path property.
       path?: never;
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the cookie property.
       cookie?: never;
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the get property.
     get?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the put property.
     put?: never;
     /** Start Daily Route */
-    // Defines the post field in the surrounding object or type.
+    // Generated declaration: defines the generated type of the post property.
     post: operations['start_daily_route_v1_daily_start_post'];
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the delete property.
     delete?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the options property.
     options?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the head property.
     head?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the patch property.
     patch?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the trace property.
     trace?: never;
-    // Closes the expression, call, or declaration started above.
+    // Generated declaration: closes the generated declaration opened above.
   };
-  // Begins the nested block or object completed below.
+  // Generated declaration: opens the object for the /v1/daily/leaderboard property.
   '/v1/daily/leaderboard': {
-    // Defines the parameters field in the surrounding object or type.
+    // Generated declaration: opens the object for the parameters property.
     parameters: {
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the query property.
       query?: never;
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the header property.
       header?: never;
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the path property.
       path?: never;
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the cookie property.
       cookie?: never;
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
     /** Daily Leaderboard Route */
-    // Defines the get field in the surrounding object or type.
+    // Generated declaration: defines the generated type of the get property.
     get: operations['daily_leaderboard_route_v1_daily_leaderboard_get'];
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the put property.
     put?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the post property.
     post?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the delete property.
     delete?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the options property.
     options?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the head property.
     head?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the patch property.
     patch?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the trace property.
     trace?: never;
-    // Closes the expression, call, or declaration started above.
+    // Generated declaration: closes the generated declaration opened above.
   };
-  // Begins the nested block or object completed below.
+  // Generated declaration: opens the object for the /v1/challenges/{challenge_id}/results property.
   '/v1/challenges/{challenge_id}/results': {
-    // Defines the parameters field in the surrounding object or type.
+    // Generated declaration: opens the object for the parameters property.
     parameters: {
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the query property.
       query?: never;
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the header property.
       header?: never;
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the path property.
       path?: never;
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the cookie property.
       cookie?: never;
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
     /** Challenge Results Route */
-    // Defines the get field in the surrounding object or type.
+    // Generated declaration: defines the generated type of the get property.
     get: operations['challenge_results_route_v1_challenges__challenge_id__results_get'];
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the put property.
     put?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the post property.
     post?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the delete property.
     delete?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the options property.
     options?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the head property.
     head?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the patch property.
     patch?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the trace property.
     trace?: never;
-    // Closes the expression, call, or declaration started above.
+    // Generated declaration: closes the generated declaration opened above.
   };
-  // Begins the nested block or object completed below.
+  // Generated declaration: opens the object for the /v1/challenges property.
   '/v1/challenges': {
-    // Defines the parameters field in the surrounding object or type.
+    // Generated declaration: opens the object for the parameters property.
     parameters: {
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the query property.
       query?: never;
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the header property.
       header?: never;
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the path property.
       path?: never;
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the cookie property.
       cookie?: never;
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the get property.
     get?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the put property.
     put?: never;
     /** Create Challenge Route */
-    // Defines the post field in the surrounding object or type.
+    // Generated declaration: defines the generated type of the post property.
     post: operations['create_challenge_route_v1_challenges_post'];
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the delete property.
     delete?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the options property.
     options?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the head property.
     head?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the patch property.
     patch?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the trace property.
     trace?: never;
-    // Closes the expression, call, or declaration started above.
+    // Generated declaration: closes the generated declaration opened above.
   };
-  // Begins the nested block or object completed below.
+  // Generated declaration: opens the object for the /v1/challenges/mine property.
   '/v1/challenges/mine': {
-    // Defines the parameters field in the surrounding object or type.
+    // Generated declaration: opens the object for the parameters property.
     parameters: {
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the query property.
       query?: never;
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the header property.
       header?: never;
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the path property.
       path?: never;
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the cookie property.
       cookie?: never;
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
     /** Owned Challenges Route */
-    // Defines the get field in the surrounding object or type.
+    // Generated declaration: defines the generated type of the get property.
     get: operations['owned_challenges_route_v1_challenges_mine_get'];
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the put property.
     put?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the post property.
     post?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the delete property.
     delete?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the options property.
     options?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the head property.
     head?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the patch property.
     patch?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the trace property.
     trace?: never;
-    // Closes the expression, call, or declaration started above.
+    // Generated declaration: closes the generated declaration opened above.
   };
-  // Begins the nested block or object completed below.
+  // Generated declaration: opens the object for the /v1/challenges/{share_code} property.
   '/v1/challenges/{share_code}': {
-    // Defines the parameters field in the surrounding object or type.
+    // Generated declaration: opens the object for the parameters property.
     parameters: {
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the query property.
       query?: never;
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the header property.
       header?: never;
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the path property.
       path?: never;
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the cookie property.
       cookie?: never;
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
     /** Get Challenge Route */
-    // Defines the get field in the surrounding object or type.
+    // Generated declaration: defines the generated type of the get property.
     get: operations['get_challenge_route_v1_challenges__share_code__get'];
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the put property.
     put?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the post property.
     post?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the delete property.
     delete?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the options property.
     options?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the head property.
     head?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the patch property.
     patch?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the trace property.
     trace?: never;
-    // Closes the expression, call, or declaration started above.
+    // Generated declaration: closes the generated declaration opened above.
   };
-  // Begins the nested block or object completed below.
+  // Generated declaration: opens the object for the /v1/challenges/{share_code}/start property.
   '/v1/challenges/{share_code}/start': {
-    // Defines the parameters field in the surrounding object or type.
+    // Generated declaration: opens the object for the parameters property.
     parameters: {
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the query property.
       query?: never;
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the header property.
       header?: never;
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the path property.
       path?: never;
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the cookie property.
       cookie?: never;
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the get property.
     get?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the put property.
     put?: never;
     /** Start Challenge Route */
-    // Defines the post field in the surrounding object or type.
+    // Generated declaration: defines the generated type of the post property.
     post: operations['start_challenge_route_v1_challenges__share_code__start_post'];
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the delete property.
     delete?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the options property.
     options?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the head property.
     head?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the patch property.
     patch?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the trace property.
     trace?: never;
-    // Closes the expression, call, or declaration started above.
+    // Generated declaration: closes the generated declaration opened above.
   };
-  // Begins the nested block or object completed below.
+  // Generated declaration: opens the object for the /v1/challenges/{challenge_id} property.
   '/v1/challenges/{challenge_id}': {
-    // Defines the parameters field in the surrounding object or type.
+    // Generated declaration: opens the object for the parameters property.
     parameters: {
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the query property.
       query?: never;
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the header property.
       header?: never;
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the path property.
       path?: never;
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the cookie property.
       cookie?: never;
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the get property.
     get?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the put property.
     put?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the post property.
     post?: never;
     /** Revoke Challenge Route */
-    // Defines the delete field in the surrounding object or type.
+    // Generated declaration: defines the generated type of the delete property.
     delete: operations['revoke_challenge_route_v1_challenges__challenge_id__delete'];
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the options property.
     options?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the head property.
     head?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the patch property.
     patch?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the trace property.
     trace?: never;
-    // Closes the expression, call, or declaration started above.
+    // Generated declaration: closes the generated declaration opened above.
   };
-  // Begins the nested block or object completed below.
+  // Generated declaration: opens the object for the /v1/rooms/{room_id}/ws-ticket property.
   '/v1/rooms/{room_id}/ws-ticket': {
-    // Defines the parameters field in the surrounding object or type.
+    // Generated declaration: opens the object for the parameters property.
     parameters: {
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the query property.
       query?: never;
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the header property.
       header?: never;
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the path property.
       path?: never;
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the cookie property.
       cookie?: never;
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the get property.
     get?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the put property.
     put?: never;
     /** Create Websocket Ticket Route */
-    // Defines the post field in the surrounding object or type.
+    // Generated declaration: defines the generated type of the post property.
     post: operations['create_websocket_ticket_route_v1_rooms__room_id__ws_ticket_post'];
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the delete property.
     delete?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the options property.
     options?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the head property.
     head?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the patch property.
     patch?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the trace property.
     trace?: never;
-    // Closes the expression, call, or declaration started above.
+    // Generated declaration: closes the generated declaration opened above.
   };
-  // Begins the nested block or object completed below.
+  // Generated declaration: opens the object for the /v1/rooms property.
   '/v1/rooms': {
-    // Defines the parameters field in the surrounding object or type.
+    // Generated declaration: opens the object for the parameters property.
     parameters: {
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the query property.
       query?: never;
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the header property.
       header?: never;
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the path property.
       path?: never;
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the cookie property.
       cookie?: never;
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the get property.
     get?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the put property.
     put?: never;
     /** Create Room Route */
-    // Defines the post field in the surrounding object or type.
+    // Generated declaration: defines the generated type of the post property.
     post: operations['create_room_route_v1_rooms_post'];
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the delete property.
     delete?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the options property.
     options?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the head property.
     head?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the patch property.
     patch?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the trace property.
     trace?: never;
-    // Closes the expression, call, or declaration started above.
+    // Generated declaration: closes the generated declaration opened above.
   };
-  // Begins the nested block or object completed below.
+  // Generated declaration: opens the object for the /v1/rooms/{room_code}/join property.
   '/v1/rooms/{room_code}/join': {
-    // Defines the parameters field in the surrounding object or type.
+    // Generated declaration: opens the object for the parameters property.
     parameters: {
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the query property.
       query?: never;
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the header property.
       header?: never;
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the path property.
       path?: never;
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the cookie property.
       cookie?: never;
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the get property.
     get?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the put property.
     put?: never;
     /** Join Room Route */
-    // Defines the post field in the surrounding object or type.
+    // Generated declaration: defines the generated type of the post property.
     post: operations['join_room_route_v1_rooms__room_code__join_post'];
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the delete property.
     delete?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the options property.
     options?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the head property.
     head?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the patch property.
     patch?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the trace property.
     trace?: never;
-    // Closes the expression, call, or declaration started above.
+    // Generated declaration: closes the generated declaration opened above.
   };
-  // Begins the nested block or object completed below.
+  // Generated declaration: opens the object for the /v1/rooms/{room_id}/ready property.
   '/v1/rooms/{room_id}/ready': {
-    // Defines the parameters field in the surrounding object or type.
+    // Generated declaration: opens the object for the parameters property.
     parameters: {
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the query property.
       query?: never;
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the header property.
       header?: never;
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the path property.
       path?: never;
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the cookie property.
       cookie?: never;
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the get property.
     get?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the put property.
     put?: never;
     /** Ready Room Route */
-    // Defines the post field in the surrounding object or type.
+    // Generated declaration: defines the generated type of the post property.
     post: operations['ready_room_route_v1_rooms__room_id__ready_post'];
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the delete property.
     delete?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the options property.
     options?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the head property.
     head?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the patch property.
     patch?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the trace property.
     trace?: never;
-    // Closes the expression, call, or declaration started above.
+    // Generated declaration: closes the generated declaration opened above.
   };
-  // Begins the nested block or object completed below.
+  // Generated declaration: opens the object for the /v1/rooms/{room_id} property.
   '/v1/rooms/{room_id}': {
-    // Defines the parameters field in the surrounding object or type.
+    // Generated declaration: opens the object for the parameters property.
     parameters: {
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the query property.
       query?: never;
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the header property.
       header?: never;
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the path property.
       path?: never;
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the cookie property.
       cookie?: never;
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
     /** Get Room Route */
-    // Defines the get field in the surrounding object or type.
+    // Generated declaration: defines the generated type of the get property.
     get: operations['get_room_route_v1_rooms__room_id__get'];
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the put property.
     put?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the post property.
     post?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the delete property.
     delete?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the options property.
     options?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the head property.
     head?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the patch property.
     patch?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the trace property.
     trace?: never;
-    // Closes the expression, call, or declaration started above.
+    // Generated declaration: closes the generated declaration opened above.
   };
-  // Begins the nested block or object completed below.
+  // Generated declaration: opens the object for the /v1/leaderboards property.
   '/v1/leaderboards': {
-    // Defines the parameters field in the surrounding object or type.
+    // Generated declaration: opens the object for the parameters property.
     parameters: {
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the query property.
       query?: never;
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the header property.
       header?: never;
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the path property.
       path?: never;
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the cookie property.
       cookie?: never;
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
     /** Get Leaderboard Route */
-    // Defines the get field in the surrounding object or type.
+    // Generated declaration: defines the generated type of the get property.
     get: operations['get_leaderboard_route_v1_leaderboards_get'];
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the put property.
     put?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the post property.
     post?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the delete property.
     delete?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the options property.
     options?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the head property.
     head?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the patch property.
     patch?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the trace property.
     trace?: never;
-    // Closes the expression, call, or declaration started above.
+    // Generated declaration: closes the generated declaration opened above.
   };
-  // Begins the nested block or object completed below.
+  // Generated declaration: opens the object for the /v1/me/profile property.
   '/v1/me/profile': {
-    // Defines the parameters field in the surrounding object or type.
+    // Generated declaration: opens the object for the parameters property.
     parameters: {
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the query property.
       query?: never;
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the header property.
       header?: never;
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the path property.
       path?: never;
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the cookie property.
       cookie?: never;
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
     /** Get Profile Route */
-    // Defines the get field in the surrounding object or type.
+    // Generated declaration: defines the generated type of the get property.
     get: operations['get_profile_route_v1_me_profile_get'];
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the put property.
     put?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the post property.
     post?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the delete property.
     delete?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the options property.
     options?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the head property.
     head?: never;
     /** Update Profile Route */
-    // Defines the patch field in the surrounding object or type.
+    // Generated declaration: defines the generated type of the patch property.
     patch: operations['update_profile_route_v1_me_profile_patch'];
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the trace property.
     trace?: never;
-    // Closes the expression, call, or declaration started above.
+    // Generated declaration: closes the generated declaration opened above.
   };
-  // Begins the nested block or object completed below.
+  // Generated declaration: opens the object for the /v1/me/games property.
   '/v1/me/games': {
-    // Defines the parameters field in the surrounding object or type.
+    // Generated declaration: opens the object for the parameters property.
     parameters: {
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the query property.
       query?: never;
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the header property.
       header?: never;
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the path property.
       path?: never;
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the cookie property.
       cookie?: never;
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
     /** Get Games Route */
-    // Defines the get field in the surrounding object or type.
+    // Generated declaration: defines the generated type of the get property.
     get: operations['get_games_route_v1_me_games_get'];
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the put property.
     put?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the post property.
     post?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the delete property.
     delete?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the options property.
     options?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the head property.
     head?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the patch property.
     patch?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the trace property.
     trace?: never;
-    // Closes the expression, call, or declaration started above.
+    // Generated declaration: closes the generated declaration opened above.
   };
-  // Begins the nested block or object completed below.
+  // Generated declaration: opens the object for the /v1/me/stats property.
   '/v1/me/stats': {
-    // Defines the parameters field in the surrounding object or type.
+    // Generated declaration: opens the object for the parameters property.
     parameters: {
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the query property.
       query?: never;
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the header property.
       header?: never;
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the path property.
       path?: never;
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the cookie property.
       cookie?: never;
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
     /** Get Stats Route */
-    // Defines the get field in the surrounding object or type.
+    // Generated declaration: defines the generated type of the get property.
     get: operations['get_stats_route_v1_me_stats_get'];
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the put property.
     put?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the post property.
     post?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the delete property.
     delete?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the options property.
     options?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the head property.
     head?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the patch property.
     patch?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the trace property.
     trace?: never;
-    // Closes the expression, call, or declaration started above.
+    // Generated declaration: closes the generated declaration opened above.
   };
-  // Begins the nested block or object completed below.
+  // Generated declaration: opens the object for the /v1/me/export property.
   '/v1/me/export': {
-    // Defines the parameters field in the surrounding object or type.
+    // Generated declaration: opens the object for the parameters property.
     parameters: {
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the query property.
       query?: never;
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the header property.
       header?: never;
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the path property.
       path?: never;
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the cookie property.
       cookie?: never;
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
     /** Export Route */
-    // Defines the get field in the surrounding object or type.
+    // Generated declaration: defines the generated type of the get property.
     get: operations['export_route_v1_me_export_get'];
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the put property.
     put?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the post property.
     post?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the delete property.
     delete?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the options property.
     options?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the head property.
     head?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the patch property.
     patch?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the trace property.
     trace?: never;
-    // Closes the expression, call, or declaration started above.
+    // Generated declaration: closes the generated declaration opened above.
   };
-  // Begins the nested block or object completed below.
+  // Generated declaration: opens the object for the /v1/me property.
   '/v1/me': {
-    // Defines the parameters field in the surrounding object or type.
+    // Generated declaration: opens the object for the parameters property.
     parameters: {
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the query property.
       query?: never;
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the header property.
       header?: never;
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the path property.
       path?: never;
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the cookie property.
       cookie?: never;
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the get property.
     get?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the put property.
     put?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the post property.
     post?: never;
     /** Delete Account Route */
-    // Defines the delete field in the surrounding object or type.
+    // Generated declaration: defines the generated type of the delete property.
     delete: operations['delete_account_route_v1_me_delete'];
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the options property.
     options?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the head property.
     head?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the patch property.
     patch?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the trace property.
     trace?: never;
-    // Closes the expression, call, or declaration started above.
+    // Generated declaration: closes the generated declaration opened above.
   };
-  // Begins the nested block or object completed below.
+  // Generated declaration: opens the object for the /v1/support property.
   '/v1/support': {
-    // Defines the parameters field in the surrounding object or type.
+    // Generated declaration: opens the object for the parameters property.
     parameters: {
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the query property.
       query?: never;
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the header property.
       header?: never;
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the path property.
       path?: never;
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the cookie property.
       cookie?: never;
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the get property.
     get?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the put property.
     put?: never;
     /** Create Support Request Route */
-    // Defines the post field in the surrounding object or type.
+    // Generated declaration: defines the generated type of the post property.
     post: operations['create_support_request_route_v1_support_post'];
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the delete property.
     delete?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the options property.
     options?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the head property.
     head?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the patch property.
     patch?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the trace property.
     trace?: never;
-    // Closes the expression, call, or declaration started above.
+    // Generated declaration: closes the generated declaration opened above.
   };
-  // Begins the nested block or object completed below.
+  // Generated declaration: opens the object for the /v1/analytics/events property.
   '/v1/analytics/events': {
-    // Defines the parameters field in the surrounding object or type.
+    // Generated declaration: opens the object for the parameters property.
     parameters: {
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the query property.
       query?: never;
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the header property.
       header?: never;
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the path property.
       path?: never;
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the cookie property.
       cookie?: never;
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the get property.
     get?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the put property.
     put?: never;
     /** Collect Event Route */
-    // Defines the post field in the surrounding object or type.
+    // Generated declaration: defines the generated type of the post property.
     post: operations['collect_event_route_v1_analytics_events_post'];
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the delete property.
     delete?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the options property.
     options?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the head property.
     head?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the patch property.
     patch?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the trace property.
     trace?: never;
-    // Closes the expression, call, or declaration started above.
+    // Generated declaration: closes the generated declaration opened above.
   };
-  // Begins the nested block or object completed below.
+  // Generated declaration: opens the object for the /v1/admin/games property.
   '/v1/admin/games': {
-    // Defines the parameters field in the surrounding object or type.
+    // Generated declaration: opens the object for the parameters property.
     parameters: {
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the query property.
       query?: never;
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the header property.
       header?: never;
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the path property.
       path?: never;
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the cookie property.
       cookie?: never;
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
     /** Games Route */
-    // Defines the get field in the surrounding object or type.
+    // Generated declaration: defines the generated type of the get property.
     get: operations['games_route_v1_admin_games_get'];
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the put property.
     put?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the post property.
     post?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the delete property.
     delete?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the options property.
     options?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the head property.
     head?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the patch property.
     patch?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the trace property.
     trace?: never;
-    // Closes the expression, call, or declaration started above.
+    // Generated declaration: closes the generated declaration opened above.
   };
-  // Begins the nested block or object completed below.
+  // Generated declaration: opens the object for the /v1/admin/profiles property.
   '/v1/admin/profiles': {
-    // Defines the parameters field in the surrounding object or type.
+    // Generated declaration: opens the object for the parameters property.
     parameters: {
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the query property.
       query?: never;
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the header property.
       header?: never;
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the path property.
       path?: never;
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the cookie property.
       cookie?: never;
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
     /** Profiles Route */
-    // Defines the get field in the surrounding object or type.
+    // Generated declaration: defines the generated type of the get property.
     get: operations['profiles_route_v1_admin_profiles_get'];
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the put property.
     put?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the post property.
     post?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the delete property.
     delete?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the options property.
     options?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the head property.
     head?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the patch property.
     patch?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the trace property.
     trace?: never;
-    // Closes the expression, call, or declaration started above.
+    // Generated declaration: closes the generated declaration opened above.
   };
-  // Begins the nested block or object completed below.
+  // Generated declaration: opens the object for the /v1/admin/rooms property.
   '/v1/admin/rooms': {
-    // Defines the parameters field in the surrounding object or type.
+    // Generated declaration: opens the object for the parameters property.
     parameters: {
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the query property.
       query?: never;
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the header property.
       header?: never;
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the path property.
       path?: never;
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the cookie property.
       cookie?: never;
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
     /** Rooms Route */
-    // Defines the get field in the surrounding object or type.
+    // Generated declaration: defines the generated type of the get property.
     get: operations['rooms_route_v1_admin_rooms_get'];
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the put property.
     put?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the post property.
     post?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the delete property.
     delete?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the options property.
     options?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the head property.
     head?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the patch property.
     patch?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the trace property.
     trace?: never;
-    // Closes the expression, call, or declaration started above.
+    // Generated declaration: closes the generated declaration opened above.
   };
-  // Begins the nested block or object completed below.
+  // Generated declaration: opens the object for the /v1/admin/challenges property.
   '/v1/admin/challenges': {
-    // Defines the parameters field in the surrounding object or type.
+    // Generated declaration: opens the object for the parameters property.
     parameters: {
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the query property.
       query?: never;
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the header property.
       header?: never;
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the path property.
       path?: never;
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the cookie property.
       cookie?: never;
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
     /** Challenges Route */
-    // Defines the get field in the surrounding object or type.
+    // Generated declaration: defines the generated type of the get property.
     get: operations['challenges_route_v1_admin_challenges_get'];
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the put property.
     put?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the post property.
     post?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the delete property.
     delete?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the options property.
     options?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the head property.
     head?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the patch property.
     patch?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the trace property.
     trace?: never;
-    // Closes the expression, call, or declaration started above.
+    // Generated declaration: closes the generated declaration opened above.
   };
-  // Begins the nested block or object completed below.
+  // Generated declaration: opens the object for the /v1/admin/leaderboard-review property.
   '/v1/admin/leaderboard-review': {
-    // Defines the parameters field in the surrounding object or type.
+    // Generated declaration: opens the object for the parameters property.
     parameters: {
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the query property.
       query?: never;
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the header property.
       header?: never;
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the path property.
       path?: never;
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the cookie property.
       cookie?: never;
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
     /** Leaderboard Review Route */
-    // Defines the get field in the surrounding object or type.
+    // Generated declaration: defines the generated type of the get property.
     get: operations['leaderboard_review_route_v1_admin_leaderboard_review_get'];
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the put property.
     put?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the post property.
     post?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the delete property.
     delete?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the options property.
     options?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the head property.
     head?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the patch property.
     patch?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the trace property.
     trace?: never;
-    // Closes the expression, call, or declaration started above.
+    // Generated declaration: closes the generated declaration opened above.
   };
-  // Begins the nested block or object completed below.
+  // Generated declaration: opens the object for the /v1/admin/summary property.
   '/v1/admin/summary': {
-    // Defines the parameters field in the surrounding object or type.
+    // Generated declaration: opens the object for the parameters property.
     parameters: {
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the query property.
       query?: never;
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the header property.
       header?: never;
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the path property.
       path?: never;
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the cookie property.
       cookie?: never;
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
     /** Summary Route */
-    // Defines the get field in the surrounding object or type.
+    // Generated declaration: defines the generated type of the get property.
     get: operations['summary_route_v1_admin_summary_get'];
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the put property.
     put?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the post property.
     post?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the delete property.
     delete?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the options property.
     options?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the head property.
     head?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the patch property.
     patch?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the trace property.
     trace?: never;
-    // Closes the expression, call, or declaration started above.
+    // Generated declaration: closes the generated declaration opened above.
   };
-  // Begins the nested block or object completed below.
+  // Generated declaration: opens the object for the /v1/admin/flags property.
   '/v1/admin/flags': {
-    // Defines the parameters field in the surrounding object or type.
+    // Generated declaration: opens the object for the parameters property.
     parameters: {
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the query property.
       query?: never;
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the header property.
       header?: never;
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the path property.
       path?: never;
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the cookie property.
       cookie?: never;
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
     /** Flags Route */
-    // Defines the get field in the surrounding object or type.
+    // Generated declaration: defines the generated type of the get property.
     get: operations['flags_route_v1_admin_flags_get'];
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the put property.
     put?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the post property.
     post?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the delete property.
     delete?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the options property.
     options?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the head property.
     head?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the patch property.
     patch?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the trace property.
     trace?: never;
-    // Closes the expression, call, or declaration started above.
+    // Generated declaration: closes the generated declaration opened above.
   };
-  // Begins the nested block or object completed below.
+  // Generated declaration: opens the object for the /v1/admin/flags/{key} property.
   '/v1/admin/flags/{key}': {
-    // Defines the parameters field in the surrounding object or type.
+    // Generated declaration: opens the object for the parameters property.
     parameters: {
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the query property.
       query?: never;
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the header property.
       header?: never;
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the path property.
       path?: never;
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the cookie property.
       cookie?: never;
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the get property.
     get?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the put property.
     put?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the post property.
     post?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the delete property.
     delete?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the options property.
     options?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the head property.
     head?: never;
     /** Update Flag Route */
-    // Defines the patch field in the surrounding object or type.
+    // Generated declaration: defines the generated type of the patch property.
     patch: operations['update_flag_route_v1_admin_flags__key__patch'];
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the trace property.
     trace?: never;
-    // Closes the expression, call, or declaration started above.
+    // Generated declaration: closes the generated declaration opened above.
   };
-  // Begins the nested block or object completed below.
+  // Generated declaration: opens the object for the /v1/admin/leaderboard/{entry_id}/invalidate property.
   '/v1/admin/leaderboard/{entry_id}/invalidate': {
-    // Defines the parameters field in the surrounding object or type.
+    // Generated declaration: opens the object for the parameters property.
     parameters: {
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the query property.
       query?: never;
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the header property.
       header?: never;
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the path property.
       path?: never;
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the cookie property.
       cookie?: never;
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the get property.
     get?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the put property.
     put?: never;
     /** Invalidate Leaderboard Route */
-    // Defines the post field in the surrounding object or type.
+    // Generated declaration: defines the generated type of the post property.
     post: operations['invalidate_leaderboard_route_v1_admin_leaderboard__entry_id__invalidate_post'];
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the delete property.
     delete?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the options property.
     options?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the head property.
     head?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the patch property.
     patch?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the trace property.
     trace?: never;
-    // Closes the expression, call, or declaration started above.
+    // Generated declaration: closes the generated declaration opened above.
   };
-  // Begins the nested block or object completed below.
+  // Generated declaration: opens the object for the /v1/admin/leaderboard/{entry_id}/restore property.
   '/v1/admin/leaderboard/{entry_id}/restore': {
-    // Defines the parameters field in the surrounding object or type.
+    // Generated declaration: opens the object for the parameters property.
     parameters: {
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the query property.
       query?: never;
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the header property.
       header?: never;
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the path property.
       path?: never;
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the cookie property.
       cookie?: never;
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the get property.
     get?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the put property.
     put?: never;
     /** Restore Leaderboard Route */
-    // Defines the post field in the surrounding object or type.
+    // Generated declaration: defines the generated type of the post property.
     post: operations['restore_leaderboard_route_v1_admin_leaderboard__entry_id__restore_post'];
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the delete property.
     delete?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the options property.
     options?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the head property.
     head?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the patch property.
     patch?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the trace property.
     trace?: never;
-    // Closes the expression, call, or declaration started above.
+    // Generated declaration: closes the generated declaration opened above.
   };
-  // Begins the nested block or object completed below.
+  // Generated declaration: opens the object for the /v1/admin/profiles/{user_id}/moderate property.
   '/v1/admin/profiles/{user_id}/moderate': {
-    // Defines the parameters field in the surrounding object or type.
+    // Generated declaration: opens the object for the parameters property.
     parameters: {
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the query property.
       query?: never;
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the header property.
       header?: never;
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the path property.
       path?: never;
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the cookie property.
       cookie?: never;
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the get property.
     get?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the put property.
     put?: never;
     /** Moderate Profile Route */
-    // Defines the post field in the surrounding object or type.
+    // Generated declaration: defines the generated type of the post property.
     post: operations['moderate_profile_route_v1_admin_profiles__user_id__moderate_post'];
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the delete property.
     delete?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the options property.
     options?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the head property.
     head?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the patch property.
     patch?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the trace property.
     trace?: never;
-    // Closes the expression, call, or declaration started above.
+    // Generated declaration: closes the generated declaration opened above.
   };
-  // Begins the nested block or object completed below.
+  // Generated declaration: opens the object for the /v1/admin/challenges/{challenge_id}/revoke property.
   '/v1/admin/challenges/{challenge_id}/revoke': {
-    // Defines the parameters field in the surrounding object or type.
+    // Generated declaration: opens the object for the parameters property.
     parameters: {
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the query property.
       query?: never;
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the header property.
       header?: never;
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the path property.
       path?: never;
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the cookie property.
       cookie?: never;
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the get property.
     get?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the put property.
     put?: never;
     /** Admin Revoke Challenge Route */
-    // Defines the post field in the surrounding object or type.
+    // Generated declaration: defines the generated type of the post property.
     post: operations['admin_revoke_challenge_route_v1_admin_challenges__challenge_id__revoke_post'];
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the delete property.
     delete?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the options property.
     options?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the head property.
     head?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the patch property.
     patch?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the trace property.
     trace?: never;
-    // Closes the expression, call, or declaration started above.
+    // Generated declaration: closes the generated declaration opened above.
   };
-  // Begins the nested block or object completed below.
+  // Generated declaration: opens the object for the /v1/admin/rooms/{room_id}/terminate property.
   '/v1/admin/rooms/{room_id}/terminate': {
-    // Defines the parameters field in the surrounding object or type.
+    // Generated declaration: opens the object for the parameters property.
     parameters: {
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the query property.
       query?: never;
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the header property.
       header?: never;
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the path property.
       path?: never;
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the cookie property.
       cookie?: never;
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the get property.
     get?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the put property.
     put?: never;
     /** Terminate Room Route */
-    // Defines the post field in the surrounding object or type.
+    // Generated declaration: defines the generated type of the post property.
     post: operations['terminate_room_route_v1_admin_rooms__room_id__terminate_post'];
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the delete property.
     delete?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the options property.
     options?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the head property.
     head?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the patch property.
     patch?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the trace property.
     trace?: never;
-    // Closes the expression, call, or declaration started above.
+    // Generated declaration: closes the generated declaration opened above.
   };
-  // Begins the nested block or object completed below.
+  // Generated declaration: opens the object for the /v1/admin/audit property.
   '/v1/admin/audit': {
-    // Defines the parameters field in the surrounding object or type.
+    // Generated declaration: opens the object for the parameters property.
     parameters: {
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the query property.
       query?: never;
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the header property.
       header?: never;
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the path property.
       path?: never;
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the cookie property.
       cookie?: never;
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
     /** Audit Route */
-    // Defines the get field in the surrounding object or type.
+    // Generated declaration: defines the generated type of the get property.
     get: operations['audit_route_v1_admin_audit_get'];
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the put property.
     put?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the post property.
     post?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the delete property.
     delete?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the options property.
     options?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the head property.
     head?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the patch property.
     patch?: never;
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the trace property.
     trace?: never;
-    // Closes the expression, call, or declaration started above.
+    // Generated declaration: closes the generated declaration opened above.
   };
-  // Closes the expression, call, or declaration started above.
+  // Generated declaration: closes the generated declaration opened above.
 }
-// Exports this declaration for use by other modules.
+// Generated declaration: exports the webhooks type alias for consumers of the OpenAPI contract.
 export type webhooks = Record<string, never>;
-// Exports this declaration for use by other modules.
+// Generated declaration: exports the components interface for consumers of the OpenAPI contract.
 export interface components {
-  // Defines the schemas field in the surrounding object or type.
+  // Generated declaration: opens the object for the schemas property.
   schemas: {
     /** AchievementProgressSchema */
-    // Defines the AchievementProgressSchema field in the surrounding object or type.
+    // Generated declaration: opens the object for the AchievementProgressSchema property.
     AchievementProgressSchema: {
       /** Current */
-      // Defines the current field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the current property.
       current: number;
       /** Target */
-      // Defines the target field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the target property.
       target: number;
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
     /** AdminActionRequest */
-    // Defines the AdminActionRequest field in the surrounding object or type.
+    // Generated declaration: opens the object for the AdminActionRequest property.
     AdminActionRequest: {
       /** Reason */
-      // Defines the reason field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the reason property.
       reason: string;
       /** Enabled */
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the enabled property.
       enabled?: boolean | null;
       /** Displayname */
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the displayName property.
       displayName?: string | null;
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
     /** AdminChallengeItem */
-    // Defines the AdminChallengeItem field in the surrounding object or type.
+    // Generated declaration: opens the object for the AdminChallengeItem property.
     AdminChallengeItem: {
       /**
        * Id
        * Format: uuid
        */
-      // Defines the id field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the id property.
       id: string;
       /**
        * Creatorid
        * Format: uuid
        */
-      // Defines the creatorId field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the creatorId property.
       creatorId: string;
       /** Title */
-      // Defines the title field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the title property.
       title: string | null;
       /** Completedcount */
-      // Defines the completedCount field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the completedCount property.
       completedCount: number;
       /** Revokedat */
-      // Defines the revokedAt field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the revokedAt property.
       revokedAt: string | null;
       /**
        * Expiresat
        * Format: date-time
        */
-      // Defines the expiresAt field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the expiresAt property.
       expiresAt: string;
       /**
        * Createdat
        * Format: date-time
        */
-      // Defines the createdAt field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the createdAt property.
       createdAt: string;
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
     /** AdminGameItem */
-    // Defines the AdminGameItem field in the surrounding object or type.
+    // Generated declaration: opens the object for the AdminGameItem property.
     AdminGameItem: {
       /** Id */
-      // Defines the id field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the id property.
       id: string;
       /**
        * Ownerid
        * Format: uuid
        */
-      // Defines the ownerId field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the ownerId property.
       ownerId: string;
       /** Mode */
-      // Defines the mode field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the mode property.
       mode: string;
       /** Status */
-      // Defines the status field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the status property.
       status: string;
       /** Difficulty */
-      // Defines the difficulty field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the difficulty property.
       difficulty: string | null;
       /** Attemptsused */
-      // Defines the attemptsUsed field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the attemptsUsed property.
       attemptsUsed: number;
       /** Maxattempts */
-      // Defines the maxAttempts field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the maxAttempts property.
       maxAttempts: number;
       /** Score */
-      // Defines the score field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the score property.
       score: number | null;
       /** Rankedeligibility */
-      // Defines the rankedEligibility field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the rankedEligibility property.
       rankedEligibility: string;
       /**
        * Startedat
        * Format: date-time
        */
-      // Defines the startedAt field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the startedAt property.
       startedAt: string;
       /** Completedat */
-      // Defines the completedAt field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the completedAt property.
       completedAt: string | null;
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
     /** AdminLeaderboardItem */
-    // Defines the AdminLeaderboardItem field in the surrounding object or type.
+    // Generated declaration: opens the object for the AdminLeaderboardItem property.
     AdminLeaderboardItem: {
       /**
        * Id
        * Format: uuid
        */
-      // Defines the id field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the id property.
       id: string;
       /**
        * Gameid
        * Format: uuid
        */
-      // Defines the gameId field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the gameId property.
       gameId: string;
       /**
        * Userid
        * Format: uuid
        */
-      // Defines the userId field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the userId property.
       userId: string;
       /** Category */
-      // Defines the category field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the category property.
       category: string;
       /** Score */
-      // Defines the score field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the score property.
       score: number;
       /** Attemptsused */
-      // Defines the attemptsUsed field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the attemptsUsed property.
       attemptsUsed: number;
       /** Elapsedseconds */
-      // Defines the elapsedSeconds field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the elapsedSeconds property.
       elapsedSeconds: number;
       /** Reviewstatus */
-      // Defines the reviewStatus field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the reviewStatus property.
       reviewStatus: string;
       /** Invalidatedat */
-      // Defines the invalidatedAt field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the invalidatedAt property.
       invalidatedAt: string | null;
       /**
        * Completedat
        * Format: date-time
        */
-      // Defines the completedAt field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the completedAt property.
       completedAt: string;
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
     /** AdminPage[AdminChallengeItem] */
-    // Defines the AdminPage_AdminChallengeItem_ field in the surrounding object or type.
+    // Generated declaration: opens the object for the AdminPage_AdminChallengeItem_ property.
     AdminPage_AdminChallengeItem_: {
       /** Items */
-      // Defines the items field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the items property.
       items: components['schemas']['AdminChallengeItem'][];
       /** Page */
-      // Defines the page field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the page property.
       page: number;
       /** Pagesize */
-      // Defines the pageSize field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the pageSize property.
       pageSize: number;
       /** Total */
-      // Defines the total field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the total property.
       total: number;
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
     /** AdminPage[AdminGameItem] */
-    // Defines the AdminPage_AdminGameItem_ field in the surrounding object or type.
+    // Generated declaration: opens the object for the AdminPage_AdminGameItem_ property.
     AdminPage_AdminGameItem_: {
       /** Items */
-      // Defines the items field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the items property.
       items: components['schemas']['AdminGameItem'][];
       /** Page */
-      // Defines the page field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the page property.
       page: number;
       /** Pagesize */
-      // Defines the pageSize field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the pageSize property.
       pageSize: number;
       /** Total */
-      // Defines the total field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the total property.
       total: number;
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
     /** AdminPage[AdminLeaderboardItem] */
-    // Defines the AdminPage_AdminLeaderboardItem_ field in the surrounding object or type.
+    // Generated declaration: opens the object for the AdminPage_AdminLeaderboardItem_ property.
     AdminPage_AdminLeaderboardItem_: {
       /** Items */
-      // Defines the items field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the items property.
       items: components['schemas']['AdminLeaderboardItem'][];
       /** Page */
-      // Defines the page field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the page property.
       page: number;
       /** Pagesize */
-      // Defines the pageSize field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the pageSize property.
       pageSize: number;
       /** Total */
-      // Defines the total field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the total property.
       total: number;
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
     /** AdminPage[AdminProfileItem] */
-    // Defines the AdminPage_AdminProfileItem_ field in the surrounding object or type.
+    // Generated declaration: opens the object for the AdminPage_AdminProfileItem_ property.
     AdminPage_AdminProfileItem_: {
       /** Items */
-      // Defines the items field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the items property.
       items: components['schemas']['AdminProfileItem'][];
       /** Page */
-      // Defines the page field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the page property.
       page: number;
       /** Pagesize */
-      // Defines the pageSize field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the pageSize property.
       pageSize: number;
       /** Total */
-      // Defines the total field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the total property.
       total: number;
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
     /** AdminPage[AdminRoomItem] */
-    // Defines the AdminPage_AdminRoomItem_ field in the surrounding object or type.
+    // Generated declaration: opens the object for the AdminPage_AdminRoomItem_ property.
     AdminPage_AdminRoomItem_: {
       /** Items */
-      // Defines the items field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the items property.
       items: components['schemas']['AdminRoomItem'][];
       /** Page */
-      // Defines the page field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the page property.
       page: number;
       /** Pagesize */
-      // Defines the pageSize field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the pageSize property.
       pageSize: number;
       /** Total */
-      // Defines the total field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the total property.
       total: number;
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
     /** AdminProfileItem */
-    // Defines the AdminProfileItem field in the surrounding object or type.
+    // Generated declaration: opens the object for the AdminProfileItem property.
     AdminProfileItem: {
       /**
        * Id
        * Format: uuid
        */
-      // Defines the id field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the id property.
       id: string;
       /** Displayname */
-      // Defines the displayName field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the displayName property.
       displayName: string | null;
       /** Isanonymous */
-      // Defines the isAnonymous field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the isAnonymous property.
       isAnonymous: boolean;
       /** Publicleaderboards */
-      // Defines the publicLeaderboards field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the publicLeaderboards property.
       publicLeaderboards: boolean;
       /** Isbanned */
-      // Defines the isBanned field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the isBanned property.
       isBanned: boolean;
       /** Deletedat */
-      // Defines the deletedAt field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the deletedAt property.
       deletedAt: string | null;
       /**
        * Createdat
        * Format: date-time
        */
-      // Defines the createdAt field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the createdAt property.
       createdAt: string;
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
     /** AdminRoomItem */
-    // Defines the AdminRoomItem field in the surrounding object or type.
+    // Generated declaration: opens the object for the AdminRoomItem property.
     AdminRoomItem: {
       /**
        * Id
        * Format: uuid
        */
-      // Defines the id field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the id property.
       id: string;
       /** Status */
-      // Defines the status field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the status property.
       status: string;
       /** Membercount */
-      // Defines the memberCount field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the memberCount property.
       memberCount: number;
       /** Winnerid */
-      // Defines the winnerId field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the winnerId property.
       winnerId: string | null;
       /** Istie */
-      // Defines the isTie field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the isTie property.
       isTie: boolean;
       /**
        * Expiresat
        * Format: date-time
        */
-      // Defines the expiresAt field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the expiresAt property.
       expiresAt: string;
       /**
        * Createdat
        * Format: date-time
        */
-      // Defines the createdAt field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the createdAt property.
       createdAt: string;
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
     /** AdminSummary */
-    // Defines the AdminSummary field in the surrounding object or type.
+    // Generated declaration: opens the object for the AdminSummary property.
     AdminSummary: {
       /** Profiles */
-      // Defines the profiles field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the profiles property.
       profiles: number;
       /** Activegames */
-      // Defines the activeGames field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the activeGames property.
       activeGames: number;
       /** Completedgames */
-      // Defines the completedGames field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the completedGames property.
       completedGames: number;
       /** Activerooms */
-      // Defines the activeRooms field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the activeRooms property.
       activeRooms: number;
       /** Pendingreviewentries */
-      // Defines the pendingReviewEntries field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the pendingReviewEntries property.
       pendingReviewEntries: number;
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
     /** AnalyticsEventRequest */
-    // Defines the AnalyticsEventRequest field in the surrounding object or type.
+    // Generated declaration: opens the object for the AnalyticsEventRequest property.
     AnalyticsEventRequest: {
       /**
        * Clienteventid
        * Format: uuid
        */
-      // Defines the clientEventId field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the clientEventId property.
       clientEventId: string;
       /**
        * Eventname
        * @enum {string}
        */
-      // Defines the eventName field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the eventName property.
       eventName:
-        // Executes this line as the next step in the surrounding logic.
+        // Generated declaration: adds another allowed type to the surrounding union.
         | 'game_started'
-        // Executes this line as the next step in the surrounding logic.
+        // Generated declaration: adds another allowed type to the surrounding union.
         | 'game_completed'
-        // Executes this line as the next step in the surrounding logic.
+        // Generated declaration: adds another allowed type to the surrounding union.
         | 'game_abandoned'
-        // Executes this line as the next step in the surrounding logic.
+        // Generated declaration: adds another allowed type to the surrounding union.
         | 'difficulty_selected'
-        // Executes this line as the next step in the surrounding logic.
+        // Generated declaration: adds another allowed type to the surrounding union.
         | 'daily_completed'
-        // Executes this line as the next step in the surrounding logic.
+        // Generated declaration: adds another allowed type to the surrounding union.
         | 'friend_challenge_created'
-        // Executes this line as the next step in the surrounding logic.
+        // Generated declaration: adds another allowed type to the surrounding union.
         | 'room_joined'
-        // Executes this line as the next step in the surrounding logic.
+        // Generated declaration: adds another allowed type to the surrounding union.
         | 'duel_completed'
-        // Executes this line as the next step in the surrounding logic.
+        // Generated declaration: adds another allowed type to the surrounding union.
         | 'validation_error'
-        // Executes this line as the next step in the surrounding logic.
+        // Generated declaration: adds another allowed type to the surrounding union.
         | 'reconnect'
-        // Executes this line as the next step in the surrounding logic.
+        // Generated declaration: adds another allowed type to the surrounding union.
         | 'account_upgraded';
       /**
        * Consent
        * @constant
        */
-      // Defines the consent field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the consent property.
       consent: true;
       /**
        * Consentversion
        * @constant
        */
-      // Defines the consentVersion field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the consentVersion property.
       consentVersion: 'privacy-v1';
       /**
        * Locale
        * @enum {string}
        */
-      // Defines the locale field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the locale property.
       locale: 'en' | 'zh-Hant';
       /** Mode */
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the mode property.
       mode?: ('solo' | 'daily' | 'practice' | 'pass_and_play' | 'friend_challenge' | 'duel') | null;
       /** Difficulty */
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the difficulty property.
       difficulty?: ('easy' | 'normal' | 'hard' | 'expert' | 'custom') | null;
       /** Result */
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the result property.
       result?: ('won' | 'lost' | 'abandoned' | 'expired' | 'tie') | null;
       /** Attemptsused */
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the attemptsUsed property.
       attemptsUsed?: number | null;
       /** Ranked */
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the ranked property.
       ranked?: boolean | null;
       /** Scoreband */
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the scoreBand property.
       scoreBand?: ('zero' | '1-999' | '1000-1499' | '1500+') | null;
       /** Dailychallengeid */
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the dailyChallengeId property.
       dailyChallengeId?: string | null;
       /** Official */
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the official property.
       official?: boolean | null;
       /** Expiryband */
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the expiryBand property.
       expiryBand?: '30_days' | null;
       /** Roomstate */
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the roomState property.
       roomState?: ('waiting' | 'active' | 'completed' | 'expired' | 'terminated') | null;
       /** Reconnect */
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the reconnect property.
       reconnect?: boolean | null;
       /** Tie */
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the tie property.
       tie?: boolean | null;
       /** Validationcategory */
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the validationCategory property.
       validationCategory?:
-        // Executes this line as the next step in the surrounding logic.
+        // Generated declaration: continues the generated OpenAPI type declaration.
         ('game_config' | 'guess' | 'challenge' | 'room' | 'profile' | 'auth') | null;
       /** Surface */
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the surface property.
       surface?: ('game' | 'room' | 'daily' | 'challenge' | 'account') | null;
       /** Recovered */
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the recovered property.
       recovered?: boolean | null;
       /** Previousanonymous */
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the previousAnonymous property.
       previousAnonymous?: boolean | null;
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
     /** AnalyticsEventResponse */
-    // Defines the AnalyticsEventResponse field in the surrounding object or type.
+    // Generated declaration: opens the object for the AnalyticsEventResponse property.
     AnalyticsEventResponse: {
       /** Received */
-      // Defines the received field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the received property.
       received: boolean;
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
     /** AttemptRequest */
-    // Defines the AttemptRequest field in the surrounding object or type.
+    // Generated declaration: opens the object for the AttemptRequest property.
     AttemptRequest: {
       /** Guess */
-      // Defines the guess field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the guess property.
       guess: string[];
       /** Idempotencykey */
-      // Defines the idempotencyKey field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the idempotencyKey property.
       idempotencyKey: string;
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
     /** AttemptSchema */
-    // Defines the AttemptSchema field in the surrounding object or type.
+    // Generated declaration: opens the object for the AttemptSchema property.
     AttemptSchema: {
       /** Number */
-      // Defines the number field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the number property.
       number: number;
       /** Guess */
-      // Defines the guess field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the guess property.
       guess: string[];
-      // Defines the feedback field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the feedback property.
       feedback: components['schemas']['FeedbackSchema'];
       /**
        * Submittedat
        * Format: date-time
        */
-      // Defines the submittedAt field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the submittedAt property.
       submittedAt: string;
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
     /** AuditEventResponse */
-    // Defines the AuditEventResponse field in the surrounding object or type.
+    // Generated declaration: opens the object for the AuditEventResponse property.
     AuditEventResponse: {
       /**
        * Id
        * Format: uuid
        */
-      // Defines the id field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the id property.
       id: string;
       /** Actorid */
-      // Defines the actorId field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the actorId property.
       actorId: string | null;
       /** Action */
-      // Defines the action field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the action property.
       action: string;
       /** Targettype */
-      // Defines the targetType field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the targetType property.
       targetType: string;
       /** Targetid */
-      // Defines the targetId field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the targetId property.
       targetId: string;
       /** Reason */
-      // Defines the reason field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the reason property.
       reason: string | null;
       /**
        * Createdat
        * Format: date-time
        */
-      // Defines the createdAt field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the createdAt property.
       createdAt: string;
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
     /** ChallengeResponse */
-    // Defines the ChallengeResponse field in the surrounding object or type.
+    // Generated declaration: opens the object for the ChallengeResponse property.
     ChallengeResponse: {
       /** Id */
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the id property.
       id?: string | null;
       /** Sharecode */
-      // Defines the shareCode field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the shareCode property.
       shareCode: string;
       /** Title */
-      // Defines the title field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the title property.
       title: string | null;
       /** Creatorname */
-      // Defines the creatorName field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the creatorName property.
       creatorName: string | null;
-      // Defines the config field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the config property.
       config: components['schemas']['GameConfigSchema'];
       /**
        * Expiresat
        * Format: date-time
        */
-      // Defines the expiresAt field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the expiresAt property.
       expiresAt: string;
       /** Revoked */
-      // Defines the revoked field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the revoked property.
       revoked: boolean;
       /**
        * Completedcount
        * @default 0
        */
-      // Defines the completedCount field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the completedCount property.
       completedCount: number;
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
     /** ChallengeResultItem */
-    // Defines the ChallengeResultItem field in the surrounding object or type.
+    // Generated declaration: opens the object for the ChallengeResultItem property.
     ChallengeResultItem: {
       /** Rank */
-      // Defines the rank field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the rank property.
       rank: number;
       /** Playerlabel */
-      // Defines the playerLabel field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the playerLabel property.
       playerLabel: string;
       /** Result */
-      // Defines the result field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the result property.
       result: string;
       /** Attemptsused */
-      // Defines the attemptsUsed field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the attemptsUsed property.
       attemptsUsed: number;
       /** Maxattempts */
-      // Defines the maxAttempts field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the maxAttempts property.
       maxAttempts: number;
       /** Score */
-      // Defines the score field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the score property.
       score: number;
       /** Elapsedseconds */
-      // Defines the elapsedSeconds field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the elapsedSeconds property.
       elapsedSeconds: number | null;
       /**
        * Completedat
        * Format: date-time
        */
-      // Defines the completedAt field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the completedAt property.
       completedAt: string;
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
     /** ChallengeResultsResponse */
-    // Defines the ChallengeResultsResponse field in the surrounding object or type.
+    // Generated declaration: opens the object for the ChallengeResultsResponse property.
     ChallengeResultsResponse: {
       /** Completedcount */
-      // Defines the completedCount field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the completedCount property.
       completedCount: number;
       /** Winrate */
-      // Defines the winRate field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the winRate property.
       winRate: number;
       /** Averageattempts */
-      // Defines the averageAttempts field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the averageAttempts property.
       averageAttempts: number | null;
       /** Scoredistribution */
-      // Defines the scoreDistribution field in the surrounding object or type.
+      // Generated declaration: opens the object for the scoreDistribution property.
       scoreDistribution: {
-        // Executes this line as the next step in the surrounding logic.
+        // Generated declaration: defines an index signature for generated OpenAPI keys and values.
         [key: string]: number;
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
       /** Items */
-      // Defines the items field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the items property.
       items: components['schemas']['ChallengeResultItem'][];
       /** Page */
-      // Defines the page field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the page property.
       page: number;
       /** Pagesize */
-      // Defines the pageSize field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the pageSize property.
       pageSize: number;
       /** Total */
-      // Defines the total field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the total property.
       total: number;
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
     /**
      * CodeMakerType
      * @enum {string}
      */
-    // Defines the CodeMakerType field in the surrounding object or type.
+    // Generated declaration: defines the generated type of the CodeMakerType property.
     CodeMakerType: 'computer' | 'human';
     /** CreateChallengeRequest */
-    // Defines the CreateChallengeRequest field in the surrounding object or type.
+    // Generated declaration: opens the object for the CreateChallengeRequest property.
     CreateChallengeRequest: {
       /** Difficulty */
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the difficulty property.
       difficulty?: ('easy' | 'normal' | 'hard' | 'expert') | null;
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the config property.
       config?: components['schemas']['GameConfigSchema'] | null;
       /** Secret */
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the secret property.
       secret?: string[] | null;
       /** Title */
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the title property.
       title?: string | null;
       /**
        * Showcreatorname
        * @default true
        */
-      // Defines the showCreatorName field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the showCreatorName property.
       showCreatorName: boolean;
       /** Idempotencykey */
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the idempotencyKey property.
       idempotencyKey?: string | null;
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
     /** CreateGameRequest */
-    // Defines the CreateGameRequest field in the surrounding object or type.
+    // Generated declaration: opens the object for the CreateGameRequest property.
     CreateGameRequest: {
       /** @default solo */
-      // Defines the mode field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the mode property.
       mode: components['schemas']['GameMode'];
       /** Difficulty */
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the difficulty property.
       difficulty?: ('easy' | 'normal' | 'hard' | 'expert') | null;
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the config property.
       config?: components['schemas']['GameConfigSchema'] | null;
       /** Secret */
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the secret property.
       secret?: string[] | null;
       /** Idempotencykey */
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the idempotencyKey property.
       idempotencyKey?: string | null;
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
     /** CreateRoomRequest */
-    // Defines the CreateRoomRequest field in the surrounding object or type.
+    // Generated declaration: opens the object for the CreateRoomRequest property.
     CreateRoomRequest: {
       /**
        * Difficulty
        * @default normal
        * @enum {string}
        */
-      // Defines the difficulty field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the difficulty property.
       difficulty: 'easy' | 'normal' | 'hard' | 'expert';
       /** Idempotencykey */
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the idempotencyKey property.
       idempotencyKey?: string | null;
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
     /** DailyDefinitionResponse */
-    // Defines the DailyDefinitionResponse field in the surrounding object or type.
+    // Generated declaration: opens the object for the DailyDefinitionResponse property.
     DailyDefinitionResponse: {
       /** Id */
-      // Defines the id field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the id property.
       id: string;
       /**
        * Date
        * Format: date
        */
-      // Defines the date field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the date property.
       date: string;
       /** Rulesetversion */
-      // Defines the ruleSetVersion field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the ruleSetVersion property.
       ruleSetVersion: string;
       /** Derivationversion */
-      // Defines the derivationVersion field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the derivationVersion property.
       derivationVersion: string;
-      // Defines the config field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the config property.
       config: components['schemas']['GameConfigSchema'];
       /**
        * Rolloverat
        * Format: date-time
        */
-      // Defines the rolloverAt field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the rolloverAt property.
       rolloverAt: string;
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
     /** DeleteAccountRequest */
-    // Defines the DeleteAccountRequest field in the surrounding object or type.
+    // Generated declaration: opens the object for the DeleteAccountRequest property.
     DeleteAccountRequest: {
       /**
        * Confirmation
        * @constant
        */
-      // Defines the confirmation field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the confirmation property.
       confirmation: 'DELETE';
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
     /** DeleteAccountResponse */
-    // Defines the DeleteAccountResponse field in the surrounding object or type.
+    // Generated declaration: opens the object for the DeleteAccountResponse property.
     DeleteAccountResponse: {
       /** Deleted */
-      // Defines the deleted field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the deleted property.
       deleted: boolean;
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
     /** FeatureFlagResponse */
-    // Defines the FeatureFlagResponse field in the surrounding object or type.
+    // Generated declaration: opens the object for the FeatureFlagResponse property.
     FeatureFlagResponse: {
       /** Key */
-      // Defines the key field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the key property.
       key: string;
       /** Enabled */
-      // Defines the enabled field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the enabled property.
       enabled: boolean;
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
     /** FeedbackSchema */
-    // Defines the FeedbackSchema field in the surrounding object or type.
+    // Generated declaration: opens the object for the FeedbackSchema property.
     FeedbackSchema: {
       /** Black */
-      // Defines the black field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the black property.
       black: number;
       /** White */
-      // Defines the white field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the white property.
       white: number;
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
     /** GameConfigSchema */
-    // Defines the GameConfigSchema field in the surrounding object or type.
+    // Generated declaration: opens the object for the GameConfigSchema property.
     GameConfigSchema: {
       /** Colours */
-      // Defines the colours field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the colours property.
       colours: string[];
       /** Codelength */
-      // Defines the codeLength field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the codeLength property.
       codeLength: number;
       /** Maxattempts */
-      // Defines the maxAttempts field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the maxAttempts property.
       maxAttempts: number;
       /** Duplicatesallowed */
-      // Defines the duplicatesAllowed field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the duplicatesAllowed property.
       duplicatesAllowed: boolean;
       /** @default computer */
-      // Defines the codeMaker field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the codeMaker property.
       codeMaker: components['schemas']['CodeMakerType'];
       /** @default private */
-      // Defines the visibility field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the visibility property.
       visibility: components['schemas']['GameVisibility'];
       /**
        * Ranked
        * @default false
        */
-      // Defines the ranked field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the ranked property.
       ranked: boolean;
       /**
        * Timebonuscap
        * @default 300
        */
-      // Defines the timeBonusCap field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the timeBonusCap property.
       timeBonusCap: number;
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
     /**
      * GameMode
      * @enum {string}
      */
-    // Defines the GameMode field in the surrounding object or type.
+    // Generated declaration: defines the generated type of the GameMode property.
     GameMode: 'solo' | 'daily' | 'practice' | 'pass_and_play' | 'friend_challenge' | 'duel';
     /** GameResponse */
-    // Defines the GameResponse field in the surrounding object or type.
+    // Generated declaration: opens the object for the GameResponse property.
     GameResponse: {
       /** Id */
-      // Defines the id field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the id property.
       id: string;
       /** Mode */
-      // Defines the mode field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the mode property.
       mode: string;
       /** Status */
-      // Defines the status field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the status property.
       status: string;
       /** Difficulty */
-      // Defines the difficulty field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the difficulty property.
       difficulty: string | null;
-      // Defines the config field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the config property.
       config: components['schemas']['GameConfigSchema'];
       /** Attempts */
-      // Defines the attempts field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the attempts property.
       attempts: components['schemas']['AttemptSchema'][];
       /** Attemptsused */
-      // Defines the attemptsUsed field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the attemptsUsed property.
       attemptsUsed: number;
       /** Maxattempts */
-      // Defines the maxAttempts field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the maxAttempts property.
       maxAttempts: number;
       /** Attemptsremaining */
-      // Defines the attemptsRemaining field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the attemptsRemaining property.
       attemptsRemaining: number;
       /**
        * Startedat
        * Format: date-time
        */
-      // Defines the startedAt field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the startedAt property.
       startedAt: string;
       /** Completedat */
-      // Defines the completedAt field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the completedAt property.
       completedAt: string | null;
       /** Score */
-      // Defines the score field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the score property.
       score: number | null;
-      // Defines the scoreBreakdown field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the scoreBreakdown property.
       scoreBreakdown: components['schemas']['ScoreBreakdownSchema'] | null;
       /** Secret */
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the secret property.
       secret?: string[] | null;
       /** Ranked */
-      // Defines the ranked field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the ranked property.
       ranked: boolean;
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
     /**
      * GameVisibility
      * @enum {string}
      */
-    // Defines the GameVisibility field in the surrounding object or type.
+    // Generated declaration: defines the generated type of the GameVisibility property.
     GameVisibility: 'private' | 'shareable' | 'public';
     /** HTTPValidationError */
-    // Defines the HTTPValidationError field in the surrounding object or type.
+    // Generated declaration: opens the object for the HTTPValidationError property.
     HTTPValidationError: {
       /** Detail */
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the detail property.
       detail?: components['schemas']['ValidationError'][];
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
     /** LeaderboardItem */
-    // Defines the LeaderboardItem field in the surrounding object or type.
+    // Generated declaration: opens the object for the LeaderboardItem property.
     LeaderboardItem: {
       /** Rank */
-      // Defines the rank field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the rank property.
       rank: number;
       /** Displayname */
-      // Defines the displayName field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the displayName property.
       displayName: string;
       /** Score */
-      // Defines the score field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the score property.
       score: number;
       /** Attemptsused */
-      // Defines the attemptsUsed field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the attemptsUsed property.
       attemptsUsed: number;
       /** Elapsedseconds */
-      // Defines the elapsedSeconds field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the elapsedSeconds property.
       elapsedSeconds: number;
       /**
        * Completedat
        * Format: date-time
        */
-      // Defines the completedAt field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the completedAt property.
       completedAt: string;
       /** Iscurrentuser */
-      // Defines the isCurrentUser field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the isCurrentUser property.
       isCurrentUser: boolean;
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
     /** OwnedChallengeItem */
-    // Defines the OwnedChallengeItem field in the surrounding object or type.
+    // Generated declaration: opens the object for the OwnedChallengeItem property.
     OwnedChallengeItem: {
       /**
        * Id
        * Format: uuid
        */
-      // Defines the id field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the id property.
       id: string;
       /** Title */
-      // Defines the title field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the title property.
       title: string | null;
       /** Showcreatorname */
-      // Defines the showCreatorName field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the showCreatorName property.
       showCreatorName: boolean;
-      // Defines the config field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the config property.
       config: components['schemas']['GameConfigSchema'];
       /** Revoked */
-      // Defines the revoked field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the revoked property.
       revoked: boolean;
       /**
        * Expiresat
        * Format: date-time
        */
-      // Defines the expiresAt field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the expiresAt property.
       expiresAt: string;
       /** Completedcount */
-      // Defines the completedCount field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the completedCount property.
       completedCount: number;
       /**
        * Createdat
        * Format: date-time
        */
-      // Defines the createdAt field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the createdAt property.
       createdAt: string;
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
     /** PaginatedGames */
-    // Defines the PaginatedGames field in the surrounding object or type.
+    // Generated declaration: opens the object for the PaginatedGames property.
     PaginatedGames: {
       /** Items */
-      // Defines the items field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the items property.
       items: components['schemas']['GameResponse'][];
       /** Page */
-      // Defines the page field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the page property.
       page: number;
       /** Pagesize */
-      // Defines the pageSize field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the pageSize property.
       pageSize: number;
       /** Total */
-      // Defines the total field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the total property.
       total: number;
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
     /** PaginatedLeaderboard */
-    // Defines the PaginatedLeaderboard field in the surrounding object or type.
+    // Generated declaration: opens the object for the PaginatedLeaderboard property.
     PaginatedLeaderboard: {
       /** Items */
-      // Defines the items field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the items property.
       items: components['schemas']['LeaderboardItem'][];
       /** Page */
-      // Defines the page field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the page property.
       page: number;
       /** Pagesize */
-      // Defines the pageSize field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the pageSize property.
       pageSize: number;
       /** Total */
-      // Defines the total field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the total property.
       total: number;
       /** Currentuserrank */
-      // Defines the currentUserRank field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the currentUserRank property.
       currentUserRank: number | null;
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
     /** PaginatedOwnedChallenges */
-    // Defines the PaginatedOwnedChallenges field in the surrounding object or type.
+    // Generated declaration: opens the object for the PaginatedOwnedChallenges property.
     PaginatedOwnedChallenges: {
       /** Items */
-      // Defines the items field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the items property.
       items: components['schemas']['OwnedChallengeItem'][];
       /** Page */
-      // Defines the page field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the page property.
       page: number;
       /** Pagesize */
-      // Defines the pageSize field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the pageSize property.
       pageSize: number;
       /** Total */
-      // Defines the total field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the total property.
       total: number;
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
     /** ProfileResponse */
-    // Defines the ProfileResponse field in the surrounding object or type.
+    // Generated declaration: opens the object for the ProfileResponse property.
     ProfileResponse: {
       /**
        * Id
        * Format: uuid
        */
-      // Defines the id field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the id property.
       id: string;
       /** Displayname */
-      // Defines the displayName field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the displayName property.
       displayName: string | null;
       /** Isanonymous */
-      // Defines the isAnonymous field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the isAnonymous property.
       isAnonymous: boolean;
       /** Publicleaderboards */
-      // Defines the publicLeaderboards field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the publicLeaderboards property.
       publicLeaderboards: boolean;
       /**
        * Createdat
        * Format: date-time
        */
-      // Defines the createdAt field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the createdAt property.
       createdAt: string;
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
     /** ProfileUpdateRequest */
-    // Defines the ProfileUpdateRequest field in the surrounding object or type.
+    // Generated declaration: opens the object for the ProfileUpdateRequest property.
     ProfileUpdateRequest: {
       /** Displayname */
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the displayName property.
       displayName?: string | null;
       /** Publicleaderboards */
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the publicLeaderboards property.
       publicLeaderboards?: boolean | null;
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
     /** RoomMemberResponse */
-    // Defines the RoomMemberResponse field in the surrounding object or type.
+    // Generated declaration: opens the object for the RoomMemberResponse property.
     RoomMemberResponse: {
       /**
        * Userid
        * Format: uuid
        */
-      // Defines the userId field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the userId property.
       userId: string;
       /** Displayname */
-      // Defines the displayName field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the displayName property.
       displayName: string;
       /** Connected */
-      // Defines the connected field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the connected property.
       connected: boolean;
       /** Ready */
-      // Defines the ready field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the ready property.
       ready: boolean;
       /** Readyat */
-      // Defines the readyAt field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the readyAt property.
       readyAt: string | null;
       /** Attemptsused */
-      // Defines the attemptsUsed field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the attemptsUsed property.
       attemptsUsed: number;
       /** Completed */
-      // Defines the completed field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the completed property.
       completed: boolean;
       /** Gameid */
-      // Defines the gameId field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the gameId property.
       gameId: string | null;
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
     /** RoomResponse */
-    // Defines the RoomResponse field in the surrounding object or type.
+    // Generated declaration: opens the object for the RoomResponse property.
     RoomResponse: {
       /**
        * Id
        * Format: uuid
        */
-      // Defines the id field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the id property.
       id: string;
       /** Roomcode */
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the roomCode property.
       roomCode?: string | null;
       /** Status */
-      // Defines the status field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the status property.
       status: string;
-      // Defines the config field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the config property.
       config: components['schemas']['GameConfigSchema'];
       /** Members */
-      // Defines the members field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the members property.
       members: components['schemas']['RoomMemberResponse'][];
       /** Winnerid */
-      // Defines the winnerId field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the winnerId property.
       winnerId: string | null;
       /** Istie */
-      // Defines the isTie field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the isTie property.
       isTie: boolean;
       /**
        * Expiresat
        * Format: date-time
        */
-      // Defines the expiresAt field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the expiresAt property.
       expiresAt: string;
       /** Eventsequence */
-      // Defines the eventSequence field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the eventSequence property.
       eventSequence: number;
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
     /** ScoreBreakdownSchema */
-    // Defines the ScoreBreakdownSchema field in the surrounding object or type.
+    // Generated declaration: opens the object for the ScoreBreakdownSchema property.
     ScoreBreakdownSchema: {
       /** Attempts */
-      // Defines the attempts field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the attempts property.
       attempts: number;
       /** Difficulty */
-      // Defines the difficulty field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the difficulty property.
       difficulty: number;
       /** Time */
-      // Defines the time field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the time property.
       time: number;
       /** Total */
-      // Defines the total field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the total property.
       total: number;
       /** Version */
-      // Defines the version field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the version property.
       version: string;
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
     /** StartGameRequest */
-    // Defines the StartGameRequest field in the surrounding object or type.
+    // Generated declaration: opens the object for the StartGameRequest property.
     StartGameRequest: {
       /**
        * Practice
        * @default false
        */
-      // Defines the practice field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the practice property.
       practice: boolean;
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
     /** StatsResponse */
-    // Defines the StatsResponse field in the surrounding object or type.
+    // Generated declaration: opens the object for the StatsResponse property.
     StatsResponse: {
       /** Gamesplayed */
-      // Defines the gamesPlayed field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the gamesPlayed property.
       gamesPlayed: number;
       /** Gameswon */
-      // Defines the gamesWon field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the gamesWon property.
       gamesWon: number;
       /** Gameslost */
-      // Defines the gamesLost field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the gamesLost property.
       gamesLost: number;
       /** Gamesabandoned */
-      // Defines the gamesAbandoned field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the gamesAbandoned property.
       gamesAbandoned: number;
       /** Winrate */
-      // Defines the winRate field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the winRate property.
       winRate: number;
       /** Averageattemptsonwins */
-      // Defines the averageAttemptsOnWins field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the averageAttemptsOnWins property.
       averageAttemptsOnWins: number | null;
       /** Bestscorebydifficulty */
-      // Defines the bestScoreByDifficulty field in the surrounding object or type.
+      // Generated declaration: opens the object for the bestScoreByDifficulty property.
       bestScoreByDifficulty: {
-        // Executes this line as the next step in the surrounding logic.
+        // Generated declaration: defines an index signature for generated OpenAPI keys and values.
         [key: string]: number;
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
       /** Dailystreak */
-      // Defines the dailyStreak field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the dailyStreak property.
       dailyStreak: number;
       /** Dailycompletionhistory */
-      // Defines the dailyCompletionHistory field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the dailyCompletionHistory property.
       dailyCompletionHistory: string[];
       /** Fastesteligiblesolve */
-      // Defines the fastestEligibleSolve field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the fastestEligibleSolve property.
       fastestEligibleSolve: number | null;
       /** Totalblackpegs */
-      // Defines the totalBlackPegs field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the totalBlackPegs property.
       totalBlackPegs: number;
       /** Totalwhitepegs */
-      // Defines the totalWhitePegs field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the totalWhitePegs property.
       totalWhitePegs: number;
       /** Favouritemode */
-      // Defines the favouriteMode field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the favouriteMode property.
       favouriteMode: string | null;
       /** Achievements */
-      // Defines the achievements field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the achievements property.
       achievements: string[];
       /** Achievementprogress */
-      // Defines the achievementProgress field in the surrounding object or type.
+      // Generated declaration: opens the object for the achievementProgress property.
       achievementProgress: {
-        // Executes this line as the next step in the surrounding logic.
+        // Generated declaration: defines an index signature for generated OpenAPI keys and values.
         [key: string]: components['schemas']['AchievementProgressSchema'];
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
     /** SupportRequestCreate */
-    // Defines the SupportRequestCreate field in the surrounding object or type.
+    // Generated declaration: opens the object for the SupportRequestCreate property.
     SupportRequestCreate: {
       /**
        * Topic
        * @enum {string}
        */
-      // Defines the topic field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the topic property.
       topic: 'account' | 'gameplay' | 'accessibility' | 'privacy' | 'safety' | 'other';
       /** Replyemail */
-      // Defines the replyEmail field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the replyEmail property.
       replyEmail: string;
       /** Message */
-      // Defines the message field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the message property.
       message: string;
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
     /** SupportRequestResponse */
-    // Defines the SupportRequestResponse field in the surrounding object or type.
+    // Generated declaration: opens the object for the SupportRequestResponse property.
     SupportRequestResponse: {
       /**
        * Id
        * Format: uuid
        */
-      // Defines the id field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the id property.
       id: string;
       /** Received */
-      // Defines the received field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the received property.
       received: boolean;
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
     /** ValidationError */
-    // Defines the ValidationError field in the surrounding object or type.
+    // Generated declaration: opens the object for the ValidationError property.
     ValidationError: {
       /** Location */
-      // Defines the loc field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the loc property.
       loc: (string | number)[];
       /** Message */
-      // Defines the msg field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the msg property.
       msg: string;
       /** Error Type */
-      // Defines the type field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the type property.
       type: string;
       /** Input */
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the input property.
       input?: unknown;
       /** Context */
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the ctx property.
       ctx?: Record<string, never>;
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
     /** WebSocketTicketResponse */
-    // Defines the WebSocketTicketResponse field in the surrounding object or type.
+    // Generated declaration: opens the object for the WebSocketTicketResponse property.
     WebSocketTicketResponse: {
       /** Ticket */
-      // Defines the ticket field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the ticket property.
       ticket: string;
       /**
        * Expiresat
        * Format: date-time
        */
-      // Defines the expiresAt field in the surrounding object or type.
+      // Generated declaration: defines the generated type of the expiresAt property.
       expiresAt: string;
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
-    // Closes the expression, call, or declaration started above.
+    // Generated declaration: closes the generated declaration opened above.
   };
-  // Defines the responses field in the surrounding object or type.
+  // Generated declaration: defines the generated type of the responses property.
   responses: never;
-  // Defines the parameters field in the surrounding object or type.
+  // Generated declaration: defines the generated type of the parameters property.
   parameters: never;
-  // Defines the requestBodies field in the surrounding object or type.
+  // Generated declaration: defines the generated type of the requestBodies property.
   requestBodies: never;
-  // Defines the headers field in the surrounding object or type.
+  // Generated declaration: defines the generated type of the headers property.
   headers: never;
-  // Defines the pathItems field in the surrounding object or type.
+  // Generated declaration: defines the generated type of the pathItems property.
   pathItems: never;
-  // Closes the expression, call, or declaration started above.
+  // Generated declaration: closes the generated declaration opened above.
 }
-// Exports this declaration for use by other modules.
+// Generated declaration: exports the $defs type alias for consumers of the OpenAPI contract.
 export type $defs = Record<string, never>;
-// Exports this declaration for use by other modules.
+// Generated declaration: exports the operations interface for consumers of the OpenAPI contract.
 export interface operations {
-  // Defines the create_game_route_v1_games_post field in the surrounding object or type.
+  // Generated declaration: opens the object for the create_game_route_v1_games_post property.
   create_game_route_v1_games_post: {
-    // Defines the parameters field in the surrounding object or type.
+    // Generated declaration: opens the object for the parameters property.
     parameters: {
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the query property.
       query?: never;
-      // Begins the nested block or object completed below.
+      // Generated declaration: opens the object for the header property.
       header?: {
-        // Executes this line as the next step in the surrounding logic.
+        // Generated declaration: defines the generated type of the authorization property.
         authorization?: string | null;
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the path property.
       path?: never;
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the cookie property.
       cookie?: never;
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
-    // Defines the requestBody field in the surrounding object or type.
+    // Generated declaration: opens the object for the requestBody property.
     requestBody: {
-      // Defines the content field in the surrounding object or type.
+      // Generated declaration: opens the object for the content property.
       content: {
-        // Executes this line as the next step in the surrounding logic.
+        // Generated declaration: defines the generated type of the application/json property.
         'application/json': components['schemas']['CreateGameRequest'];
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
-    // Defines the responses field in the surrounding object or type.
+    // Generated declaration: opens the object for the responses property.
     responses: {
       /** @description Successful Response */
-      // Begins the nested block or object completed below.
+      // Generated declaration: continues the generated OpenAPI type declaration.
       201: {
-        // Defines the headers field in the surrounding object or type.
+        // Generated declaration: opens the object for the headers property.
         headers: {
-          // Executes this line as the next step in the surrounding logic.
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
           [name: string]: unknown;
-          // Closes the expression, call, or declaration started above.
+          // Generated declaration: closes the generated declaration opened above.
         };
-        // Defines the content field in the surrounding object or type.
+        // Generated declaration: opens the object for the content property.
         content: {
-          // Executes this line as the next step in the surrounding logic.
+          // Generated declaration: defines the generated type of the application/json property.
           'application/json': components['schemas']['GameResponse'];
-          // Closes the expression, call, or declaration started above.
+          // Generated declaration: closes the generated declaration opened above.
         };
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
       /** @description Validation Error */
-      // Begins the nested block or object completed below.
+      // Generated declaration: continues the generated OpenAPI type declaration.
       422: {
-        // Defines the headers field in the surrounding object or type.
+        // Generated declaration: opens the object for the headers property.
         headers: {
-          // Executes this line as the next step in the surrounding logic.
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
           [name: string]: unknown;
-          // Closes the expression, call, or declaration started above.
+          // Generated declaration: closes the generated declaration opened above.
         };
-        // Defines the content field in the surrounding object or type.
+        // Generated declaration: opens the object for the content property.
         content: {
-          // Executes this line as the next step in the surrounding logic.
+          // Generated declaration: defines the generated type of the application/json property.
           'application/json': components['schemas']['HTTPValidationError'];
-          // Closes the expression, call, or declaration started above.
+          // Generated declaration: closes the generated declaration opened above.
         };
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
-    // Closes the expression, call, or declaration started above.
+    // Generated declaration: closes the generated declaration opened above.
   };
-  // Defines the get_game_route_v1_games__game_id__get field in the surrounding object or type.
+  // Generated declaration: opens the object for the get_game_route_v1_games__game_id__get property.
   get_game_route_v1_games__game_id__get: {
-    // Defines the parameters field in the surrounding object or type.
+    // Generated declaration: opens the object for the parameters property.
     parameters: {
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the query property.
       query?: never;
-      // Begins the nested block or object completed below.
+      // Generated declaration: opens the object for the header property.
       header?: {
-        // Executes this line as the next step in the surrounding logic.
+        // Generated declaration: defines the generated type of the authorization property.
         authorization?: string | null;
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
-      // Defines the path field in the surrounding object or type.
+      // Generated declaration: opens the object for the path property.
       path: {
-        // Defines the game_id field in the surrounding object or type.
+        // Generated declaration: defines the generated type of the game_id property.
         game_id: string;
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the cookie property.
       cookie?: never;
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the requestBody property.
     requestBody?: never;
-    // Defines the responses field in the surrounding object or type.
+    // Generated declaration: opens the object for the responses property.
     responses: {
       /** @description Successful Response */
-      // Begins the nested block or object completed below.
+      // Generated declaration: continues the generated OpenAPI type declaration.
       200: {
-        // Defines the headers field in the surrounding object or type.
+        // Generated declaration: opens the object for the headers property.
         headers: {
-          // Executes this line as the next step in the surrounding logic.
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
           [name: string]: unknown;
-          // Closes the expression, call, or declaration started above.
+          // Generated declaration: closes the generated declaration opened above.
         };
-        // Defines the content field in the surrounding object or type.
+        // Generated declaration: opens the object for the content property.
         content: {
-          // Executes this line as the next step in the surrounding logic.
+          // Generated declaration: defines the generated type of the application/json property.
           'application/json': components['schemas']['GameResponse'];
-          // Closes the expression, call, or declaration started above.
+          // Generated declaration: closes the generated declaration opened above.
         };
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
       /** @description Validation Error */
-      // Begins the nested block or object completed below.
+      // Generated declaration: continues the generated OpenAPI type declaration.
       422: {
-        // Defines the headers field in the surrounding object or type.
+        // Generated declaration: opens the object for the headers property.
         headers: {
-          // Executes this line as the next step in the surrounding logic.
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
           [name: string]: unknown;
-          // Closes the expression, call, or declaration started above.
+          // Generated declaration: closes the generated declaration opened above.
         };
-        // Defines the content field in the surrounding object or type.
+        // Generated declaration: opens the object for the content property.
         content: {
-          // Executes this line as the next step in the surrounding logic.
+          // Generated declaration: defines the generated type of the application/json property.
           'application/json': components['schemas']['HTTPValidationError'];
-          // Closes the expression, call, or declaration started above.
+          // Generated declaration: closes the generated declaration opened above.
         };
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
-    // Closes the expression, call, or declaration started above.
+    // Generated declaration: closes the generated declaration opened above.
   };
-  // Defines the submit_attempt_route_v1_games__game_id__attempts_post field in the surrounding object or type.
+  // Generated declaration: opens the object for the submit_attempt_route_v1_games__game_id__attempts_post property.
   submit_attempt_route_v1_games__game_id__attempts_post: {
-    // Defines the parameters field in the surrounding object or type.
+    // Generated declaration: opens the object for the parameters property.
     parameters: {
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the query property.
       query?: never;
-      // Begins the nested block or object completed below.
+      // Generated declaration: opens the object for the header property.
       header?: {
-        // Executes this line as the next step in the surrounding logic.
+        // Generated declaration: defines the generated type of the authorization property.
         authorization?: string | null;
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
-      // Defines the path field in the surrounding object or type.
+      // Generated declaration: opens the object for the path property.
       path: {
-        // Defines the game_id field in the surrounding object or type.
+        // Generated declaration: defines the generated type of the game_id property.
         game_id: string;
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the cookie property.
       cookie?: never;
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
-    // Defines the requestBody field in the surrounding object or type.
+    // Generated declaration: opens the object for the requestBody property.
     requestBody: {
-      // Defines the content field in the surrounding object or type.
+      // Generated declaration: opens the object for the content property.
       content: {
-        // Executes this line as the next step in the surrounding logic.
+        // Generated declaration: defines the generated type of the application/json property.
         'application/json': components['schemas']['AttemptRequest'];
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
-    // Defines the responses field in the surrounding object or type.
+    // Generated declaration: opens the object for the responses property.
     responses: {
       /** @description Successful Response */
-      // Begins the nested block or object completed below.
+      // Generated declaration: continues the generated OpenAPI type declaration.
       200: {
-        // Defines the headers field in the surrounding object or type.
+        // Generated declaration: opens the object for the headers property.
         headers: {
-          // Executes this line as the next step in the surrounding logic.
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
           [name: string]: unknown;
-          // Closes the expression, call, or declaration started above.
+          // Generated declaration: closes the generated declaration opened above.
         };
-        // Defines the content field in the surrounding object or type.
+        // Generated declaration: opens the object for the content property.
         content: {
-          // Executes this line as the next step in the surrounding logic.
+          // Generated declaration: defines the generated type of the application/json property.
           'application/json': components['schemas']['GameResponse'];
-          // Closes the expression, call, or declaration started above.
+          // Generated declaration: closes the generated declaration opened above.
         };
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
       /** @description Validation Error */
-      // Begins the nested block or object completed below.
+      // Generated declaration: continues the generated OpenAPI type declaration.
       422: {
-        // Defines the headers field in the surrounding object or type.
+        // Generated declaration: opens the object for the headers property.
         headers: {
-          // Executes this line as the next step in the surrounding logic.
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
           [name: string]: unknown;
-          // Closes the expression, call, or declaration started above.
+          // Generated declaration: closes the generated declaration opened above.
         };
-        // Defines the content field in the surrounding object or type.
+        // Generated declaration: opens the object for the content property.
         content: {
-          // Executes this line as the next step in the surrounding logic.
+          // Generated declaration: defines the generated type of the application/json property.
           'application/json': components['schemas']['HTTPValidationError'];
-          // Closes the expression, call, or declaration started above.
+          // Generated declaration: closes the generated declaration opened above.
         };
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
-    // Closes the expression, call, or declaration started above.
+    // Generated declaration: closes the generated declaration opened above.
   };
-  // Defines the abandon_game_route_v1_games__game_id__abandon_post field in the surrounding object or type.
+  // Generated declaration: opens the object for the abandon_game_route_v1_games__game_id__abandon_post property.
   abandon_game_route_v1_games__game_id__abandon_post: {
-    // Defines the parameters field in the surrounding object or type.
+    // Generated declaration: opens the object for the parameters property.
     parameters: {
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the query property.
       query?: never;
-      // Begins the nested block or object completed below.
+      // Generated declaration: opens the object for the header property.
       header?: {
-        // Executes this line as the next step in the surrounding logic.
+        // Generated declaration: defines the generated type of the authorization property.
         authorization?: string | null;
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
-      // Defines the path field in the surrounding object or type.
+      // Generated declaration: opens the object for the path property.
       path: {
-        // Defines the game_id field in the surrounding object or type.
+        // Generated declaration: defines the generated type of the game_id property.
         game_id: string;
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the cookie property.
       cookie?: never;
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the requestBody property.
     requestBody?: never;
-    // Defines the responses field in the surrounding object or type.
+    // Generated declaration: opens the object for the responses property.
     responses: {
       /** @description Successful Response */
-      // Begins the nested block or object completed below.
+      // Generated declaration: continues the generated OpenAPI type declaration.
       200: {
-        // Defines the headers field in the surrounding object or type.
+        // Generated declaration: opens the object for the headers property.
         headers: {
-          // Executes this line as the next step in the surrounding logic.
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
           [name: string]: unknown;
-          // Closes the expression, call, or declaration started above.
+          // Generated declaration: closes the generated declaration opened above.
         };
-        // Defines the content field in the surrounding object or type.
+        // Generated declaration: opens the object for the content property.
         content: {
-          // Executes this line as the next step in the surrounding logic.
+          // Generated declaration: defines the generated type of the application/json property.
           'application/json': components['schemas']['GameResponse'];
-          // Closes the expression, call, or declaration started above.
+          // Generated declaration: closes the generated declaration opened above.
         };
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
       /** @description Validation Error */
-      // Begins the nested block or object completed below.
+      // Generated declaration: continues the generated OpenAPI type declaration.
       422: {
-        // Defines the headers field in the surrounding object or type.
+        // Generated declaration: opens the object for the headers property.
         headers: {
-          // Executes this line as the next step in the surrounding logic.
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
           [name: string]: unknown;
-          // Closes the expression, call, or declaration started above.
+          // Generated declaration: closes the generated declaration opened above.
         };
-        // Defines the content field in the surrounding object or type.
+        // Generated declaration: opens the object for the content property.
         content: {
-          // Executes this line as the next step in the surrounding logic.
+          // Generated declaration: defines the generated type of the application/json property.
           'application/json': components['schemas']['HTTPValidationError'];
-          // Closes the expression, call, or declaration started above.
+          // Generated declaration: closes the generated declaration opened above.
         };
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
-    // Closes the expression, call, or declaration started above.
+    // Generated declaration: closes the generated declaration opened above.
   };
-  // Defines the get_daily_route_v1_daily_get field in the surrounding object or type.
+  // Generated declaration: opens the object for the get_daily_route_v1_daily_get property.
   get_daily_route_v1_daily_get: {
-    // Defines the parameters field in the surrounding object or type.
+    // Generated declaration: opens the object for the parameters property.
     parameters: {
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the query property.
       query?: never;
-      // Begins the nested block or object completed below.
+      // Generated declaration: opens the object for the header property.
       header?: {
-        // Executes this line as the next step in the surrounding logic.
+        // Generated declaration: defines the generated type of the authorization property.
         authorization?: string | null;
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the path property.
       path?: never;
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the cookie property.
       cookie?: never;
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the requestBody property.
     requestBody?: never;
-    // Defines the responses field in the surrounding object or type.
+    // Generated declaration: opens the object for the responses property.
     responses: {
       /** @description Successful Response */
-      // Begins the nested block or object completed below.
+      // Generated declaration: continues the generated OpenAPI type declaration.
       200: {
-        // Defines the headers field in the surrounding object or type.
+        // Generated declaration: opens the object for the headers property.
         headers: {
-          // Executes this line as the next step in the surrounding logic.
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
           [name: string]: unknown;
-          // Closes the expression, call, or declaration started above.
+          // Generated declaration: closes the generated declaration opened above.
         };
-        // Defines the content field in the surrounding object or type.
+        // Generated declaration: opens the object for the content property.
         content: {
-          // Executes this line as the next step in the surrounding logic.
+          // Generated declaration: defines the generated type of the application/json property.
           'application/json': components['schemas']['DailyDefinitionResponse'];
-          // Closes the expression, call, or declaration started above.
+          // Generated declaration: closes the generated declaration opened above.
         };
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
       /** @description Validation Error */
-      // Begins the nested block or object completed below.
+      // Generated declaration: continues the generated OpenAPI type declaration.
       422: {
-        // Defines the headers field in the surrounding object or type.
+        // Generated declaration: opens the object for the headers property.
         headers: {
-          // Executes this line as the next step in the surrounding logic.
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
           [name: string]: unknown;
-          // Closes the expression, call, or declaration started above.
+          // Generated declaration: closes the generated declaration opened above.
         };
-        // Defines the content field in the surrounding object or type.
+        // Generated declaration: opens the object for the content property.
         content: {
-          // Executes this line as the next step in the surrounding logic.
+          // Generated declaration: defines the generated type of the application/json property.
           'application/json': components['schemas']['HTTPValidationError'];
-          // Closes the expression, call, or declaration started above.
+          // Generated declaration: closes the generated declaration opened above.
         };
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
-    // Closes the expression, call, or declaration started above.
+    // Generated declaration: closes the generated declaration opened above.
   };
-  // Defines the start_daily_route_v1_daily_start_post field in the surrounding object or type.
+  // Generated declaration: opens the object for the start_daily_route_v1_daily_start_post property.
   start_daily_route_v1_daily_start_post: {
-    // Defines the parameters field in the surrounding object or type.
+    // Generated declaration: opens the object for the parameters property.
     parameters: {
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the query property.
       query?: never;
-      // Begins the nested block or object completed below.
+      // Generated declaration: opens the object for the header property.
       header?: {
-        // Executes this line as the next step in the surrounding logic.
+        // Generated declaration: defines the generated type of the authorization property.
         authorization?: string | null;
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the path property.
       path?: never;
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the cookie property.
       cookie?: never;
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
-    // Begins the nested block or object completed below.
+    // Generated declaration: opens the object for the requestBody property.
     requestBody?: {
-      // Defines the content field in the surrounding object or type.
+      // Generated declaration: opens the object for the content property.
       content: {
-        // Executes this line as the next step in the surrounding logic.
+        // Generated declaration: defines the generated type of the application/json property.
         'application/json': components['schemas']['StartGameRequest'] | null;
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
-    // Defines the responses field in the surrounding object or type.
+    // Generated declaration: opens the object for the responses property.
     responses: {
       /** @description Successful Response */
-      // Begins the nested block or object completed below.
+      // Generated declaration: continues the generated OpenAPI type declaration.
       200: {
-        // Defines the headers field in the surrounding object or type.
+        // Generated declaration: opens the object for the headers property.
         headers: {
-          // Executes this line as the next step in the surrounding logic.
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
           [name: string]: unknown;
-          // Closes the expression, call, or declaration started above.
+          // Generated declaration: closes the generated declaration opened above.
         };
-        // Defines the content field in the surrounding object or type.
+        // Generated declaration: opens the object for the content property.
         content: {
-          // Executes this line as the next step in the surrounding logic.
+          // Generated declaration: defines the generated type of the application/json property.
           'application/json': components['schemas']['GameResponse'];
-          // Closes the expression, call, or declaration started above.
+          // Generated declaration: closes the generated declaration opened above.
         };
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
       /** @description Validation Error */
-      // Begins the nested block or object completed below.
+      // Generated declaration: continues the generated OpenAPI type declaration.
       422: {
-        // Defines the headers field in the surrounding object or type.
+        // Generated declaration: opens the object for the headers property.
         headers: {
-          // Executes this line as the next step in the surrounding logic.
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
           [name: string]: unknown;
-          // Closes the expression, call, or declaration started above.
+          // Generated declaration: closes the generated declaration opened above.
         };
-        // Defines the content field in the surrounding object or type.
+        // Generated declaration: opens the object for the content property.
         content: {
-          // Executes this line as the next step in the surrounding logic.
+          // Generated declaration: defines the generated type of the application/json property.
           'application/json': components['schemas']['HTTPValidationError'];
-          // Closes the expression, call, or declaration started above.
+          // Generated declaration: closes the generated declaration opened above.
         };
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
-    // Closes the expression, call, or declaration started above.
+    // Generated declaration: closes the generated declaration opened above.
   };
-  // Defines the daily_leaderboard_route_v1_daily_leaderboard_get field in the surrounding object or type.
+  // Generated declaration: opens the object for the daily_leaderboard_route_v1_daily_leaderboard_get property.
   daily_leaderboard_route_v1_daily_leaderboard_get: {
-    // Defines the parameters field in the surrounding object or type.
+    // Generated declaration: opens the object for the parameters property.
     parameters: {
-      // Begins the nested block or object completed below.
+      // Generated declaration: opens the object for the query property.
       query?: {
-        // Executes this line as the next step in the surrounding logic.
+        // Generated declaration: defines the generated type of the page property.
         page?: number;
-        // Executes this line as the next step in the surrounding logic.
+        // Generated declaration: defines the generated type of the page_size property.
         page_size?: number;
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
-      // Begins the nested block or object completed below.
+      // Generated declaration: opens the object for the header property.
       header?: {
-        // Executes this line as the next step in the surrounding logic.
+        // Generated declaration: defines the generated type of the authorization property.
         authorization?: string | null;
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the path property.
       path?: never;
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the cookie property.
       cookie?: never;
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the requestBody property.
     requestBody?: never;
-    // Defines the responses field in the surrounding object or type.
+    // Generated declaration: opens the object for the responses property.
     responses: {
       /** @description Successful Response */
-      // Begins the nested block or object completed below.
+      // Generated declaration: continues the generated OpenAPI type declaration.
       200: {
-        // Defines the headers field in the surrounding object or type.
+        // Generated declaration: opens the object for the headers property.
         headers: {
-          // Executes this line as the next step in the surrounding logic.
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
           [name: string]: unknown;
-          // Closes the expression, call, or declaration started above.
+          // Generated declaration: closes the generated declaration opened above.
         };
-        // Defines the content field in the surrounding object or type.
+        // Generated declaration: opens the object for the content property.
         content: {
-          // Executes this line as the next step in the surrounding logic.
+          // Generated declaration: defines the generated type of the application/json property.
           'application/json': components['schemas']['PaginatedLeaderboard'];
-          // Closes the expression, call, or declaration started above.
+          // Generated declaration: closes the generated declaration opened above.
         };
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
       /** @description Validation Error */
-      // Begins the nested block or object completed below.
+      // Generated declaration: continues the generated OpenAPI type declaration.
       422: {
-        // Defines the headers field in the surrounding object or type.
+        // Generated declaration: opens the object for the headers property.
         headers: {
-          // Executes this line as the next step in the surrounding logic.
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
           [name: string]: unknown;
-          // Closes the expression, call, or declaration started above.
+          // Generated declaration: closes the generated declaration opened above.
         };
-        // Defines the content field in the surrounding object or type.
+        // Generated declaration: opens the object for the content property.
         content: {
-          // Executes this line as the next step in the surrounding logic.
+          // Generated declaration: defines the generated type of the application/json property.
           'application/json': components['schemas']['HTTPValidationError'];
-          // Closes the expression, call, or declaration started above.
+          // Generated declaration: closes the generated declaration opened above.
         };
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
-    // Closes the expression, call, or declaration started above.
+    // Generated declaration: closes the generated declaration opened above.
   };
-  // Defines the challenge_results_route_v1_challenges__challenge_id__results_get field in the surrounding object or type.
+  // Generated declaration: opens the object for the challenge_results_route_v1_challenges__challenge_id__results_get property.
   challenge_results_route_v1_challenges__challenge_id__results_get: {
-    // Defines the parameters field in the surrounding object or type.
+    // Generated declaration: opens the object for the parameters property.
     parameters: {
-      // Begins the nested block or object completed below.
+      // Generated declaration: opens the object for the query property.
       query?: {
-        // Executes this line as the next step in the surrounding logic.
+        // Generated declaration: defines the generated type of the page property.
         page?: number;
-        // Executes this line as the next step in the surrounding logic.
+        // Generated declaration: defines the generated type of the page_size property.
         page_size?: number;
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
-      // Begins the nested block or object completed below.
+      // Generated declaration: opens the object for the header property.
       header?: {
-        // Executes this line as the next step in the surrounding logic.
+        // Generated declaration: defines the generated type of the authorization property.
         authorization?: string | null;
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
-      // Defines the path field in the surrounding object or type.
+      // Generated declaration: opens the object for the path property.
       path: {
-        // Defines the challenge_id field in the surrounding object or type.
+        // Generated declaration: defines the generated type of the challenge_id property.
         challenge_id: string;
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the cookie property.
       cookie?: never;
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the requestBody property.
     requestBody?: never;
-    // Defines the responses field in the surrounding object or type.
+    // Generated declaration: opens the object for the responses property.
     responses: {
       /** @description Successful Response */
-      // Begins the nested block or object completed below.
+      // Generated declaration: continues the generated OpenAPI type declaration.
       200: {
-        // Defines the headers field in the surrounding object or type.
+        // Generated declaration: opens the object for the headers property.
         headers: {
-          // Executes this line as the next step in the surrounding logic.
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
           [name: string]: unknown;
-          // Closes the expression, call, or declaration started above.
+          // Generated declaration: closes the generated declaration opened above.
         };
-        // Defines the content field in the surrounding object or type.
+        // Generated declaration: opens the object for the content property.
         content: {
-          // Executes this line as the next step in the surrounding logic.
+          // Generated declaration: defines the generated type of the application/json property.
           'application/json': components['schemas']['ChallengeResultsResponse'];
-          // Closes the expression, call, or declaration started above.
+          // Generated declaration: closes the generated declaration opened above.
         };
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
       /** @description Validation Error */
-      // Begins the nested block or object completed below.
+      // Generated declaration: continues the generated OpenAPI type declaration.
       422: {
-        // Defines the headers field in the surrounding object or type.
+        // Generated declaration: opens the object for the headers property.
         headers: {
-          // Executes this line as the next step in the surrounding logic.
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
           [name: string]: unknown;
-          // Closes the expression, call, or declaration started above.
+          // Generated declaration: closes the generated declaration opened above.
         };
-        // Defines the content field in the surrounding object or type.
+        // Generated declaration: opens the object for the content property.
         content: {
-          // Executes this line as the next step in the surrounding logic.
+          // Generated declaration: defines the generated type of the application/json property.
           'application/json': components['schemas']['HTTPValidationError'];
-          // Closes the expression, call, or declaration started above.
+          // Generated declaration: closes the generated declaration opened above.
         };
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
-    // Closes the expression, call, or declaration started above.
+    // Generated declaration: closes the generated declaration opened above.
   };
-  // Defines the create_challenge_route_v1_challenges_post field in the surrounding object or type.
+  // Generated declaration: opens the object for the create_challenge_route_v1_challenges_post property.
   create_challenge_route_v1_challenges_post: {
-    // Defines the parameters field in the surrounding object or type.
+    // Generated declaration: opens the object for the parameters property.
     parameters: {
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the query property.
       query?: never;
-      // Begins the nested block or object completed below.
+      // Generated declaration: opens the object for the header property.
       header?: {
-        // Executes this line as the next step in the surrounding logic.
+        // Generated declaration: defines the generated type of the authorization property.
         authorization?: string | null;
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the path property.
       path?: never;
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the cookie property.
       cookie?: never;
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
-    // Defines the requestBody field in the surrounding object or type.
+    // Generated declaration: opens the object for the requestBody property.
     requestBody: {
-      // Defines the content field in the surrounding object or type.
+      // Generated declaration: opens the object for the content property.
       content: {
-        // Executes this line as the next step in the surrounding logic.
+        // Generated declaration: defines the generated type of the application/json property.
         'application/json': components['schemas']['CreateChallengeRequest'];
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
-    // Defines the responses field in the surrounding object or type.
+    // Generated declaration: opens the object for the responses property.
     responses: {
       /** @description Successful Response */
-      // Begins the nested block or object completed below.
+      // Generated declaration: continues the generated OpenAPI type declaration.
       201: {
-        // Defines the headers field in the surrounding object or type.
+        // Generated declaration: opens the object for the headers property.
         headers: {
-          // Executes this line as the next step in the surrounding logic.
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
           [name: string]: unknown;
-          // Closes the expression, call, or declaration started above.
+          // Generated declaration: closes the generated declaration opened above.
         };
-        // Defines the content field in the surrounding object or type.
+        // Generated declaration: opens the object for the content property.
         content: {
-          // Executes this line as the next step in the surrounding logic.
+          // Generated declaration: defines the generated type of the application/json property.
           'application/json': components['schemas']['ChallengeResponse'];
-          // Closes the expression, call, or declaration started above.
+          // Generated declaration: closes the generated declaration opened above.
         };
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
       /** @description Validation Error */
-      // Begins the nested block or object completed below.
+      // Generated declaration: continues the generated OpenAPI type declaration.
       422: {
-        // Defines the headers field in the surrounding object or type.
+        // Generated declaration: opens the object for the headers property.
         headers: {
-          // Executes this line as the next step in the surrounding logic.
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
           [name: string]: unknown;
-          // Closes the expression, call, or declaration started above.
+          // Generated declaration: closes the generated declaration opened above.
         };
-        // Defines the content field in the surrounding object or type.
+        // Generated declaration: opens the object for the content property.
         content: {
-          // Executes this line as the next step in the surrounding logic.
+          // Generated declaration: defines the generated type of the application/json property.
           'application/json': components['schemas']['HTTPValidationError'];
-          // Closes the expression, call, or declaration started above.
+          // Generated declaration: closes the generated declaration opened above.
         };
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
-    // Closes the expression, call, or declaration started above.
+    // Generated declaration: closes the generated declaration opened above.
   };
-  // Defines the owned_challenges_route_v1_challenges_mine_get field in the surrounding object or type.
+  // Generated declaration: opens the object for the owned_challenges_route_v1_challenges_mine_get property.
   owned_challenges_route_v1_challenges_mine_get: {
-    // Defines the parameters field in the surrounding object or type.
+    // Generated declaration: opens the object for the parameters property.
     parameters: {
-      // Begins the nested block or object completed below.
+      // Generated declaration: opens the object for the query property.
       query?: {
-        // Executes this line as the next step in the surrounding logic.
+        // Generated declaration: defines the generated type of the page property.
         page?: number;
-        // Executes this line as the next step in the surrounding logic.
+        // Generated declaration: defines the generated type of the page_size property.
         page_size?: number;
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
-      // Begins the nested block or object completed below.
+      // Generated declaration: opens the object for the header property.
       header?: {
-        // Executes this line as the next step in the surrounding logic.
+        // Generated declaration: defines the generated type of the authorization property.
         authorization?: string | null;
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the path property.
       path?: never;
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the cookie property.
       cookie?: never;
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the requestBody property.
     requestBody?: never;
-    // Defines the responses field in the surrounding object or type.
+    // Generated declaration: opens the object for the responses property.
     responses: {
       /** @description Successful Response */
-      // Begins the nested block or object completed below.
+      // Generated declaration: continues the generated OpenAPI type declaration.
       200: {
-        // Defines the headers field in the surrounding object or type.
+        // Generated declaration: opens the object for the headers property.
         headers: {
-          // Executes this line as the next step in the surrounding logic.
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
           [name: string]: unknown;
-          // Closes the expression, call, or declaration started above.
+          // Generated declaration: closes the generated declaration opened above.
         };
-        // Defines the content field in the surrounding object or type.
+        // Generated declaration: opens the object for the content property.
         content: {
-          // Executes this line as the next step in the surrounding logic.
+          // Generated declaration: defines the generated type of the application/json property.
           'application/json': components['schemas']['PaginatedOwnedChallenges'];
-          // Closes the expression, call, or declaration started above.
+          // Generated declaration: closes the generated declaration opened above.
         };
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
       /** @description Validation Error */
-      // Begins the nested block or object completed below.
+      // Generated declaration: continues the generated OpenAPI type declaration.
       422: {
-        // Defines the headers field in the surrounding object or type.
+        // Generated declaration: opens the object for the headers property.
         headers: {
-          // Executes this line as the next step in the surrounding logic.
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
           [name: string]: unknown;
-          // Closes the expression, call, or declaration started above.
+          // Generated declaration: closes the generated declaration opened above.
         };
-        // Defines the content field in the surrounding object or type.
+        // Generated declaration: opens the object for the content property.
         content: {
-          // Executes this line as the next step in the surrounding logic.
+          // Generated declaration: defines the generated type of the application/json property.
           'application/json': components['schemas']['HTTPValidationError'];
-          // Closes the expression, call, or declaration started above.
+          // Generated declaration: closes the generated declaration opened above.
         };
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
-    // Closes the expression, call, or declaration started above.
+    // Generated declaration: closes the generated declaration opened above.
   };
-  // Defines the get_challenge_route_v1_challenges__share_code__get field in the surrounding object or type.
+  // Generated declaration: opens the object for the get_challenge_route_v1_challenges__share_code__get property.
   get_challenge_route_v1_challenges__share_code__get: {
-    // Defines the parameters field in the surrounding object or type.
+    // Generated declaration: opens the object for the parameters property.
     parameters: {
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the query property.
       query?: never;
-      // Begins the nested block or object completed below.
+      // Generated declaration: opens the object for the header property.
       header?: {
-        // Executes this line as the next step in the surrounding logic.
+        // Generated declaration: defines the generated type of the authorization property.
         authorization?: string | null;
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
-      // Defines the path field in the surrounding object or type.
+      // Generated declaration: opens the object for the path property.
       path: {
-        // Defines the share_code field in the surrounding object or type.
+        // Generated declaration: defines the generated type of the share_code property.
         share_code: string;
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the cookie property.
       cookie?: never;
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the requestBody property.
     requestBody?: never;
-    // Defines the responses field in the surrounding object or type.
+    // Generated declaration: opens the object for the responses property.
     responses: {
       /** @description Successful Response */
-      // Begins the nested block or object completed below.
+      // Generated declaration: continues the generated OpenAPI type declaration.
       200: {
-        // Defines the headers field in the surrounding object or type.
+        // Generated declaration: opens the object for the headers property.
         headers: {
-          // Executes this line as the next step in the surrounding logic.
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
           [name: string]: unknown;
-          // Closes the expression, call, or declaration started above.
+          // Generated declaration: closes the generated declaration opened above.
         };
-        // Defines the content field in the surrounding object or type.
+        // Generated declaration: opens the object for the content property.
         content: {
-          // Executes this line as the next step in the surrounding logic.
+          // Generated declaration: defines the generated type of the application/json property.
           'application/json': components['schemas']['ChallengeResponse'];
-          // Closes the expression, call, or declaration started above.
+          // Generated declaration: closes the generated declaration opened above.
         };
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
       /** @description Validation Error */
-      // Begins the nested block or object completed below.
+      // Generated declaration: continues the generated OpenAPI type declaration.
       422: {
-        // Defines the headers field in the surrounding object or type.
+        // Generated declaration: opens the object for the headers property.
         headers: {
-          // Executes this line as the next step in the surrounding logic.
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
           [name: string]: unknown;
-          // Closes the expression, call, or declaration started above.
+          // Generated declaration: closes the generated declaration opened above.
         };
-        // Defines the content field in the surrounding object or type.
+        // Generated declaration: opens the object for the content property.
         content: {
-          // Executes this line as the next step in the surrounding logic.
+          // Generated declaration: defines the generated type of the application/json property.
           'application/json': components['schemas']['HTTPValidationError'];
-          // Closes the expression, call, or declaration started above.
+          // Generated declaration: closes the generated declaration opened above.
         };
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
-    // Closes the expression, call, or declaration started above.
+    // Generated declaration: closes the generated declaration opened above.
   };
-  // Defines the start_challenge_route_v1_challenges__share_code__start_post field in the surrounding object or type.
+  // Generated declaration: opens the object for the start_challenge_route_v1_challenges__share_code__start_post property.
   start_challenge_route_v1_challenges__share_code__start_post: {
-    // Defines the parameters field in the surrounding object or type.
+    // Generated declaration: opens the object for the parameters property.
     parameters: {
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the query property.
       query?: never;
-      // Begins the nested block or object completed below.
+      // Generated declaration: opens the object for the header property.
       header?: {
-        // Executes this line as the next step in the surrounding logic.
+        // Generated declaration: defines the generated type of the authorization property.
         authorization?: string | null;
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
-      // Defines the path field in the surrounding object or type.
+      // Generated declaration: opens the object for the path property.
       path: {
-        // Defines the share_code field in the surrounding object or type.
+        // Generated declaration: defines the generated type of the share_code property.
         share_code: string;
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the cookie property.
       cookie?: never;
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
-    // Begins the nested block or object completed below.
+    // Generated declaration: opens the object for the requestBody property.
     requestBody?: {
-      // Defines the content field in the surrounding object or type.
+      // Generated declaration: opens the object for the content property.
       content: {
-        // Executes this line as the next step in the surrounding logic.
+        // Generated declaration: defines the generated type of the application/json property.
         'application/json': components['schemas']['StartGameRequest'] | null;
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
-    // Defines the responses field in the surrounding object or type.
+    // Generated declaration: opens the object for the responses property.
     responses: {
       /** @description Successful Response */
-      // Begins the nested block or object completed below.
+      // Generated declaration: continues the generated OpenAPI type declaration.
       200: {
-        // Defines the headers field in the surrounding object or type.
+        // Generated declaration: opens the object for the headers property.
         headers: {
-          // Executes this line as the next step in the surrounding logic.
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
           [name: string]: unknown;
-          // Closes the expression, call, or declaration started above.
+          // Generated declaration: closes the generated declaration opened above.
         };
-        // Defines the content field in the surrounding object or type.
+        // Generated declaration: opens the object for the content property.
         content: {
-          // Executes this line as the next step in the surrounding logic.
+          // Generated declaration: defines the generated type of the application/json property.
           'application/json': components['schemas']['GameResponse'];
-          // Closes the expression, call, or declaration started above.
+          // Generated declaration: closes the generated declaration opened above.
         };
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
       /** @description Validation Error */
-      // Begins the nested block or object completed below.
+      // Generated declaration: continues the generated OpenAPI type declaration.
       422: {
-        // Defines the headers field in the surrounding object or type.
+        // Generated declaration: opens the object for the headers property.
         headers: {
-          // Executes this line as the next step in the surrounding logic.
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
           [name: string]: unknown;
-          // Closes the expression, call, or declaration started above.
+          // Generated declaration: closes the generated declaration opened above.
         };
-        // Defines the content field in the surrounding object or type.
+        // Generated declaration: opens the object for the content property.
         content: {
-          // Executes this line as the next step in the surrounding logic.
+          // Generated declaration: defines the generated type of the application/json property.
           'application/json': components['schemas']['HTTPValidationError'];
-          // Closes the expression, call, or declaration started above.
+          // Generated declaration: closes the generated declaration opened above.
         };
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
-    // Closes the expression, call, or declaration started above.
+    // Generated declaration: closes the generated declaration opened above.
   };
-  // Defines the revoke_challenge_route_v1_challenges__challenge_id__delete field in the surrounding object or type.
+  // Generated declaration: opens the object for the revoke_challenge_route_v1_challenges__challenge_id__delete property.
   revoke_challenge_route_v1_challenges__challenge_id__delete: {
-    // Defines the parameters field in the surrounding object or type.
+    // Generated declaration: opens the object for the parameters property.
     parameters: {
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the query property.
       query?: never;
-      // Begins the nested block or object completed below.
+      // Generated declaration: opens the object for the header property.
       header?: {
-        // Executes this line as the next step in the surrounding logic.
+        // Generated declaration: defines the generated type of the authorization property.
         authorization?: string | null;
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
-      // Defines the path field in the surrounding object or type.
+      // Generated declaration: opens the object for the path property.
       path: {
-        // Defines the challenge_id field in the surrounding object or type.
+        // Generated declaration: defines the generated type of the challenge_id property.
         challenge_id: string;
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the cookie property.
       cookie?: never;
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the requestBody property.
     requestBody?: never;
-    // Defines the responses field in the surrounding object or type.
+    // Generated declaration: opens the object for the responses property.
     responses: {
       /** @description Successful Response */
-      // Begins the nested block or object completed below.
+      // Generated declaration: continues the generated OpenAPI type declaration.
       204: {
-        // Defines the headers field in the surrounding object or type.
+        // Generated declaration: opens the object for the headers property.
         headers: {
-          // Executes this line as the next step in the surrounding logic.
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
           [name: string]: unknown;
-          // Closes the expression, call, or declaration started above.
+          // Generated declaration: closes the generated declaration opened above.
         };
-        // Executes this line as the next step in the surrounding logic.
+        // Generated declaration: defines the generated type of the content property.
         content?: never;
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
       /** @description Validation Error */
-      // Begins the nested block or object completed below.
+      // Generated declaration: continues the generated OpenAPI type declaration.
       422: {
-        // Defines the headers field in the surrounding object or type.
+        // Generated declaration: opens the object for the headers property.
         headers: {
-          // Executes this line as the next step in the surrounding logic.
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
           [name: string]: unknown;
-          // Closes the expression, call, or declaration started above.
+          // Generated declaration: closes the generated declaration opened above.
         };
-        // Defines the content field in the surrounding object or type.
+        // Generated declaration: opens the object for the content property.
         content: {
-          // Executes this line as the next step in the surrounding logic.
+          // Generated declaration: defines the generated type of the application/json property.
           'application/json': components['schemas']['HTTPValidationError'];
-          // Closes the expression, call, or declaration started above.
+          // Generated declaration: closes the generated declaration opened above.
         };
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
-    // Closes the expression, call, or declaration started above.
+    // Generated declaration: closes the generated declaration opened above.
   };
-  // Defines the create_websocket_ticket_route_v1_rooms__room_id__ws_ticket_post field in the surrounding object or type.
+  // Generated declaration: opens the object for the create_websocket_ticket_route_v1_rooms__room_id__ws_ticket_post property.
   create_websocket_ticket_route_v1_rooms__room_id__ws_ticket_post: {
-    // Defines the parameters field in the surrounding object or type.
+    // Generated declaration: opens the object for the parameters property.
     parameters: {
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the query property.
       query?: never;
-      // Begins the nested block or object completed below.
+      // Generated declaration: opens the object for the header property.
       header?: {
-        // Executes this line as the next step in the surrounding logic.
+        // Generated declaration: defines the generated type of the authorization property.
         authorization?: string | null;
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
-      // Defines the path field in the surrounding object or type.
+      // Generated declaration: opens the object for the path property.
       path: {
-        // Defines the room_id field in the surrounding object or type.
+        // Generated declaration: defines the generated type of the room_id property.
         room_id: string;
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the cookie property.
       cookie?: never;
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the requestBody property.
     requestBody?: never;
-    // Defines the responses field in the surrounding object or type.
+    // Generated declaration: opens the object for the responses property.
     responses: {
       /** @description Successful Response */
-      // Begins the nested block or object completed below.
+      // Generated declaration: continues the generated OpenAPI type declaration.
       200: {
-        // Defines the headers field in the surrounding object or type.
+        // Generated declaration: opens the object for the headers property.
         headers: {
-          // Executes this line as the next step in the surrounding logic.
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
           [name: string]: unknown;
-          // Closes the expression, call, or declaration started above.
+          // Generated declaration: closes the generated declaration opened above.
         };
-        // Defines the content field in the surrounding object or type.
+        // Generated declaration: opens the object for the content property.
         content: {
-          // Executes this line as the next step in the surrounding logic.
+          // Generated declaration: defines the generated type of the application/json property.
           'application/json': components['schemas']['WebSocketTicketResponse'];
-          // Closes the expression, call, or declaration started above.
+          // Generated declaration: closes the generated declaration opened above.
         };
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
       /** @description Validation Error */
-      // Begins the nested block or object completed below.
+      // Generated declaration: continues the generated OpenAPI type declaration.
       422: {
-        // Defines the headers field in the surrounding object or type.
+        // Generated declaration: opens the object for the headers property.
         headers: {
-          // Executes this line as the next step in the surrounding logic.
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
           [name: string]: unknown;
-          // Closes the expression, call, or declaration started above.
+          // Generated declaration: closes the generated declaration opened above.
         };
-        // Defines the content field in the surrounding object or type.
+        // Generated declaration: opens the object for the content property.
         content: {
-          // Executes this line as the next step in the surrounding logic.
+          // Generated declaration: defines the generated type of the application/json property.
           'application/json': components['schemas']['HTTPValidationError'];
-          // Closes the expression, call, or declaration started above.
+          // Generated declaration: closes the generated declaration opened above.
         };
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
-    // Closes the expression, call, or declaration started above.
+    // Generated declaration: closes the generated declaration opened above.
   };
-  // Defines the create_room_route_v1_rooms_post field in the surrounding object or type.
+  // Generated declaration: opens the object for the create_room_route_v1_rooms_post property.
   create_room_route_v1_rooms_post: {
-    // Defines the parameters field in the surrounding object or type.
+    // Generated declaration: opens the object for the parameters property.
     parameters: {
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the query property.
       query?: never;
-      // Begins the nested block or object completed below.
+      // Generated declaration: opens the object for the header property.
       header?: {
-        // Executes this line as the next step in the surrounding logic.
+        // Generated declaration: defines the generated type of the authorization property.
         authorization?: string | null;
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the path property.
       path?: never;
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the cookie property.
       cookie?: never;
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
-    // Defines the requestBody field in the surrounding object or type.
+    // Generated declaration: opens the object for the requestBody property.
     requestBody: {
-      // Defines the content field in the surrounding object or type.
+      // Generated declaration: opens the object for the content property.
       content: {
-        // Executes this line as the next step in the surrounding logic.
+        // Generated declaration: defines the generated type of the application/json property.
         'application/json': components['schemas']['CreateRoomRequest'];
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
-    // Defines the responses field in the surrounding object or type.
+    // Generated declaration: opens the object for the responses property.
     responses: {
       /** @description Successful Response */
-      // Begins the nested block or object completed below.
+      // Generated declaration: continues the generated OpenAPI type declaration.
       201: {
-        // Defines the headers field in the surrounding object or type.
+        // Generated declaration: opens the object for the headers property.
         headers: {
-          // Executes this line as the next step in the surrounding logic.
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
           [name: string]: unknown;
-          // Closes the expression, call, or declaration started above.
+          // Generated declaration: closes the generated declaration opened above.
         };
-        // Defines the content field in the surrounding object or type.
+        // Generated declaration: opens the object for the content property.
         content: {
-          // Executes this line as the next step in the surrounding logic.
+          // Generated declaration: defines the generated type of the application/json property.
           'application/json': components['schemas']['RoomResponse'];
-          // Closes the expression, call, or declaration started above.
+          // Generated declaration: closes the generated declaration opened above.
         };
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
       /** @description Validation Error */
-      // Begins the nested block or object completed below.
+      // Generated declaration: continues the generated OpenAPI type declaration.
       422: {
-        // Defines the headers field in the surrounding object or type.
+        // Generated declaration: opens the object for the headers property.
         headers: {
-          // Executes this line as the next step in the surrounding logic.
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
           [name: string]: unknown;
-          // Closes the expression, call, or declaration started above.
+          // Generated declaration: closes the generated declaration opened above.
         };
-        // Defines the content field in the surrounding object or type.
+        // Generated declaration: opens the object for the content property.
         content: {
-          // Executes this line as the next step in the surrounding logic.
+          // Generated declaration: defines the generated type of the application/json property.
           'application/json': components['schemas']['HTTPValidationError'];
-          // Closes the expression, call, or declaration started above.
+          // Generated declaration: closes the generated declaration opened above.
         };
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
-    // Closes the expression, call, or declaration started above.
+    // Generated declaration: closes the generated declaration opened above.
   };
-  // Defines the join_room_route_v1_rooms__room_code__join_post field in the surrounding object or type.
+  // Generated declaration: opens the object for the join_room_route_v1_rooms__room_code__join_post property.
   join_room_route_v1_rooms__room_code__join_post: {
-    // Defines the parameters field in the surrounding object or type.
+    // Generated declaration: opens the object for the parameters property.
     parameters: {
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the query property.
       query?: never;
-      // Begins the nested block or object completed below.
+      // Generated declaration: opens the object for the header property.
       header?: {
-        // Executes this line as the next step in the surrounding logic.
+        // Generated declaration: defines the generated type of the authorization property.
         authorization?: string | null;
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
-      // Defines the path field in the surrounding object or type.
+      // Generated declaration: opens the object for the path property.
       path: {
-        // Defines the room_code field in the surrounding object or type.
+        // Generated declaration: defines the generated type of the room_code property.
         room_code: string;
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the cookie property.
       cookie?: never;
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the requestBody property.
     requestBody?: never;
-    // Defines the responses field in the surrounding object or type.
+    // Generated declaration: opens the object for the responses property.
     responses: {
       /** @description Successful Response */
-      // Begins the nested block or object completed below.
+      // Generated declaration: continues the generated OpenAPI type declaration.
       200: {
-        // Defines the headers field in the surrounding object or type.
+        // Generated declaration: opens the object for the headers property.
         headers: {
-          // Executes this line as the next step in the surrounding logic.
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
           [name: string]: unknown;
-          // Closes the expression, call, or declaration started above.
+          // Generated declaration: closes the generated declaration opened above.
         };
-        // Defines the content field in the surrounding object or type.
+        // Generated declaration: opens the object for the content property.
         content: {
-          // Executes this line as the next step in the surrounding logic.
+          // Generated declaration: defines the generated type of the application/json property.
           'application/json': components['schemas']['RoomResponse'];
-          // Closes the expression, call, or declaration started above.
+          // Generated declaration: closes the generated declaration opened above.
         };
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
       /** @description Validation Error */
-      // Begins the nested block or object completed below.
+      // Generated declaration: continues the generated OpenAPI type declaration.
       422: {
-        // Defines the headers field in the surrounding object or type.
+        // Generated declaration: opens the object for the headers property.
         headers: {
-          // Executes this line as the next step in the surrounding logic.
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
           [name: string]: unknown;
-          // Closes the expression, call, or declaration started above.
+          // Generated declaration: closes the generated declaration opened above.
         };
-        // Defines the content field in the surrounding object or type.
+        // Generated declaration: opens the object for the content property.
         content: {
-          // Executes this line as the next step in the surrounding logic.
+          // Generated declaration: defines the generated type of the application/json property.
           'application/json': components['schemas']['HTTPValidationError'];
-          // Closes the expression, call, or declaration started above.
+          // Generated declaration: closes the generated declaration opened above.
         };
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
-    // Closes the expression, call, or declaration started above.
+    // Generated declaration: closes the generated declaration opened above.
   };
-  // Defines the ready_room_route_v1_rooms__room_id__ready_post field in the surrounding object or type.
+  // Generated declaration: opens the object for the ready_room_route_v1_rooms__room_id__ready_post property.
   ready_room_route_v1_rooms__room_id__ready_post: {
-    // Defines the parameters field in the surrounding object or type.
+    // Generated declaration: opens the object for the parameters property.
     parameters: {
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the query property.
       query?: never;
-      // Begins the nested block or object completed below.
+      // Generated declaration: opens the object for the header property.
       header?: {
-        // Executes this line as the next step in the surrounding logic.
+        // Generated declaration: defines the generated type of the authorization property.
         authorization?: string | null;
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
-      // Defines the path field in the surrounding object or type.
+      // Generated declaration: opens the object for the path property.
       path: {
-        // Defines the room_id field in the surrounding object or type.
+        // Generated declaration: defines the generated type of the room_id property.
         room_id: string;
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the cookie property.
       cookie?: never;
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the requestBody property.
     requestBody?: never;
-    // Defines the responses field in the surrounding object or type.
+    // Generated declaration: opens the object for the responses property.
     responses: {
       /** @description Successful Response */
-      // Begins the nested block or object completed below.
+      // Generated declaration: continues the generated OpenAPI type declaration.
       200: {
-        // Defines the headers field in the surrounding object or type.
+        // Generated declaration: opens the object for the headers property.
         headers: {
-          // Executes this line as the next step in the surrounding logic.
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
           [name: string]: unknown;
-          // Closes the expression, call, or declaration started above.
+          // Generated declaration: closes the generated declaration opened above.
         };
-        // Defines the content field in the surrounding object or type.
+        // Generated declaration: opens the object for the content property.
         content: {
-          // Executes this line as the next step in the surrounding logic.
+          // Generated declaration: defines the generated type of the application/json property.
           'application/json': components['schemas']['RoomResponse'];
-          // Closes the expression, call, or declaration started above.
+          // Generated declaration: closes the generated declaration opened above.
         };
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
       /** @description Validation Error */
-      // Begins the nested block or object completed below.
+      // Generated declaration: continues the generated OpenAPI type declaration.
       422: {
-        // Defines the headers field in the surrounding object or type.
+        // Generated declaration: opens the object for the headers property.
         headers: {
-          // Executes this line as the next step in the surrounding logic.
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
           [name: string]: unknown;
-          // Closes the expression, call, or declaration started above.
+          // Generated declaration: closes the generated declaration opened above.
         };
-        // Defines the content field in the surrounding object or type.
+        // Generated declaration: opens the object for the content property.
         content: {
-          // Executes this line as the next step in the surrounding logic.
+          // Generated declaration: defines the generated type of the application/json property.
           'application/json': components['schemas']['HTTPValidationError'];
-          // Closes the expression, call, or declaration started above.
+          // Generated declaration: closes the generated declaration opened above.
         };
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
-    // Closes the expression, call, or declaration started above.
+    // Generated declaration: closes the generated declaration opened above.
   };
-  // Defines the get_room_route_v1_rooms__room_id__get field in the surrounding object or type.
+  // Generated declaration: opens the object for the get_room_route_v1_rooms__room_id__get property.
   get_room_route_v1_rooms__room_id__get: {
-    // Defines the parameters field in the surrounding object or type.
+    // Generated declaration: opens the object for the parameters property.
     parameters: {
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the query property.
       query?: never;
-      // Begins the nested block or object completed below.
+      // Generated declaration: opens the object for the header property.
       header?: {
-        // Executes this line as the next step in the surrounding logic.
+        // Generated declaration: defines the generated type of the authorization property.
         authorization?: string | null;
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
-      // Defines the path field in the surrounding object or type.
+      // Generated declaration: opens the object for the path property.
       path: {
-        // Defines the room_id field in the surrounding object or type.
+        // Generated declaration: defines the generated type of the room_id property.
         room_id: string;
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the cookie property.
       cookie?: never;
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the requestBody property.
     requestBody?: never;
-    // Defines the responses field in the surrounding object or type.
+    // Generated declaration: opens the object for the responses property.
     responses: {
       /** @description Successful Response */
-      // Begins the nested block or object completed below.
+      // Generated declaration: continues the generated OpenAPI type declaration.
       200: {
-        // Defines the headers field in the surrounding object or type.
+        // Generated declaration: opens the object for the headers property.
         headers: {
-          // Executes this line as the next step in the surrounding logic.
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
           [name: string]: unknown;
-          // Closes the expression, call, or declaration started above.
+          // Generated declaration: closes the generated declaration opened above.
         };
-        // Defines the content field in the surrounding object or type.
+        // Generated declaration: opens the object for the content property.
         content: {
-          // Executes this line as the next step in the surrounding logic.
+          // Generated declaration: defines the generated type of the application/json property.
           'application/json': components['schemas']['RoomResponse'];
-          // Closes the expression, call, or declaration started above.
+          // Generated declaration: closes the generated declaration opened above.
         };
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
       /** @description Validation Error */
-      // Begins the nested block or object completed below.
+      // Generated declaration: continues the generated OpenAPI type declaration.
       422: {
-        // Defines the headers field in the surrounding object or type.
+        // Generated declaration: opens the object for the headers property.
         headers: {
-          // Executes this line as the next step in the surrounding logic.
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
           [name: string]: unknown;
-          // Closes the expression, call, or declaration started above.
+          // Generated declaration: closes the generated declaration opened above.
         };
-        // Defines the content field in the surrounding object or type.
+        // Generated declaration: opens the object for the content property.
         content: {
-          // Executes this line as the next step in the surrounding logic.
+          // Generated declaration: defines the generated type of the application/json property.
           'application/json': components['schemas']['HTTPValidationError'];
-          // Closes the expression, call, or declaration started above.
+          // Generated declaration: closes the generated declaration opened above.
         };
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
-    // Closes the expression, call, or declaration started above.
+    // Generated declaration: closes the generated declaration opened above.
   };
-  // Defines the get_leaderboard_route_v1_leaderboards_get field in the surrounding object or type.
+  // Generated declaration: opens the object for the get_leaderboard_route_v1_leaderboards_get property.
   get_leaderboard_route_v1_leaderboards_get: {
-    // Defines the parameters field in the surrounding object or type.
+    // Generated declaration: opens the object for the parameters property.
     parameters: {
-      // Begins the nested block or object completed below.
+      // Generated declaration: opens the object for the query property.
       query?: {
-        // Executes this line as the next step in the surrounding logic.
+        // Generated declaration: defines the generated type of the period property.
         period?: string;
-        // Executes this line as the next step in the surrounding logic.
+        // Generated declaration: defines the generated type of the difficulty property.
         difficulty?: string | null;
-        // Executes this line as the next step in the surrounding logic.
+        // Generated declaration: defines the generated type of the page property.
         page?: number;
-        // Executes this line as the next step in the surrounding logic.
+        // Generated declaration: defines the generated type of the page_size property.
         page_size?: number;
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
-      // Begins the nested block or object completed below.
+      // Generated declaration: opens the object for the header property.
       header?: {
-        // Executes this line as the next step in the surrounding logic.
+        // Generated declaration: defines the generated type of the authorization property.
         authorization?: string | null;
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the path property.
       path?: never;
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the cookie property.
       cookie?: never;
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the requestBody property.
     requestBody?: never;
-    // Defines the responses field in the surrounding object or type.
+    // Generated declaration: opens the object for the responses property.
     responses: {
       /** @description Successful Response */
-      // Begins the nested block or object completed below.
+      // Generated declaration: continues the generated OpenAPI type declaration.
       200: {
-        // Defines the headers field in the surrounding object or type.
+        // Generated declaration: opens the object for the headers property.
         headers: {
-          // Executes this line as the next step in the surrounding logic.
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
           [name: string]: unknown;
-          // Closes the expression, call, or declaration started above.
+          // Generated declaration: closes the generated declaration opened above.
         };
-        // Defines the content field in the surrounding object or type.
+        // Generated declaration: opens the object for the content property.
         content: {
-          // Executes this line as the next step in the surrounding logic.
+          // Generated declaration: defines the generated type of the application/json property.
           'application/json': components['schemas']['PaginatedLeaderboard'];
-          // Closes the expression, call, or declaration started above.
+          // Generated declaration: closes the generated declaration opened above.
         };
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
       /** @description Validation Error */
-      // Begins the nested block or object completed below.
+      // Generated declaration: continues the generated OpenAPI type declaration.
       422: {
-        // Defines the headers field in the surrounding object or type.
+        // Generated declaration: opens the object for the headers property.
         headers: {
-          // Executes this line as the next step in the surrounding logic.
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
           [name: string]: unknown;
-          // Closes the expression, call, or declaration started above.
+          // Generated declaration: closes the generated declaration opened above.
         };
-        // Defines the content field in the surrounding object or type.
+        // Generated declaration: opens the object for the content property.
         content: {
-          // Executes this line as the next step in the surrounding logic.
+          // Generated declaration: defines the generated type of the application/json property.
           'application/json': components['schemas']['HTTPValidationError'];
-          // Closes the expression, call, or declaration started above.
+          // Generated declaration: closes the generated declaration opened above.
         };
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
-    // Closes the expression, call, or declaration started above.
+    // Generated declaration: closes the generated declaration opened above.
   };
-  // Defines the get_profile_route_v1_me_profile_get field in the surrounding object or type.
+  // Generated declaration: opens the object for the get_profile_route_v1_me_profile_get property.
   get_profile_route_v1_me_profile_get: {
-    // Defines the parameters field in the surrounding object or type.
+    // Generated declaration: opens the object for the parameters property.
     parameters: {
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the query property.
       query?: never;
-      // Begins the nested block or object completed below.
+      // Generated declaration: opens the object for the header property.
       header?: {
-        // Executes this line as the next step in the surrounding logic.
+        // Generated declaration: defines the generated type of the authorization property.
         authorization?: string | null;
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the path property.
       path?: never;
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the cookie property.
       cookie?: never;
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the requestBody property.
     requestBody?: never;
-    // Defines the responses field in the surrounding object or type.
+    // Generated declaration: opens the object for the responses property.
     responses: {
       /** @description Successful Response */
-      // Begins the nested block or object completed below.
+      // Generated declaration: continues the generated OpenAPI type declaration.
       200: {
-        // Defines the headers field in the surrounding object or type.
+        // Generated declaration: opens the object for the headers property.
         headers: {
-          // Executes this line as the next step in the surrounding logic.
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
           [name: string]: unknown;
-          // Closes the expression, call, or declaration started above.
+          // Generated declaration: closes the generated declaration opened above.
         };
-        // Defines the content field in the surrounding object or type.
+        // Generated declaration: opens the object for the content property.
         content: {
-          // Executes this line as the next step in the surrounding logic.
+          // Generated declaration: defines the generated type of the application/json property.
           'application/json': components['schemas']['ProfileResponse'];
-          // Closes the expression, call, or declaration started above.
+          // Generated declaration: closes the generated declaration opened above.
         };
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
       /** @description Validation Error */
-      // Begins the nested block or object completed below.
+      // Generated declaration: continues the generated OpenAPI type declaration.
       422: {
-        // Defines the headers field in the surrounding object or type.
+        // Generated declaration: opens the object for the headers property.
         headers: {
-          // Executes this line as the next step in the surrounding logic.
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
           [name: string]: unknown;
-          // Closes the expression, call, or declaration started above.
+          // Generated declaration: closes the generated declaration opened above.
         };
-        // Defines the content field in the surrounding object or type.
+        // Generated declaration: opens the object for the content property.
         content: {
-          // Executes this line as the next step in the surrounding logic.
+          // Generated declaration: defines the generated type of the application/json property.
           'application/json': components['schemas']['HTTPValidationError'];
-          // Closes the expression, call, or declaration started above.
+          // Generated declaration: closes the generated declaration opened above.
         };
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
-    // Closes the expression, call, or declaration started above.
+    // Generated declaration: closes the generated declaration opened above.
   };
-  // Defines the update_profile_route_v1_me_profile_patch field in the surrounding object or type.
+  // Generated declaration: opens the object for the update_profile_route_v1_me_profile_patch property.
   update_profile_route_v1_me_profile_patch: {
-    // Defines the parameters field in the surrounding object or type.
+    // Generated declaration: opens the object for the parameters property.
     parameters: {
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the query property.
       query?: never;
-      // Begins the nested block or object completed below.
+      // Generated declaration: opens the object for the header property.
       header?: {
-        // Executes this line as the next step in the surrounding logic.
+        // Generated declaration: defines the generated type of the authorization property.
         authorization?: string | null;
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the path property.
       path?: never;
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the cookie property.
       cookie?: never;
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
-    // Defines the requestBody field in the surrounding object or type.
+    // Generated declaration: opens the object for the requestBody property.
     requestBody: {
-      // Defines the content field in the surrounding object or type.
+      // Generated declaration: opens the object for the content property.
       content: {
-        // Executes this line as the next step in the surrounding logic.
+        // Generated declaration: defines the generated type of the application/json property.
         'application/json': components['schemas']['ProfileUpdateRequest'];
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
-    // Defines the responses field in the surrounding object or type.
+    // Generated declaration: opens the object for the responses property.
     responses: {
       /** @description Successful Response */
-      // Begins the nested block or object completed below.
+      // Generated declaration: continues the generated OpenAPI type declaration.
       200: {
-        // Defines the headers field in the surrounding object or type.
+        // Generated declaration: opens the object for the headers property.
         headers: {
-          // Executes this line as the next step in the surrounding logic.
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
           [name: string]: unknown;
-          // Closes the expression, call, or declaration started above.
+          // Generated declaration: closes the generated declaration opened above.
         };
-        // Defines the content field in the surrounding object or type.
+        // Generated declaration: opens the object for the content property.
         content: {
-          // Executes this line as the next step in the surrounding logic.
+          // Generated declaration: defines the generated type of the application/json property.
           'application/json': components['schemas']['ProfileResponse'];
-          // Closes the expression, call, or declaration started above.
+          // Generated declaration: closes the generated declaration opened above.
         };
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
       /** @description Validation Error */
-      // Begins the nested block or object completed below.
+      // Generated declaration: continues the generated OpenAPI type declaration.
       422: {
-        // Defines the headers field in the surrounding object or type.
+        // Generated declaration: opens the object for the headers property.
         headers: {
-          // Executes this line as the next step in the surrounding logic.
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
           [name: string]: unknown;
-          // Closes the expression, call, or declaration started above.
+          // Generated declaration: closes the generated declaration opened above.
         };
-        // Defines the content field in the surrounding object or type.
+        // Generated declaration: opens the object for the content property.
         content: {
-          // Executes this line as the next step in the surrounding logic.
+          // Generated declaration: defines the generated type of the application/json property.
           'application/json': components['schemas']['HTTPValidationError'];
-          // Closes the expression, call, or declaration started above.
+          // Generated declaration: closes the generated declaration opened above.
         };
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
-    // Closes the expression, call, or declaration started above.
+    // Generated declaration: closes the generated declaration opened above.
   };
-  // Defines the get_games_route_v1_me_games_get field in the surrounding object or type.
+  // Generated declaration: opens the object for the get_games_route_v1_me_games_get property.
   get_games_route_v1_me_games_get: {
-    // Defines the parameters field in the surrounding object or type.
+    // Generated declaration: opens the object for the parameters property.
     parameters: {
-      // Begins the nested block or object completed below.
+      // Generated declaration: opens the object for the query property.
       query?: {
-        // Executes this line as the next step in the surrounding logic.
+        // Generated declaration: defines the generated type of the page property.
         page?: number;
-        // Executes this line as the next step in the surrounding logic.
+        // Generated declaration: defines the generated type of the page_size property.
         page_size?: number;
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
-      // Begins the nested block or object completed below.
+      // Generated declaration: opens the object for the header property.
       header?: {
-        // Executes this line as the next step in the surrounding logic.
+        // Generated declaration: defines the generated type of the authorization property.
         authorization?: string | null;
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the path property.
       path?: never;
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the cookie property.
       cookie?: never;
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the requestBody property.
     requestBody?: never;
-    // Defines the responses field in the surrounding object or type.
+    // Generated declaration: opens the object for the responses property.
     responses: {
       /** @description Successful Response */
-      // Begins the nested block or object completed below.
+      // Generated declaration: continues the generated OpenAPI type declaration.
       200: {
-        // Defines the headers field in the surrounding object or type.
+        // Generated declaration: opens the object for the headers property.
         headers: {
-          // Executes this line as the next step in the surrounding logic.
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
           [name: string]: unknown;
-          // Closes the expression, call, or declaration started above.
+          // Generated declaration: closes the generated declaration opened above.
         };
-        // Defines the content field in the surrounding object or type.
+        // Generated declaration: opens the object for the content property.
         content: {
-          // Executes this line as the next step in the surrounding logic.
+          // Generated declaration: defines the generated type of the application/json property.
           'application/json': components['schemas']['PaginatedGames'];
-          // Closes the expression, call, or declaration started above.
+          // Generated declaration: closes the generated declaration opened above.
         };
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
       /** @description Validation Error */
-      // Begins the nested block or object completed below.
+      // Generated declaration: continues the generated OpenAPI type declaration.
       422: {
-        // Defines the headers field in the surrounding object or type.
+        // Generated declaration: opens the object for the headers property.
         headers: {
-          // Executes this line as the next step in the surrounding logic.
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
           [name: string]: unknown;
-          // Closes the expression, call, or declaration started above.
+          // Generated declaration: closes the generated declaration opened above.
         };
-        // Defines the content field in the surrounding object or type.
+        // Generated declaration: opens the object for the content property.
         content: {
-          // Executes this line as the next step in the surrounding logic.
+          // Generated declaration: defines the generated type of the application/json property.
           'application/json': components['schemas']['HTTPValidationError'];
-          // Closes the expression, call, or declaration started above.
+          // Generated declaration: closes the generated declaration opened above.
         };
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
-    // Closes the expression, call, or declaration started above.
+    // Generated declaration: closes the generated declaration opened above.
   };
-  // Defines the get_stats_route_v1_me_stats_get field in the surrounding object or type.
+  // Generated declaration: opens the object for the get_stats_route_v1_me_stats_get property.
   get_stats_route_v1_me_stats_get: {
-    // Defines the parameters field in the surrounding object or type.
+    // Generated declaration: opens the object for the parameters property.
     parameters: {
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the query property.
       query?: never;
-      // Begins the nested block or object completed below.
+      // Generated declaration: opens the object for the header property.
       header?: {
-        // Executes this line as the next step in the surrounding logic.
+        // Generated declaration: defines the generated type of the authorization property.
         authorization?: string | null;
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the path property.
       path?: never;
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the cookie property.
       cookie?: never;
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the requestBody property.
     requestBody?: never;
-    // Defines the responses field in the surrounding object or type.
+    // Generated declaration: opens the object for the responses property.
     responses: {
       /** @description Successful Response */
-      // Begins the nested block or object completed below.
+      // Generated declaration: continues the generated OpenAPI type declaration.
       200: {
-        // Defines the headers field in the surrounding object or type.
+        // Generated declaration: opens the object for the headers property.
         headers: {
-          // Executes this line as the next step in the surrounding logic.
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
           [name: string]: unknown;
-          // Closes the expression, call, or declaration started above.
+          // Generated declaration: closes the generated declaration opened above.
         };
-        // Defines the content field in the surrounding object or type.
+        // Generated declaration: opens the object for the content property.
         content: {
-          // Executes this line as the next step in the surrounding logic.
+          // Generated declaration: defines the generated type of the application/json property.
           'application/json': components['schemas']['StatsResponse'];
-          // Closes the expression, call, or declaration started above.
+          // Generated declaration: closes the generated declaration opened above.
         };
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
       /** @description Validation Error */
-      // Begins the nested block or object completed below.
+      // Generated declaration: continues the generated OpenAPI type declaration.
       422: {
-        // Defines the headers field in the surrounding object or type.
+        // Generated declaration: opens the object for the headers property.
         headers: {
-          // Executes this line as the next step in the surrounding logic.
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
           [name: string]: unknown;
-          // Closes the expression, call, or declaration started above.
+          // Generated declaration: closes the generated declaration opened above.
         };
-        // Defines the content field in the surrounding object or type.
+        // Generated declaration: opens the object for the content property.
         content: {
-          // Executes this line as the next step in the surrounding logic.
+          // Generated declaration: defines the generated type of the application/json property.
           'application/json': components['schemas']['HTTPValidationError'];
-          // Closes the expression, call, or declaration started above.
+          // Generated declaration: closes the generated declaration opened above.
         };
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
-    // Closes the expression, call, or declaration started above.
+    // Generated declaration: closes the generated declaration opened above.
   };
-  // Defines the export_route_v1_me_export_get field in the surrounding object or type.
+  // Generated declaration: opens the object for the export_route_v1_me_export_get property.
   export_route_v1_me_export_get: {
-    // Defines the parameters field in the surrounding object or type.
+    // Generated declaration: opens the object for the parameters property.
     parameters: {
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the query property.
       query?: never;
-      // Begins the nested block or object completed below.
+      // Generated declaration: opens the object for the header property.
       header?: {
-        // Executes this line as the next step in the surrounding logic.
+        // Generated declaration: defines the generated type of the authorization property.
         authorization?: string | null;
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the path property.
       path?: never;
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the cookie property.
       cookie?: never;
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the requestBody property.
     requestBody?: never;
-    // Defines the responses field in the surrounding object or type.
+    // Generated declaration: opens the object for the responses property.
     responses: {
       /** @description Successful Response */
-      // Begins the nested block or object completed below.
+      // Generated declaration: continues the generated OpenAPI type declaration.
       200: {
-        // Defines the headers field in the surrounding object or type.
+        // Generated declaration: opens the object for the headers property.
         headers: {
-          // Executes this line as the next step in the surrounding logic.
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
           [name: string]: unknown;
-          // Closes the expression, call, or declaration started above.
+          // Generated declaration: closes the generated declaration opened above.
         };
-        // Defines the content field in the surrounding object or type.
+        // Generated declaration: opens the object for the content property.
         content: {
-          // Executes this line as the next step in the surrounding logic.
+          // Generated declaration: defines the generated type of the application/json property.
           'application/json': unknown;
-          // Closes the expression, call, or declaration started above.
+          // Generated declaration: closes the generated declaration opened above.
         };
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
       /** @description Validation Error */
-      // Begins the nested block or object completed below.
+      // Generated declaration: continues the generated OpenAPI type declaration.
       422: {
-        // Defines the headers field in the surrounding object or type.
+        // Generated declaration: opens the object for the headers property.
         headers: {
-          // Executes this line as the next step in the surrounding logic.
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
           [name: string]: unknown;
-          // Closes the expression, call, or declaration started above.
+          // Generated declaration: closes the generated declaration opened above.
         };
-        // Defines the content field in the surrounding object or type.
+        // Generated declaration: opens the object for the content property.
         content: {
-          // Executes this line as the next step in the surrounding logic.
+          // Generated declaration: defines the generated type of the application/json property.
           'application/json': components['schemas']['HTTPValidationError'];
-          // Closes the expression, call, or declaration started above.
+          // Generated declaration: closes the generated declaration opened above.
         };
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
-    // Closes the expression, call, or declaration started above.
+    // Generated declaration: closes the generated declaration opened above.
   };
-  // Defines the delete_account_route_v1_me_delete field in the surrounding object or type.
+  // Generated declaration: opens the object for the delete_account_route_v1_me_delete property.
   delete_account_route_v1_me_delete: {
-    // Defines the parameters field in the surrounding object or type.
+    // Generated declaration: opens the object for the parameters property.
     parameters: {
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the query property.
       query?: never;
-      // Begins the nested block or object completed below.
+      // Generated declaration: opens the object for the header property.
       header?: {
-        // Executes this line as the next step in the surrounding logic.
+        // Generated declaration: defines the generated type of the authorization property.
         authorization?: string | null;
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the path property.
       path?: never;
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the cookie property.
       cookie?: never;
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
-    // Defines the requestBody field in the surrounding object or type.
+    // Generated declaration: opens the object for the requestBody property.
     requestBody: {
-      // Defines the content field in the surrounding object or type.
+      // Generated declaration: opens the object for the content property.
       content: {
-        // Executes this line as the next step in the surrounding logic.
+        // Generated declaration: defines the generated type of the application/json property.
         'application/json': components['schemas']['DeleteAccountRequest'];
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
-    // Defines the responses field in the surrounding object or type.
+    // Generated declaration: opens the object for the responses property.
     responses: {
       /** @description Successful Response */
-      // Begins the nested block or object completed below.
+      // Generated declaration: continues the generated OpenAPI type declaration.
       200: {
-        // Defines the headers field in the surrounding object or type.
+        // Generated declaration: opens the object for the headers property.
         headers: {
-          // Executes this line as the next step in the surrounding logic.
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
           [name: string]: unknown;
-          // Closes the expression, call, or declaration started above.
+          // Generated declaration: closes the generated declaration opened above.
         };
-        // Defines the content field in the surrounding object or type.
+        // Generated declaration: opens the object for the content property.
         content: {
-          // Executes this line as the next step in the surrounding logic.
+          // Generated declaration: defines the generated type of the application/json property.
           'application/json': components['schemas']['DeleteAccountResponse'];
-          // Closes the expression, call, or declaration started above.
+          // Generated declaration: closes the generated declaration opened above.
         };
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
       /** @description Validation Error */
-      // Begins the nested block or object completed below.
+      // Generated declaration: continues the generated OpenAPI type declaration.
       422: {
-        // Defines the headers field in the surrounding object or type.
+        // Generated declaration: opens the object for the headers property.
         headers: {
-          // Executes this line as the next step in the surrounding logic.
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
           [name: string]: unknown;
-          // Closes the expression, call, or declaration started above.
+          // Generated declaration: closes the generated declaration opened above.
         };
-        // Defines the content field in the surrounding object or type.
+        // Generated declaration: opens the object for the content property.
         content: {
-          // Executes this line as the next step in the surrounding logic.
+          // Generated declaration: defines the generated type of the application/json property.
           'application/json': components['schemas']['HTTPValidationError'];
-          // Closes the expression, call, or declaration started above.
+          // Generated declaration: closes the generated declaration opened above.
         };
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
-    // Closes the expression, call, or declaration started above.
+    // Generated declaration: closes the generated declaration opened above.
   };
-  // Defines the create_support_request_route_v1_support_post field in the surrounding object or type.
+  // Generated declaration: opens the object for the create_support_request_route_v1_support_post property.
   create_support_request_route_v1_support_post: {
-    // Defines the parameters field in the surrounding object or type.
+    // Generated declaration: opens the object for the parameters property.
     parameters: {
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the query property.
       query?: never;
-      // Begins the nested block or object completed below.
+      // Generated declaration: opens the object for the header property.
       header?: {
-        // Executes this line as the next step in the surrounding logic.
+        // Generated declaration: defines the generated type of the authorization property.
         authorization?: string | null;
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the path property.
       path?: never;
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the cookie property.
       cookie?: never;
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
-    // Defines the requestBody field in the surrounding object or type.
+    // Generated declaration: opens the object for the requestBody property.
     requestBody: {
-      // Defines the content field in the surrounding object or type.
+      // Generated declaration: opens the object for the content property.
       content: {
-        // Executes this line as the next step in the surrounding logic.
+        // Generated declaration: defines the generated type of the application/json property.
         'application/json': components['schemas']['SupportRequestCreate'];
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
-    // Defines the responses field in the surrounding object or type.
+    // Generated declaration: opens the object for the responses property.
     responses: {
       /** @description Successful Response */
-      // Begins the nested block or object completed below.
+      // Generated declaration: continues the generated OpenAPI type declaration.
       202: {
-        // Defines the headers field in the surrounding object or type.
+        // Generated declaration: opens the object for the headers property.
         headers: {
-          // Executes this line as the next step in the surrounding logic.
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
           [name: string]: unknown;
-          // Closes the expression, call, or declaration started above.
+          // Generated declaration: closes the generated declaration opened above.
         };
-        // Defines the content field in the surrounding object or type.
+        // Generated declaration: opens the object for the content property.
         content: {
-          // Executes this line as the next step in the surrounding logic.
+          // Generated declaration: defines the generated type of the application/json property.
           'application/json': components['schemas']['SupportRequestResponse'];
-          // Closes the expression, call, or declaration started above.
+          // Generated declaration: closes the generated declaration opened above.
         };
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
       /** @description Validation Error */
-      // Begins the nested block or object completed below.
+      // Generated declaration: continues the generated OpenAPI type declaration.
       422: {
-        // Defines the headers field in the surrounding object or type.
+        // Generated declaration: opens the object for the headers property.
         headers: {
-          // Executes this line as the next step in the surrounding logic.
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
           [name: string]: unknown;
-          // Closes the expression, call, or declaration started above.
+          // Generated declaration: closes the generated declaration opened above.
         };
-        // Defines the content field in the surrounding object or type.
+        // Generated declaration: opens the object for the content property.
         content: {
-          // Executes this line as the next step in the surrounding logic.
+          // Generated declaration: defines the generated type of the application/json property.
           'application/json': components['schemas']['HTTPValidationError'];
-          // Closes the expression, call, or declaration started above.
+          // Generated declaration: closes the generated declaration opened above.
         };
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
-    // Closes the expression, call, or declaration started above.
+    // Generated declaration: closes the generated declaration opened above.
   };
-  // Defines the collect_event_route_v1_analytics_events_post field in the surrounding object or type.
+  // Generated declaration: opens the object for the collect_event_route_v1_analytics_events_post property.
   collect_event_route_v1_analytics_events_post: {
-    // Defines the parameters field in the surrounding object or type.
+    // Generated declaration: opens the object for the parameters property.
     parameters: {
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the query property.
       query?: never;
-      // Begins the nested block or object completed below.
+      // Generated declaration: opens the object for the header property.
       header?: {
-        // Executes this line as the next step in the surrounding logic.
+        // Generated declaration: defines the generated type of the authorization property.
         authorization?: string | null;
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the path property.
       path?: never;
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the cookie property.
       cookie?: never;
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
-    // Defines the requestBody field in the surrounding object or type.
+    // Generated declaration: opens the object for the requestBody property.
     requestBody: {
-      // Defines the content field in the surrounding object or type.
+      // Generated declaration: opens the object for the content property.
       content: {
-        // Executes this line as the next step in the surrounding logic.
+        // Generated declaration: defines the generated type of the application/json property.
         'application/json': components['schemas']['AnalyticsEventRequest'];
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
-    // Defines the responses field in the surrounding object or type.
+    // Generated declaration: opens the object for the responses property.
     responses: {
       /** @description Successful Response */
-      // Begins the nested block or object completed below.
+      // Generated declaration: continues the generated OpenAPI type declaration.
       202: {
-        // Defines the headers field in the surrounding object or type.
+        // Generated declaration: opens the object for the headers property.
         headers: {
-          // Executes this line as the next step in the surrounding logic.
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
           [name: string]: unknown;
-          // Closes the expression, call, or declaration started above.
+          // Generated declaration: closes the generated declaration opened above.
         };
-        // Defines the content field in the surrounding object or type.
+        // Generated declaration: opens the object for the content property.
         content: {
-          // Executes this line as the next step in the surrounding logic.
+          // Generated declaration: defines the generated type of the application/json property.
           'application/json': components['schemas']['AnalyticsEventResponse'];
-          // Closes the expression, call, or declaration started above.
+          // Generated declaration: closes the generated declaration opened above.
         };
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
       /** @description Validation Error */
-      // Begins the nested block or object completed below.
+      // Generated declaration: continues the generated OpenAPI type declaration.
       422: {
-        // Defines the headers field in the surrounding object or type.
+        // Generated declaration: opens the object for the headers property.
         headers: {
-          // Executes this line as the next step in the surrounding logic.
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
           [name: string]: unknown;
-          // Closes the expression, call, or declaration started above.
+          // Generated declaration: closes the generated declaration opened above.
         };
-        // Defines the content field in the surrounding object or type.
+        // Generated declaration: opens the object for the content property.
         content: {
-          // Executes this line as the next step in the surrounding logic.
+          // Generated declaration: defines the generated type of the application/json property.
           'application/json': components['schemas']['HTTPValidationError'];
-          // Closes the expression, call, or declaration started above.
+          // Generated declaration: closes the generated declaration opened above.
         };
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
-    // Closes the expression, call, or declaration started above.
+    // Generated declaration: closes the generated declaration opened above.
   };
-  // Defines the games_route_v1_admin_games_get field in the surrounding object or type.
+  // Generated declaration: opens the object for the games_route_v1_admin_games_get property.
   games_route_v1_admin_games_get: {
-    // Defines the parameters field in the surrounding object or type.
+    // Generated declaration: opens the object for the parameters property.
     parameters: {
-      // Begins the nested block or object completed below.
+      // Generated declaration: opens the object for the query property.
       query?: {
-        // Executes this line as the next step in the surrounding logic.
+        // Generated declaration: defines the generated type of the status property.
         status?: string | null;
-        // Executes this line as the next step in the surrounding logic.
+        // Generated declaration: defines the generated type of the page property.
         page?: number;
-        // Executes this line as the next step in the surrounding logic.
+        // Generated declaration: defines the generated type of the page_size property.
         page_size?: number;
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
-      // Begins the nested block or object completed below.
+      // Generated declaration: opens the object for the header property.
       header?: {
-        // Executes this line as the next step in the surrounding logic.
+        // Generated declaration: defines the generated type of the authorization property.
         authorization?: string | null;
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the path property.
       path?: never;
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the cookie property.
       cookie?: never;
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the requestBody property.
     requestBody?: never;
-    // Defines the responses field in the surrounding object or type.
+    // Generated declaration: opens the object for the responses property.
     responses: {
       /** @description Successful Response */
-      // Begins the nested block or object completed below.
+      // Generated declaration: continues the generated OpenAPI type declaration.
       200: {
-        // Defines the headers field in the surrounding object or type.
+        // Generated declaration: opens the object for the headers property.
         headers: {
-          // Executes this line as the next step in the surrounding logic.
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
           [name: string]: unknown;
-          // Closes the expression, call, or declaration started above.
+          // Generated declaration: closes the generated declaration opened above.
         };
-        // Defines the content field in the surrounding object or type.
+        // Generated declaration: opens the object for the content property.
         content: {
-          // Executes this line as the next step in the surrounding logic.
+          // Generated declaration: defines the generated type of the application/json property.
           'application/json': components['schemas']['AdminPage_AdminGameItem_'];
-          // Closes the expression, call, or declaration started above.
+          // Generated declaration: closes the generated declaration opened above.
         };
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
       /** @description Validation Error */
-      // Begins the nested block or object completed below.
+      // Generated declaration: continues the generated OpenAPI type declaration.
       422: {
-        // Defines the headers field in the surrounding object or type.
+        // Generated declaration: opens the object for the headers property.
         headers: {
-          // Executes this line as the next step in the surrounding logic.
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
           [name: string]: unknown;
-          // Closes the expression, call, or declaration started above.
+          // Generated declaration: closes the generated declaration opened above.
         };
-        // Defines the content field in the surrounding object or type.
+        // Generated declaration: opens the object for the content property.
         content: {
-          // Executes this line as the next step in the surrounding logic.
+          // Generated declaration: defines the generated type of the application/json property.
           'application/json': components['schemas']['HTTPValidationError'];
-          // Closes the expression, call, or declaration started above.
+          // Generated declaration: closes the generated declaration opened above.
         };
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
-    // Closes the expression, call, or declaration started above.
+    // Generated declaration: closes the generated declaration opened above.
   };
-  // Defines the profiles_route_v1_admin_profiles_get field in the surrounding object or type.
+  // Generated declaration: opens the object for the profiles_route_v1_admin_profiles_get property.
   profiles_route_v1_admin_profiles_get: {
-    // Defines the parameters field in the surrounding object or type.
+    // Generated declaration: opens the object for the parameters property.
     parameters: {
-      // Begins the nested block or object completed below.
+      // Generated declaration: opens the object for the query property.
       query?: {
-        // Executes this line as the next step in the surrounding logic.
+        // Generated declaration: defines the generated type of the moderation_only property.
         moderation_only?: boolean;
-        // Executes this line as the next step in the surrounding logic.
+        // Generated declaration: defines the generated type of the search property.
         search?: string | null;
-        // Executes this line as the next step in the surrounding logic.
+        // Generated declaration: defines the generated type of the page property.
         page?: number;
-        // Executes this line as the next step in the surrounding logic.
+        // Generated declaration: defines the generated type of the page_size property.
         page_size?: number;
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
-      // Begins the nested block or object completed below.
+      // Generated declaration: opens the object for the header property.
       header?: {
-        // Executes this line as the next step in the surrounding logic.
+        // Generated declaration: defines the generated type of the authorization property.
         authorization?: string | null;
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the path property.
       path?: never;
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the cookie property.
       cookie?: never;
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the requestBody property.
     requestBody?: never;
-    // Defines the responses field in the surrounding object or type.
+    // Generated declaration: opens the object for the responses property.
     responses: {
       /** @description Successful Response */
-      // Begins the nested block or object completed below.
+      // Generated declaration: continues the generated OpenAPI type declaration.
       200: {
-        // Defines the headers field in the surrounding object or type.
+        // Generated declaration: opens the object for the headers property.
         headers: {
-          // Executes this line as the next step in the surrounding logic.
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
           [name: string]: unknown;
-          // Closes the expression, call, or declaration started above.
+          // Generated declaration: closes the generated declaration opened above.
         };
-        // Defines the content field in the surrounding object or type.
+        // Generated declaration: opens the object for the content property.
         content: {
-          // Executes this line as the next step in the surrounding logic.
+          // Generated declaration: defines the generated type of the application/json property.
           'application/json': components['schemas']['AdminPage_AdminProfileItem_'];
-          // Closes the expression, call, or declaration started above.
+          // Generated declaration: closes the generated declaration opened above.
         };
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
       /** @description Validation Error */
-      // Begins the nested block or object completed below.
+      // Generated declaration: continues the generated OpenAPI type declaration.
       422: {
-        // Defines the headers field in the surrounding object or type.
+        // Generated declaration: opens the object for the headers property.
         headers: {
-          // Executes this line as the next step in the surrounding logic.
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
           [name: string]: unknown;
-          // Closes the expression, call, or declaration started above.
+          // Generated declaration: closes the generated declaration opened above.
         };
-        // Defines the content field in the surrounding object or type.
+        // Generated declaration: opens the object for the content property.
         content: {
-          // Executes this line as the next step in the surrounding logic.
+          // Generated declaration: defines the generated type of the application/json property.
           'application/json': components['schemas']['HTTPValidationError'];
-          // Closes the expression, call, or declaration started above.
+          // Generated declaration: closes the generated declaration opened above.
         };
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
-    // Closes the expression, call, or declaration started above.
+    // Generated declaration: closes the generated declaration opened above.
   };
-  // Defines the rooms_route_v1_admin_rooms_get field in the surrounding object or type.
+  // Generated declaration: opens the object for the rooms_route_v1_admin_rooms_get property.
   rooms_route_v1_admin_rooms_get: {
-    // Defines the parameters field in the surrounding object or type.
+    // Generated declaration: opens the object for the parameters property.
     parameters: {
-      // Begins the nested block or object completed below.
+      // Generated declaration: opens the object for the query property.
       query?: {
-        // Executes this line as the next step in the surrounding logic.
+        // Generated declaration: defines the generated type of the active_only property.
         active_only?: boolean;
-        // Executes this line as the next step in the surrounding logic.
+        // Generated declaration: defines the generated type of the page property.
         page?: number;
-        // Executes this line as the next step in the surrounding logic.
+        // Generated declaration: defines the generated type of the page_size property.
         page_size?: number;
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
-      // Begins the nested block or object completed below.
+      // Generated declaration: opens the object for the header property.
       header?: {
-        // Executes this line as the next step in the surrounding logic.
+        // Generated declaration: defines the generated type of the authorization property.
         authorization?: string | null;
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the path property.
       path?: never;
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the cookie property.
       cookie?: never;
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the requestBody property.
     requestBody?: never;
-    // Defines the responses field in the surrounding object or type.
+    // Generated declaration: opens the object for the responses property.
     responses: {
       /** @description Successful Response */
-      // Begins the nested block or object completed below.
+      // Generated declaration: continues the generated OpenAPI type declaration.
       200: {
-        // Defines the headers field in the surrounding object or type.
+        // Generated declaration: opens the object for the headers property.
         headers: {
-          // Executes this line as the next step in the surrounding logic.
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
           [name: string]: unknown;
-          // Closes the expression, call, or declaration started above.
+          // Generated declaration: closes the generated declaration opened above.
         };
-        // Defines the content field in the surrounding object or type.
+        // Generated declaration: opens the object for the content property.
         content: {
-          // Executes this line as the next step in the surrounding logic.
+          // Generated declaration: defines the generated type of the application/json property.
           'application/json': components['schemas']['AdminPage_AdminRoomItem_'];
-          // Closes the expression, call, or declaration started above.
+          // Generated declaration: closes the generated declaration opened above.
         };
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
       /** @description Validation Error */
-      // Begins the nested block or object completed below.
+      // Generated declaration: continues the generated OpenAPI type declaration.
       422: {
-        // Defines the headers field in the surrounding object or type.
+        // Generated declaration: opens the object for the headers property.
         headers: {
-          // Executes this line as the next step in the surrounding logic.
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
           [name: string]: unknown;
-          // Closes the expression, call, or declaration started above.
+          // Generated declaration: closes the generated declaration opened above.
         };
-        // Defines the content field in the surrounding object or type.
+        // Generated declaration: opens the object for the content property.
         content: {
-          // Executes this line as the next step in the surrounding logic.
+          // Generated declaration: defines the generated type of the application/json property.
           'application/json': components['schemas']['HTTPValidationError'];
-          // Closes the expression, call, or declaration started above.
+          // Generated declaration: closes the generated declaration opened above.
         };
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
-    // Closes the expression, call, or declaration started above.
+    // Generated declaration: closes the generated declaration opened above.
   };
-  // Defines the challenges_route_v1_admin_challenges_get field in the surrounding object or type.
+  // Generated declaration: opens the object for the challenges_route_v1_admin_challenges_get property.
   challenges_route_v1_admin_challenges_get: {
-    // Defines the parameters field in the surrounding object or type.
+    // Generated declaration: opens the object for the parameters property.
     parameters: {
-      // Begins the nested block or object completed below.
+      // Generated declaration: opens the object for the query property.
       query?: {
-        // Executes this line as the next step in the surrounding logic.
+        // Generated declaration: defines the generated type of the active_only property.
         active_only?: boolean;
-        // Executes this line as the next step in the surrounding logic.
+        // Generated declaration: defines the generated type of the page property.
         page?: number;
-        // Executes this line as the next step in the surrounding logic.
+        // Generated declaration: defines the generated type of the page_size property.
         page_size?: number;
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
-      // Begins the nested block or object completed below.
+      // Generated declaration: opens the object for the header property.
       header?: {
-        // Executes this line as the next step in the surrounding logic.
+        // Generated declaration: defines the generated type of the authorization property.
         authorization?: string | null;
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the path property.
       path?: never;
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the cookie property.
       cookie?: never;
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the requestBody property.
     requestBody?: never;
-    // Defines the responses field in the surrounding object or type.
+    // Generated declaration: opens the object for the responses property.
     responses: {
       /** @description Successful Response */
-      // Begins the nested block or object completed below.
+      // Generated declaration: continues the generated OpenAPI type declaration.
       200: {
-        // Defines the headers field in the surrounding object or type.
+        // Generated declaration: opens the object for the headers property.
         headers: {
-          // Executes this line as the next step in the surrounding logic.
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
           [name: string]: unknown;
-          // Closes the expression, call, or declaration started above.
+          // Generated declaration: closes the generated declaration opened above.
         };
-        // Defines the content field in the surrounding object or type.
+        // Generated declaration: opens the object for the content property.
         content: {
-          // Executes this line as the next step in the surrounding logic.
+          // Generated declaration: defines the generated type of the application/json property.
           'application/json': components['schemas']['AdminPage_AdminChallengeItem_'];
-          // Closes the expression, call, or declaration started above.
+          // Generated declaration: closes the generated declaration opened above.
         };
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
       /** @description Validation Error */
-      // Begins the nested block or object completed below.
+      // Generated declaration: continues the generated OpenAPI type declaration.
       422: {
-        // Defines the headers field in the surrounding object or type.
+        // Generated declaration: opens the object for the headers property.
         headers: {
-          // Executes this line as the next step in the surrounding logic.
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
           [name: string]: unknown;
-          // Closes the expression, call, or declaration started above.
+          // Generated declaration: closes the generated declaration opened above.
         };
-        // Defines the content field in the surrounding object or type.
+        // Generated declaration: opens the object for the content property.
         content: {
-          // Executes this line as the next step in the surrounding logic.
+          // Generated declaration: defines the generated type of the application/json property.
           'application/json': components['schemas']['HTTPValidationError'];
-          // Closes the expression, call, or declaration started above.
+          // Generated declaration: closes the generated declaration opened above.
         };
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
-    // Closes the expression, call, or declaration started above.
+    // Generated declaration: closes the generated declaration opened above.
   };
-  // Defines the leaderboard_review_route_v1_admin_leaderboard_review_get field in the surrounding object or type.
+  // Generated declaration: opens the object for the leaderboard_review_route_v1_admin_leaderboard_review_get property.
   leaderboard_review_route_v1_admin_leaderboard_review_get: {
-    // Defines the parameters field in the surrounding object or type.
+    // Generated declaration: opens the object for the parameters property.
     parameters: {
-      // Begins the nested block or object completed below.
+      // Generated declaration: opens the object for the query property.
       query?: {
-        // Executes this line as the next step in the surrounding logic.
+        // Generated declaration: defines the generated type of the status property.
         status?: string | null;
-        // Executes this line as the next step in the surrounding logic.
+        // Generated declaration: defines the generated type of the page property.
         page?: number;
-        // Executes this line as the next step in the surrounding logic.
+        // Generated declaration: defines the generated type of the page_size property.
         page_size?: number;
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
-      // Begins the nested block or object completed below.
+      // Generated declaration: opens the object for the header property.
       header?: {
-        // Executes this line as the next step in the surrounding logic.
+        // Generated declaration: defines the generated type of the authorization property.
         authorization?: string | null;
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the path property.
       path?: never;
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the cookie property.
       cookie?: never;
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the requestBody property.
     requestBody?: never;
-    // Defines the responses field in the surrounding object or type.
+    // Generated declaration: opens the object for the responses property.
     responses: {
       /** @description Successful Response */
-      // Begins the nested block or object completed below.
+      // Generated declaration: continues the generated OpenAPI type declaration.
       200: {
-        // Defines the headers field in the surrounding object or type.
+        // Generated declaration: opens the object for the headers property.
         headers: {
-          // Executes this line as the next step in the surrounding logic.
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
           [name: string]: unknown;
-          // Closes the expression, call, or declaration started above.
+          // Generated declaration: closes the generated declaration opened above.
         };
-        // Defines the content field in the surrounding object or type.
+        // Generated declaration: opens the object for the content property.
         content: {
-          // Executes this line as the next step in the surrounding logic.
+          // Generated declaration: defines the generated type of the application/json property.
           'application/json': components['schemas']['AdminPage_AdminLeaderboardItem_'];
-          // Closes the expression, call, or declaration started above.
+          // Generated declaration: closes the generated declaration opened above.
         };
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
       /** @description Validation Error */
-      // Begins the nested block or object completed below.
+      // Generated declaration: continues the generated OpenAPI type declaration.
       422: {
-        // Defines the headers field in the surrounding object or type.
+        // Generated declaration: opens the object for the headers property.
         headers: {
-          // Executes this line as the next step in the surrounding logic.
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
           [name: string]: unknown;
-          // Closes the expression, call, or declaration started above.
+          // Generated declaration: closes the generated declaration opened above.
         };
-        // Defines the content field in the surrounding object or type.
+        // Generated declaration: opens the object for the content property.
         content: {
-          // Executes this line as the next step in the surrounding logic.
+          // Generated declaration: defines the generated type of the application/json property.
           'application/json': components['schemas']['HTTPValidationError'];
-          // Closes the expression, call, or declaration started above.
+          // Generated declaration: closes the generated declaration opened above.
         };
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
-    // Closes the expression, call, or declaration started above.
+    // Generated declaration: closes the generated declaration opened above.
   };
-  // Defines the summary_route_v1_admin_summary_get field in the surrounding object or type.
+  // Generated declaration: opens the object for the summary_route_v1_admin_summary_get property.
   summary_route_v1_admin_summary_get: {
-    // Defines the parameters field in the surrounding object or type.
+    // Generated declaration: opens the object for the parameters property.
     parameters: {
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the query property.
       query?: never;
-      // Begins the nested block or object completed below.
+      // Generated declaration: opens the object for the header property.
       header?: {
-        // Executes this line as the next step in the surrounding logic.
+        // Generated declaration: defines the generated type of the authorization property.
         authorization?: string | null;
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the path property.
       path?: never;
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the cookie property.
       cookie?: never;
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the requestBody property.
     requestBody?: never;
-    // Defines the responses field in the surrounding object or type.
+    // Generated declaration: opens the object for the responses property.
     responses: {
       /** @description Successful Response */
-      // Begins the nested block or object completed below.
+      // Generated declaration: continues the generated OpenAPI type declaration.
       200: {
-        // Defines the headers field in the surrounding object or type.
+        // Generated declaration: opens the object for the headers property.
         headers: {
-          // Executes this line as the next step in the surrounding logic.
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
           [name: string]: unknown;
-          // Closes the expression, call, or declaration started above.
+          // Generated declaration: closes the generated declaration opened above.
         };
-        // Defines the content field in the surrounding object or type.
+        // Generated declaration: opens the object for the content property.
         content: {
-          // Executes this line as the next step in the surrounding logic.
+          // Generated declaration: defines the generated type of the application/json property.
           'application/json': components['schemas']['AdminSummary'];
-          // Closes the expression, call, or declaration started above.
+          // Generated declaration: closes the generated declaration opened above.
         };
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
       /** @description Validation Error */
-      // Begins the nested block or object completed below.
+      // Generated declaration: continues the generated OpenAPI type declaration.
       422: {
-        // Defines the headers field in the surrounding object or type.
+        // Generated declaration: opens the object for the headers property.
         headers: {
-          // Executes this line as the next step in the surrounding logic.
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
           [name: string]: unknown;
-          // Closes the expression, call, or declaration started above.
+          // Generated declaration: closes the generated declaration opened above.
         };
-        // Defines the content field in the surrounding object or type.
+        // Generated declaration: opens the object for the content property.
         content: {
-          // Executes this line as the next step in the surrounding logic.
+          // Generated declaration: defines the generated type of the application/json property.
           'application/json': components['schemas']['HTTPValidationError'];
-          // Closes the expression, call, or declaration started above.
+          // Generated declaration: closes the generated declaration opened above.
         };
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
-    // Closes the expression, call, or declaration started above.
+    // Generated declaration: closes the generated declaration opened above.
   };
-  // Defines the flags_route_v1_admin_flags_get field in the surrounding object or type.
+  // Generated declaration: opens the object for the flags_route_v1_admin_flags_get property.
   flags_route_v1_admin_flags_get: {
-    // Defines the parameters field in the surrounding object or type.
+    // Generated declaration: opens the object for the parameters property.
     parameters: {
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the query property.
       query?: never;
-      // Begins the nested block or object completed below.
+      // Generated declaration: opens the object for the header property.
       header?: {
-        // Executes this line as the next step in the surrounding logic.
+        // Generated declaration: defines the generated type of the authorization property.
         authorization?: string | null;
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the path property.
       path?: never;
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the cookie property.
       cookie?: never;
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the requestBody property.
     requestBody?: never;
-    // Defines the responses field in the surrounding object or type.
+    // Generated declaration: opens the object for the responses property.
     responses: {
       /** @description Successful Response */
-      // Begins the nested block or object completed below.
+      // Generated declaration: continues the generated OpenAPI type declaration.
       200: {
-        // Defines the headers field in the surrounding object or type.
+        // Generated declaration: opens the object for the headers property.
         headers: {
-          // Executes this line as the next step in the surrounding logic.
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
           [name: string]: unknown;
-          // Closes the expression, call, or declaration started above.
+          // Generated declaration: closes the generated declaration opened above.
         };
-        // Defines the content field in the surrounding object or type.
+        // Generated declaration: opens the object for the content property.
         content: {
-          // Executes this line as the next step in the surrounding logic.
+          // Generated declaration: defines the generated type of the application/json property.
           'application/json': components['schemas']['FeatureFlagResponse'][];
-          // Closes the expression, call, or declaration started above.
+          // Generated declaration: closes the generated declaration opened above.
         };
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
       /** @description Validation Error */
-      // Begins the nested block or object completed below.
+      // Generated declaration: continues the generated OpenAPI type declaration.
       422: {
-        // Defines the headers field in the surrounding object or type.
+        // Generated declaration: opens the object for the headers property.
         headers: {
-          // Executes this line as the next step in the surrounding logic.
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
           [name: string]: unknown;
-          // Closes the expression, call, or declaration started above.
+          // Generated declaration: closes the generated declaration opened above.
         };
-        // Defines the content field in the surrounding object or type.
+        // Generated declaration: opens the object for the content property.
         content: {
-          // Executes this line as the next step in the surrounding logic.
+          // Generated declaration: defines the generated type of the application/json property.
           'application/json': components['schemas']['HTTPValidationError'];
-          // Closes the expression, call, or declaration started above.
+          // Generated declaration: closes the generated declaration opened above.
         };
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
-    // Closes the expression, call, or declaration started above.
+    // Generated declaration: closes the generated declaration opened above.
   };
-  // Defines the update_flag_route_v1_admin_flags__key__patch field in the surrounding object or type.
+  // Generated declaration: opens the object for the update_flag_route_v1_admin_flags__key__patch property.
   update_flag_route_v1_admin_flags__key__patch: {
-    // Defines the parameters field in the surrounding object or type.
+    // Generated declaration: opens the object for the parameters property.
     parameters: {
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the query property.
       query?: never;
-      // Begins the nested block or object completed below.
+      // Generated declaration: opens the object for the header property.
       header?: {
-        // Executes this line as the next step in the surrounding logic.
+        // Generated declaration: defines the generated type of the authorization property.
         authorization?: string | null;
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
-      // Defines the path field in the surrounding object or type.
+      // Generated declaration: opens the object for the path property.
       path: {
-        // Defines the key field in the surrounding object or type.
+        // Generated declaration: defines the generated type of the key property.
         key: string;
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the cookie property.
       cookie?: never;
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
-    // Defines the requestBody field in the surrounding object or type.
+    // Generated declaration: opens the object for the requestBody property.
     requestBody: {
-      // Defines the content field in the surrounding object or type.
+      // Generated declaration: opens the object for the content property.
       content: {
-        // Executes this line as the next step in the surrounding logic.
+        // Generated declaration: defines the generated type of the application/json property.
         'application/json': components['schemas']['AdminActionRequest'];
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
-    // Defines the responses field in the surrounding object or type.
+    // Generated declaration: opens the object for the responses property.
     responses: {
       /** @description Successful Response */
-      // Begins the nested block or object completed below.
+      // Generated declaration: continues the generated OpenAPI type declaration.
       200: {
-        // Defines the headers field in the surrounding object or type.
+        // Generated declaration: opens the object for the headers property.
         headers: {
-          // Executes this line as the next step in the surrounding logic.
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
           [name: string]: unknown;
-          // Closes the expression, call, or declaration started above.
+          // Generated declaration: closes the generated declaration opened above.
         };
-        // Defines the content field in the surrounding object or type.
+        // Generated declaration: opens the object for the content property.
         content: {
-          // Executes this line as the next step in the surrounding logic.
+          // Generated declaration: defines the generated type of the application/json property.
           'application/json': components['schemas']['FeatureFlagResponse'];
-          // Closes the expression, call, or declaration started above.
+          // Generated declaration: closes the generated declaration opened above.
         };
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
       /** @description Validation Error */
-      // Begins the nested block or object completed below.
+      // Generated declaration: continues the generated OpenAPI type declaration.
       422: {
-        // Defines the headers field in the surrounding object or type.
+        // Generated declaration: opens the object for the headers property.
         headers: {
-          // Executes this line as the next step in the surrounding logic.
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
           [name: string]: unknown;
-          // Closes the expression, call, or declaration started above.
+          // Generated declaration: closes the generated declaration opened above.
         };
-        // Defines the content field in the surrounding object or type.
+        // Generated declaration: opens the object for the content property.
         content: {
-          // Executes this line as the next step in the surrounding logic.
+          // Generated declaration: defines the generated type of the application/json property.
           'application/json': components['schemas']['HTTPValidationError'];
-          // Closes the expression, call, or declaration started above.
+          // Generated declaration: closes the generated declaration opened above.
         };
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
-    // Closes the expression, call, or declaration started above.
+    // Generated declaration: closes the generated declaration opened above.
   };
-  // Defines the invalidate_leaderboard_route_v1_admin_leaderboard__entry_id__invalidate_post field in the surrounding object or type.
+  // Generated declaration: opens the object for the invalidate_leaderboard_route_v1_admin_leaderboard__entry_id__invalidate_post property.
   invalidate_leaderboard_route_v1_admin_leaderboard__entry_id__invalidate_post: {
-    // Defines the parameters field in the surrounding object or type.
+    // Generated declaration: opens the object for the parameters property.
     parameters: {
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the query property.
       query?: never;
-      // Begins the nested block or object completed below.
+      // Generated declaration: opens the object for the header property.
       header?: {
-        // Executes this line as the next step in the surrounding logic.
+        // Generated declaration: defines the generated type of the authorization property.
         authorization?: string | null;
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
-      // Defines the path field in the surrounding object or type.
+      // Generated declaration: opens the object for the path property.
       path: {
-        // Defines the entry_id field in the surrounding object or type.
+        // Generated declaration: defines the generated type of the entry_id property.
         entry_id: string;
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the cookie property.
       cookie?: never;
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
-    // Defines the requestBody field in the surrounding object or type.
+    // Generated declaration: opens the object for the requestBody property.
     requestBody: {
-      // Defines the content field in the surrounding object or type.
+      // Generated declaration: opens the object for the content property.
       content: {
-        // Executes this line as the next step in the surrounding logic.
+        // Generated declaration: defines the generated type of the application/json property.
         'application/json': components['schemas']['AdminActionRequest'];
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
-    // Defines the responses field in the surrounding object or type.
+    // Generated declaration: opens the object for the responses property.
     responses: {
       /** @description Successful Response */
-      // Begins the nested block or object completed below.
+      // Generated declaration: continues the generated OpenAPI type declaration.
       200: {
-        // Defines the headers field in the surrounding object or type.
+        // Generated declaration: opens the object for the headers property.
         headers: {
-          // Executes this line as the next step in the surrounding logic.
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
           [name: string]: unknown;
-          // Closes the expression, call, or declaration started above.
+          // Generated declaration: closes the generated declaration opened above.
         };
-        // Defines the content field in the surrounding object or type.
+        // Generated declaration: opens the object for the content property.
         content: {
-          // Begins the nested block or object completed below.
+          // Generated declaration: opens the object for the application/json property.
           'application/json': {
-            // Executes this line as the next step in the surrounding logic.
+            // Generated declaration: defines an index signature for generated OpenAPI keys and values.
             [key: string]: boolean;
-            // Closes the expression, call, or declaration started above.
+            // Generated declaration: closes the generated declaration opened above.
           };
-          // Closes the expression, call, or declaration started above.
+          // Generated declaration: closes the generated declaration opened above.
         };
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
       /** @description Validation Error */
-      // Begins the nested block or object completed below.
+      // Generated declaration: continues the generated OpenAPI type declaration.
       422: {
-        // Defines the headers field in the surrounding object or type.
+        // Generated declaration: opens the object for the headers property.
         headers: {
-          // Executes this line as the next step in the surrounding logic.
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
           [name: string]: unknown;
-          // Closes the expression, call, or declaration started above.
+          // Generated declaration: closes the generated declaration opened above.
         };
-        // Defines the content field in the surrounding object or type.
+        // Generated declaration: opens the object for the content property.
         content: {
-          // Executes this line as the next step in the surrounding logic.
+          // Generated declaration: defines the generated type of the application/json property.
           'application/json': components['schemas']['HTTPValidationError'];
-          // Closes the expression, call, or declaration started above.
+          // Generated declaration: closes the generated declaration opened above.
         };
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
-    // Closes the expression, call, or declaration started above.
+    // Generated declaration: closes the generated declaration opened above.
   };
-  // Defines the restore_leaderboard_route_v1_admin_leaderboard__entry_id__restore_post field in the surrounding object or type.
+  // Generated declaration: opens the object for the restore_leaderboard_route_v1_admin_leaderboard__entry_id__restore_post property.
   restore_leaderboard_route_v1_admin_leaderboard__entry_id__restore_post: {
-    // Defines the parameters field in the surrounding object or type.
+    // Generated declaration: opens the object for the parameters property.
     parameters: {
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the query property.
       query?: never;
-      // Begins the nested block or object completed below.
+      // Generated declaration: opens the object for the header property.
       header?: {
-        // Executes this line as the next step in the surrounding logic.
+        // Generated declaration: defines the generated type of the authorization property.
         authorization?: string | null;
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
-      // Defines the path field in the surrounding object or type.
+      // Generated declaration: opens the object for the path property.
       path: {
-        // Defines the entry_id field in the surrounding object or type.
+        // Generated declaration: defines the generated type of the entry_id property.
         entry_id: string;
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the cookie property.
       cookie?: never;
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
-    // Defines the requestBody field in the surrounding object or type.
+    // Generated declaration: opens the object for the requestBody property.
     requestBody: {
-      // Defines the content field in the surrounding object or type.
+      // Generated declaration: opens the object for the content property.
       content: {
-        // Executes this line as the next step in the surrounding logic.
+        // Generated declaration: defines the generated type of the application/json property.
         'application/json': components['schemas']['AdminActionRequest'];
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
-    // Defines the responses field in the surrounding object or type.
+    // Generated declaration: opens the object for the responses property.
     responses: {
       /** @description Successful Response */
-      // Begins the nested block or object completed below.
+      // Generated declaration: continues the generated OpenAPI type declaration.
       200: {
-        // Defines the headers field in the surrounding object or type.
+        // Generated declaration: opens the object for the headers property.
         headers: {
-          // Executes this line as the next step in the surrounding logic.
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
           [name: string]: unknown;
-          // Closes the expression, call, or declaration started above.
+          // Generated declaration: closes the generated declaration opened above.
         };
-        // Defines the content field in the surrounding object or type.
+        // Generated declaration: opens the object for the content property.
         content: {
-          // Begins the nested block or object completed below.
+          // Generated declaration: opens the object for the application/json property.
           'application/json': {
-            // Executes this line as the next step in the surrounding logic.
+            // Generated declaration: defines an index signature for generated OpenAPI keys and values.
             [key: string]: boolean;
-            // Closes the expression, call, or declaration started above.
+            // Generated declaration: closes the generated declaration opened above.
           };
-          // Closes the expression, call, or declaration started above.
+          // Generated declaration: closes the generated declaration opened above.
         };
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
       /** @description Validation Error */
-      // Begins the nested block or object completed below.
+      // Generated declaration: continues the generated OpenAPI type declaration.
       422: {
-        // Defines the headers field in the surrounding object or type.
+        // Generated declaration: opens the object for the headers property.
         headers: {
-          // Executes this line as the next step in the surrounding logic.
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
           [name: string]: unknown;
-          // Closes the expression, call, or declaration started above.
+          // Generated declaration: closes the generated declaration opened above.
         };
-        // Defines the content field in the surrounding object or type.
+        // Generated declaration: opens the object for the content property.
         content: {
-          // Executes this line as the next step in the surrounding logic.
+          // Generated declaration: defines the generated type of the application/json property.
           'application/json': components['schemas']['HTTPValidationError'];
-          // Closes the expression, call, or declaration started above.
+          // Generated declaration: closes the generated declaration opened above.
         };
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
-    // Closes the expression, call, or declaration started above.
+    // Generated declaration: closes the generated declaration opened above.
   };
-  // Defines the moderate_profile_route_v1_admin_profiles__user_id__moderate_post field in the surrounding object or type.
+  // Generated declaration: opens the object for the moderate_profile_route_v1_admin_profiles__user_id__moderate_post property.
   moderate_profile_route_v1_admin_profiles__user_id__moderate_post: {
-    // Defines the parameters field in the surrounding object or type.
+    // Generated declaration: opens the object for the parameters property.
     parameters: {
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the query property.
       query?: never;
-      // Begins the nested block or object completed below.
+      // Generated declaration: opens the object for the header property.
       header?: {
-        // Executes this line as the next step in the surrounding logic.
+        // Generated declaration: defines the generated type of the authorization property.
         authorization?: string | null;
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
-      // Defines the path field in the surrounding object or type.
+      // Generated declaration: opens the object for the path property.
       path: {
-        // Defines the user_id field in the surrounding object or type.
+        // Generated declaration: defines the generated type of the user_id property.
         user_id: string;
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the cookie property.
       cookie?: never;
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
-    // Defines the requestBody field in the surrounding object or type.
+    // Generated declaration: opens the object for the requestBody property.
     requestBody: {
-      // Defines the content field in the surrounding object or type.
+      // Generated declaration: opens the object for the content property.
       content: {
-        // Executes this line as the next step in the surrounding logic.
+        // Generated declaration: defines the generated type of the application/json property.
         'application/json': components['schemas']['AdminActionRequest'];
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
-    // Defines the responses field in the surrounding object or type.
+    // Generated declaration: opens the object for the responses property.
     responses: {
       /** @description Successful Response */
-      // Begins the nested block or object completed below.
+      // Generated declaration: continues the generated OpenAPI type declaration.
       200: {
-        // Defines the headers field in the surrounding object or type.
+        // Generated declaration: opens the object for the headers property.
         headers: {
-          // Executes this line as the next step in the surrounding logic.
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
           [name: string]: unknown;
-          // Closes the expression, call, or declaration started above.
+          // Generated declaration: closes the generated declaration opened above.
         };
-        // Defines the content field in the surrounding object or type.
+        // Generated declaration: opens the object for the content property.
         content: {
-          // Begins the nested block or object completed below.
+          // Generated declaration: opens the object for the application/json property.
           'application/json': {
-            // Executes this line as the next step in the surrounding logic.
+            // Generated declaration: defines an index signature for generated OpenAPI keys and values.
             [key: string]: boolean;
-            // Closes the expression, call, or declaration started above.
+            // Generated declaration: closes the generated declaration opened above.
           };
-          // Closes the expression, call, or declaration started above.
+          // Generated declaration: closes the generated declaration opened above.
         };
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
       /** @description Validation Error */
-      // Begins the nested block or object completed below.
+      // Generated declaration: continues the generated OpenAPI type declaration.
       422: {
-        // Defines the headers field in the surrounding object or type.
+        // Generated declaration: opens the object for the headers property.
         headers: {
-          // Executes this line as the next step in the surrounding logic.
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
           [name: string]: unknown;
-          // Closes the expression, call, or declaration started above.
+          // Generated declaration: closes the generated declaration opened above.
         };
-        // Defines the content field in the surrounding object or type.
+        // Generated declaration: opens the object for the content property.
         content: {
-          // Executes this line as the next step in the surrounding logic.
+          // Generated declaration: defines the generated type of the application/json property.
           'application/json': components['schemas']['HTTPValidationError'];
-          // Closes the expression, call, or declaration started above.
+          // Generated declaration: closes the generated declaration opened above.
         };
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
-    // Closes the expression, call, or declaration started above.
+    // Generated declaration: closes the generated declaration opened above.
   };
-  // Defines the admin_revoke_challenge_route_v1_admin_challenges__challenge_id__revoke_post field in the surrounding object or type.
+  // Generated declaration: opens the object for the admin_revoke_challenge_route_v1_admin_challenges__challenge_id__revoke_post property.
   admin_revoke_challenge_route_v1_admin_challenges__challenge_id__revoke_post: {
-    // Defines the parameters field in the surrounding object or type.
+    // Generated declaration: opens the object for the parameters property.
     parameters: {
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the query property.
       query?: never;
-      // Begins the nested block or object completed below.
+      // Generated declaration: opens the object for the header property.
       header?: {
-        // Executes this line as the next step in the surrounding logic.
+        // Generated declaration: defines the generated type of the authorization property.
         authorization?: string | null;
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
-      // Defines the path field in the surrounding object or type.
+      // Generated declaration: opens the object for the path property.
       path: {
-        // Defines the challenge_id field in the surrounding object or type.
+        // Generated declaration: defines the generated type of the challenge_id property.
         challenge_id: string;
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the cookie property.
       cookie?: never;
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
-    // Defines the requestBody field in the surrounding object or type.
+    // Generated declaration: opens the object for the requestBody property.
     requestBody: {
-      // Defines the content field in the surrounding object or type.
+      // Generated declaration: opens the object for the content property.
       content: {
-        // Executes this line as the next step in the surrounding logic.
+        // Generated declaration: defines the generated type of the application/json property.
         'application/json': components['schemas']['AdminActionRequest'];
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
-    // Defines the responses field in the surrounding object or type.
+    // Generated declaration: opens the object for the responses property.
     responses: {
       /** @description Successful Response */
-      // Begins the nested block or object completed below.
+      // Generated declaration: continues the generated OpenAPI type declaration.
       200: {
-        // Defines the headers field in the surrounding object or type.
+        // Generated declaration: opens the object for the headers property.
         headers: {
-          // Executes this line as the next step in the surrounding logic.
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
           [name: string]: unknown;
-          // Closes the expression, call, or declaration started above.
+          // Generated declaration: closes the generated declaration opened above.
         };
-        // Defines the content field in the surrounding object or type.
+        // Generated declaration: opens the object for the content property.
         content: {
-          // Begins the nested block or object completed below.
+          // Generated declaration: opens the object for the application/json property.
           'application/json': {
-            // Executes this line as the next step in the surrounding logic.
+            // Generated declaration: defines an index signature for generated OpenAPI keys and values.
             [key: string]: boolean;
-            // Closes the expression, call, or declaration started above.
+            // Generated declaration: closes the generated declaration opened above.
           };
-          // Closes the expression, call, or declaration started above.
+          // Generated declaration: closes the generated declaration opened above.
         };
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
       /** @description Validation Error */
-      // Begins the nested block or object completed below.
+      // Generated declaration: continues the generated OpenAPI type declaration.
       422: {
-        // Defines the headers field in the surrounding object or type.
+        // Generated declaration: opens the object for the headers property.
         headers: {
-          // Executes this line as the next step in the surrounding logic.
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
           [name: string]: unknown;
-          // Closes the expression, call, or declaration started above.
+          // Generated declaration: closes the generated declaration opened above.
         };
-        // Defines the content field in the surrounding object or type.
+        // Generated declaration: opens the object for the content property.
         content: {
-          // Executes this line as the next step in the surrounding logic.
+          // Generated declaration: defines the generated type of the application/json property.
           'application/json': components['schemas']['HTTPValidationError'];
-          // Closes the expression, call, or declaration started above.
+          // Generated declaration: closes the generated declaration opened above.
         };
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
-    // Closes the expression, call, or declaration started above.
+    // Generated declaration: closes the generated declaration opened above.
   };
-  // Defines the terminate_room_route_v1_admin_rooms__room_id__terminate_post field in the surrounding object or type.
+  // Generated declaration: opens the object for the terminate_room_route_v1_admin_rooms__room_id__terminate_post property.
   terminate_room_route_v1_admin_rooms__room_id__terminate_post: {
-    // Defines the parameters field in the surrounding object or type.
+    // Generated declaration: opens the object for the parameters property.
     parameters: {
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the query property.
       query?: never;
-      // Begins the nested block or object completed below.
+      // Generated declaration: opens the object for the header property.
       header?: {
-        // Executes this line as the next step in the surrounding logic.
+        // Generated declaration: defines the generated type of the authorization property.
         authorization?: string | null;
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
-      // Defines the path field in the surrounding object or type.
+      // Generated declaration: opens the object for the path property.
       path: {
-        // Defines the room_id field in the surrounding object or type.
+        // Generated declaration: defines the generated type of the room_id property.
         room_id: string;
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the cookie property.
       cookie?: never;
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
-    // Defines the requestBody field in the surrounding object or type.
+    // Generated declaration: opens the object for the requestBody property.
     requestBody: {
-      // Defines the content field in the surrounding object or type.
+      // Generated declaration: opens the object for the content property.
       content: {
-        // Executes this line as the next step in the surrounding logic.
+        // Generated declaration: defines the generated type of the application/json property.
         'application/json': components['schemas']['AdminActionRequest'];
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
-    // Defines the responses field in the surrounding object or type.
+    // Generated declaration: opens the object for the responses property.
     responses: {
       /** @description Successful Response */
-      // Begins the nested block or object completed below.
+      // Generated declaration: continues the generated OpenAPI type declaration.
       200: {
-        // Defines the headers field in the surrounding object or type.
+        // Generated declaration: opens the object for the headers property.
         headers: {
-          // Executes this line as the next step in the surrounding logic.
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
           [name: string]: unknown;
-          // Closes the expression, call, or declaration started above.
+          // Generated declaration: closes the generated declaration opened above.
         };
-        // Defines the content field in the surrounding object or type.
+        // Generated declaration: opens the object for the content property.
         content: {
-          // Begins the nested block or object completed below.
+          // Generated declaration: opens the object for the application/json property.
           'application/json': {
-            // Executes this line as the next step in the surrounding logic.
+            // Generated declaration: defines an index signature for generated OpenAPI keys and values.
             [key: string]: boolean;
-            // Closes the expression, call, or declaration started above.
+            // Generated declaration: closes the generated declaration opened above.
           };
-          // Closes the expression, call, or declaration started above.
+          // Generated declaration: closes the generated declaration opened above.
         };
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
       /** @description Validation Error */
-      // Begins the nested block or object completed below.
+      // Generated declaration: continues the generated OpenAPI type declaration.
       422: {
-        // Defines the headers field in the surrounding object or type.
+        // Generated declaration: opens the object for the headers property.
         headers: {
-          // Executes this line as the next step in the surrounding logic.
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
           [name: string]: unknown;
-          // Closes the expression, call, or declaration started above.
+          // Generated declaration: closes the generated declaration opened above.
         };
-        // Defines the content field in the surrounding object or type.
+        // Generated declaration: opens the object for the content property.
         content: {
-          // Executes this line as the next step in the surrounding logic.
+          // Generated declaration: defines the generated type of the application/json property.
           'application/json': components['schemas']['HTTPValidationError'];
-          // Closes the expression, call, or declaration started above.
+          // Generated declaration: closes the generated declaration opened above.
         };
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
-    // Closes the expression, call, or declaration started above.
+    // Generated declaration: closes the generated declaration opened above.
   };
-  // Defines the audit_route_v1_admin_audit_get field in the surrounding object or type.
+  // Generated declaration: opens the object for the audit_route_v1_admin_audit_get property.
   audit_route_v1_admin_audit_get: {
-    // Defines the parameters field in the surrounding object or type.
+    // Generated declaration: opens the object for the parameters property.
     parameters: {
-      // Begins the nested block or object completed below.
+      // Generated declaration: opens the object for the query property.
       query?: {
-        // Executes this line as the next step in the surrounding logic.
+        // Generated declaration: defines the generated type of the limit property.
         limit?: number;
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
-      // Begins the nested block or object completed below.
+      // Generated declaration: opens the object for the header property.
       header?: {
-        // Executes this line as the next step in the surrounding logic.
+        // Generated declaration: defines the generated type of the authorization property.
         authorization?: string | null;
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the path property.
       path?: never;
-      // Executes this line as the next step in the surrounding logic.
+      // Generated declaration: defines the generated type of the cookie property.
       cookie?: never;
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
-    // Executes this line as the next step in the surrounding logic.
+    // Generated declaration: defines the generated type of the requestBody property.
     requestBody?: never;
-    // Defines the responses field in the surrounding object or type.
+    // Generated declaration: opens the object for the responses property.
     responses: {
       /** @description Successful Response */
-      // Begins the nested block or object completed below.
+      // Generated declaration: continues the generated OpenAPI type declaration.
       200: {
-        // Defines the headers field in the surrounding object or type.
+        // Generated declaration: opens the object for the headers property.
         headers: {
-          // Executes this line as the next step in the surrounding logic.
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
           [name: string]: unknown;
-          // Closes the expression, call, or declaration started above.
+          // Generated declaration: closes the generated declaration opened above.
         };
-        // Defines the content field in the surrounding object or type.
+        // Generated declaration: opens the object for the content property.
         content: {
-          // Executes this line as the next step in the surrounding logic.
+          // Generated declaration: defines the generated type of the application/json property.
           'application/json': components['schemas']['AuditEventResponse'][];
-          // Closes the expression, call, or declaration started above.
+          // Generated declaration: closes the generated declaration opened above.
         };
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
       /** @description Validation Error */
-      // Begins the nested block or object completed below.
+      // Generated declaration: continues the generated OpenAPI type declaration.
       422: {
-        // Defines the headers field in the surrounding object or type.
+        // Generated declaration: opens the object for the headers property.
         headers: {
-          // Executes this line as the next step in the surrounding logic.
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
           [name: string]: unknown;
-          // Closes the expression, call, or declaration started above.
+          // Generated declaration: closes the generated declaration opened above.
         };
-        // Defines the content field in the surrounding object or type.
+        // Generated declaration: opens the object for the content property.
         content: {
-          // Executes this line as the next step in the surrounding logic.
+          // Generated declaration: defines the generated type of the application/json property.
           'application/json': components['schemas']['HTTPValidationError'];
-          // Closes the expression, call, or declaration started above.
+          // Generated declaration: closes the generated declaration opened above.
         };
-        // Closes the expression, call, or declaration started above.
+        // Generated declaration: closes the generated declaration opened above.
       };
-      // Closes the expression, call, or declaration started above.
+      // Generated declaration: closes the generated declaration opened above.
     };
-    // Closes the expression, call, or declaration started above.
+    // Generated declaration: closes the generated declaration opened above.
   };
-  // Closes the expression, call, or declaration started above.
+  // Generated declaration: closes the generated declaration opened above.
 }
