@@ -148,12 +148,12 @@ async def test_create_secret_omission_attempt_idempotency_and_terminal(api: APIC
 
     # Acquires this asynchronous managed resource for the nested operation.
     async with api.sessions() as session:
-        # Asserts this invariant so an unexpected test state fails immediately.
-        assert len((await session.find_one(GameSession, {"public_id": game["id"]})).attempts) == 1
         # Computes and stores `stored` for subsequent operations.
         stored = await session.find_one(GameSession, {"public_id": game["id"]})
         # Asserts this invariant so an unexpected test state fails immediately.
         assert stored is not None
+        # Asserts this invariant so an unexpected test state fails immediately.
+        assert len(stored.attempts) == 1
         # Asserts this invariant so an unexpected test state fails immediately.
         assert stored.creation_request_fingerprint is not None
         # Asserts this invariant so an unexpected test state fails immediately.
