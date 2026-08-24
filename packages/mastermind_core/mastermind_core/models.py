@@ -1,13 +1,15 @@
-# ruff: noqa: I001 -- line explanations intentionally separate imports.
 # Defers annotation evaluation so modern type hints work without runtime lookups.
 from __future__ import annotations
 
 # Imports selected names from `dataclasses` for use in this module.
 from dataclasses import asdict, dataclass, field
+
 # Imports selected names from `datetime` for use in this module.
 from datetime import UTC, datetime
+
 # Imports selected names from `enum` for use in this module.
 from enum import StrEnum
+
 # Imports selected names from `typing` for use in this module.
 from typing import Any
 
@@ -69,7 +71,7 @@ class GameStatus(StrEnum):
             GameStatus.ABANDONED,
             # Supplies this value to the surrounding multiline call or collection.
             GameStatus.EXPIRED,
-        # Closes the multiline call or collection started on an earlier line.
+            # Closes the multiline call or collection started on an earlier line.
         }
 
 
@@ -162,7 +164,7 @@ class GameConfig:
                 # Adds the `Enable at least as many colours as there are code positions.` string
                 # to the surrounding call or ordered collection.
                 "Enable at least as many colours as there are code positions.",
-            # Closes the multiline call or collection started on an earlier line.
+                # Closes the multiline call or collection started on an earlier line.
             )
         # Tests `not 0 <= self.time_bonus_cap <= 3600` before running the nested branch.
         if not 0 <= self.time_bonus_cap <= 3600:
@@ -189,7 +191,7 @@ class GameConfig:
             "ranked": self.ranked,
             # Maps the `timeBonusCap` field to `self.time_bonus_cap` in the dictionary.
             "timeBonusCap": self.time_bonus_cap,
-        # Closes the multiline call or collection started on an earlier line.
+            # Closes the multiline call or collection started on an earlier line.
         }
 
     # Applies `@classmethod` to configure the class or method declared immediately below.
@@ -207,13 +209,13 @@ class GameConfig:
             max_attempts=int(
                 # Continues the surrounding expression or executes the next required operation.
                 value["maxAttempts"] if "maxAttempts" in value else value["max_attempts"]
-            # Closes the multiline call or collection started on an earlier line.
+                # Closes the multiline call or collection started on an earlier line.
             ),
             # Computes `bool(` and stores the result in `duplicates_allowed` for later use.
             duplicates_allowed=bool(
                 # Calls `value.get` to perform this step with the supplied arguments.
                 value.get("duplicatesAllowed", value.get("duplicates_allowed"))
-            # Closes the multiline call or collection started on an earlier line.
+                # Closes the multiline call or collection started on an earlier line.
             ),
             # Provides `CodeMakerType(value.get("codeMaker", value.get("code_maker",
             # "computer")))` as the `code_maker` parameter or argument.
@@ -226,7 +228,7 @@ class GameConfig:
             # Provides `int(value.get("timeBonusCap", value.get("time_bonus_cap", 300)))` as the
             # `time_bonus_cap` parameter or argument.
             time_bonus_cap=int(value.get("timeBonusCap", value.get("time_bonus_cap", 300))),
-        # Closes the multiline call or collection started on an earlier line.
+            # Closes the multiline call or collection started on an earlier line.
         )
 
 
@@ -282,7 +284,7 @@ class AttemptRecord:
             "feedback": self.feedback.to_dict(),
             # Maps the `submittedAt` field to `self.submitted_at.isoformat()` in the dictionary.
             "submittedAt": self.submitted_at.isoformat(),
-        # Closes the multiline call or collection started on an earlier line.
+            # Closes the multiline call or collection started on an earlier line.
         }
 
 
@@ -316,7 +318,7 @@ ALLOWED_TRANSITIONS: dict[GameStatus, frozenset[GameStatus]] = {
     GameStatus.ACTIVE: frozenset(
         # Continues the surrounding expression or executes the next required operation.
         {GameStatus.WON, GameStatus.LOST, GameStatus.ABANDONED, GameStatus.EXPIRED}
-    # Closes the multiline call or collection started on an earlier line.
+        # Closes the multiline call or collection started on an earlier line.
     ),
     # Supplies this value to the surrounding multiline call or collection.
     GameStatus.WON: frozenset(),
@@ -326,7 +328,7 @@ ALLOWED_TRANSITIONS: dict[GameStatus, frozenset[GameStatus]] = {
     GameStatus.ABANDONED: frozenset(),
     # Supplies this value to the surrounding multiline call or collection.
     GameStatus.EXPIRED: frozenset(),
-# Closes the multiline call or collection started on an earlier line.
+    # Closes the multiline call or collection started on an earlier line.
 }
 
 
@@ -396,5 +398,5 @@ class GameState:
             score=self.score,
             # Provides `self.rule_set_version` as the `rule_set_version` parameter or argument.
             rule_set_version=self.rule_set_version,
-        # Closes the multiline call or collection started on an earlier line.
+            # Closes the multiline call or collection started on an earlier line.
         )

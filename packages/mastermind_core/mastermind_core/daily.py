@@ -1,16 +1,18 @@
-# ruff: noqa: I001 -- line explanations intentionally separate imports.
 # Defers annotation evaluation so modern type hints work without runtime lookups.
 from __future__ import annotations
 
 # Imports `hashlib` so its functionality is available below.
 import hashlib
+
 # Imports `hmac` so its functionality is available below.
 import hmac
+
 # Imports selected names from `datetime` for use in this module.
 from datetime import date
 
 # Imports selected names from `.errors` for use in this module.
 from .errors import DomainError
+
 # Imports selected names from `.models` for use in this module.
 from .models import RULE_SET_VERSION, GameConfig
 
@@ -34,7 +36,7 @@ def derive_daily_secret(
     config: GameConfig,
     # Declares `server_key` as `bytes,` so the data shape is explicit.
     server_key: bytes,
-# Completes the function signature and declares the type returned to callers.
+    # Completes the function signature and declares the type returned to callers.
 ) -> tuple[str, ...]:
     # Tests `len(server_key) < 32` before running the nested branch.
     if len(server_key) < 32:
@@ -44,7 +46,7 @@ def derive_daily_secret(
     context = (
         # Adds this formatted text segment to the message being constructed.
         f"{DAILY_DERIVATION_VERSION}|{RULE_SET_VERSION}|{challenge_date.isoformat()}"
-    # Continues the surrounding expression or executes the next required operation.
+        # Continues the surrounding expression or executes the next required operation.
     ).encode()
     # Computes `[]` and stores the result in `output` for later use.
     output: list[str] = []

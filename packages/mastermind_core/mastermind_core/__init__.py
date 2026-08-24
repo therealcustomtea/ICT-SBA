@@ -1,12 +1,15 @@
-# ruff: noqa: I001 -- line explanations intentionally separate imports.
 # Imports selected names from `.daily` for use in this module.
 from .daily import DAILY_DERIVATION_VERSION, daily_challenge_id, derive_daily_secret
+
 # Imports selected names from `.engine` for use in this module.
 from .engine import abandon_game, create_game, generate_secret, seeded_rng, submit_guess
+
 # Imports selected names from `.errors` for use in this module.
 from .errors import DomainError, IllegalTransitionError
+
 # Imports selected names from `.feedback` for use in this module.
 from .feedback import calculate_feedback
+
 # Imports selected names from `.models` for use in this module.
 from .models import (
     # Includes `COLOUR_IDS` in the surrounding import, call, or collection.
@@ -35,12 +38,15 @@ from .models import (
     LeaderboardEligibility,
     # Includes `ScoreBreakdown` in the surrounding import, call, or collection.
     ScoreBreakdown,
-# Closes the multiline call or collection started on an earlier line.
+    # Closes the multiline call or collection started on an earlier line.
 )
+
 # Imports selected names from `.presets` for use in this module.
 from .presets import PRESETS, get_preset, preset_name
+
 # Imports selected names from `.scoring` for use in this module.
 from .scoring import calculate_score
+
 # Imports selected names from `.validation` for use in this module.
 from .validation import normalize_code, validate_code
 
@@ -106,5 +112,5 @@ __all__ = [
     "submit_guess",
     # Adds the `validate_code` string to the surrounding call or ordered collection.
     "validate_code",
-# Closes the multiline call or collection started on an earlier line.
+    # Closes the multiline call or collection started on an earlier line.
 ]

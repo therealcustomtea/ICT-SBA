@@ -17,7 +17,7 @@ def calculate_score(
     attempts_used: int,
     # Declares `elapsed_seconds` as `float,` so the data shape is explicit.
     elapsed_seconds: float,
-# Completes the function signature and declares the type returned to callers.
+    # Completes the function signature and declares the type returned to callers.
 ) -> ScoreBreakdown:
     # Documents the purpose and contract of the surrounding module or function.
     """Calculate the points awarded for a terminal game.
@@ -42,7 +42,7 @@ def calculate_score(
         + len(config.colours) * 20
         # Continues the surrounding expression or executes the next required operation.
         + (100 if config.duplicates_allowed else 0)
-    # Closes the multiline call or collection started on an earlier line.
+        # Closes the multiline call or collection started on an earlier line.
     )
     # Begins constructing the value that this function returns to its caller.
     return ScoreBreakdown(
@@ -55,5 +55,5 @@ def calculate_score(
         # Provides `max(0, attempts_component + difficulty_component)` as the `total` parameter
         # or argument.
         total=max(0, attempts_component + difficulty_component),
-    # Closes the multiline call or collection started on an earlier line.
+        # Closes the multiline call or collection started on an earlier line.
     )

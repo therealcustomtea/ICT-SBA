@@ -29,5 +29,5 @@ class IllegalTransitionError(DomainError):
             "ILLEGAL_GAME_TRANSITION",
             # Adds this formatted text segment to the message being constructed.
             f"A game cannot transition from {current} to {target}.",
-        # Closes the multiline call or collection started on an earlier line.
+            # Closes the multiline call or collection started on an earlier line.
         )

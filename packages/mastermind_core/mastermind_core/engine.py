@@ -1,28 +1,36 @@
-# ruff: noqa: I001 -- line explanations intentionally separate imports.
 # Defers annotation evaluation so modern type hints work without runtime lookups.
 from __future__ import annotations
 
 # Imports `random` so its functionality is available below.
 import random
+
 # Imports `secrets` so its functionality is available below.
 import secrets
+
 # Imports selected names from `collections.abc` for use in this module.
 from collections.abc import Sequence
+
 # Imports selected names from `dataclasses` for use in this module.
 from dataclasses import replace
+
 # Imports selected names from `datetime` for use in this module.
 from datetime import UTC, datetime
+
 # Imports selected names from `typing` for use in this module.
 from typing import Protocol
 
 # Imports selected names from `.errors` for use in this module.
 from .errors import DomainError
+
 # Imports selected names from `.feedback` for use in this module.
 from .feedback import calculate_feedback
+
 # Imports selected names from `.models` for use in this module.
 from .models import AttemptRecord, GameConfig, GameMode, GameState, GameStatus
+
 # Imports selected names from `.scoring` for use in this module.
 from .scoring import calculate_score
+
 # Imports selected names from `.validation` for use in this module.
 from .validation import validate_code
 
@@ -74,7 +82,7 @@ def submit_guess(
     at: datetime | None = None,
     # Provides `None` as the `idempotency_key` parameter or argument.
     idempotency_key: str | None = None,
-# Completes the function signature and declares the type returned to callers.
+    # Completes the function signature and declares the type returned to callers.
 ) -> GameState:
     # Tests `state.status is not GameStatus.ACTIVE` before running the nested branch.
     if state.status is not GameStatus.ACTIVE:
@@ -103,7 +111,7 @@ def submit_guess(
         submitted_at=timestamp,
         # Provides `idempotency_key` as the `idempotency_key` parameter or argument.
         idempotency_key=idempotency_key,
-    # Closes the multiline call or collection started on an earlier line.
+        # Closes the multiline call or collection started on an earlier line.
     )
     # Computes `(*state.attempts, attempt)` and stores the result in `attempts` for later use.
     attempts = (*state.attempts, attempt)
@@ -119,7 +127,7 @@ def submit_guess(
         if len(attempts) >= state.config.max_attempts
         # Continues the surrounding expression or executes the next required operation.
         else GameStatus.ACTIVE
-    # Closes the multiline call or collection started on an earlier line.
+        # Closes the multiline call or collection started on an earlier line.
     )
     # Computes `timestamp if target.terminal else None` and stores the result in `completed_at`
     # for later use.
@@ -139,13 +147,13 @@ def submit_guess(
             attempts_used=len(attempts),
             # Provides `elapsed` as the `elapsed_seconds` parameter or argument.
             elapsed_seconds=elapsed,
-        # Closes the multiline call or collection started on an earlier line.
+            # Closes the multiline call or collection started on an earlier line.
         )
         # Tests `target.terminal` before running the nested branch.
         if target.terminal
         # Continues the surrounding expression or executes the next required operation.
         else None
-    # Closes the multiline call or collection started on an earlier line.
+        # Closes the multiline call or collection started on an earlier line.
     )
     # Begins constructing the value that this function returns to its caller.
     return replace(
@@ -159,7 +167,7 @@ def submit_guess(
         completed_at=completed_at,
         # Provides `score` as the `score` parameter or argument.
         score=score,
-    # Closes the multiline call or collection started on an earlier line.
+        # Closes the multiline call or collection started on an earlier line.
     )
 
 
@@ -182,9 +190,9 @@ def abandon_game(state: GameState, *, at: datetime | None = None) -> GameState:
             attempts_used=state.attempts_used,
             # Provides `0` as the `elapsed_seconds` parameter or argument.
             elapsed_seconds=0,
-        # Closes the multiline call or collection started on an earlier line.
+            # Closes the multiline call or collection started on an earlier line.
         ),
-    # Closes the multiline call or collection started on an earlier line.
+        # Closes the multiline call or collection started on an earlier line.
     )
 
 

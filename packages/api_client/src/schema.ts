@@ -3,2956 +3,5328 @@
  * Do not make direct changes to the file.
  */
 
+// Exports this declaration for use by other modules.
 export interface paths {
+  // Begins the nested block or object completed below.
   '/v1/games': {
+    // Defines the parameters field in the surrounding object or type.
     parameters: {
+      // Executes this line as the next step in the surrounding logic.
       query?: never;
+      // Executes this line as the next step in the surrounding logic.
       header?: never;
+      // Executes this line as the next step in the surrounding logic.
       path?: never;
+      // Executes this line as the next step in the surrounding logic.
       cookie?: never;
+      // Closes the expression, call, or declaration started above.
     };
+    // Executes this line as the next step in the surrounding logic.
     get?: never;
+    // Executes this line as the next step in the surrounding logic.
     put?: never;
     /** Create Game Route */
+    // Defines the post field in the surrounding object or type.
     post: operations['create_game_route_v1_games_post'];
+    // Executes this line as the next step in the surrounding logic.
     delete?: never;
+    // Executes this line as the next step in the surrounding logic.
     options?: never;
+    // Executes this line as the next step in the surrounding logic.
     head?: never;
+    // Executes this line as the next step in the surrounding logic.
     patch?: never;
+    // Executes this line as the next step in the surrounding logic.
     trace?: never;
+    // Closes the expression, call, or declaration started above.
   };
+  // Begins the nested block or object completed below.
   '/v1/games/{game_id}': {
+    // Defines the parameters field in the surrounding object or type.
     parameters: {
+      // Executes this line as the next step in the surrounding logic.
       query?: never;
+      // Executes this line as the next step in the surrounding logic.
       header?: never;
+      // Executes this line as the next step in the surrounding logic.
       path?: never;
+      // Executes this line as the next step in the surrounding logic.
       cookie?: never;
+      // Closes the expression, call, or declaration started above.
     };
     /** Get Game Route */
+    // Defines the get field in the surrounding object or type.
     get: operations['get_game_route_v1_games__game_id__get'];
+    // Executes this line as the next step in the surrounding logic.
     put?: never;
+    // Executes this line as the next step in the surrounding logic.
     post?: never;
+    // Executes this line as the next step in the surrounding logic.
     delete?: never;
+    // Executes this line as the next step in the surrounding logic.
     options?: never;
+    // Executes this line as the next step in the surrounding logic.
     head?: never;
+    // Executes this line as the next step in the surrounding logic.
     patch?: never;
+    // Executes this line as the next step in the surrounding logic.
     trace?: never;
+    // Closes the expression, call, or declaration started above.
   };
+  // Begins the nested block or object completed below.
   '/v1/games/{game_id}/attempts': {
+    // Defines the parameters field in the surrounding object or type.
     parameters: {
+      // Executes this line as the next step in the surrounding logic.
       query?: never;
+      // Executes this line as the next step in the surrounding logic.
       header?: never;
+      // Executes this line as the next step in the surrounding logic.
       path?: never;
+      // Executes this line as the next step in the surrounding logic.
       cookie?: never;
+      // Closes the expression, call, or declaration started above.
     };
+    // Executes this line as the next step in the surrounding logic.
     get?: never;
+    // Executes this line as the next step in the surrounding logic.
     put?: never;
     /** Submit Attempt Route */
+    // Defines the post field in the surrounding object or type.
     post: operations['submit_attempt_route_v1_games__game_id__attempts_post'];
+    // Executes this line as the next step in the surrounding logic.
     delete?: never;
+    // Executes this line as the next step in the surrounding logic.
     options?: never;
+    // Executes this line as the next step in the surrounding logic.
     head?: never;
+    // Executes this line as the next step in the surrounding logic.
     patch?: never;
+    // Executes this line as the next step in the surrounding logic.
     trace?: never;
+    // Closes the expression, call, or declaration started above.
   };
+  // Begins the nested block or object completed below.
   '/v1/games/{game_id}/abandon': {
+    // Defines the parameters field in the surrounding object or type.
     parameters: {
+      // Executes this line as the next step in the surrounding logic.
       query?: never;
+      // Executes this line as the next step in the surrounding logic.
       header?: never;
+      // Executes this line as the next step in the surrounding logic.
       path?: never;
+      // Executes this line as the next step in the surrounding logic.
       cookie?: never;
+      // Closes the expression, call, or declaration started above.
     };
+    // Executes this line as the next step in the surrounding logic.
     get?: never;
+    // Executes this line as the next step in the surrounding logic.
     put?: never;
     /** Abandon Game Route */
+    // Defines the post field in the surrounding object or type.
     post: operations['abandon_game_route_v1_games__game_id__abandon_post'];
+    // Executes this line as the next step in the surrounding logic.
     delete?: never;
+    // Executes this line as the next step in the surrounding logic.
     options?: never;
+    // Executes this line as the next step in the surrounding logic.
     head?: never;
+    // Executes this line as the next step in the surrounding logic.
     patch?: never;
+    // Executes this line as the next step in the surrounding logic.
     trace?: never;
+    // Closes the expression, call, or declaration started above.
   };
+  // Begins the nested block or object completed below.
   '/v1/daily': {
+    // Defines the parameters field in the surrounding object or type.
     parameters: {
+      // Executes this line as the next step in the surrounding logic.
       query?: never;
+      // Executes this line as the next step in the surrounding logic.
       header?: never;
+      // Executes this line as the next step in the surrounding logic.
       path?: never;
+      // Executes this line as the next step in the surrounding logic.
       cookie?: never;
+      // Closes the expression, call, or declaration started above.
     };
     /** Get Daily Route */
+    // Defines the get field in the surrounding object or type.
     get: operations['get_daily_route_v1_daily_get'];
+    // Executes this line as the next step in the surrounding logic.
     put?: never;
+    // Executes this line as the next step in the surrounding logic.
     post?: never;
+    // Executes this line as the next step in the surrounding logic.
     delete?: never;
+    // Executes this line as the next step in the surrounding logic.
     options?: never;
+    // Executes this line as the next step in the surrounding logic.
     head?: never;
+    // Executes this line as the next step in the surrounding logic.
     patch?: never;
+    // Executes this line as the next step in the surrounding logic.
     trace?: never;
+    // Closes the expression, call, or declaration started above.
   };
+  // Begins the nested block or object completed below.
   '/v1/daily/start': {
+    // Defines the parameters field in the surrounding object or type.
     parameters: {
+      // Executes this line as the next step in the surrounding logic.
       query?: never;
+      // Executes this line as the next step in the surrounding logic.
       header?: never;
+      // Executes this line as the next step in the surrounding logic.
       path?: never;
+      // Executes this line as the next step in the surrounding logic.
       cookie?: never;
+      // Closes the expression, call, or declaration started above.
     };
+    // Executes this line as the next step in the surrounding logic.
     get?: never;
+    // Executes this line as the next step in the surrounding logic.
     put?: never;
     /** Start Daily Route */
+    // Defines the post field in the surrounding object or type.
     post: operations['start_daily_route_v1_daily_start_post'];
+    // Executes this line as the next step in the surrounding logic.
     delete?: never;
+    // Executes this line as the next step in the surrounding logic.
     options?: never;
+    // Executes this line as the next step in the surrounding logic.
     head?: never;
+    // Executes this line as the next step in the surrounding logic.
     patch?: never;
+    // Executes this line as the next step in the surrounding logic.
     trace?: never;
+    // Closes the expression, call, or declaration started above.
   };
+  // Begins the nested block or object completed below.
   '/v1/daily/leaderboard': {
+    // Defines the parameters field in the surrounding object or type.
     parameters: {
+      // Executes this line as the next step in the surrounding logic.
       query?: never;
+      // Executes this line as the next step in the surrounding logic.
       header?: never;
+      // Executes this line as the next step in the surrounding logic.
       path?: never;
+      // Executes this line as the next step in the surrounding logic.
       cookie?: never;
+      // Closes the expression, call, or declaration started above.
     };
     /** Daily Leaderboard Route */
+    // Defines the get field in the surrounding object or type.
     get: operations['daily_leaderboard_route_v1_daily_leaderboard_get'];
+    // Executes this line as the next step in the surrounding logic.
     put?: never;
+    // Executes this line as the next step in the surrounding logic.
     post?: never;
+    // Executes this line as the next step in the surrounding logic.
     delete?: never;
+    // Executes this line as the next step in the surrounding logic.
     options?: never;
+    // Executes this line as the next step in the surrounding logic.
     head?: never;
+    // Executes this line as the next step in the surrounding logic.
     patch?: never;
+    // Executes this line as the next step in the surrounding logic.
     trace?: never;
+    // Closes the expression, call, or declaration started above.
   };
+  // Begins the nested block or object completed below.
   '/v1/challenges/{challenge_id}/results': {
+    // Defines the parameters field in the surrounding object or type.
     parameters: {
+      // Executes this line as the next step in the surrounding logic.
       query?: never;
+      // Executes this line as the next step in the surrounding logic.
       header?: never;
+      // Executes this line as the next step in the surrounding logic.
       path?: never;
+      // Executes this line as the next step in the surrounding logic.
       cookie?: never;
+      // Closes the expression, call, or declaration started above.
     };
     /** Challenge Results Route */
+    // Defines the get field in the surrounding object or type.
     get: operations['challenge_results_route_v1_challenges__challenge_id__results_get'];
+    // Executes this line as the next step in the surrounding logic.
     put?: never;
+    // Executes this line as the next step in the surrounding logic.
     post?: never;
+    // Executes this line as the next step in the surrounding logic.
     delete?: never;
+    // Executes this line as the next step in the surrounding logic.
     options?: never;
+    // Executes this line as the next step in the surrounding logic.
     head?: never;
+    // Executes this line as the next step in the surrounding logic.
     patch?: never;
+    // Executes this line as the next step in the surrounding logic.
     trace?: never;
+    // Closes the expression, call, or declaration started above.
   };
+  // Begins the nested block or object completed below.
   '/v1/challenges': {
+    // Defines the parameters field in the surrounding object or type.
     parameters: {
+      // Executes this line as the next step in the surrounding logic.
       query?: never;
+      // Executes this line as the next step in the surrounding logic.
       header?: never;
+      // Executes this line as the next step in the surrounding logic.
       path?: never;
+      // Executes this line as the next step in the surrounding logic.
       cookie?: never;
+      // Closes the expression, call, or declaration started above.
     };
+    // Executes this line as the next step in the surrounding logic.
     get?: never;
+    // Executes this line as the next step in the surrounding logic.
     put?: never;
     /** Create Challenge Route */
+    // Defines the post field in the surrounding object or type.
     post: operations['create_challenge_route_v1_challenges_post'];
+    // Executes this line as the next step in the surrounding logic.
     delete?: never;
+    // Executes this line as the next step in the surrounding logic.
     options?: never;
+    // Executes this line as the next step in the surrounding logic.
     head?: never;
+    // Executes this line as the next step in the surrounding logic.
     patch?: never;
+    // Executes this line as the next step in the surrounding logic.
     trace?: never;
+    // Closes the expression, call, or declaration started above.
   };
+  // Begins the nested block or object completed below.
   '/v1/challenges/mine': {
+    // Defines the parameters field in the surrounding object or type.
     parameters: {
+      // Executes this line as the next step in the surrounding logic.
       query?: never;
+      // Executes this line as the next step in the surrounding logic.
       header?: never;
+      // Executes this line as the next step in the surrounding logic.
       path?: never;
+      // Executes this line as the next step in the surrounding logic.
       cookie?: never;
+      // Closes the expression, call, or declaration started above.
     };
     /** Owned Challenges Route */
+    // Defines the get field in the surrounding object or type.
     get: operations['owned_challenges_route_v1_challenges_mine_get'];
+    // Executes this line as the next step in the surrounding logic.
     put?: never;
+    // Executes this line as the next step in the surrounding logic.
     post?: never;
+    // Executes this line as the next step in the surrounding logic.
     delete?: never;
+    // Executes this line as the next step in the surrounding logic.
     options?: never;
+    // Executes this line as the next step in the surrounding logic.
     head?: never;
+    // Executes this line as the next step in the surrounding logic.
     patch?: never;
+    // Executes this line as the next step in the surrounding logic.
     trace?: never;
+    // Closes the expression, call, or declaration started above.
   };
+  // Begins the nested block or object completed below.
   '/v1/challenges/{share_code}': {
+    // Defines the parameters field in the surrounding object or type.
     parameters: {
+      // Executes this line as the next step in the surrounding logic.
       query?: never;
+      // Executes this line as the next step in the surrounding logic.
       header?: never;
+      // Executes this line as the next step in the surrounding logic.
       path?: never;
+      // Executes this line as the next step in the surrounding logic.
       cookie?: never;
+      // Closes the expression, call, or declaration started above.
     };
     /** Get Challenge Route */
+    // Defines the get field in the surrounding object or type.
     get: operations['get_challenge_route_v1_challenges__share_code__get'];
+    // Executes this line as the next step in the surrounding logic.
     put?: never;
+    // Executes this line as the next step in the surrounding logic.
     post?: never;
+    // Executes this line as the next step in the surrounding logic.
     delete?: never;
+    // Executes this line as the next step in the surrounding logic.
     options?: never;
+    // Executes this line as the next step in the surrounding logic.
     head?: never;
+    // Executes this line as the next step in the surrounding logic.
     patch?: never;
+    // Executes this line as the next step in the surrounding logic.
     trace?: never;
+    // Closes the expression, call, or declaration started above.
   };
+  // Begins the nested block or object completed below.
   '/v1/challenges/{share_code}/start': {
+    // Defines the parameters field in the surrounding object or type.
     parameters: {
+      // Executes this line as the next step in the surrounding logic.
       query?: never;
+      // Executes this line as the next step in the surrounding logic.
       header?: never;
+      // Executes this line as the next step in the surrounding logic.
       path?: never;
+      // Executes this line as the next step in the surrounding logic.
       cookie?: never;
+      // Closes the expression, call, or declaration started above.
     };
+    // Executes this line as the next step in the surrounding logic.
     get?: never;
+    // Executes this line as the next step in the surrounding logic.
     put?: never;
     /** Start Challenge Route */
+    // Defines the post field in the surrounding object or type.
     post: operations['start_challenge_route_v1_challenges__share_code__start_post'];
+    // Executes this line as the next step in the surrounding logic.
     delete?: never;
+    // Executes this line as the next step in the surrounding logic.
     options?: never;
+    // Executes this line as the next step in the surrounding logic.
     head?: never;
+    // Executes this line as the next step in the surrounding logic.
     patch?: never;
+    // Executes this line as the next step in the surrounding logic.
     trace?: never;
+    // Closes the expression, call, or declaration started above.
   };
+  // Begins the nested block or object completed below.
   '/v1/challenges/{challenge_id}': {
+    // Defines the parameters field in the surrounding object or type.
     parameters: {
+      // Executes this line as the next step in the surrounding logic.
       query?: never;
+      // Executes this line as the next step in the surrounding logic.
       header?: never;
+      // Executes this line as the next step in the surrounding logic.
       path?: never;
+      // Executes this line as the next step in the surrounding logic.
       cookie?: never;
+      // Closes the expression, call, or declaration started above.
     };
+    // Executes this line as the next step in the surrounding logic.
     get?: never;
+    // Executes this line as the next step in the surrounding logic.
     put?: never;
+    // Executes this line as the next step in the surrounding logic.
     post?: never;
     /** Revoke Challenge Route */
+    // Defines the delete field in the surrounding object or type.
     delete: operations['revoke_challenge_route_v1_challenges__challenge_id__delete'];
+    // Executes this line as the next step in the surrounding logic.
     options?: never;
+    // Executes this line as the next step in the surrounding logic.
     head?: never;
+    // Executes this line as the next step in the surrounding logic.
     patch?: never;
+    // Executes this line as the next step in the surrounding logic.
     trace?: never;
+    // Closes the expression, call, or declaration started above.
   };
+  // Begins the nested block or object completed below.
   '/v1/rooms/{room_id}/ws-ticket': {
+    // Defines the parameters field in the surrounding object or type.
     parameters: {
+      // Executes this line as the next step in the surrounding logic.
       query?: never;
+      // Executes this line as the next step in the surrounding logic.
       header?: never;
+      // Executes this line as the next step in the surrounding logic.
       path?: never;
+      // Executes this line as the next step in the surrounding logic.
       cookie?: never;
+      // Closes the expression, call, or declaration started above.
     };
+    // Executes this line as the next step in the surrounding logic.
     get?: never;
+    // Executes this line as the next step in the surrounding logic.
     put?: never;
     /** Create Websocket Ticket Route */
+    // Defines the post field in the surrounding object or type.
     post: operations['create_websocket_ticket_route_v1_rooms__room_id__ws_ticket_post'];
+    // Executes this line as the next step in the surrounding logic.
     delete?: never;
+    // Executes this line as the next step in the surrounding logic.
     options?: never;
+    // Executes this line as the next step in the surrounding logic.
     head?: never;
+    // Executes this line as the next step in the surrounding logic.
     patch?: never;
+    // Executes this line as the next step in the surrounding logic.
     trace?: never;
+    // Closes the expression, call, or declaration started above.
   };
+  // Begins the nested block or object completed below.
   '/v1/rooms': {
+    // Defines the parameters field in the surrounding object or type.
     parameters: {
+      // Executes this line as the next step in the surrounding logic.
       query?: never;
+      // Executes this line as the next step in the surrounding logic.
       header?: never;
+      // Executes this line as the next step in the surrounding logic.
       path?: never;
+      // Executes this line as the next step in the surrounding logic.
       cookie?: never;
+      // Closes the expression, call, or declaration started above.
     };
+    // Executes this line as the next step in the surrounding logic.
     get?: never;
+    // Executes this line as the next step in the surrounding logic.
     put?: never;
     /** Create Room Route */
+    // Defines the post field in the surrounding object or type.
     post: operations['create_room_route_v1_rooms_post'];
+    // Executes this line as the next step in the surrounding logic.
     delete?: never;
+    // Executes this line as the next step in the surrounding logic.
     options?: never;
+    // Executes this line as the next step in the surrounding logic.
     head?: never;
+    // Executes this line as the next step in the surrounding logic.
     patch?: never;
+    // Executes this line as the next step in the surrounding logic.
     trace?: never;
+    // Closes the expression, call, or declaration started above.
   };
+  // Begins the nested block or object completed below.
   '/v1/rooms/{room_code}/join': {
+    // Defines the parameters field in the surrounding object or type.
     parameters: {
+      // Executes this line as the next step in the surrounding logic.
       query?: never;
+      // Executes this line as the next step in the surrounding logic.
       header?: never;
+      // Executes this line as the next step in the surrounding logic.
       path?: never;
+      // Executes this line as the next step in the surrounding logic.
       cookie?: never;
+      // Closes the expression, call, or declaration started above.
     };
+    // Executes this line as the next step in the surrounding logic.
     get?: never;
+    // Executes this line as the next step in the surrounding logic.
     put?: never;
     /** Join Room Route */
+    // Defines the post field in the surrounding object or type.
     post: operations['join_room_route_v1_rooms__room_code__join_post'];
+    // Executes this line as the next step in the surrounding logic.
     delete?: never;
+    // Executes this line as the next step in the surrounding logic.
     options?: never;
+    // Executes this line as the next step in the surrounding logic.
     head?: never;
+    // Executes this line as the next step in the surrounding logic.
     patch?: never;
+    // Executes this line as the next step in the surrounding logic.
     trace?: never;
+    // Closes the expression, call, or declaration started above.
   };
+  // Begins the nested block or object completed below.
   '/v1/rooms/{room_id}/ready': {
+    // Defines the parameters field in the surrounding object or type.
     parameters: {
+      // Executes this line as the next step in the surrounding logic.
       query?: never;
+      // Executes this line as the next step in the surrounding logic.
       header?: never;
+      // Executes this line as the next step in the surrounding logic.
       path?: never;
+      // Executes this line as the next step in the surrounding logic.
       cookie?: never;
+      // Closes the expression, call, or declaration started above.
     };
+    // Executes this line as the next step in the surrounding logic.
     get?: never;
+    // Executes this line as the next step in the surrounding logic.
     put?: never;
     /** Ready Room Route */
+    // Defines the post field in the surrounding object or type.
     post: operations['ready_room_route_v1_rooms__room_id__ready_post'];
+    // Executes this line as the next step in the surrounding logic.
     delete?: never;
+    // Executes this line as the next step in the surrounding logic.
     options?: never;
+    // Executes this line as the next step in the surrounding logic.
     head?: never;
+    // Executes this line as the next step in the surrounding logic.
     patch?: never;
+    // Executes this line as the next step in the surrounding logic.
     trace?: never;
+    // Closes the expression, call, or declaration started above.
   };
+  // Begins the nested block or object completed below.
   '/v1/rooms/{room_id}': {
+    // Defines the parameters field in the surrounding object or type.
     parameters: {
+      // Executes this line as the next step in the surrounding logic.
       query?: never;
+      // Executes this line as the next step in the surrounding logic.
       header?: never;
+      // Executes this line as the next step in the surrounding logic.
       path?: never;
+      // Executes this line as the next step in the surrounding logic.
       cookie?: never;
+      // Closes the expression, call, or declaration started above.
     };
     /** Get Room Route */
+    // Defines the get field in the surrounding object or type.
     get: operations['get_room_route_v1_rooms__room_id__get'];
+    // Executes this line as the next step in the surrounding logic.
     put?: never;
+    // Executes this line as the next step in the surrounding logic.
     post?: never;
+    // Executes this line as the next step in the surrounding logic.
     delete?: never;
+    // Executes this line as the next step in the surrounding logic.
     options?: never;
+    // Executes this line as the next step in the surrounding logic.
     head?: never;
+    // Executes this line as the next step in the surrounding logic.
     patch?: never;
+    // Executes this line as the next step in the surrounding logic.
     trace?: never;
+    // Closes the expression, call, or declaration started above.
   };
+  // Begins the nested block or object completed below.
   '/v1/leaderboards': {
+    // Defines the parameters field in the surrounding object or type.
     parameters: {
+      // Executes this line as the next step in the surrounding logic.
       query?: never;
+      // Executes this line as the next step in the surrounding logic.
       header?: never;
+      // Executes this line as the next step in the surrounding logic.
       path?: never;
+      // Executes this line as the next step in the surrounding logic.
       cookie?: never;
+      // Closes the expression, call, or declaration started above.
     };
     /** Get Leaderboard Route */
+    // Defines the get field in the surrounding object or type.
     get: operations['get_leaderboard_route_v1_leaderboards_get'];
+    // Executes this line as the next step in the surrounding logic.
     put?: never;
+    // Executes this line as the next step in the surrounding logic.
     post?: never;
+    // Executes this line as the next step in the surrounding logic.
     delete?: never;
+    // Executes this line as the next step in the surrounding logic.
     options?: never;
+    // Executes this line as the next step in the surrounding logic.
     head?: never;
+    // Executes this line as the next step in the surrounding logic.
     patch?: never;
+    // Executes this line as the next step in the surrounding logic.
     trace?: never;
+    // Closes the expression, call, or declaration started above.
   };
+  // Begins the nested block or object completed below.
   '/v1/me/profile': {
+    // Defines the parameters field in the surrounding object or type.
     parameters: {
+      // Executes this line as the next step in the surrounding logic.
       query?: never;
+      // Executes this line as the next step in the surrounding logic.
       header?: never;
+      // Executes this line as the next step in the surrounding logic.
       path?: never;
+      // Executes this line as the next step in the surrounding logic.
       cookie?: never;
+      // Closes the expression, call, or declaration started above.
     };
     /** Get Profile Route */
+    // Defines the get field in the surrounding object or type.
     get: operations['get_profile_route_v1_me_profile_get'];
+    // Executes this line as the next step in the surrounding logic.
     put?: never;
+    // Executes this line as the next step in the surrounding logic.
     post?: never;
+    // Executes this line as the next step in the surrounding logic.
     delete?: never;
+    // Executes this line as the next step in the surrounding logic.
     options?: never;
+    // Executes this line as the next step in the surrounding logic.
     head?: never;
     /** Update Profile Route */
+    // Defines the patch field in the surrounding object or type.
     patch: operations['update_profile_route_v1_me_profile_patch'];
+    // Executes this line as the next step in the surrounding logic.
     trace?: never;
+    // Closes the expression, call, or declaration started above.
   };
+  // Begins the nested block or object completed below.
   '/v1/me/games': {
+    // Defines the parameters field in the surrounding object or type.
     parameters: {
+      // Executes this line as the next step in the surrounding logic.
       query?: never;
+      // Executes this line as the next step in the surrounding logic.
       header?: never;
+      // Executes this line as the next step in the surrounding logic.
       path?: never;
+      // Executes this line as the next step in the surrounding logic.
       cookie?: never;
+      // Closes the expression, call, or declaration started above.
     };
     /** Get Games Route */
+    // Defines the get field in the surrounding object or type.
     get: operations['get_games_route_v1_me_games_get'];
+    // Executes this line as the next step in the surrounding logic.
     put?: never;
+    // Executes this line as the next step in the surrounding logic.
     post?: never;
+    // Executes this line as the next step in the surrounding logic.
     delete?: never;
+    // Executes this line as the next step in the surrounding logic.
     options?: never;
+    // Executes this line as the next step in the surrounding logic.
     head?: never;
+    // Executes this line as the next step in the surrounding logic.
     patch?: never;
+    // Executes this line as the next step in the surrounding logic.
     trace?: never;
+    // Closes the expression, call, or declaration started above.
   };
+  // Begins the nested block or object completed below.
   '/v1/me/stats': {
+    // Defines the parameters field in the surrounding object or type.
     parameters: {
+      // Executes this line as the next step in the surrounding logic.
       query?: never;
+      // Executes this line as the next step in the surrounding logic.
       header?: never;
+      // Executes this line as the next step in the surrounding logic.
       path?: never;
+      // Executes this line as the next step in the surrounding logic.
       cookie?: never;
+      // Closes the expression, call, or declaration started above.
     };
     /** Get Stats Route */
+    // Defines the get field in the surrounding object or type.
     get: operations['get_stats_route_v1_me_stats_get'];
+    // Executes this line as the next step in the surrounding logic.
     put?: never;
+    // Executes this line as the next step in the surrounding logic.
     post?: never;
+    // Executes this line as the next step in the surrounding logic.
     delete?: never;
+    // Executes this line as the next step in the surrounding logic.
     options?: never;
+    // Executes this line as the next step in the surrounding logic.
     head?: never;
+    // Executes this line as the next step in the surrounding logic.
     patch?: never;
+    // Executes this line as the next step in the surrounding logic.
     trace?: never;
+    // Closes the expression, call, or declaration started above.
   };
+  // Begins the nested block or object completed below.
   '/v1/me/export': {
+    // Defines the parameters field in the surrounding object or type.
     parameters: {
+      // Executes this line as the next step in the surrounding logic.
       query?: never;
+      // Executes this line as the next step in the surrounding logic.
       header?: never;
+      // Executes this line as the next step in the surrounding logic.
       path?: never;
+      // Executes this line as the next step in the surrounding logic.
       cookie?: never;
+      // Closes the expression, call, or declaration started above.
     };
     /** Export Route */
+    // Defines the get field in the surrounding object or type.
     get: operations['export_route_v1_me_export_get'];
+    // Executes this line as the next step in the surrounding logic.
     put?: never;
+    // Executes this line as the next step in the surrounding logic.
     post?: never;
+    // Executes this line as the next step in the surrounding logic.
     delete?: never;
+    // Executes this line as the next step in the surrounding logic.
     options?: never;
+    // Executes this line as the next step in the surrounding logic.
     head?: never;
+    // Executes this line as the next step in the surrounding logic.
     patch?: never;
+    // Executes this line as the next step in the surrounding logic.
     trace?: never;
+    // Closes the expression, call, or declaration started above.
   };
+  // Begins the nested block or object completed below.
   '/v1/me': {
+    // Defines the parameters field in the surrounding object or type.
     parameters: {
+      // Executes this line as the next step in the surrounding logic.
       query?: never;
+      // Executes this line as the next step in the surrounding logic.
       header?: never;
+      // Executes this line as the next step in the surrounding logic.
       path?: never;
+      // Executes this line as the next step in the surrounding logic.
       cookie?: never;
+      // Closes the expression, call, or declaration started above.
     };
+    // Executes this line as the next step in the surrounding logic.
     get?: never;
+    // Executes this line as the next step in the surrounding logic.
     put?: never;
+    // Executes this line as the next step in the surrounding logic.
     post?: never;
     /** Delete Account Route */
+    // Defines the delete field in the surrounding object or type.
     delete: operations['delete_account_route_v1_me_delete'];
+    // Executes this line as the next step in the surrounding logic.
     options?: never;
+    // Executes this line as the next step in the surrounding logic.
     head?: never;
+    // Executes this line as the next step in the surrounding logic.
     patch?: never;
+    // Executes this line as the next step in the surrounding logic.
     trace?: never;
+    // Closes the expression, call, or declaration started above.
   };
+  // Begins the nested block or object completed below.
   '/v1/support': {
+    // Defines the parameters field in the surrounding object or type.
     parameters: {
+      // Executes this line as the next step in the surrounding logic.
       query?: never;
+      // Executes this line as the next step in the surrounding logic.
       header?: never;
+      // Executes this line as the next step in the surrounding logic.
       path?: never;
+      // Executes this line as the next step in the surrounding logic.
       cookie?: never;
+      // Closes the expression, call, or declaration started above.
     };
+    // Executes this line as the next step in the surrounding logic.
     get?: never;
+    // Executes this line as the next step in the surrounding logic.
     put?: never;
     /** Create Support Request Route */
+    // Defines the post field in the surrounding object or type.
     post: operations['create_support_request_route_v1_support_post'];
+    // Executes this line as the next step in the surrounding logic.
     delete?: never;
+    // Executes this line as the next step in the surrounding logic.
     options?: never;
+    // Executes this line as the next step in the surrounding logic.
     head?: never;
+    // Executes this line as the next step in the surrounding logic.
     patch?: never;
+    // Executes this line as the next step in the surrounding logic.
     trace?: never;
+    // Closes the expression, call, or declaration started above.
   };
+  // Begins the nested block or object completed below.
   '/v1/analytics/events': {
+    // Defines the parameters field in the surrounding object or type.
     parameters: {
+      // Executes this line as the next step in the surrounding logic.
       query?: never;
+      // Executes this line as the next step in the surrounding logic.
       header?: never;
+      // Executes this line as the next step in the surrounding logic.
       path?: never;
+      // Executes this line as the next step in the surrounding logic.
       cookie?: never;
+      // Closes the expression, call, or declaration started above.
     };
+    // Executes this line as the next step in the surrounding logic.
     get?: never;
+    // Executes this line as the next step in the surrounding logic.
     put?: never;
     /** Collect Event Route */
+    // Defines the post field in the surrounding object or type.
     post: operations['collect_event_route_v1_analytics_events_post'];
+    // Executes this line as the next step in the surrounding logic.
     delete?: never;
+    // Executes this line as the next step in the surrounding logic.
     options?: never;
+    // Executes this line as the next step in the surrounding logic.
     head?: never;
+    // Executes this line as the next step in the surrounding logic.
     patch?: never;
+    // Executes this line as the next step in the surrounding logic.
     trace?: never;
+    // Closes the expression, call, or declaration started above.
   };
+  // Begins the nested block or object completed below.
   '/v1/admin/games': {
+    // Defines the parameters field in the surrounding object or type.
     parameters: {
+      // Executes this line as the next step in the surrounding logic.
       query?: never;
+      // Executes this line as the next step in the surrounding logic.
       header?: never;
+      // Executes this line as the next step in the surrounding logic.
       path?: never;
+      // Executes this line as the next step in the surrounding logic.
       cookie?: never;
+      // Closes the expression, call, or declaration started above.
     };
     /** Games Route */
+    // Defines the get field in the surrounding object or type.
     get: operations['games_route_v1_admin_games_get'];
+    // Executes this line as the next step in the surrounding logic.
     put?: never;
+    // Executes this line as the next step in the surrounding logic.
     post?: never;
+    // Executes this line as the next step in the surrounding logic.
     delete?: never;
+    // Executes this line as the next step in the surrounding logic.
     options?: never;
+    // Executes this line as the next step in the surrounding logic.
     head?: never;
+    // Executes this line as the next step in the surrounding logic.
     patch?: never;
+    // Executes this line as the next step in the surrounding logic.
     trace?: never;
+    // Closes the expression, call, or declaration started above.
   };
+  // Begins the nested block or object completed below.
   '/v1/admin/profiles': {
+    // Defines the parameters field in the surrounding object or type.
     parameters: {
+      // Executes this line as the next step in the surrounding logic.
       query?: never;
+      // Executes this line as the next step in the surrounding logic.
       header?: never;
+      // Executes this line as the next step in the surrounding logic.
       path?: never;
+      // Executes this line as the next step in the surrounding logic.
       cookie?: never;
+      // Closes the expression, call, or declaration started above.
     };
     /** Profiles Route */
+    // Defines the get field in the surrounding object or type.
     get: operations['profiles_route_v1_admin_profiles_get'];
+    // Executes this line as the next step in the surrounding logic.
     put?: never;
+    // Executes this line as the next step in the surrounding logic.
     post?: never;
+    // Executes this line as the next step in the surrounding logic.
     delete?: never;
+    // Executes this line as the next step in the surrounding logic.
     options?: never;
+    // Executes this line as the next step in the surrounding logic.
     head?: never;
+    // Executes this line as the next step in the surrounding logic.
     patch?: never;
+    // Executes this line as the next step in the surrounding logic.
     trace?: never;
+    // Closes the expression, call, or declaration started above.
   };
+  // Begins the nested block or object completed below.
   '/v1/admin/rooms': {
+    // Defines the parameters field in the surrounding object or type.
     parameters: {
+      // Executes this line as the next step in the surrounding logic.
       query?: never;
+      // Executes this line as the next step in the surrounding logic.
       header?: never;
+      // Executes this line as the next step in the surrounding logic.
       path?: never;
+      // Executes this line as the next step in the surrounding logic.
       cookie?: never;
+      // Closes the expression, call, or declaration started above.
     };
     /** Rooms Route */
+    // Defines the get field in the surrounding object or type.
     get: operations['rooms_route_v1_admin_rooms_get'];
+    // Executes this line as the next step in the surrounding logic.
     put?: never;
+    // Executes this line as the next step in the surrounding logic.
     post?: never;
+    // Executes this line as the next step in the surrounding logic.
     delete?: never;
+    // Executes this line as the next step in the surrounding logic.
     options?: never;
+    // Executes this line as the next step in the surrounding logic.
     head?: never;
+    // Executes this line as the next step in the surrounding logic.
     patch?: never;
+    // Executes this line as the next step in the surrounding logic.
     trace?: never;
+    // Closes the expression, call, or declaration started above.
   };
+  // Begins the nested block or object completed below.
   '/v1/admin/challenges': {
+    // Defines the parameters field in the surrounding object or type.
     parameters: {
+      // Executes this line as the next step in the surrounding logic.
       query?: never;
+      // Executes this line as the next step in the surrounding logic.
       header?: never;
+      // Executes this line as the next step in the surrounding logic.
       path?: never;
+      // Executes this line as the next step in the surrounding logic.
       cookie?: never;
+      // Closes the expression, call, or declaration started above.
     };
     /** Challenges Route */
+    // Defines the get field in the surrounding object or type.
     get: operations['challenges_route_v1_admin_challenges_get'];
+    // Executes this line as the next step in the surrounding logic.
     put?: never;
+    // Executes this line as the next step in the surrounding logic.
     post?: never;
+    // Executes this line as the next step in the surrounding logic.
     delete?: never;
+    // Executes this line as the next step in the surrounding logic.
     options?: never;
+    // Executes this line as the next step in the surrounding logic.
     head?: never;
+    // Executes this line as the next step in the surrounding logic.
     patch?: never;
+    // Executes this line as the next step in the surrounding logic.
     trace?: never;
+    // Closes the expression, call, or declaration started above.
   };
+  // Begins the nested block or object completed below.
   '/v1/admin/leaderboard-review': {
+    // Defines the parameters field in the surrounding object or type.
     parameters: {
+      // Executes this line as the next step in the surrounding logic.
       query?: never;
+      // Executes this line as the next step in the surrounding logic.
       header?: never;
+      // Executes this line as the next step in the surrounding logic.
       path?: never;
+      // Executes this line as the next step in the surrounding logic.
       cookie?: never;
+      // Closes the expression, call, or declaration started above.
     };
     /** Leaderboard Review Route */
+    // Defines the get field in the surrounding object or type.
     get: operations['leaderboard_review_route_v1_admin_leaderboard_review_get'];
+    // Executes this line as the next step in the surrounding logic.
     put?: never;
+    // Executes this line as the next step in the surrounding logic.
     post?: never;
+    // Executes this line as the next step in the surrounding logic.
     delete?: never;
+    // Executes this line as the next step in the surrounding logic.
     options?: never;
+    // Executes this line as the next step in the surrounding logic.
     head?: never;
+    // Executes this line as the next step in the surrounding logic.
     patch?: never;
+    // Executes this line as the next step in the surrounding logic.
     trace?: never;
+    // Closes the expression, call, or declaration started above.
   };
+  // Begins the nested block or object completed below.
   '/v1/admin/summary': {
+    // Defines the parameters field in the surrounding object or type.
     parameters: {
+      // Executes this line as the next step in the surrounding logic.
       query?: never;
+      // Executes this line as the next step in the surrounding logic.
       header?: never;
+      // Executes this line as the next step in the surrounding logic.
       path?: never;
+      // Executes this line as the next step in the surrounding logic.
       cookie?: never;
+      // Closes the expression, call, or declaration started above.
     };
     /** Summary Route */
+    // Defines the get field in the surrounding object or type.
     get: operations['summary_route_v1_admin_summary_get'];
+    // Executes this line as the next step in the surrounding logic.
     put?: never;
+    // Executes this line as the next step in the surrounding logic.
     post?: never;
+    // Executes this line as the next step in the surrounding logic.
     delete?: never;
+    // Executes this line as the next step in the surrounding logic.
     options?: never;
+    // Executes this line as the next step in the surrounding logic.
     head?: never;
+    // Executes this line as the next step in the surrounding logic.
     patch?: never;
+    // Executes this line as the next step in the surrounding logic.
     trace?: never;
+    // Closes the expression, call, or declaration started above.
   };
+  // Begins the nested block or object completed below.
   '/v1/admin/flags': {
+    // Defines the parameters field in the surrounding object or type.
     parameters: {
+      // Executes this line as the next step in the surrounding logic.
       query?: never;
+      // Executes this line as the next step in the surrounding logic.
       header?: never;
+      // Executes this line as the next step in the surrounding logic.
       path?: never;
+      // Executes this line as the next step in the surrounding logic.
       cookie?: never;
+      // Closes the expression, call, or declaration started above.
     };
     /** Flags Route */
+    // Defines the get field in the surrounding object or type.
     get: operations['flags_route_v1_admin_flags_get'];
+    // Executes this line as the next step in the surrounding logic.
     put?: never;
+    // Executes this line as the next step in the surrounding logic.
     post?: never;
+    // Executes this line as the next step in the surrounding logic.
     delete?: never;
+    // Executes this line as the next step in the surrounding logic.
     options?: never;
+    // Executes this line as the next step in the surrounding logic.
     head?: never;
+    // Executes this line as the next step in the surrounding logic.
     patch?: never;
+    // Executes this line as the next step in the surrounding logic.
     trace?: never;
+    // Closes the expression, call, or declaration started above.
   };
+  // Begins the nested block or object completed below.
   '/v1/admin/flags/{key}': {
+    // Defines the parameters field in the surrounding object or type.
     parameters: {
+      // Executes this line as the next step in the surrounding logic.
       query?: never;
+      // Executes this line as the next step in the surrounding logic.
       header?: never;
+      // Executes this line as the next step in the surrounding logic.
       path?: never;
+      // Executes this line as the next step in the surrounding logic.
       cookie?: never;
+      // Closes the expression, call, or declaration started above.
     };
+    // Executes this line as the next step in the surrounding logic.
     get?: never;
+    // Executes this line as the next step in the surrounding logic.
     put?: never;
+    // Executes this line as the next step in the surrounding logic.
     post?: never;
+    // Executes this line as the next step in the surrounding logic.
     delete?: never;
+    // Executes this line as the next step in the surrounding logic.
     options?: never;
+    // Executes this line as the next step in the surrounding logic.
     head?: never;
     /** Update Flag Route */
+    // Defines the patch field in the surrounding object or type.
     patch: operations['update_flag_route_v1_admin_flags__key__patch'];
+    // Executes this line as the next step in the surrounding logic.
     trace?: never;
+    // Closes the expression, call, or declaration started above.
   };
+  // Begins the nested block or object completed below.
   '/v1/admin/leaderboard/{entry_id}/invalidate': {
+    // Defines the parameters field in the surrounding object or type.
     parameters: {
+      // Executes this line as the next step in the surrounding logic.
       query?: never;
+      // Executes this line as the next step in the surrounding logic.
       header?: never;
+      // Executes this line as the next step in the surrounding logic.
       path?: never;
+      // Executes this line as the next step in the surrounding logic.
       cookie?: never;
+      // Closes the expression, call, or declaration started above.
     };
+    // Executes this line as the next step in the surrounding logic.
     get?: never;
+    // Executes this line as the next step in the surrounding logic.
     put?: never;
     /** Invalidate Leaderboard Route */
+    // Defines the post field in the surrounding object or type.
     post: operations['invalidate_leaderboard_route_v1_admin_leaderboard__entry_id__invalidate_post'];
+    // Executes this line as the next step in the surrounding logic.
     delete?: never;
+    // Executes this line as the next step in the surrounding logic.
     options?: never;
+    // Executes this line as the next step in the surrounding logic.
     head?: never;
+    // Executes this line as the next step in the surrounding logic.
     patch?: never;
+    // Executes this line as the next step in the surrounding logic.
     trace?: never;
+    // Closes the expression, call, or declaration started above.
   };
+  // Begins the nested block or object completed below.
   '/v1/admin/leaderboard/{entry_id}/restore': {
+    // Defines the parameters field in the surrounding object or type.
     parameters: {
+      // Executes this line as the next step in the surrounding logic.
       query?: never;
+      // Executes this line as the next step in the surrounding logic.
       header?: never;
+      // Executes this line as the next step in the surrounding logic.
       path?: never;
+      // Executes this line as the next step in the surrounding logic.
       cookie?: never;
+      // Closes the expression, call, or declaration started above.
     };
+    // Executes this line as the next step in the surrounding logic.
     get?: never;
+    // Executes this line as the next step in the surrounding logic.
     put?: never;
     /** Restore Leaderboard Route */
+    // Defines the post field in the surrounding object or type.
     post: operations['restore_leaderboard_route_v1_admin_leaderboard__entry_id__restore_post'];
+    // Executes this line as the next step in the surrounding logic.
     delete?: never;
+    // Executes this line as the next step in the surrounding logic.
     options?: never;
+    // Executes this line as the next step in the surrounding logic.
     head?: never;
+    // Executes this line as the next step in the surrounding logic.
     patch?: never;
+    // Executes this line as the next step in the surrounding logic.
     trace?: never;
+    // Closes the expression, call, or declaration started above.
   };
+  // Begins the nested block or object completed below.
   '/v1/admin/profiles/{user_id}/moderate': {
+    // Defines the parameters field in the surrounding object or type.
     parameters: {
+      // Executes this line as the next step in the surrounding logic.
       query?: never;
+      // Executes this line as the next step in the surrounding logic.
       header?: never;
+      // Executes this line as the next step in the surrounding logic.
       path?: never;
+      // Executes this line as the next step in the surrounding logic.
       cookie?: never;
+      // Closes the expression, call, or declaration started above.
     };
+    // Executes this line as the next step in the surrounding logic.
     get?: never;
+    // Executes this line as the next step in the surrounding logic.
     put?: never;
     /** Moderate Profile Route */
+    // Defines the post field in the surrounding object or type.
     post: operations['moderate_profile_route_v1_admin_profiles__user_id__moderate_post'];
+    // Executes this line as the next step in the surrounding logic.
     delete?: never;
+    // Executes this line as the next step in the surrounding logic.
     options?: never;
+    // Executes this line as the next step in the surrounding logic.
     head?: never;
+    // Executes this line as the next step in the surrounding logic.
     patch?: never;
+    // Executes this line as the next step in the surrounding logic.
     trace?: never;
+    // Closes the expression, call, or declaration started above.
   };
+  // Begins the nested block or object completed below.
   '/v1/admin/challenges/{challenge_id}/revoke': {
+    // Defines the parameters field in the surrounding object or type.
     parameters: {
+      // Executes this line as the next step in the surrounding logic.
       query?: never;
+      // Executes this line as the next step in the surrounding logic.
       header?: never;
+      // Executes this line as the next step in the surrounding logic.
       path?: never;
+      // Executes this line as the next step in the surrounding logic.
       cookie?: never;
+      // Closes the expression, call, or declaration started above.
     };
+    // Executes this line as the next step in the surrounding logic.
     get?: never;
+    // Executes this line as the next step in the surrounding logic.
     put?: never;
     /** Admin Revoke Challenge Route */
+    // Defines the post field in the surrounding object or type.
     post: operations['admin_revoke_challenge_route_v1_admin_challenges__challenge_id__revoke_post'];
+    // Executes this line as the next step in the surrounding logic.
     delete?: never;
+    // Executes this line as the next step in the surrounding logic.
     options?: never;
+    // Executes this line as the next step in the surrounding logic.
     head?: never;
+    // Executes this line as the next step in the surrounding logic.
     patch?: never;
+    // Executes this line as the next step in the surrounding logic.
     trace?: never;
+    // Closes the expression, call, or declaration started above.
   };
+  // Begins the nested block or object completed below.
   '/v1/admin/rooms/{room_id}/terminate': {
+    // Defines the parameters field in the surrounding object or type.
     parameters: {
+      // Executes this line as the next step in the surrounding logic.
       query?: never;
+      // Executes this line as the next step in the surrounding logic.
       header?: never;
+      // Executes this line as the next step in the surrounding logic.
       path?: never;
+      // Executes this line as the next step in the surrounding logic.
       cookie?: never;
+      // Closes the expression, call, or declaration started above.
     };
+    // Executes this line as the next step in the surrounding logic.
     get?: never;
+    // Executes this line as the next step in the surrounding logic.
     put?: never;
     /** Terminate Room Route */
+    // Defines the post field in the surrounding object or type.
     post: operations['terminate_room_route_v1_admin_rooms__room_id__terminate_post'];
+    // Executes this line as the next step in the surrounding logic.
     delete?: never;
+    // Executes this line as the next step in the surrounding logic.
     options?: never;
+    // Executes this line as the next step in the surrounding logic.
     head?: never;
+    // Executes this line as the next step in the surrounding logic.
     patch?: never;
+    // Executes this line as the next step in the surrounding logic.
     trace?: never;
+    // Closes the expression, call, or declaration started above.
   };
+  // Begins the nested block or object completed below.
   '/v1/admin/audit': {
+    // Defines the parameters field in the surrounding object or type.
     parameters: {
+      // Executes this line as the next step in the surrounding logic.
       query?: never;
+      // Executes this line as the next step in the surrounding logic.
       header?: never;
+      // Executes this line as the next step in the surrounding logic.
       path?: never;
+      // Executes this line as the next step in the surrounding logic.
       cookie?: never;
+      // Closes the expression, call, or declaration started above.
     };
     /** Audit Route */
+    // Defines the get field in the surrounding object or type.
     get: operations['audit_route_v1_admin_audit_get'];
+    // Executes this line as the next step in the surrounding logic.
     put?: never;
+    // Executes this line as the next step in the surrounding logic.
     post?: never;
+    // Executes this line as the next step in the surrounding logic.
     delete?: never;
+    // Executes this line as the next step in the surrounding logic.
     options?: never;
+    // Executes this line as the next step in the surrounding logic.
     head?: never;
+    // Executes this line as the next step in the surrounding logic.
     patch?: never;
+    // Executes this line as the next step in the surrounding logic.
     trace?: never;
+    // Closes the expression, call, or declaration started above.
   };
+  // Closes the expression, call, or declaration started above.
 }
+// Exports this declaration for use by other modules.
 export type webhooks = Record<string, never>;
+// Exports this declaration for use by other modules.
 export interface components {
+  // Defines the schemas field in the surrounding object or type.
   schemas: {
     /** AchievementProgressSchema */
+    // Defines the AchievementProgressSchema field in the surrounding object or type.
     AchievementProgressSchema: {
       /** Current */
+      // Defines the current field in the surrounding object or type.
       current: number;
       /** Target */
+      // Defines the target field in the surrounding object or type.
       target: number;
+      // Closes the expression, call, or declaration started above.
     };
     /** AdminActionRequest */
+    // Defines the AdminActionRequest field in the surrounding object or type.
     AdminActionRequest: {
       /** Reason */
+      // Defines the reason field in the surrounding object or type.
       reason: string;
       /** Enabled */
+      // Executes this line as the next step in the surrounding logic.
       enabled?: boolean | null;
       /** Displayname */
+      // Executes this line as the next step in the surrounding logic.
       displayName?: string | null;
+      // Closes the expression, call, or declaration started above.
     };
     /** AdminChallengeItem */
+    // Defines the AdminChallengeItem field in the surrounding object or type.
     AdminChallengeItem: {
       /**
        * Id
        * Format: uuid
        */
+      // Defines the id field in the surrounding object or type.
       id: string;
       /**
        * Creatorid
        * Format: uuid
        */
+      // Defines the creatorId field in the surrounding object or type.
       creatorId: string;
       /** Title */
+      // Defines the title field in the surrounding object or type.
       title: string | null;
       /** Completedcount */
+      // Defines the completedCount field in the surrounding object or type.
       completedCount: number;
       /** Revokedat */
+      // Defines the revokedAt field in the surrounding object or type.
       revokedAt: string | null;
       /**
        * Expiresat
        * Format: date-time
        */
+      // Defines the expiresAt field in the surrounding object or type.
       expiresAt: string;
       /**
        * Createdat
        * Format: date-time
        */
+      // Defines the createdAt field in the surrounding object or type.
       createdAt: string;
+      // Closes the expression, call, or declaration started above.
     };
     /** AdminGameItem */
+    // Defines the AdminGameItem field in the surrounding object or type.
     AdminGameItem: {
       /** Id */
+      // Defines the id field in the surrounding object or type.
       id: string;
       /**
        * Ownerid
        * Format: uuid
        */
+      // Defines the ownerId field in the surrounding object or type.
       ownerId: string;
       /** Mode */
+      // Defines the mode field in the surrounding object or type.
       mode: string;
       /** Status */
+      // Defines the status field in the surrounding object or type.
       status: string;
       /** Difficulty */
+      // Defines the difficulty field in the surrounding object or type.
       difficulty: string | null;
       /** Attemptsused */
+      // Defines the attemptsUsed field in the surrounding object or type.
       attemptsUsed: number;
       /** Maxattempts */
+      // Defines the maxAttempts field in the surrounding object or type.
       maxAttempts: number;
       /** Score */
+      // Defines the score field in the surrounding object or type.
       score: number | null;
       /** Rankedeligibility */
+      // Defines the rankedEligibility field in the surrounding object or type.
       rankedEligibility: string;
       /**
        * Startedat
        * Format: date-time
        */
+      // Defines the startedAt field in the surrounding object or type.
       startedAt: string;
       /** Completedat */
+      // Defines the completedAt field in the surrounding object or type.
       completedAt: string | null;
+      // Closes the expression, call, or declaration started above.
     };
     /** AdminLeaderboardItem */
+    // Defines the AdminLeaderboardItem field in the surrounding object or type.
     AdminLeaderboardItem: {
       /**
        * Id
        * Format: uuid
        */
+      // Defines the id field in the surrounding object or type.
       id: string;
       /**
        * Gameid
        * Format: uuid
        */
+      // Defines the gameId field in the surrounding object or type.
       gameId: string;
       /**
        * Userid
        * Format: uuid
        */
+      // Defines the userId field in the surrounding object or type.
       userId: string;
       /** Category */
+      // Defines the category field in the surrounding object or type.
       category: string;
       /** Score */
+      // Defines the score field in the surrounding object or type.
       score: number;
       /** Attemptsused */
+      // Defines the attemptsUsed field in the surrounding object or type.
       attemptsUsed: number;
       /** Elapsedseconds */
+      // Defines the elapsedSeconds field in the surrounding object or type.
       elapsedSeconds: number;
       /** Reviewstatus */
+      // Defines the reviewStatus field in the surrounding object or type.
       reviewStatus: string;
       /** Invalidatedat */
+      // Defines the invalidatedAt field in the surrounding object or type.
       invalidatedAt: string | null;
       /**
        * Completedat
        * Format: date-time
        */
+      // Defines the completedAt field in the surrounding object or type.
       completedAt: string;
+      // Closes the expression, call, or declaration started above.
     };
     /** AdminPage[AdminChallengeItem] */
+    // Defines the AdminPage_AdminChallengeItem_ field in the surrounding object or type.
     AdminPage_AdminChallengeItem_: {
       /** Items */
+      // Defines the items field in the surrounding object or type.
       items: components['schemas']['AdminChallengeItem'][];
       /** Page */
+      // Defines the page field in the surrounding object or type.
       page: number;
       /** Pagesize */
+      // Defines the pageSize field in the surrounding object or type.
       pageSize: number;
       /** Total */
+      // Defines the total field in the surrounding object or type.
       total: number;
+      // Closes the expression, call, or declaration started above.
     };
     /** AdminPage[AdminGameItem] */
+    // Defines the AdminPage_AdminGameItem_ field in the surrounding object or type.
     AdminPage_AdminGameItem_: {
       /** Items */
+      // Defines the items field in the surrounding object or type.
       items: components['schemas']['AdminGameItem'][];
       /** Page */
+      // Defines the page field in the surrounding object or type.
       page: number;
       /** Pagesize */
+      // Defines the pageSize field in the surrounding object or type.
       pageSize: number;
       /** Total */
+      // Defines the total field in the surrounding object or type.
       total: number;
+      // Closes the expression, call, or declaration started above.
     };
     /** AdminPage[AdminLeaderboardItem] */
+    // Defines the AdminPage_AdminLeaderboardItem_ field in the surrounding object or type.
     AdminPage_AdminLeaderboardItem_: {
       /** Items */
+      // Defines the items field in the surrounding object or type.
       items: components['schemas']['AdminLeaderboardItem'][];
       /** Page */
+      // Defines the page field in the surrounding object or type.
       page: number;
       /** Pagesize */
+      // Defines the pageSize field in the surrounding object or type.
       pageSize: number;
       /** Total */
+      // Defines the total field in the surrounding object or type.
       total: number;
+      // Closes the expression, call, or declaration started above.
     };
     /** AdminPage[AdminProfileItem] */
+    // Defines the AdminPage_AdminProfileItem_ field in the surrounding object or type.
     AdminPage_AdminProfileItem_: {
       /** Items */
+      // Defines the items field in the surrounding object or type.
       items: components['schemas']['AdminProfileItem'][];
       /** Page */
+      // Defines the page field in the surrounding object or type.
       page: number;
       /** Pagesize */
+      // Defines the pageSize field in the surrounding object or type.
       pageSize: number;
       /** Total */
+      // Defines the total field in the surrounding object or type.
       total: number;
+      // Closes the expression, call, or declaration started above.
     };
     /** AdminPage[AdminRoomItem] */
+    // Defines the AdminPage_AdminRoomItem_ field in the surrounding object or type.
     AdminPage_AdminRoomItem_: {
       /** Items */
+      // Defines the items field in the surrounding object or type.
       items: components['schemas']['AdminRoomItem'][];
       /** Page */
+      // Defines the page field in the surrounding object or type.
       page: number;
       /** Pagesize */
+      // Defines the pageSize field in the surrounding object or type.
       pageSize: number;
       /** Total */
+      // Defines the total field in the surrounding object or type.
       total: number;
+      // Closes the expression, call, or declaration started above.
     };
     /** AdminProfileItem */
+    // Defines the AdminProfileItem field in the surrounding object or type.
     AdminProfileItem: {
       /**
        * Id
        * Format: uuid
        */
+      // Defines the id field in the surrounding object or type.
       id: string;
       /** Displayname */
+      // Defines the displayName field in the surrounding object or type.
       displayName: string | null;
       /** Isanonymous */
+      // Defines the isAnonymous field in the surrounding object or type.
       isAnonymous: boolean;
       /** Publicleaderboards */
+      // Defines the publicLeaderboards field in the surrounding object or type.
       publicLeaderboards: boolean;
       /** Isbanned */
+      // Defines the isBanned field in the surrounding object or type.
       isBanned: boolean;
       /** Deletedat */
+      // Defines the deletedAt field in the surrounding object or type.
       deletedAt: string | null;
       /**
        * Createdat
        * Format: date-time
        */
+      // Defines the createdAt field in the surrounding object or type.
       createdAt: string;
+      // Closes the expression, call, or declaration started above.
     };
     /** AdminRoomItem */
+    // Defines the AdminRoomItem field in the surrounding object or type.
     AdminRoomItem: {
       /**
        * Id
        * Format: uuid
        */
+      // Defines the id field in the surrounding object or type.
       id: string;
       /** Status */
+      // Defines the status field in the surrounding object or type.
       status: string;
       /** Membercount */
+      // Defines the memberCount field in the surrounding object or type.
       memberCount: number;
       /** Winnerid */
+      // Defines the winnerId field in the surrounding object or type.
       winnerId: string | null;
       /** Istie */
+      // Defines the isTie field in the surrounding object or type.
       isTie: boolean;
       /**
        * Expiresat
        * Format: date-time
        */
+      // Defines the expiresAt field in the surrounding object or type.
       expiresAt: string;
       /**
        * Createdat
        * Format: date-time
        */
+      // Defines the createdAt field in the surrounding object or type.
       createdAt: string;
+      // Closes the expression, call, or declaration started above.
     };
     /** AdminSummary */
+    // Defines the AdminSummary field in the surrounding object or type.
     AdminSummary: {
       /** Profiles */
+      // Defines the profiles field in the surrounding object or type.
       profiles: number;
       /** Activegames */
+      // Defines the activeGames field in the surrounding object or type.
       activeGames: number;
       /** Completedgames */
+      // Defines the completedGames field in the surrounding object or type.
       completedGames: number;
       /** Activerooms */
+      // Defines the activeRooms field in the surrounding object or type.
       activeRooms: number;
       /** Pendingreviewentries */
+      // Defines the pendingReviewEntries field in the surrounding object or type.
       pendingReviewEntries: number;
+      // Closes the expression, call, or declaration started above.
     };
     /** AnalyticsEventRequest */
+    // Defines the AnalyticsEventRequest field in the surrounding object or type.
     AnalyticsEventRequest: {
       /**
        * Clienteventid
        * Format: uuid
        */
+      // Defines the clientEventId field in the surrounding object or type.
       clientEventId: string;
       /**
        * Eventname
        * @enum {string}
        */
+      // Defines the eventName field in the surrounding object or type.
       eventName:
+        // Executes this line as the next step in the surrounding logic.
         | 'game_started'
+        // Executes this line as the next step in the surrounding logic.
         | 'game_completed'
+        // Executes this line as the next step in the surrounding logic.
         | 'game_abandoned'
+        // Executes this line as the next step in the surrounding logic.
         | 'difficulty_selected'
+        // Executes this line as the next step in the surrounding logic.
         | 'daily_completed'
+        // Executes this line as the next step in the surrounding logic.
         | 'friend_challenge_created'
+        // Executes this line as the next step in the surrounding logic.
         | 'room_joined'
+        // Executes this line as the next step in the surrounding logic.
         | 'duel_completed'
+        // Executes this line as the next step in the surrounding logic.
         | 'validation_error'
+        // Executes this line as the next step in the surrounding logic.
         | 'reconnect'
+        // Executes this line as the next step in the surrounding logic.
         | 'account_upgraded';
       /**
        * Consent
        * @constant
        */
+      // Defines the consent field in the surrounding object or type.
       consent: true;
       /**
        * Consentversion
        * @constant
        */
+      // Defines the consentVersion field in the surrounding object or type.
       consentVersion: 'privacy-v1';
       /**
        * Locale
        * @enum {string}
        */
+      // Defines the locale field in the surrounding object or type.
       locale: 'en' | 'zh-Hant';
       /** Mode */
+      // Executes this line as the next step in the surrounding logic.
       mode?: ('solo' | 'daily' | 'practice' | 'pass_and_play' | 'friend_challenge' | 'duel') | null;
       /** Difficulty */
+      // Executes this line as the next step in the surrounding logic.
       difficulty?: ('easy' | 'normal' | 'hard' | 'expert' | 'custom') | null;
       /** Result */
+      // Executes this line as the next step in the surrounding logic.
       result?: ('won' | 'lost' | 'abandoned' | 'expired' | 'tie') | null;
       /** Attemptsused */
+      // Executes this line as the next step in the surrounding logic.
       attemptsUsed?: number | null;
       /** Ranked */
+      // Executes this line as the next step in the surrounding logic.
       ranked?: boolean | null;
       /** Scoreband */
+      // Executes this line as the next step in the surrounding logic.
       scoreBand?: ('zero' | '1-999' | '1000-1499' | '1500+') | null;
       /** Dailychallengeid */
+      // Executes this line as the next step in the surrounding logic.
       dailyChallengeId?: string | null;
       /** Official */
+      // Executes this line as the next step in the surrounding logic.
       official?: boolean | null;
       /** Expiryband */
+      // Executes this line as the next step in the surrounding logic.
       expiryBand?: '30_days' | null;
       /** Roomstate */
+      // Executes this line as the next step in the surrounding logic.
       roomState?: ('waiting' | 'active' | 'completed' | 'expired' | 'terminated') | null;
       /** Reconnect */
+      // Executes this line as the next step in the surrounding logic.
       reconnect?: boolean | null;
       /** Tie */
+      // Executes this line as the next step in the surrounding logic.
       tie?: boolean | null;
       /** Validationcategory */
+      // Executes this line as the next step in the surrounding logic.
       validationCategory?:
+        // Executes this line as the next step in the surrounding logic.
         ('game_config' | 'guess' | 'challenge' | 'room' | 'profile' | 'auth') | null;
       /** Surface */
+      // Executes this line as the next step in the surrounding logic.
       surface?: ('game' | 'room' | 'daily' | 'challenge' | 'account') | null;
       /** Recovered */
+      // Executes this line as the next step in the surrounding logic.
       recovered?: boolean | null;
       /** Previousanonymous */
+      // Executes this line as the next step in the surrounding logic.
       previousAnonymous?: boolean | null;
+      // Closes the expression, call, or declaration started above.
     };
     /** AnalyticsEventResponse */
+    // Defines the AnalyticsEventResponse field in the surrounding object or type.
     AnalyticsEventResponse: {
       /** Received */
+      // Defines the received field in the surrounding object or type.
       received: boolean;
+      // Closes the expression, call, or declaration started above.
     };
     /** AttemptRequest */
+    // Defines the AttemptRequest field in the surrounding object or type.
     AttemptRequest: {
       /** Guess */
+      // Defines the guess field in the surrounding object or type.
       guess: string[];
       /** Idempotencykey */
+      // Defines the idempotencyKey field in the surrounding object or type.
       idempotencyKey: string;
+      // Closes the expression, call, or declaration started above.
     };
     /** AttemptSchema */
+    // Defines the AttemptSchema field in the surrounding object or type.
     AttemptSchema: {
       /** Number */
+      // Defines the number field in the surrounding object or type.
       number: number;
       /** Guess */
+      // Defines the guess field in the surrounding object or type.
       guess: string[];
+      // Defines the feedback field in the surrounding object or type.
       feedback: components['schemas']['FeedbackSchema'];
       /**
        * Submittedat
        * Format: date-time
        */
+      // Defines the submittedAt field in the surrounding object or type.
       submittedAt: string;
+      // Closes the expression, call, or declaration started above.
     };
     /** AuditEventResponse */
+    // Defines the AuditEventResponse field in the surrounding object or type.
     AuditEventResponse: {
       /**
        * Id
        * Format: uuid
        */
+      // Defines the id field in the surrounding object or type.
       id: string;
       /** Actorid */
+      // Defines the actorId field in the surrounding object or type.
       actorId: string | null;
       /** Action */
+      // Defines the action field in the surrounding object or type.
       action: string;
       /** Targettype */
+      // Defines the targetType field in the surrounding object or type.
       targetType: string;
       /** Targetid */
+      // Defines the targetId field in the surrounding object or type.
       targetId: string;
       /** Reason */
+      // Defines the reason field in the surrounding object or type.
       reason: string | null;
       /**
        * Createdat
        * Format: date-time
        */
+      // Defines the createdAt field in the surrounding object or type.
       createdAt: string;
+      // Closes the expression, call, or declaration started above.
     };
     /** ChallengeResponse */
+    // Defines the ChallengeResponse field in the surrounding object or type.
     ChallengeResponse: {
       /** Id */
+      // Executes this line as the next step in the surrounding logic.
       id?: string | null;
       /** Sharecode */
+      // Defines the shareCode field in the surrounding object or type.
       shareCode: string;
       /** Title */
+      // Defines the title field in the surrounding object or type.
       title: string | null;
       /** Creatorname */
+      // Defines the creatorName field in the surrounding object or type.
       creatorName: string | null;
+      // Defines the config field in the surrounding object or type.
       config: components['schemas']['GameConfigSchema'];
       /**
        * Expiresat
        * Format: date-time
        */
+      // Defines the expiresAt field in the surrounding object or type.
       expiresAt: string;
       /** Revoked */
+      // Defines the revoked field in the surrounding object or type.
       revoked: boolean;
       /**
        * Completedcount
        * @default 0
        */
+      // Defines the completedCount field in the surrounding object or type.
       completedCount: number;
+      // Closes the expression, call, or declaration started above.
     };
     /** ChallengeResultItem */
+    // Defines the ChallengeResultItem field in the surrounding object or type.
     ChallengeResultItem: {
       /** Rank */
+      // Defines the rank field in the surrounding object or type.
       rank: number;
       /** Playerlabel */
+      // Defines the playerLabel field in the surrounding object or type.
       playerLabel: string;
       /** Result */
+      // Defines the result field in the surrounding object or type.
       result: string;
       /** Attemptsused */
+      // Defines the attemptsUsed field in the surrounding object or type.
       attemptsUsed: number;
       /** Maxattempts */
+      // Defines the maxAttempts field in the surrounding object or type.
       maxAttempts: number;
       /** Score */
+      // Defines the score field in the surrounding object or type.
       score: number;
       /** Elapsedseconds */
+      // Defines the elapsedSeconds field in the surrounding object or type.
       elapsedSeconds: number | null;
       /**
        * Completedat
        * Format: date-time
        */
+      // Defines the completedAt field in the surrounding object or type.
       completedAt: string;
+      // Closes the expression, call, or declaration started above.
     };
     /** ChallengeResultsResponse */
+    // Defines the ChallengeResultsResponse field in the surrounding object or type.
     ChallengeResultsResponse: {
       /** Completedcount */
+      // Defines the completedCount field in the surrounding object or type.
       completedCount: number;
       /** Winrate */
+      // Defines the winRate field in the surrounding object or type.
       winRate: number;
       /** Averageattempts */
+      // Defines the averageAttempts field in the surrounding object or type.
       averageAttempts: number | null;
       /** Scoredistribution */
+      // Defines the scoreDistribution field in the surrounding object or type.
       scoreDistribution: {
+        // Executes this line as the next step in the surrounding logic.
         [key: string]: number;
+        // Closes the expression, call, or declaration started above.
       };
       /** Items */
+      // Defines the items field in the surrounding object or type.
       items: components['schemas']['ChallengeResultItem'][];
       /** Page */
+      // Defines the page field in the surrounding object or type.
       page: number;
       /** Pagesize */
+      // Defines the pageSize field in the surrounding object or type.
       pageSize: number;
       /** Total */
+      // Defines the total field in the surrounding object or type.
       total: number;
+      // Closes the expression, call, or declaration started above.
     };
     /**
      * CodeMakerType
      * @enum {string}
      */
+    // Defines the CodeMakerType field in the surrounding object or type.
     CodeMakerType: 'computer' | 'human';
     /** CreateChallengeRequest */
+    // Defines the CreateChallengeRequest field in the surrounding object or type.
     CreateChallengeRequest: {
       /** Difficulty */
+      // Executes this line as the next step in the surrounding logic.
       difficulty?: ('easy' | 'normal' | 'hard' | 'expert') | null;
+      // Executes this line as the next step in the surrounding logic.
       config?: components['schemas']['GameConfigSchema'] | null;
       /** Secret */
+      // Executes this line as the next step in the surrounding logic.
       secret?: string[] | null;
       /** Title */
+      // Executes this line as the next step in the surrounding logic.
       title?: string | null;
       /**
        * Showcreatorname
        * @default true
        */
+      // Defines the showCreatorName field in the surrounding object or type.
       showCreatorName: boolean;
       /** Idempotencykey */
+      // Executes this line as the next step in the surrounding logic.
       idempotencyKey?: string | null;
+      // Closes the expression, call, or declaration started above.
     };
     /** CreateGameRequest */
+    // Defines the CreateGameRequest field in the surrounding object or type.
     CreateGameRequest: {
       /** @default solo */
+      // Defines the mode field in the surrounding object or type.
       mode: components['schemas']['GameMode'];
       /** Difficulty */
+      // Executes this line as the next step in the surrounding logic.
       difficulty?: ('easy' | 'normal' | 'hard' | 'expert') | null;
+      // Executes this line as the next step in the surrounding logic.
       config?: components['schemas']['GameConfigSchema'] | null;
       /** Secret */
+      // Executes this line as the next step in the surrounding logic.
       secret?: string[] | null;
       /** Idempotencykey */
+      // Executes this line as the next step in the surrounding logic.
       idempotencyKey?: string | null;
+      // Closes the expression, call, or declaration started above.
     };
     /** CreateRoomRequest */
+    // Defines the CreateRoomRequest field in the surrounding object or type.
     CreateRoomRequest: {
       /**
        * Difficulty
        * @default normal
        * @enum {string}
        */
+      // Defines the difficulty field in the surrounding object or type.
       difficulty: 'easy' | 'normal' | 'hard' | 'expert';
       /** Idempotencykey */
+      // Executes this line as the next step in the surrounding logic.
       idempotencyKey?: string | null;
+      // Closes the expression, call, or declaration started above.
     };
     /** DailyDefinitionResponse */
+    // Defines the DailyDefinitionResponse field in the surrounding object or type.
     DailyDefinitionResponse: {
       /** Id */
+      // Defines the id field in the surrounding object or type.
       id: string;
       /**
        * Date
        * Format: date
        */
+      // Defines the date field in the surrounding object or type.
       date: string;
       /** Rulesetversion */
+      // Defines the ruleSetVersion field in the surrounding object or type.
       ruleSetVersion: string;
       /** Derivationversion */
+      // Defines the derivationVersion field in the surrounding object or type.
       derivationVersion: string;
+      // Defines the config field in the surrounding object or type.
       config: components['schemas']['GameConfigSchema'];
       /**
        * Rolloverat
        * Format: date-time
        */
+      // Defines the rolloverAt field in the surrounding object or type.
       rolloverAt: string;
+      // Closes the expression, call, or declaration started above.
     };
     /** DeleteAccountRequest */
+    // Defines the DeleteAccountRequest field in the surrounding object or type.
     DeleteAccountRequest: {
       /**
        * Confirmation
        * @constant
        */
+      // Defines the confirmation field in the surrounding object or type.
       confirmation: 'DELETE';
+      // Closes the expression, call, or declaration started above.
     };
     /** DeleteAccountResponse */
+    // Defines the DeleteAccountResponse field in the surrounding object or type.
     DeleteAccountResponse: {
       /** Deleted */
+      // Defines the deleted field in the surrounding object or type.
       deleted: boolean;
+      // Closes the expression, call, or declaration started above.
     };
     /** FeatureFlagResponse */
+    // Defines the FeatureFlagResponse field in the surrounding object or type.
     FeatureFlagResponse: {
       /** Key */
+      // Defines the key field in the surrounding object or type.
       key: string;
       /** Enabled */
+      // Defines the enabled field in the surrounding object or type.
       enabled: boolean;
+      // Closes the expression, call, or declaration started above.
     };
     /** FeedbackSchema */
+    // Defines the FeedbackSchema field in the surrounding object or type.
     FeedbackSchema: {
       /** Black */
+      // Defines the black field in the surrounding object or type.
       black: number;
       /** White */
+      // Defines the white field in the surrounding object or type.
       white: number;
+      // Closes the expression, call, or declaration started above.
     };
     /** GameConfigSchema */
+    // Defines the GameConfigSchema field in the surrounding object or type.
     GameConfigSchema: {
       /** Colours */
+      // Defines the colours field in the surrounding object or type.
       colours: string[];
       /** Codelength */
+      // Defines the codeLength field in the surrounding object or type.
       codeLength: number;
       /** Maxattempts */
+      // Defines the maxAttempts field in the surrounding object or type.
       maxAttempts: number;
       /** Duplicatesallowed */
+      // Defines the duplicatesAllowed field in the surrounding object or type.
       duplicatesAllowed: boolean;
       /** @default computer */
+      // Defines the codeMaker field in the surrounding object or type.
       codeMaker: components['schemas']['CodeMakerType'];
       /** @default private */
+      // Defines the visibility field in the surrounding object or type.
       visibility: components['schemas']['GameVisibility'];
       /**
        * Ranked
        * @default false
        */
+      // Defines the ranked field in the surrounding object or type.
       ranked: boolean;
       /**
        * Timebonuscap
        * @default 300
        */
+      // Defines the timeBonusCap field in the surrounding object or type.
       timeBonusCap: number;
+      // Closes the expression, call, or declaration started above.
     };
     /**
      * GameMode
      * @enum {string}
      */
+    // Defines the GameMode field in the surrounding object or type.
     GameMode: 'solo' | 'daily' | 'practice' | 'pass_and_play' | 'friend_challenge' | 'duel';
     /** GameResponse */
+    // Defines the GameResponse field in the surrounding object or type.
     GameResponse: {
       /** Id */
+      // Defines the id field in the surrounding object or type.
       id: string;
       /** Mode */
+      // Defines the mode field in the surrounding object or type.
       mode: string;
       /** Status */
+      // Defines the status field in the surrounding object or type.
       status: string;
       /** Difficulty */
+      // Defines the difficulty field in the surrounding object or type.
       difficulty: string | null;
+      // Defines the config field in the surrounding object or type.
       config: components['schemas']['GameConfigSchema'];
       /** Attempts */
+      // Defines the attempts field in the surrounding object or type.
       attempts: components['schemas']['AttemptSchema'][];
       /** Attemptsused */
+      // Defines the attemptsUsed field in the surrounding object or type.
       attemptsUsed: number;
       /** Maxattempts */
+      // Defines the maxAttempts field in the surrounding object or type.
       maxAttempts: number;
       /** Attemptsremaining */
+      // Defines the attemptsRemaining field in the surrounding object or type.
       attemptsRemaining: number;
       /**
        * Startedat
        * Format: date-time
        */
+      // Defines the startedAt field in the surrounding object or type.
       startedAt: string;
       /** Completedat */
+      // Defines the completedAt field in the surrounding object or type.
       completedAt: string | null;
       /** Score */
+      // Defines the score field in the surrounding object or type.
       score: number | null;
+      // Defines the scoreBreakdown field in the surrounding object or type.
       scoreBreakdown: components['schemas']['ScoreBreakdownSchema'] | null;
       /** Secret */
+      // Executes this line as the next step in the surrounding logic.
       secret?: string[] | null;
       /** Ranked */
+      // Defines the ranked field in the surrounding object or type.
       ranked: boolean;
+      // Closes the expression, call, or declaration started above.
     };
     /**
      * GameVisibility
      * @enum {string}
      */
+    // Defines the GameVisibility field in the surrounding object or type.
     GameVisibility: 'private' | 'shareable' | 'public';
     /** HTTPValidationError */
+    // Defines the HTTPValidationError field in the surrounding object or type.
     HTTPValidationError: {
       /** Detail */
+      // Executes this line as the next step in the surrounding logic.
       detail?: components['schemas']['ValidationError'][];
+      // Closes the expression, call, or declaration started above.
     };
     /** LeaderboardItem */
+    // Defines the LeaderboardItem field in the surrounding object or type.
     LeaderboardItem: {
       /** Rank */
+      // Defines the rank field in the surrounding object or type.
       rank: number;
       /** Displayname */
+      // Defines the displayName field in the surrounding object or type.
       displayName: string;
       /** Score */
+      // Defines the score field in the surrounding object or type.
       score: number;
       /** Attemptsused */
+      // Defines the attemptsUsed field in the surrounding object or type.
       attemptsUsed: number;
       /** Elapsedseconds */
+      // Defines the elapsedSeconds field in the surrounding object or type.
       elapsedSeconds: number;
       /**
        * Completedat
        * Format: date-time
        */
+      // Defines the completedAt field in the surrounding object or type.
       completedAt: string;
       /** Iscurrentuser */
+      // Defines the isCurrentUser field in the surrounding object or type.
       isCurrentUser: boolean;
+      // Closes the expression, call, or declaration started above.
     };
     /** OwnedChallengeItem */
+    // Defines the OwnedChallengeItem field in the surrounding object or type.
     OwnedChallengeItem: {
       /**
        * Id
        * Format: uuid
        */
+      // Defines the id field in the surrounding object or type.
       id: string;
       /** Title */
+      // Defines the title field in the surrounding object or type.
       title: string | null;
       /** Showcreatorname */
+      // Defines the showCreatorName field in the surrounding object or type.
       showCreatorName: boolean;
+      // Defines the config field in the surrounding object or type.
       config: components['schemas']['GameConfigSchema'];
       /** Revoked */
+      // Defines the revoked field in the surrounding object or type.
       revoked: boolean;
       /**
        * Expiresat
        * Format: date-time
        */
+      // Defines the expiresAt field in the surrounding object or type.
       expiresAt: string;
       /** Completedcount */
+      // Defines the completedCount field in the surrounding object or type.
       completedCount: number;
       /**
        * Createdat
        * Format: date-time
        */
+      // Defines the createdAt field in the surrounding object or type.
       createdAt: string;
+      // Closes the expression, call, or declaration started above.
     };
     /** PaginatedGames */
+    // Defines the PaginatedGames field in the surrounding object or type.
     PaginatedGames: {
       /** Items */
+      // Defines the items field in the surrounding object or type.
       items: components['schemas']['GameResponse'][];
       /** Page */
+      // Defines the page field in the surrounding object or type.
       page: number;
       /** Pagesize */
+      // Defines the pageSize field in the surrounding object or type.
       pageSize: number;
       /** Total */
+      // Defines the total field in the surrounding object or type.
       total: number;
+      // Closes the expression, call, or declaration started above.
     };
     /** PaginatedLeaderboard */
+    // Defines the PaginatedLeaderboard field in the surrounding object or type.
     PaginatedLeaderboard: {
       /** Items */
+      // Defines the items field in the surrounding object or type.
       items: components['schemas']['LeaderboardItem'][];
       /** Page */
+      // Defines the page field in the surrounding object or type.
       page: number;
       /** Pagesize */
+      // Defines the pageSize field in the surrounding object or type.
       pageSize: number;
       /** Total */
+      // Defines the total field in the surrounding object or type.
       total: number;
       /** Currentuserrank */
+      // Defines the currentUserRank field in the surrounding object or type.
       currentUserRank: number | null;
+      // Closes the expression, call, or declaration started above.
     };
     /** PaginatedOwnedChallenges */
+    // Defines the PaginatedOwnedChallenges field in the surrounding object or type.
     PaginatedOwnedChallenges: {
       /** Items */
+      // Defines the items field in the surrounding object or type.
       items: components['schemas']['OwnedChallengeItem'][];
       /** Page */
+      // Defines the page field in the surrounding object or type.
       page: number;
       /** Pagesize */
+      // Defines the pageSize field in the surrounding object or type.
       pageSize: number;
       /** Total */
+      // Defines the total field in the surrounding object or type.
       total: number;
+      // Closes the expression, call, or declaration started above.
     };
     /** ProfileResponse */
+    // Defines the ProfileResponse field in the surrounding object or type.
     ProfileResponse: {
       /**
        * Id
        * Format: uuid
        */
+      // Defines the id field in the surrounding object or type.
       id: string;
       /** Displayname */
+      // Defines the displayName field in the surrounding object or type.
       displayName: string | null;
       /** Isanonymous */
+      // Defines the isAnonymous field in the surrounding object or type.
       isAnonymous: boolean;
       /** Publicleaderboards */
+      // Defines the publicLeaderboards field in the surrounding object or type.
       publicLeaderboards: boolean;
       /**
        * Createdat
        * Format: date-time
        */
+      // Defines the createdAt field in the surrounding object or type.
       createdAt: string;
+      // Closes the expression, call, or declaration started above.
     };
     /** ProfileUpdateRequest */
+    // Defines the ProfileUpdateRequest field in the surrounding object or type.
     ProfileUpdateRequest: {
       /** Displayname */
+      // Executes this line as the next step in the surrounding logic.
       displayName?: string | null;
       /** Publicleaderboards */
+      // Executes this line as the next step in the surrounding logic.
       publicLeaderboards?: boolean | null;
+      // Closes the expression, call, or declaration started above.
     };
     /** RoomMemberResponse */
+    // Defines the RoomMemberResponse field in the surrounding object or type.
     RoomMemberResponse: {
       /**
        * Userid
        * Format: uuid
        */
+      // Defines the userId field in the surrounding object or type.
       userId: string;
       /** Displayname */
+      // Defines the displayName field in the surrounding object or type.
       displayName: string;
       /** Connected */
+      // Defines the connected field in the surrounding object or type.
       connected: boolean;
       /** Ready */
+      // Defines the ready field in the surrounding object or type.
       ready: boolean;
       /** Readyat */
+      // Defines the readyAt field in the surrounding object or type.
       readyAt: string | null;
       /** Attemptsused */
+      // Defines the attemptsUsed field in the surrounding object or type.
       attemptsUsed: number;
       /** Completed */
+      // Defines the completed field in the surrounding object or type.
       completed: boolean;
       /** Gameid */
+      // Defines the gameId field in the surrounding object or type.
       gameId: string | null;
+      // Closes the expression, call, or declaration started above.
     };
     /** RoomResponse */
+    // Defines the RoomResponse field in the surrounding object or type.
     RoomResponse: {
       /**
        * Id
        * Format: uuid
        */
+      // Defines the id field in the surrounding object or type.
       id: string;
       /** Roomcode */
+      // Executes this line as the next step in the surrounding logic.
       roomCode?: string | null;
       /** Status */
+      // Defines the status field in the surrounding object or type.
       status: string;
+      // Defines the config field in the surrounding object or type.
       config: components['schemas']['GameConfigSchema'];
       /** Members */
+      // Defines the members field in the surrounding object or type.
       members: components['schemas']['RoomMemberResponse'][];
       /** Winnerid */
+      // Defines the winnerId field in the surrounding object or type.
       winnerId: string | null;
       /** Istie */
+      // Defines the isTie field in the surrounding object or type.
       isTie: boolean;
       /**
        * Expiresat
        * Format: date-time
        */
+      // Defines the expiresAt field in the surrounding object or type.
       expiresAt: string;
       /** Eventsequence */
+      // Defines the eventSequence field in the surrounding object or type.
       eventSequence: number;
+      // Closes the expression, call, or declaration started above.
     };
     /** ScoreBreakdownSchema */
+    // Defines the ScoreBreakdownSchema field in the surrounding object or type.
     ScoreBreakdownSchema: {
       /** Attempts */
+      // Defines the attempts field in the surrounding object or type.
       attempts: number;
       /** Difficulty */
+      // Defines the difficulty field in the surrounding object or type.
       difficulty: number;
       /** Time */
+      // Defines the time field in the surrounding object or type.
       time: number;
       /** Total */
+      // Defines the total field in the surrounding object or type.
       total: number;
       /** Version */
+      // Defines the version field in the surrounding object or type.
       version: string;
+      // Closes the expression, call, or declaration started above.
     };
     /** StartGameRequest */
+    // Defines the StartGameRequest field in the surrounding object or type.
     StartGameRequest: {
       /**
        * Practice
        * @default false
        */
+      // Defines the practice field in the surrounding object or type.
       practice: boolean;
+      // Closes the expression, call, or declaration started above.
     };
     /** StatsResponse */
+    // Defines the StatsResponse field in the surrounding object or type.
     StatsResponse: {
       /** Gamesplayed */
+      // Defines the gamesPlayed field in the surrounding object or type.
       gamesPlayed: number;
       /** Gameswon */
+      // Defines the gamesWon field in the surrounding object or type.
       gamesWon: number;
       /** Gameslost */
+      // Defines the gamesLost field in the surrounding object or type.
       gamesLost: number;
       /** Gamesabandoned */
+      // Defines the gamesAbandoned field in the surrounding object or type.
       gamesAbandoned: number;
       /** Winrate */
+      // Defines the winRate field in the surrounding object or type.
       winRate: number;
       /** Averageattemptsonwins */
+      // Defines the averageAttemptsOnWins field in the surrounding object or type.
       averageAttemptsOnWins: number | null;
       /** Bestscorebydifficulty */
+      // Defines the bestScoreByDifficulty field in the surrounding object or type.
       bestScoreByDifficulty: {
+        // Executes this line as the next step in the surrounding logic.
         [key: string]: number;
+        // Closes the expression, call, or declaration started above.
       };
       /** Dailystreak */
+      // Defines the dailyStreak field in the surrounding object or type.
       dailyStreak: number;
       /** Dailycompletionhistory */
+      // Defines the dailyCompletionHistory field in the surrounding object or type.
       dailyCompletionHistory: string[];
       /** Fastesteligiblesolve */
+      // Defines the fastestEligibleSolve field in the surrounding object or type.
       fastestEligibleSolve: number | null;
       /** Totalblackpegs */
+      // Defines the totalBlackPegs field in the surrounding object or type.
       totalBlackPegs: number;
       /** Totalwhitepegs */
+      // Defines the totalWhitePegs field in the surrounding object or type.
       totalWhitePegs: number;
       /** Favouritemode */
+      // Defines the favouriteMode field in the surrounding object or type.
       favouriteMode: string | null;
       /** Achievements */
+      // Defines the achievements field in the surrounding object or type.
       achievements: string[];
       /** Achievementprogress */
+      // Defines the achievementProgress field in the surrounding object or type.
       achievementProgress: {
+        // Executes this line as the next step in the surrounding logic.
         [key: string]: components['schemas']['AchievementProgressSchema'];
+        // Closes the expression, call, or declaration started above.
       };
+      // Closes the expression, call, or declaration started above.
     };
     /** SupportRequestCreate */
+    // Defines the SupportRequestCreate field in the surrounding object or type.
     SupportRequestCreate: {
       /**
        * Topic
        * @enum {string}
        */
+      // Defines the topic field in the surrounding object or type.
       topic: 'account' | 'gameplay' | 'accessibility' | 'privacy' | 'safety' | 'other';
       /** Replyemail */
+      // Defines the replyEmail field in the surrounding object or type.
       replyEmail: string;
       /** Message */
+      // Defines the message field in the surrounding object or type.
       message: string;
+      // Closes the expression, call, or declaration started above.
     };
     /** SupportRequestResponse */
+    // Defines the SupportRequestResponse field in the surrounding object or type.
     SupportRequestResponse: {
       /**
        * Id
        * Format: uuid
        */
+      // Defines the id field in the surrounding object or type.
       id: string;
       /** Received */
+      // Defines the received field in the surrounding object or type.
       received: boolean;
+      // Closes the expression, call, or declaration started above.
     };
     /** ValidationError */
+    // Defines the ValidationError field in the surrounding object or type.
     ValidationError: {
       /** Location */
+      // Defines the loc field in the surrounding object or type.
       loc: (string | number)[];
       /** Message */
+      // Defines the msg field in the surrounding object or type.
       msg: string;
       /** Error Type */
+      // Defines the type field in the surrounding object or type.
       type: string;
       /** Input */
+      // Executes this line as the next step in the surrounding logic.
       input?: unknown;
       /** Context */
+      // Executes this line as the next step in the surrounding logic.
       ctx?: Record<string, never>;
+      // Closes the expression, call, or declaration started above.
     };
     /** WebSocketTicketResponse */
+    // Defines the WebSocketTicketResponse field in the surrounding object or type.
     WebSocketTicketResponse: {
       /** Ticket */
+      // Defines the ticket field in the surrounding object or type.
       ticket: string;
       /**
        * Expiresat
        * Format: date-time
        */
+      // Defines the expiresAt field in the surrounding object or type.
       expiresAt: string;
+      // Closes the expression, call, or declaration started above.
     };
+    // Closes the expression, call, or declaration started above.
   };
+  // Defines the responses field in the surrounding object or type.
   responses: never;
+  // Defines the parameters field in the surrounding object or type.
   parameters: never;
+  // Defines the requestBodies field in the surrounding object or type.
   requestBodies: never;
+  // Defines the headers field in the surrounding object or type.
   headers: never;
+  // Defines the pathItems field in the surrounding object or type.
   pathItems: never;
+  // Closes the expression, call, or declaration started above.
 }
+// Exports this declaration for use by other modules.
 export type $defs = Record<string, never>;
+// Exports this declaration for use by other modules.
 export interface operations {
+  // Defines the create_game_route_v1_games_post field in the surrounding object or type.
   create_game_route_v1_games_post: {
+    // Defines the parameters field in the surrounding object or type.
     parameters: {
+      // Executes this line as the next step in the surrounding logic.
       query?: never;
+      // Begins the nested block or object completed below.
       header?: {
+        // Executes this line as the next step in the surrounding logic.
         authorization?: string | null;
+        // Closes the expression, call, or declaration started above.
       };
+      // Executes this line as the next step in the surrounding logic.
       path?: never;
+      // Executes this line as the next step in the surrounding logic.
       cookie?: never;
+      // Closes the expression, call, or declaration started above.
     };
+    // Defines the requestBody field in the surrounding object or type.
     requestBody: {
+      // Defines the content field in the surrounding object or type.
       content: {
+        // Executes this line as the next step in the surrounding logic.
         'application/json': components['schemas']['CreateGameRequest'];
+        // Closes the expression, call, or declaration started above.
       };
+      // Closes the expression, call, or declaration started above.
     };
+    // Defines the responses field in the surrounding object or type.
     responses: {
       /** @description Successful Response */
+      // Begins the nested block or object completed below.
       201: {
+        // Defines the headers field in the surrounding object or type.
         headers: {
+          // Executes this line as the next step in the surrounding logic.
           [name: string]: unknown;
+          // Closes the expression, call, or declaration started above.
         };
+        // Defines the content field in the surrounding object or type.
         content: {
+          // Executes this line as the next step in the surrounding logic.
           'application/json': components['schemas']['GameResponse'];
+          // Closes the expression, call, or declaration started above.
         };
+        // Closes the expression, call, or declaration started above.
       };
       /** @description Validation Error */
+      // Begins the nested block or object completed below.
       422: {
+        // Defines the headers field in the surrounding object or type.
         headers: {
+          // Executes this line as the next step in the surrounding logic.
           [name: string]: unknown;
+          // Closes the expression, call, or declaration started above.
         };
+        // Defines the content field in the surrounding object or type.
         content: {
+          // Executes this line as the next step in the surrounding logic.
           'application/json': components['schemas']['HTTPValidationError'];
+          // Closes the expression, call, or declaration started above.
         };
+        // Closes the expression, call, or declaration started above.
       };
+      // Closes the expression, call, or declaration started above.
     };
+    // Closes the expression, call, or declaration started above.
   };
+  // Defines the get_game_route_v1_games__game_id__get field in the surrounding object or type.
   get_game_route_v1_games__game_id__get: {
+    // Defines the parameters field in the surrounding object or type.
     parameters: {
+      // Executes this line as the next step in the surrounding logic.
       query?: never;
+      // Begins the nested block or object completed below.
       header?: {
+        // Executes this line as the next step in the surrounding logic.
         authorization?: string | null;
+        // Closes the expression, call, or declaration started above.
       };
+      // Defines the path field in the surrounding object or type.
       path: {
+        // Defines the game_id field in the surrounding object or type.
         game_id: string;
+        // Closes the expression, call, or declaration started above.
       };
+      // Executes this line as the next step in the surrounding logic.
       cookie?: never;
+      // Closes the expression, call, or declaration started above.
     };
+    // Executes this line as the next step in the surrounding logic.
     requestBody?: never;
+    // Defines the responses field in the surrounding object or type.
     responses: {
       /** @description Successful Response */
+      // Begins the nested block or object completed below.
       200: {
+        // Defines the headers field in the surrounding object or type.
         headers: {
+          // Executes this line as the next step in the surrounding logic.
           [name: string]: unknown;
+          // Closes the expression, call, or declaration started above.
         };
+        // Defines the content field in the surrounding object or type.
         content: {
+          // Executes this line as the next step in the surrounding logic.
           'application/json': components['schemas']['GameResponse'];
+          // Closes the expression, call, or declaration started above.
         };
+        // Closes the expression, call, or declaration started above.
       };
       /** @description Validation Error */
+      // Begins the nested block or object completed below.
       422: {
+        // Defines the headers field in the surrounding object or type.
         headers: {
+          // Executes this line as the next step in the surrounding logic.
           [name: string]: unknown;
+          // Closes the expression, call, or declaration started above.
         };
+        // Defines the content field in the surrounding object or type.
         content: {
+          // Executes this line as the next step in the surrounding logic.
           'application/json': components['schemas']['HTTPValidationError'];
+          // Closes the expression, call, or declaration started above.
         };
+        // Closes the expression, call, or declaration started above.
       };
+      // Closes the expression, call, or declaration started above.
     };
+    // Closes the expression, call, or declaration started above.
   };
+  // Defines the submit_attempt_route_v1_games__game_id__attempts_post field in the surrounding object or type.
   submit_attempt_route_v1_games__game_id__attempts_post: {
+    // Defines the parameters field in the surrounding object or type.
     parameters: {
+      // Executes this line as the next step in the surrounding logic.
       query?: never;
+      // Begins the nested block or object completed below.
       header?: {
+        // Executes this line as the next step in the surrounding logic.
         authorization?: string | null;
+        // Closes the expression, call, or declaration started above.
       };
+      // Defines the path field in the surrounding object or type.
       path: {
+        // Defines the game_id field in the surrounding object or type.
         game_id: string;
+        // Closes the expression, call, or declaration started above.
       };
+      // Executes this line as the next step in the surrounding logic.
       cookie?: never;
+      // Closes the expression, call, or declaration started above.
     };
+    // Defines the requestBody field in the surrounding object or type.
     requestBody: {
+      // Defines the content field in the surrounding object or type.
       content: {
+        // Executes this line as the next step in the surrounding logic.
         'application/json': components['schemas']['AttemptRequest'];
+        // Closes the expression, call, or declaration started above.
       };
+      // Closes the expression, call, or declaration started above.
     };
+    // Defines the responses field in the surrounding object or type.
     responses: {
       /** @description Successful Response */
+      // Begins the nested block or object completed below.
       200: {
+        // Defines the headers field in the surrounding object or type.
         headers: {
+          // Executes this line as the next step in the surrounding logic.
           [name: string]: unknown;
+          // Closes the expression, call, or declaration started above.
         };
+        // Defines the content field in the surrounding object or type.
         content: {
+          // Executes this line as the next step in the surrounding logic.
           'application/json': components['schemas']['GameResponse'];
+          // Closes the expression, call, or declaration started above.
         };
+        // Closes the expression, call, or declaration started above.
       };
       /** @description Validation Error */
+      // Begins the nested block or object completed below.
       422: {
+        // Defines the headers field in the surrounding object or type.
         headers: {
+          // Executes this line as the next step in the surrounding logic.
           [name: string]: unknown;
+          // Closes the expression, call, or declaration started above.
         };
+        // Defines the content field in the surrounding object or type.
         content: {
+          // Executes this line as the next step in the surrounding logic.
           'application/json': components['schemas']['HTTPValidationError'];
+          // Closes the expression, call, or declaration started above.
         };
+        // Closes the expression, call, or declaration started above.
       };
+      // Closes the expression, call, or declaration started above.
     };
+    // Closes the expression, call, or declaration started above.
   };
+  // Defines the abandon_game_route_v1_games__game_id__abandon_post field in the surrounding object or type.
   abandon_game_route_v1_games__game_id__abandon_post: {
+    // Defines the parameters field in the surrounding object or type.
     parameters: {
+      // Executes this line as the next step in the surrounding logic.
       query?: never;
+      // Begins the nested block or object completed below.
       header?: {
+        // Executes this line as the next step in the surrounding logic.
         authorization?: string | null;
+        // Closes the expression, call, or declaration started above.
       };
+      // Defines the path field in the surrounding object or type.
       path: {
+        // Defines the game_id field in the surrounding object or type.
         game_id: string;
+        // Closes the expression, call, or declaration started above.
       };
+      // Executes this line as the next step in the surrounding logic.
       cookie?: never;
+      // Closes the expression, call, or declaration started above.
     };
+    // Executes this line as the next step in the surrounding logic.
     requestBody?: never;
+    // Defines the responses field in the surrounding object or type.
     responses: {
       /** @description Successful Response */
+      // Begins the nested block or object completed below.
       200: {
+        // Defines the headers field in the surrounding object or type.
         headers: {
+          // Executes this line as the next step in the surrounding logic.
           [name: string]: unknown;
+          // Closes the expression, call, or declaration started above.
         };
+        // Defines the content field in the surrounding object or type.
         content: {
+          // Executes this line as the next step in the surrounding logic.
           'application/json': components['schemas']['GameResponse'];
+          // Closes the expression, call, or declaration started above.
         };
+        // Closes the expression, call, or declaration started above.
       };
       /** @description Validation Error */
+      // Begins the nested block or object completed below.
       422: {
+        // Defines the headers field in the surrounding object or type.
         headers: {
+          // Executes this line as the next step in the surrounding logic.
           [name: string]: unknown;
+          // Closes the expression, call, or declaration started above.
         };
+        // Defines the content field in the surrounding object or type.
         content: {
+          // Executes this line as the next step in the surrounding logic.
           'application/json': components['schemas']['HTTPValidationError'];
+          // Closes the expression, call, or declaration started above.
         };
+        // Closes the expression, call, or declaration started above.
       };
+      // Closes the expression, call, or declaration started above.
     };
+    // Closes the expression, call, or declaration started above.
   };
+  // Defines the get_daily_route_v1_daily_get field in the surrounding object or type.
   get_daily_route_v1_daily_get: {
+    // Defines the parameters field in the surrounding object or type.
     parameters: {
+      // Executes this line as the next step in the surrounding logic.
       query?: never;
+      // Begins the nested block or object completed below.
       header?: {
+        // Executes this line as the next step in the surrounding logic.
         authorization?: string | null;
+        // Closes the expression, call, or declaration started above.
       };
+      // Executes this line as the next step in the surrounding logic.
       path?: never;
+      // Executes this line as the next step in the surrounding logic.
       cookie?: never;
+      // Closes the expression, call, or declaration started above.
     };
+    // Executes this line as the next step in the surrounding logic.
     requestBody?: never;
+    // Defines the responses field in the surrounding object or type.
     responses: {
       /** @description Successful Response */
+      // Begins the nested block or object completed below.
       200: {
+        // Defines the headers field in the surrounding object or type.
         headers: {
+          // Executes this line as the next step in the surrounding logic.
           [name: string]: unknown;
+          // Closes the expression, call, or declaration started above.
         };
+        // Defines the content field in the surrounding object or type.
         content: {
+          // Executes this line as the next step in the surrounding logic.
           'application/json': components['schemas']['DailyDefinitionResponse'];
+          // Closes the expression, call, or declaration started above.
         };
+        // Closes the expression, call, or declaration started above.
       };
       /** @description Validation Error */
+      // Begins the nested block or object completed below.
       422: {
+        // Defines the headers field in the surrounding object or type.
         headers: {
+          // Executes this line as the next step in the surrounding logic.
           [name: string]: unknown;
+          // Closes the expression, call, or declaration started above.
         };
+        // Defines the content field in the surrounding object or type.
         content: {
+          // Executes this line as the next step in the surrounding logic.
           'application/json': components['schemas']['HTTPValidationError'];
+          // Closes the expression, call, or declaration started above.
         };
+        // Closes the expression, call, or declaration started above.
       };
+      // Closes the expression, call, or declaration started above.
     };
+    // Closes the expression, call, or declaration started above.
   };
+  // Defines the start_daily_route_v1_daily_start_post field in the surrounding object or type.
   start_daily_route_v1_daily_start_post: {
+    // Defines the parameters field in the surrounding object or type.
     parameters: {
+      // Executes this line as the next step in the surrounding logic.
       query?: never;
+      // Begins the nested block or object completed below.
       header?: {
+        // Executes this line as the next step in the surrounding logic.
         authorization?: string | null;
+        // Closes the expression, call, or declaration started above.
       };
+      // Executes this line as the next step in the surrounding logic.
       path?: never;
+      // Executes this line as the next step in the surrounding logic.
       cookie?: never;
+      // Closes the expression, call, or declaration started above.
     };
+    // Begins the nested block or object completed below.
     requestBody?: {
+      // Defines the content field in the surrounding object or type.
       content: {
+        // Executes this line as the next step in the surrounding logic.
         'application/json': components['schemas']['StartGameRequest'] | null;
+        // Closes the expression, call, or declaration started above.
       };
+      // Closes the expression, call, or declaration started above.
     };
+    // Defines the responses field in the surrounding object or type.
     responses: {
       /** @description Successful Response */
+      // Begins the nested block or object completed below.
       200: {
+        // Defines the headers field in the surrounding object or type.
         headers: {
+          // Executes this line as the next step in the surrounding logic.
           [name: string]: unknown;
+          // Closes the expression, call, or declaration started above.
         };
+        // Defines the content field in the surrounding object or type.
         content: {
+          // Executes this line as the next step in the surrounding logic.
           'application/json': components['schemas']['GameResponse'];
+          // Closes the expression, call, or declaration started above.
         };
+        // Closes the expression, call, or declaration started above.
       };
       /** @description Validation Error */
+      // Begins the nested block or object completed below.
       422: {
+        // Defines the headers field in the surrounding object or type.
         headers: {
+          // Executes this line as the next step in the surrounding logic.
           [name: string]: unknown;
+          // Closes the expression, call, or declaration started above.
         };
+        // Defines the content field in the surrounding object or type.
         content: {
+          // Executes this line as the next step in the surrounding logic.
           'application/json': components['schemas']['HTTPValidationError'];
+          // Closes the expression, call, or declaration started above.
         };
+        // Closes the expression, call, or declaration started above.
       };
+      // Closes the expression, call, or declaration started above.
     };
+    // Closes the expression, call, or declaration started above.
   };
+  // Defines the daily_leaderboard_route_v1_daily_leaderboard_get field in the surrounding object or type.
   daily_leaderboard_route_v1_daily_leaderboard_get: {
+    // Defines the parameters field in the surrounding object or type.
     parameters: {
+      // Begins the nested block or object completed below.
       query?: {
+        // Executes this line as the next step in the surrounding logic.
         page?: number;
+        // Executes this line as the next step in the surrounding logic.
         page_size?: number;
+        // Closes the expression, call, or declaration started above.
       };
+      // Begins the nested block or object completed below.
       header?: {
+        // Executes this line as the next step in the surrounding logic.
         authorization?: string | null;
+        // Closes the expression, call, or declaration started above.
       };
+      // Executes this line as the next step in the surrounding logic.
       path?: never;
+      // Executes this line as the next step in the surrounding logic.
       cookie?: never;
+      // Closes the expression, call, or declaration started above.
     };
+    // Executes this line as the next step in the surrounding logic.
     requestBody?: never;
+    // Defines the responses field in the surrounding object or type.
     responses: {
       /** @description Successful Response */
+      // Begins the nested block or object completed below.
       200: {
+        // Defines the headers field in the surrounding object or type.
         headers: {
+          // Executes this line as the next step in the surrounding logic.
           [name: string]: unknown;
+          // Closes the expression, call, or declaration started above.
         };
+        // Defines the content field in the surrounding object or type.
         content: {
+          // Executes this line as the next step in the surrounding logic.
           'application/json': components['schemas']['PaginatedLeaderboard'];
+          // Closes the expression, call, or declaration started above.
         };
+        // Closes the expression, call, or declaration started above.
       };
       /** @description Validation Error */
+      // Begins the nested block or object completed below.
       422: {
+        // Defines the headers field in the surrounding object or type.
         headers: {
+          // Executes this line as the next step in the surrounding logic.
           [name: string]: unknown;
+          // Closes the expression, call, or declaration started above.
         };
+        // Defines the content field in the surrounding object or type.
         content: {
+          // Executes this line as the next step in the surrounding logic.
           'application/json': components['schemas']['HTTPValidationError'];
+          // Closes the expression, call, or declaration started above.
         };
+        // Closes the expression, call, or declaration started above.
       };
+      // Closes the expression, call, or declaration started above.
     };
+    // Closes the expression, call, or declaration started above.
   };
+  // Defines the challenge_results_route_v1_challenges__challenge_id__results_get field in the surrounding object or type.
   challenge_results_route_v1_challenges__challenge_id__results_get: {
+    // Defines the parameters field in the surrounding object or type.
     parameters: {
+      // Begins the nested block or object completed below.
       query?: {
+        // Executes this line as the next step in the surrounding logic.
         page?: number;
+        // Executes this line as the next step in the surrounding logic.
         page_size?: number;
+        // Closes the expression, call, or declaration started above.
       };
+      // Begins the nested block or object completed below.
       header?: {
+        // Executes this line as the next step in the surrounding logic.
         authorization?: string | null;
+        // Closes the expression, call, or declaration started above.
       };
+      // Defines the path field in the surrounding object or type.
       path: {
+        // Defines the challenge_id field in the surrounding object or type.
         challenge_id: string;
+        // Closes the expression, call, or declaration started above.
       };
+      // Executes this line as the next step in the surrounding logic.
       cookie?: never;
+      // Closes the expression, call, or declaration started above.
     };
+    // Executes this line as the next step in the surrounding logic.
     requestBody?: never;
+    // Defines the responses field in the surrounding object or type.
     responses: {
       /** @description Successful Response */
+      // Begins the nested block or object completed below.
       200: {
+        // Defines the headers field in the surrounding object or type.
         headers: {
+          // Executes this line as the next step in the surrounding logic.
           [name: string]: unknown;
+          // Closes the expression, call, or declaration started above.
         };
+        // Defines the content field in the surrounding object or type.
         content: {
+          // Executes this line as the next step in the surrounding logic.
           'application/json': components['schemas']['ChallengeResultsResponse'];
+          // Closes the expression, call, or declaration started above.
         };
+        // Closes the expression, call, or declaration started above.
       };
       /** @description Validation Error */
+      // Begins the nested block or object completed below.
       422: {
+        // Defines the headers field in the surrounding object or type.
         headers: {
+          // Executes this line as the next step in the surrounding logic.
           [name: string]: unknown;
+          // Closes the expression, call, or declaration started above.
         };
+        // Defines the content field in the surrounding object or type.
         content: {
+          // Executes this line as the next step in the surrounding logic.
           'application/json': components['schemas']['HTTPValidationError'];
+          // Closes the expression, call, or declaration started above.
         };
+        // Closes the expression, call, or declaration started above.
       };
+      // Closes the expression, call, or declaration started above.
     };
+    // Closes the expression, call, or declaration started above.
   };
+  // Defines the create_challenge_route_v1_challenges_post field in the surrounding object or type.
   create_challenge_route_v1_challenges_post: {
+    // Defines the parameters field in the surrounding object or type.
     parameters: {
+      // Executes this line as the next step in the surrounding logic.
       query?: never;
+      // Begins the nested block or object completed below.
       header?: {
+        // Executes this line as the next step in the surrounding logic.
         authorization?: string | null;
+        // Closes the expression, call, or declaration started above.
       };
+      // Executes this line as the next step in the surrounding logic.
       path?: never;
+      // Executes this line as the next step in the surrounding logic.
       cookie?: never;
+      // Closes the expression, call, or declaration started above.
     };
+    // Defines the requestBody field in the surrounding object or type.
     requestBody: {
+      // Defines the content field in the surrounding object or type.
       content: {
+        // Executes this line as the next step in the surrounding logic.
         'application/json': components['schemas']['CreateChallengeRequest'];
+        // Closes the expression, call, or declaration started above.
       };
+      // Closes the expression, call, or declaration started above.
     };
+    // Defines the responses field in the surrounding object or type.
     responses: {
       /** @description Successful Response */
+      // Begins the nested block or object completed below.
       201: {
+        // Defines the headers field in the surrounding object or type.
         headers: {
+          // Executes this line as the next step in the surrounding logic.
           [name: string]: unknown;
+          // Closes the expression, call, or declaration started above.
         };
+        // Defines the content field in the surrounding object or type.
         content: {
+          // Executes this line as the next step in the surrounding logic.
           'application/json': components['schemas']['ChallengeResponse'];
+          // Closes the expression, call, or declaration started above.
         };
+        // Closes the expression, call, or declaration started above.
       };
       /** @description Validation Error */
+      // Begins the nested block or object completed below.
       422: {
+        // Defines the headers field in the surrounding object or type.
         headers: {
+          // Executes this line as the next step in the surrounding logic.
           [name: string]: unknown;
+          // Closes the expression, call, or declaration started above.
         };
+        // Defines the content field in the surrounding object or type.
         content: {
+          // Executes this line as the next step in the surrounding logic.
           'application/json': components['schemas']['HTTPValidationError'];
+          // Closes the expression, call, or declaration started above.
         };
+        // Closes the expression, call, or declaration started above.
       };
+      // Closes the expression, call, or declaration started above.
     };
+    // Closes the expression, call, or declaration started above.
   };
+  // Defines the owned_challenges_route_v1_challenges_mine_get field in the surrounding object or type.
   owned_challenges_route_v1_challenges_mine_get: {
+    // Defines the parameters field in the surrounding object or type.
     parameters: {
+      // Begins the nested block or object completed below.
       query?: {
+        // Executes this line as the next step in the surrounding logic.
         page?: number;
+        // Executes this line as the next step in the surrounding logic.
         page_size?: number;
+        // Closes the expression, call, or declaration started above.
       };
+      // Begins the nested block or object completed below.
       header?: {
+        // Executes this line as the next step in the surrounding logic.
         authorization?: string | null;
+        // Closes the expression, call, or declaration started above.
       };
+      // Executes this line as the next step in the surrounding logic.
       path?: never;
+      // Executes this line as the next step in the surrounding logic.
       cookie?: never;
+      // Closes the expression, call, or declaration started above.
     };
+    // Executes this line as the next step in the surrounding logic.
     requestBody?: never;
+    // Defines the responses field in the surrounding object or type.
     responses: {
       /** @description Successful Response */
+      // Begins the nested block or object completed below.
       200: {
+        // Defines the headers field in the surrounding object or type.
         headers: {
+          // Executes this line as the next step in the surrounding logic.
           [name: string]: unknown;
+          // Closes the expression, call, or declaration started above.
         };
+        // Defines the content field in the surrounding object or type.
         content: {
+          // Executes this line as the next step in the surrounding logic.
           'application/json': components['schemas']['PaginatedOwnedChallenges'];
+          // Closes the expression, call, or declaration started above.
         };
+        // Closes the expression, call, or declaration started above.
       };
       /** @description Validation Error */
+      // Begins the nested block or object completed below.
       422: {
+        // Defines the headers field in the surrounding object or type.
         headers: {
+          // Executes this line as the next step in the surrounding logic.
           [name: string]: unknown;
+          // Closes the expression, call, or declaration started above.
         };
+        // Defines the content field in the surrounding object or type.
         content: {
+          // Executes this line as the next step in the surrounding logic.
           'application/json': components['schemas']['HTTPValidationError'];
+          // Closes the expression, call, or declaration started above.
         };
+        // Closes the expression, call, or declaration started above.
       };
+      // Closes the expression, call, or declaration started above.
     };
+    // Closes the expression, call, or declaration started above.
   };
+  // Defines the get_challenge_route_v1_challenges__share_code__get field in the surrounding object or type.
   get_challenge_route_v1_challenges__share_code__get: {
+    // Defines the parameters field in the surrounding object or type.
     parameters: {
+      // Executes this line as the next step in the surrounding logic.
       query?: never;
+      // Begins the nested block or object completed below.
       header?: {
+        // Executes this line as the next step in the surrounding logic.
         authorization?: string | null;
+        // Closes the expression, call, or declaration started above.
       };
+      // Defines the path field in the surrounding object or type.
       path: {
+        // Defines the share_code field in the surrounding object or type.
         share_code: string;
+        // Closes the expression, call, or declaration started above.
       };
+      // Executes this line as the next step in the surrounding logic.
       cookie?: never;
+      // Closes the expression, call, or declaration started above.
     };
+    // Executes this line as the next step in the surrounding logic.
     requestBody?: never;
+    // Defines the responses field in the surrounding object or type.
     responses: {
       /** @description Successful Response */
+      // Begins the nested block or object completed below.
       200: {
+        // Defines the headers field in the surrounding object or type.
         headers: {
+          // Executes this line as the next step in the surrounding logic.
           [name: string]: unknown;
+          // Closes the expression, call, or declaration started above.
         };
+        // Defines the content field in the surrounding object or type.
         content: {
+          // Executes this line as the next step in the surrounding logic.
           'application/json': components['schemas']['ChallengeResponse'];
+          // Closes the expression, call, or declaration started above.
         };
+        // Closes the expression, call, or declaration started above.
       };
       /** @description Validation Error */
+      // Begins the nested block or object completed below.
       422: {
+        // Defines the headers field in the surrounding object or type.
         headers: {
+          // Executes this line as the next step in the surrounding logic.
           [name: string]: unknown;
+          // Closes the expression, call, or declaration started above.
         };
+        // Defines the content field in the surrounding object or type.
         content: {
+          // Executes this line as the next step in the surrounding logic.
           'application/json': components['schemas']['HTTPValidationError'];
+          // Closes the expression, call, or declaration started above.
         };
+        // Closes the expression, call, or declaration started above.
       };
+      // Closes the expression, call, or declaration started above.
     };
+    // Closes the expression, call, or declaration started above.
   };
+  // Defines the start_challenge_route_v1_challenges__share_code__start_post field in the surrounding object or type.
   start_challenge_route_v1_challenges__share_code__start_post: {
+    // Defines the parameters field in the surrounding object or type.
     parameters: {
+      // Executes this line as the next step in the surrounding logic.
       query?: never;
+      // Begins the nested block or object completed below.
       header?: {
+        // Executes this line as the next step in the surrounding logic.
         authorization?: string | null;
+        // Closes the expression, call, or declaration started above.
       };
+      // Defines the path field in the surrounding object or type.
       path: {
+        // Defines the share_code field in the surrounding object or type.
         share_code: string;
+        // Closes the expression, call, or declaration started above.
       };
+      // Executes this line as the next step in the surrounding logic.
       cookie?: never;
+      // Closes the expression, call, or declaration started above.
     };
+    // Begins the nested block or object completed below.
     requestBody?: {
+      // Defines the content field in the surrounding object or type.
       content: {
+        // Executes this line as the next step in the surrounding logic.
         'application/json': components['schemas']['StartGameRequest'] | null;
+        // Closes the expression, call, or declaration started above.
       };
+      // Closes the expression, call, or declaration started above.
     };
+    // Defines the responses field in the surrounding object or type.
     responses: {
       /** @description Successful Response */
+      // Begins the nested block or object completed below.
       200: {
+        // Defines the headers field in the surrounding object or type.
         headers: {
+          // Executes this line as the next step in the surrounding logic.
           [name: string]: unknown;
+          // Closes the expression, call, or declaration started above.
         };
+        // Defines the content field in the surrounding object or type.
         content: {
+          // Executes this line as the next step in the surrounding logic.
           'application/json': components['schemas']['GameResponse'];
+          // Closes the expression, call, or declaration started above.
         };
+        // Closes the expression, call, or declaration started above.
       };
       /** @description Validation Error */
+      // Begins the nested block or object completed below.
       422: {
+        // Defines the headers field in the surrounding object or type.
         headers: {
+          // Executes this line as the next step in the surrounding logic.
           [name: string]: unknown;
+          // Closes the expression, call, or declaration started above.
         };
+        // Defines the content field in the surrounding object or type.
         content: {
+          // Executes this line as the next step in the surrounding logic.
           'application/json': components['schemas']['HTTPValidationError'];
+          // Closes the expression, call, or declaration started above.
         };
+        // Closes the expression, call, or declaration started above.
       };
+      // Closes the expression, call, or declaration started above.
     };
+    // Closes the expression, call, or declaration started above.
   };
+  // Defines the revoke_challenge_route_v1_challenges__challenge_id__delete field in the surrounding object or type.
   revoke_challenge_route_v1_challenges__challenge_id__delete: {
+    // Defines the parameters field in the surrounding object or type.
     parameters: {
+      // Executes this line as the next step in the surrounding logic.
       query?: never;
+      // Begins the nested block or object completed below.
       header?: {
+        // Executes this line as the next step in the surrounding logic.
         authorization?: string | null;
+        // Closes the expression, call, or declaration started above.
       };
+      // Defines the path field in the surrounding object or type.
       path: {
+        // Defines the challenge_id field in the surrounding object or type.
         challenge_id: string;
+        // Closes the expression, call, or declaration started above.
       };
+      // Executes this line as the next step in the surrounding logic.
       cookie?: never;
+      // Closes the expression, call, or declaration started above.
     };
+    // Executes this line as the next step in the surrounding logic.
     requestBody?: never;
+    // Defines the responses field in the surrounding object or type.
     responses: {
       /** @description Successful Response */
+      // Begins the nested block or object completed below.
       204: {
+        // Defines the headers field in the surrounding object or type.
         headers: {
+          // Executes this line as the next step in the surrounding logic.
           [name: string]: unknown;
+          // Closes the expression, call, or declaration started above.
         };
+        // Executes this line as the next step in the surrounding logic.
         content?: never;
+        // Closes the expression, call, or declaration started above.
       };
       /** @description Validation Error */
+      // Begins the nested block or object completed below.
       422: {
+        // Defines the headers field in the surrounding object or type.
         headers: {
+          // Executes this line as the next step in the surrounding logic.
           [name: string]: unknown;
+          // Closes the expression, call, or declaration started above.
         };
+        // Defines the content field in the surrounding object or type.
         content: {
+          // Executes this line as the next step in the surrounding logic.
           'application/json': components['schemas']['HTTPValidationError'];
+          // Closes the expression, call, or declaration started above.
         };
+        // Closes the expression, call, or declaration started above.
       };
+      // Closes the expression, call, or declaration started above.
     };
+    // Closes the expression, call, or declaration started above.
   };
+  // Defines the create_websocket_ticket_route_v1_rooms__room_id__ws_ticket_post field in the surrounding object or type.
   create_websocket_ticket_route_v1_rooms__room_id__ws_ticket_post: {
+    // Defines the parameters field in the surrounding object or type.
     parameters: {
+      // Executes this line as the next step in the surrounding logic.
       query?: never;
+      // Begins the nested block or object completed below.
       header?: {
+        // Executes this line as the next step in the surrounding logic.
         authorization?: string | null;
+        // Closes the expression, call, or declaration started above.
       };
+      // Defines the path field in the surrounding object or type.
       path: {
+        // Defines the room_id field in the surrounding object or type.
         room_id: string;
+        // Closes the expression, call, or declaration started above.
       };
+      // Executes this line as the next step in the surrounding logic.
       cookie?: never;
+      // Closes the expression, call, or declaration started above.
     };
+    // Executes this line as the next step in the surrounding logic.
     requestBody?: never;
+    // Defines the responses field in the surrounding object or type.
     responses: {
       /** @description Successful Response */
+      // Begins the nested block or object completed below.
       200: {
+        // Defines the headers field in the surrounding object or type.
         headers: {
+          // Executes this line as the next step in the surrounding logic.
           [name: string]: unknown;
+          // Closes the expression, call, or declaration started above.
         };
+        // Defines the content field in the surrounding object or type.
         content: {
+          // Executes this line as the next step in the surrounding logic.
           'application/json': components['schemas']['WebSocketTicketResponse'];
+          // Closes the expression, call, or declaration started above.
         };
+        // Closes the expression, call, or declaration started above.
       };
       /** @description Validation Error */
+      // Begins the nested block or object completed below.
       422: {
+        // Defines the headers field in the surrounding object or type.
         headers: {
+          // Executes this line as the next step in the surrounding logic.
           [name: string]: unknown;
+          // Closes the expression, call, or declaration started above.
         };
+        // Defines the content field in the surrounding object or type.
         content: {
+          // Executes this line as the next step in the surrounding logic.
           'application/json': components['schemas']['HTTPValidationError'];
+          // Closes the expression, call, or declaration started above.
         };
+        // Closes the expression, call, or declaration started above.
       };
+      // Closes the expression, call, or declaration started above.
     };
+    // Closes the expression, call, or declaration started above.
   };
+  // Defines the create_room_route_v1_rooms_post field in the surrounding object or type.
   create_room_route_v1_rooms_post: {
+    // Defines the parameters field in the surrounding object or type.
     parameters: {
+      // Executes this line as the next step in the surrounding logic.
       query?: never;
+      // Begins the nested block or object completed below.
       header?: {
+        // Executes this line as the next step in the surrounding logic.
         authorization?: string | null;
+        // Closes the expression, call, or declaration started above.
       };
+      // Executes this line as the next step in the surrounding logic.
       path?: never;
+      // Executes this line as the next step in the surrounding logic.
       cookie?: never;
+      // Closes the expression, call, or declaration started above.
     };
+    // Defines the requestBody field in the surrounding object or type.
     requestBody: {
+      // Defines the content field in the surrounding object or type.
       content: {
+        // Executes this line as the next step in the surrounding logic.
         'application/json': components['schemas']['CreateRoomRequest'];
+        // Closes the expression, call, or declaration started above.
       };
+      // Closes the expression, call, or declaration started above.
     };
+    // Defines the responses field in the surrounding object or type.
     responses: {
       /** @description Successful Response */
+      // Begins the nested block or object completed below.
       201: {
+        // Defines the headers field in the surrounding object or type.
         headers: {
+          // Executes this line as the next step in the surrounding logic.
           [name: string]: unknown;
+          // Closes the expression, call, or declaration started above.
         };
+        // Defines the content field in the surrounding object or type.
         content: {
+          // Executes this line as the next step in the surrounding logic.
           'application/json': components['schemas']['RoomResponse'];
+          // Closes the expression, call, or declaration started above.
         };
+        // Closes the expression, call, or declaration started above.
       };
       /** @description Validation Error */
+      // Begins the nested block or object completed below.
       422: {
+        // Defines the headers field in the surrounding object or type.
         headers: {
+          // Executes this line as the next step in the surrounding logic.
           [name: string]: unknown;
+          // Closes the expression, call, or declaration started above.
         };
+        // Defines the content field in the surrounding object or type.
         content: {
+          // Executes this line as the next step in the surrounding logic.
           'application/json': components['schemas']['HTTPValidationError'];
+          // Closes the expression, call, or declaration started above.
         };
+        // Closes the expression, call, or declaration started above.
       };
+      // Closes the expression, call, or declaration started above.
     };
+    // Closes the expression, call, or declaration started above.
   };
+  // Defines the join_room_route_v1_rooms__room_code__join_post field in the surrounding object or type.
   join_room_route_v1_rooms__room_code__join_post: {
+    // Defines the parameters field in the surrounding object or type.
     parameters: {
+      // Executes this line as the next step in the surrounding logic.
       query?: never;
+      // Begins the nested block or object completed below.
       header?: {
+        // Executes this line as the next step in the surrounding logic.
         authorization?: string | null;
+        // Closes the expression, call, or declaration started above.
       };
+      // Defines the path field in the surrounding object or type.
       path: {
+        // Defines the room_code field in the surrounding object or type.
         room_code: string;
+        // Closes the expression, call, or declaration started above.
       };
+      // Executes this line as the next step in the surrounding logic.
       cookie?: never;
+      // Closes the expression, call, or declaration started above.
     };
+    // Executes this line as the next step in the surrounding logic.
     requestBody?: never;
+    // Defines the responses field in the surrounding object or type.
     responses: {
       /** @description Successful Response */
+      // Begins the nested block or object completed below.
       200: {
+        // Defines the headers field in the surrounding object or type.
         headers: {
+          // Executes this line as the next step in the surrounding logic.
           [name: string]: unknown;
+          // Closes the expression, call, or declaration started above.
         };
+        // Defines the content field in the surrounding object or type.
         content: {
+          // Executes this line as the next step in the surrounding logic.
           'application/json': components['schemas']['RoomResponse'];
+          // Closes the expression, call, or declaration started above.
         };
+        // Closes the expression, call, or declaration started above.
       };
       /** @description Validation Error */
+      // Begins the nested block or object completed below.
       422: {
+        // Defines the headers field in the surrounding object or type.
         headers: {
+          // Executes this line as the next step in the surrounding logic.
           [name: string]: unknown;
+          // Closes the expression, call, or declaration started above.
         };
+        // Defines the content field in the surrounding object or type.
         content: {
+          // Executes this line as the next step in the surrounding logic.
           'application/json': components['schemas']['HTTPValidationError'];
+          // Closes the expression, call, or declaration started above.
         };
+        // Closes the expression, call, or declaration started above.
       };
+      // Closes the expression, call, or declaration started above.
     };
+    // Closes the expression, call, or declaration started above.
   };
+  // Defines the ready_room_route_v1_rooms__room_id__ready_post field in the surrounding object or type.
   ready_room_route_v1_rooms__room_id__ready_post: {
+    // Defines the parameters field in the surrounding object or type.
     parameters: {
+      // Executes this line as the next step in the surrounding logic.
       query?: never;
+      // Begins the nested block or object completed below.
       header?: {
+        // Executes this line as the next step in the surrounding logic.
         authorization?: string | null;
+        // Closes the expression, call, or declaration started above.
       };
+      // Defines the path field in the surrounding object or type.
       path: {
+        // Defines the room_id field in the surrounding object or type.
         room_id: string;
+        // Closes the expression, call, or declaration started above.
       };
+      // Executes this line as the next step in the surrounding logic.
       cookie?: never;
+      // Closes the expression, call, or declaration started above.
     };
+    // Executes this line as the next step in the surrounding logic.
     requestBody?: never;
+    // Defines the responses field in the surrounding object or type.
     responses: {
       /** @description Successful Response */
+      // Begins the nested block or object completed below.
       200: {
+        // Defines the headers field in the surrounding object or type.
         headers: {
+          // Executes this line as the next step in the surrounding logic.
           [name: string]: unknown;
+          // Closes the expression, call, or declaration started above.
         };
+        // Defines the content field in the surrounding object or type.
         content: {
+          // Executes this line as the next step in the surrounding logic.
           'application/json': components['schemas']['RoomResponse'];
+          // Closes the expression, call, or declaration started above.
         };
+        // Closes the expression, call, or declaration started above.
       };
       /** @description Validation Error */
+      // Begins the nested block or object completed below.
       422: {
+        // Defines the headers field in the surrounding object or type.
         headers: {
+          // Executes this line as the next step in the surrounding logic.
           [name: string]: unknown;
+          // Closes the expression, call, or declaration started above.
         };
+        // Defines the content field in the surrounding object or type.
         content: {
+          // Executes this line as the next step in the surrounding logic.
           'application/json': components['schemas']['HTTPValidationError'];
+          // Closes the expression, call, or declaration started above.
         };
+        // Closes the expression, call, or declaration started above.
       };
+      // Closes the expression, call, or declaration started above.
     };
+    // Closes the expression, call, or declaration started above.
   };
+  // Defines the get_room_route_v1_rooms__room_id__get field in the surrounding object or type.
   get_room_route_v1_rooms__room_id__get: {
+    // Defines the parameters field in the surrounding object or type.
     parameters: {
+      // Executes this line as the next step in the surrounding logic.
       query?: never;
+      // Begins the nested block or object completed below.
       header?: {
+        // Executes this line as the next step in the surrounding logic.
         authorization?: string | null;
+        // Closes the expression, call, or declaration started above.
       };
+      // Defines the path field in the surrounding object or type.
       path: {
+        // Defines the room_id field in the surrounding object or type.
         room_id: string;
+        // Closes the expression, call, or declaration started above.
       };
+      // Executes this line as the next step in the surrounding logic.
       cookie?: never;
+      // Closes the expression, call, or declaration started above.
     };
+    // Executes this line as the next step in the surrounding logic.
     requestBody?: never;
+    // Defines the responses field in the surrounding object or type.
     responses: {
       /** @description Successful Response */
+      // Begins the nested block or object completed below.
       200: {
+        // Defines the headers field in the surrounding object or type.
         headers: {
+          // Executes this line as the next step in the surrounding logic.
           [name: string]: unknown;
+          // Closes the expression, call, or declaration started above.
         };
+        // Defines the content field in the surrounding object or type.
         content: {
+          // Executes this line as the next step in the surrounding logic.
           'application/json': components['schemas']['RoomResponse'];
+          // Closes the expression, call, or declaration started above.
         };
+        // Closes the expression, call, or declaration started above.
       };
       /** @description Validation Error */
+      // Begins the nested block or object completed below.
       422: {
+        // Defines the headers field in the surrounding object or type.
         headers: {
+          // Executes this line as the next step in the surrounding logic.
           [name: string]: unknown;
+          // Closes the expression, call, or declaration started above.
         };
+        // Defines the content field in the surrounding object or type.
         content: {
+          // Executes this line as the next step in the surrounding logic.
           'application/json': components['schemas']['HTTPValidationError'];
+          // Closes the expression, call, or declaration started above.
         };
+        // Closes the expression, call, or declaration started above.
       };
+      // Closes the expression, call, or declaration started above.
     };
+    // Closes the expression, call, or declaration started above.
   };
+  // Defines the get_leaderboard_route_v1_leaderboards_get field in the surrounding object or type.
   get_leaderboard_route_v1_leaderboards_get: {
+    // Defines the parameters field in the surrounding object or type.
     parameters: {
+      // Begins the nested block or object completed below.
       query?: {
+        // Executes this line as the next step in the surrounding logic.
         period?: string;
+        // Executes this line as the next step in the surrounding logic.
         difficulty?: string | null;
+        // Executes this line as the next step in the surrounding logic.
         page?: number;
+        // Executes this line as the next step in the surrounding logic.
         page_size?: number;
+        // Closes the expression, call, or declaration started above.
       };
+      // Begins the nested block or object completed below.
       header?: {
+        // Executes this line as the next step in the surrounding logic.
         authorization?: string | null;
+        // Closes the expression, call, or declaration started above.
       };
+      // Executes this line as the next step in the surrounding logic.
       path?: never;
+      // Executes this line as the next step in the surrounding logic.
       cookie?: never;
+      // Closes the expression, call, or declaration started above.
     };
+    // Executes this line as the next step in the surrounding logic.
     requestBody?: never;
+    // Defines the responses field in the surrounding object or type.
     responses: {
       /** @description Successful Response */
+      // Begins the nested block or object completed below.
       200: {
+        // Defines the headers field in the surrounding object or type.
         headers: {
+          // Executes this line as the next step in the surrounding logic.
           [name: string]: unknown;
+          // Closes the expression, call, or declaration started above.
         };
+        // Defines the content field in the surrounding object or type.
         content: {
+          // Executes this line as the next step in the surrounding logic.
           'application/json': components['schemas']['PaginatedLeaderboard'];
+          // Closes the expression, call, or declaration started above.
         };
+        // Closes the expression, call, or declaration started above.
       };
       /** @description Validation Error */
+      // Begins the nested block or object completed below.
       422: {
+        // Defines the headers field in the surrounding object or type.
         headers: {
+          // Executes this line as the next step in the surrounding logic.
           [name: string]: unknown;
+          // Closes the expression, call, or declaration started above.
         };
+        // Defines the content field in the surrounding object or type.
         content: {
+          // Executes this line as the next step in the surrounding logic.
           'application/json': components['schemas']['HTTPValidationError'];
+          // Closes the expression, call, or declaration started above.
         };
+        // Closes the expression, call, or declaration started above.
       };
+      // Closes the expression, call, or declaration started above.
     };
+    // Closes the expression, call, or declaration started above.
   };
+  // Defines the get_profile_route_v1_me_profile_get field in the surrounding object or type.
   get_profile_route_v1_me_profile_get: {
+    // Defines the parameters field in the surrounding object or type.
     parameters: {
+      // Executes this line as the next step in the surrounding logic.
       query?: never;
+      // Begins the nested block or object completed below.
       header?: {
+        // Executes this line as the next step in the surrounding logic.
         authorization?: string | null;
+        // Closes the expression, call, or declaration started above.
       };
+      // Executes this line as the next step in the surrounding logic.
       path?: never;
+      // Executes this line as the next step in the surrounding logic.
       cookie?: never;
+      // Closes the expression, call, or declaration started above.
     };
+    // Executes this line as the next step in the surrounding logic.
     requestBody?: never;
+    // Defines the responses field in the surrounding object or type.
     responses: {
       /** @description Successful Response */
+      // Begins the nested block or object completed below.
       200: {
+        // Defines the headers field in the surrounding object or type.
         headers: {
+          // Executes this line as the next step in the surrounding logic.
           [name: string]: unknown;
+          // Closes the expression, call, or declaration started above.
         };
+        // Defines the content field in the surrounding object or type.
         content: {
+          // Executes this line as the next step in the surrounding logic.
           'application/json': components['schemas']['ProfileResponse'];
+          // Closes the expression, call, or declaration started above.
         };
+        // Closes the expression, call, or declaration started above.
       };
       /** @description Validation Error */
+      // Begins the nested block or object completed below.
       422: {
+        // Defines the headers field in the surrounding object or type.
         headers: {
+          // Executes this line as the next step in the surrounding logic.
           [name: string]: unknown;
+          // Closes the expression, call, or declaration started above.
         };
+        // Defines the content field in the surrounding object or type.
         content: {
+          // Executes this line as the next step in the surrounding logic.
           'application/json': components['schemas']['HTTPValidationError'];
+          // Closes the expression, call, or declaration started above.
         };
+        // Closes the expression, call, or declaration started above.
       };
+      // Closes the expression, call, or declaration started above.
     };
+    // Closes the expression, call, or declaration started above.
   };
+  // Defines the update_profile_route_v1_me_profile_patch field in the surrounding object or type.
   update_profile_route_v1_me_profile_patch: {
+    // Defines the parameters field in the surrounding object or type.
     parameters: {
+      // Executes this line as the next step in the surrounding logic.
       query?: never;
+      // Begins the nested block or object completed below.
       header?: {
+        // Executes this line as the next step in the surrounding logic.
         authorization?: string | null;
+        // Closes the expression, call, or declaration started above.
       };
+      // Executes this line as the next step in the surrounding logic.
       path?: never;
+      // Executes this line as the next step in the surrounding logic.
       cookie?: never;
+      // Closes the expression, call, or declaration started above.
     };
+    // Defines the requestBody field in the surrounding object or type.
     requestBody: {
+      // Defines the content field in the surrounding object or type.
       content: {
+        // Executes this line as the next step in the surrounding logic.
         'application/json': components['schemas']['ProfileUpdateRequest'];
+        // Closes the expression, call, or declaration started above.
       };
+      // Closes the expression, call, or declaration started above.
     };
+    // Defines the responses field in the surrounding object or type.
     responses: {
       /** @description Successful Response */
+      // Begins the nested block or object completed below.
       200: {
+        // Defines the headers field in the surrounding object or type.
         headers: {
+          // Executes this line as the next step in the surrounding logic.
           [name: string]: unknown;
+          // Closes the expression, call, or declaration started above.
         };
+        // Defines the content field in the surrounding object or type.
         content: {
+          // Executes this line as the next step in the surrounding logic.
           'application/json': components['schemas']['ProfileResponse'];
+          // Closes the expression, call, or declaration started above.
         };
+        // Closes the expression, call, or declaration started above.
       };
       /** @description Validation Error */
+      // Begins the nested block or object completed below.
       422: {
+        // Defines the headers field in the surrounding object or type.
         headers: {
+          // Executes this line as the next step in the surrounding logic.
           [name: string]: unknown;
+          // Closes the expression, call, or declaration started above.
         };
+        // Defines the content field in the surrounding object or type.
         content: {
+          // Executes this line as the next step in the surrounding logic.
           'application/json': components['schemas']['HTTPValidationError'];
+          // Closes the expression, call, or declaration started above.
         };
+        // Closes the expression, call, or declaration started above.
       };
+      // Closes the expression, call, or declaration started above.
     };
+    // Closes the expression, call, or declaration started above.
   };
+  // Defines the get_games_route_v1_me_games_get field in the surrounding object or type.
   get_games_route_v1_me_games_get: {
+    // Defines the parameters field in the surrounding object or type.
     parameters: {
+      // Begins the nested block or object completed below.
       query?: {
+        // Executes this line as the next step in the surrounding logic.
         page?: number;
+        // Executes this line as the next step in the surrounding logic.
         page_size?: number;
+        // Closes the expression, call, or declaration started above.
       };
+      // Begins the nested block or object completed below.
       header?: {
+        // Executes this line as the next step in the surrounding logic.
         authorization?: string | null;
+        // Closes the expression, call, or declaration started above.
       };
+      // Executes this line as the next step in the surrounding logic.
       path?: never;
+      // Executes this line as the next step in the surrounding logic.
       cookie?: never;
+      // Closes the expression, call, or declaration started above.
     };
+    // Executes this line as the next step in the surrounding logic.
     requestBody?: never;
+    // Defines the responses field in the surrounding object or type.
     responses: {
       /** @description Successful Response */
+      // Begins the nested block or object completed below.
       200: {
+        // Defines the headers field in the surrounding object or type.
         headers: {
+          // Executes this line as the next step in the surrounding logic.
           [name: string]: unknown;
+          // Closes the expression, call, or declaration started above.
         };
+        // Defines the content field in the surrounding object or type.
         content: {
+          // Executes this line as the next step in the surrounding logic.
           'application/json': components['schemas']['PaginatedGames'];
+          // Closes the expression, call, or declaration started above.
         };
+        // Closes the expression, call, or declaration started above.
       };
       /** @description Validation Error */
+      // Begins the nested block or object completed below.
       422: {
+        // Defines the headers field in the surrounding object or type.
         headers: {
+          // Executes this line as the next step in the surrounding logic.
           [name: string]: unknown;
+          // Closes the expression, call, or declaration started above.
         };
+        // Defines the content field in the surrounding object or type.
         content: {
+          // Executes this line as the next step in the surrounding logic.
           'application/json': components['schemas']['HTTPValidationError'];
+          // Closes the expression, call, or declaration started above.
         };
+        // Closes the expression, call, or declaration started above.
       };
+      // Closes the expression, call, or declaration started above.
     };
+    // Closes the expression, call, or declaration started above.
   };
+  // Defines the get_stats_route_v1_me_stats_get field in the surrounding object or type.
   get_stats_route_v1_me_stats_get: {
+    // Defines the parameters field in the surrounding object or type.
     parameters: {
+      // Executes this line as the next step in the surrounding logic.
       query?: never;
+      // Begins the nested block or object completed below.
       header?: {
+        // Executes this line as the next step in the surrounding logic.
         authorization?: string | null;
+        // Closes the expression, call, or declaration started above.
       };
+      // Executes this line as the next step in the surrounding logic.
       path?: never;
+      // Executes this line as the next step in the surrounding logic.
       cookie?: never;
+      // Closes the expression, call, or declaration started above.
     };
+    // Executes this line as the next step in the surrounding logic.
     requestBody?: never;
+    // Defines the responses field in the surrounding object or type.
     responses: {
       /** @description Successful Response */
+      // Begins the nested block or object completed below.
       200: {
+        // Defines the headers field in the surrounding object or type.
         headers: {
+          // Executes this line as the next step in the surrounding logic.
           [name: string]: unknown;
+          // Closes the expression, call, or declaration started above.
         };
+        // Defines the content field in the surrounding object or type.
         content: {
+          // Executes this line as the next step in the surrounding logic.
           'application/json': components['schemas']['StatsResponse'];
+          // Closes the expression, call, or declaration started above.
         };
+        // Closes the expression, call, or declaration started above.
       };
       /** @description Validation Error */
+      // Begins the nested block or object completed below.
       422: {
+        // Defines the headers field in the surrounding object or type.
         headers: {
+          // Executes this line as the next step in the surrounding logic.
           [name: string]: unknown;
+          // Closes the expression, call, or declaration started above.
         };
+        // Defines the content field in the surrounding object or type.
         content: {
+          // Executes this line as the next step in the surrounding logic.
           'application/json': components['schemas']['HTTPValidationError'];
+          // Closes the expression, call, or declaration started above.
         };
+        // Closes the expression, call, or declaration started above.
       };
+      // Closes the expression, call, or declaration started above.
     };
+    // Closes the expression, call, or declaration started above.
   };
+  // Defines the export_route_v1_me_export_get field in the surrounding object or type.
   export_route_v1_me_export_get: {
+    // Defines the parameters field in the surrounding object or type.
     parameters: {
+      // Executes this line as the next step in the surrounding logic.
       query?: never;
+      // Begins the nested block or object completed below.
       header?: {
+        // Executes this line as the next step in the surrounding logic.
         authorization?: string | null;
+        // Closes the expression, call, or declaration started above.
       };
+      // Executes this line as the next step in the surrounding logic.
       path?: never;
+      // Executes this line as the next step in the surrounding logic.
       cookie?: never;
+      // Closes the expression, call, or declaration started above.
     };
+    // Executes this line as the next step in the surrounding logic.
     requestBody?: never;
+    // Defines the responses field in the surrounding object or type.
     responses: {
       /** @description Successful Response */
+      // Begins the nested block or object completed below.
       200: {
+        // Defines the headers field in the surrounding object or type.
         headers: {
+          // Executes this line as the next step in the surrounding logic.
           [name: string]: unknown;
+          // Closes the expression, call, or declaration started above.
         };
+        // Defines the content field in the surrounding object or type.
         content: {
+          // Executes this line as the next step in the surrounding logic.
           'application/json': unknown;
+          // Closes the expression, call, or declaration started above.
         };
+        // Closes the expression, call, or declaration started above.
       };
       /** @description Validation Error */
+      // Begins the nested block or object completed below.
       422: {
+        // Defines the headers field in the surrounding object or type.
         headers: {
+          // Executes this line as the next step in the surrounding logic.
           [name: string]: unknown;
+          // Closes the expression, call, or declaration started above.
         };
+        // Defines the content field in the surrounding object or type.
         content: {
+          // Executes this line as the next step in the surrounding logic.
           'application/json': components['schemas']['HTTPValidationError'];
+          // Closes the expression, call, or declaration started above.
         };
+        // Closes the expression, call, or declaration started above.
       };
+      // Closes the expression, call, or declaration started above.
     };
+    // Closes the expression, call, or declaration started above.
   };
+  // Defines the delete_account_route_v1_me_delete field in the surrounding object or type.
   delete_account_route_v1_me_delete: {
+    // Defines the parameters field in the surrounding object or type.
     parameters: {
+      // Executes this line as the next step in the surrounding logic.
       query?: never;
+      // Begins the nested block or object completed below.
       header?: {
+        // Executes this line as the next step in the surrounding logic.
         authorization?: string | null;
+        // Closes the expression, call, or declaration started above.
       };
+      // Executes this line as the next step in the surrounding logic.
       path?: never;
+      // Executes this line as the next step in the surrounding logic.
       cookie?: never;
+      // Closes the expression, call, or declaration started above.
     };
+    // Defines the requestBody field in the surrounding object or type.
     requestBody: {
+      // Defines the content field in the surrounding object or type.
       content: {
+        // Executes this line as the next step in the surrounding logic.
         'application/json': components['schemas']['DeleteAccountRequest'];
+        // Closes the expression, call, or declaration started above.
       };
+      // Closes the expression, call, or declaration started above.
     };
+    // Defines the responses field in the surrounding object or type.
     responses: {
       /** @description Successful Response */
+      // Begins the nested block or object completed below.
       200: {
+        // Defines the headers field in the surrounding object or type.
         headers: {
+          // Executes this line as the next step in the surrounding logic.
           [name: string]: unknown;
+          // Closes the expression, call, or declaration started above.
         };
+        // Defines the content field in the surrounding object or type.
         content: {
+          // Executes this line as the next step in the surrounding logic.
           'application/json': components['schemas']['DeleteAccountResponse'];
+          // Closes the expression, call, or declaration started above.
         };
+        // Closes the expression, call, or declaration started above.
       };
       /** @description Validation Error */
+      // Begins the nested block or object completed below.
       422: {
+        // Defines the headers field in the surrounding object or type.
         headers: {
+          // Executes this line as the next step in the surrounding logic.
           [name: string]: unknown;
+          // Closes the expression, call, or declaration started above.
         };
+        // Defines the content field in the surrounding object or type.
         content: {
+          // Executes this line as the next step in the surrounding logic.
           'application/json': components['schemas']['HTTPValidationError'];
+          // Closes the expression, call, or declaration started above.
         };
+        // Closes the expression, call, or declaration started above.
       };
+      // Closes the expression, call, or declaration started above.
     };
+    // Closes the expression, call, or declaration started above.
   };
+  // Defines the create_support_request_route_v1_support_post field in the surrounding object or type.
   create_support_request_route_v1_support_post: {
+    // Defines the parameters field in the surrounding object or type.
     parameters: {
+      // Executes this line as the next step in the surrounding logic.
       query?: never;
+      // Begins the nested block or object completed below.
       header?: {
+        // Executes this line as the next step in the surrounding logic.
         authorization?: string | null;
+        // Closes the expression, call, or declaration started above.
       };
+      // Executes this line as the next step in the surrounding logic.
       path?: never;
+      // Executes this line as the next step in the surrounding logic.
       cookie?: never;
+      // Closes the expression, call, or declaration started above.
     };
+    // Defines the requestBody field in the surrounding object or type.
     requestBody: {
+      // Defines the content field in the surrounding object or type.
       content: {
+        // Executes this line as the next step in the surrounding logic.
         'application/json': components['schemas']['SupportRequestCreate'];
+        // Closes the expression, call, or declaration started above.
       };
+      // Closes the expression, call, or declaration started above.
     };
+    // Defines the responses field in the surrounding object or type.
     responses: {
       /** @description Successful Response */
+      // Begins the nested block or object completed below.
       202: {
+        // Defines the headers field in the surrounding object or type.
         headers: {
+          // Executes this line as the next step in the surrounding logic.
           [name: string]: unknown;
+          // Closes the expression, call, or declaration started above.
         };
+        // Defines the content field in the surrounding object or type.
         content: {
+          // Executes this line as the next step in the surrounding logic.
           'application/json': components['schemas']['SupportRequestResponse'];
+          // Closes the expression, call, or declaration started above.
         };
+        // Closes the expression, call, or declaration started above.
       };
       /** @description Validation Error */
+      // Begins the nested block or object completed below.
       422: {
+        // Defines the headers field in the surrounding object or type.
         headers: {
+          // Executes this line as the next step in the surrounding logic.
           [name: string]: unknown;
+          // Closes the expression, call, or declaration started above.
         };
+        // Defines the content field in the surrounding object or type.
         content: {
+          // Executes this line as the next step in the surrounding logic.
           'application/json': components['schemas']['HTTPValidationError'];
+          // Closes the expression, call, or declaration started above.
         };
+        // Closes the expression, call, or declaration started above.
       };
+      // Closes the expression, call, or declaration started above.
     };
+    // Closes the expression, call, or declaration started above.
   };
+  // Defines the collect_event_route_v1_analytics_events_post field in the surrounding object or type.
   collect_event_route_v1_analytics_events_post: {
+    // Defines the parameters field in the surrounding object or type.
     parameters: {
+      // Executes this line as the next step in the surrounding logic.
       query?: never;
+      // Begins the nested block or object completed below.
       header?: {
+        // Executes this line as the next step in the surrounding logic.
         authorization?: string | null;
+        // Closes the expression, call, or declaration started above.
       };
+      // Executes this line as the next step in the surrounding logic.
       path?: never;
+      // Executes this line as the next step in the surrounding logic.
       cookie?: never;
+      // Closes the expression, call, or declaration started above.
     };
+    // Defines the requestBody field in the surrounding object or type.
     requestBody: {
+      // Defines the content field in the surrounding object or type.
       content: {
+        // Executes this line as the next step in the surrounding logic.
         'application/json': components['schemas']['AnalyticsEventRequest'];
+        // Closes the expression, call, or declaration started above.
       };
+      // Closes the expression, call, or declaration started above.
     };
+    // Defines the responses field in the surrounding object or type.
     responses: {
       /** @description Successful Response */
+      // Begins the nested block or object completed below.
       202: {
+        // Defines the headers field in the surrounding object or type.
         headers: {
+          // Executes this line as the next step in the surrounding logic.
           [name: string]: unknown;
+          // Closes the expression, call, or declaration started above.
         };
+        // Defines the content field in the surrounding object or type.
         content: {
+          // Executes this line as the next step in the surrounding logic.
           'application/json': components['schemas']['AnalyticsEventResponse'];
+          // Closes the expression, call, or declaration started above.
         };
+        // Closes the expression, call, or declaration started above.
       };
       /** @description Validation Error */
+      // Begins the nested block or object completed below.
       422: {
+        // Defines the headers field in the surrounding object or type.
         headers: {
+          // Executes this line as the next step in the surrounding logic.
           [name: string]: unknown;
+          // Closes the expression, call, or declaration started above.
         };
+        // Defines the content field in the surrounding object or type.
         content: {
+          // Executes this line as the next step in the surrounding logic.
           'application/json': components['schemas']['HTTPValidationError'];
+          // Closes the expression, call, or declaration started above.
         };
+        // Closes the expression, call, or declaration started above.
       };
+      // Closes the expression, call, or declaration started above.
     };
+    // Closes the expression, call, or declaration started above.
   };
+  // Defines the games_route_v1_admin_games_get field in the surrounding object or type.
   games_route_v1_admin_games_get: {
+    // Defines the parameters field in the surrounding object or type.
     parameters: {
+      // Begins the nested block or object completed below.
       query?: {
+        // Executes this line as the next step in the surrounding logic.
         status?: string | null;
+        // Executes this line as the next step in the surrounding logic.
         page?: number;
+        // Executes this line as the next step in the surrounding logic.
         page_size?: number;
+        // Closes the expression, call, or declaration started above.
       };
+      // Begins the nested block or object completed below.
       header?: {
+        // Executes this line as the next step in the surrounding logic.
         authorization?: string | null;
+        // Closes the expression, call, or declaration started above.
       };
+      // Executes this line as the next step in the surrounding logic.
       path?: never;
+      // Executes this line as the next step in the surrounding logic.
       cookie?: never;
+      // Closes the expression, call, or declaration started above.
     };
+    // Executes this line as the next step in the surrounding logic.
     requestBody?: never;
+    // Defines the responses field in the surrounding object or type.
     responses: {
       /** @description Successful Response */
+      // Begins the nested block or object completed below.
       200: {
+        // Defines the headers field in the surrounding object or type.
         headers: {
+          // Executes this line as the next step in the surrounding logic.
           [name: string]: unknown;
+          // Closes the expression, call, or declaration started above.
         };
+        // Defines the content field in the surrounding object or type.
         content: {
+          // Executes this line as the next step in the surrounding logic.
           'application/json': components['schemas']['AdminPage_AdminGameItem_'];
+          // Closes the expression, call, or declaration started above.
         };
+        // Closes the expression, call, or declaration started above.
       };
       /** @description Validation Error */
+      // Begins the nested block or object completed below.
       422: {
+        // Defines the headers field in the surrounding object or type.
         headers: {
+          // Executes this line as the next step in the surrounding logic.
           [name: string]: unknown;
+          // Closes the expression, call, or declaration started above.
         };
+        // Defines the content field in the surrounding object or type.
         content: {
+          // Executes this line as the next step in the surrounding logic.
           'application/json': components['schemas']['HTTPValidationError'];
+          // Closes the expression, call, or declaration started above.
         };
+        // Closes the expression, call, or declaration started above.
       };
+      // Closes the expression, call, or declaration started above.
     };
+    // Closes the expression, call, or declaration started above.
   };
+  // Defines the profiles_route_v1_admin_profiles_get field in the surrounding object or type.
   profiles_route_v1_admin_profiles_get: {
+    // Defines the parameters field in the surrounding object or type.
     parameters: {
+      // Begins the nested block or object completed below.
       query?: {
+        // Executes this line as the next step in the surrounding logic.
         moderation_only?: boolean;
+        // Executes this line as the next step in the surrounding logic.
         search?: string | null;
+        // Executes this line as the next step in the surrounding logic.
         page?: number;
+        // Executes this line as the next step in the surrounding logic.
         page_size?: number;
+        // Closes the expression, call, or declaration started above.
       };
+      // Begins the nested block or object completed below.
       header?: {
+        // Executes this line as the next step in the surrounding logic.
         authorization?: string | null;
+        // Closes the expression, call, or declaration started above.
       };
+      // Executes this line as the next step in the surrounding logic.
       path?: never;
+      // Executes this line as the next step in the surrounding logic.
       cookie?: never;
+      // Closes the expression, call, or declaration started above.
     };
+    // Executes this line as the next step in the surrounding logic.
     requestBody?: never;
+    // Defines the responses field in the surrounding object or type.
     responses: {
       /** @description Successful Response */
+      // Begins the nested block or object completed below.
       200: {
+        // Defines the headers field in the surrounding object or type.
         headers: {
+          // Executes this line as the next step in the surrounding logic.
           [name: string]: unknown;
+          // Closes the expression, call, or declaration started above.
         };
+        // Defines the content field in the surrounding object or type.
         content: {
+          // Executes this line as the next step in the surrounding logic.
           'application/json': components['schemas']['AdminPage_AdminProfileItem_'];
+          // Closes the expression, call, or declaration started above.
         };
+        // Closes the expression, call, or declaration started above.
       };
       /** @description Validation Error */
+      // Begins the nested block or object completed below.
       422: {
+        // Defines the headers field in the surrounding object or type.
         headers: {
+          // Executes this line as the next step in the surrounding logic.
           [name: string]: unknown;
+          // Closes the expression, call, or declaration started above.
         };
+        // Defines the content field in the surrounding object or type.
         content: {
+          // Executes this line as the next step in the surrounding logic.
           'application/json': components['schemas']['HTTPValidationError'];
+          // Closes the expression, call, or declaration started above.
         };
+        // Closes the expression, call, or declaration started above.
       };
+      // Closes the expression, call, or declaration started above.
     };
+    // Closes the expression, call, or declaration started above.
   };
+  // Defines the rooms_route_v1_admin_rooms_get field in the surrounding object or type.
   rooms_route_v1_admin_rooms_get: {
+    // Defines the parameters field in the surrounding object or type.
     parameters: {
+      // Begins the nested block or object completed below.
       query?: {
+        // Executes this line as the next step in the surrounding logic.
         active_only?: boolean;
+        // Executes this line as the next step in the surrounding logic.
         page?: number;
+        // Executes this line as the next step in the surrounding logic.
         page_size?: number;
+        // Closes the expression, call, or declaration started above.
       };
+      // Begins the nested block or object completed below.
       header?: {
+        // Executes this line as the next step in the surrounding logic.
         authorization?: string | null;
+        // Closes the expression, call, or declaration started above.
       };
+      // Executes this line as the next step in the surrounding logic.
       path?: never;
+      // Executes this line as the next step in the surrounding logic.
       cookie?: never;
+      // Closes the expression, call, or declaration started above.
     };
+    // Executes this line as the next step in the surrounding logic.
     requestBody?: never;
+    // Defines the responses field in the surrounding object or type.
     responses: {
       /** @description Successful Response */
+      // Begins the nested block or object completed below.
       200: {
+        // Defines the headers field in the surrounding object or type.
         headers: {
+          // Executes this line as the next step in the surrounding logic.
           [name: string]: unknown;
+          // Closes the expression, call, or declaration started above.
         };
+        // Defines the content field in the surrounding object or type.
         content: {
+          // Executes this line as the next step in the surrounding logic.
           'application/json': components['schemas']['AdminPage_AdminRoomItem_'];
+          // Closes the expression, call, or declaration started above.
         };
+        // Closes the expression, call, or declaration started above.
       };
       /** @description Validation Error */
+      // Begins the nested block or object completed below.
       422: {
+        // Defines the headers field in the surrounding object or type.
         headers: {
+          // Executes this line as the next step in the surrounding logic.
           [name: string]: unknown;
+          // Closes the expression, call, or declaration started above.
         };
+        // Defines the content field in the surrounding object or type.
         content: {
+          // Executes this line as the next step in the surrounding logic.
           'application/json': components['schemas']['HTTPValidationError'];
+          // Closes the expression, call, or declaration started above.
         };
+        // Closes the expression, call, or declaration started above.
       };
+      // Closes the expression, call, or declaration started above.
     };
+    // Closes the expression, call, or declaration started above.
   };
+  // Defines the challenges_route_v1_admin_challenges_get field in the surrounding object or type.
   challenges_route_v1_admin_challenges_get: {
+    // Defines the parameters field in the surrounding object or type.
     parameters: {
+      // Begins the nested block or object completed below.
       query?: {
+        // Executes this line as the next step in the surrounding logic.
         active_only?: boolean;
+        // Executes this line as the next step in the surrounding logic.
         page?: number;
+        // Executes this line as the next step in the surrounding logic.
         page_size?: number;
+        // Closes the expression, call, or declaration started above.
       };
+      // Begins the nested block or object completed below.
       header?: {
+        // Executes this line as the next step in the surrounding logic.
         authorization?: string | null;
+        // Closes the expression, call, or declaration started above.
       };
+      // Executes this line as the next step in the surrounding logic.
       path?: never;
+      // Executes this line as the next step in the surrounding logic.
       cookie?: never;
+      // Closes the expression, call, or declaration started above.
     };
+    // Executes this line as the next step in the surrounding logic.
     requestBody?: never;
+    // Defines the responses field in the surrounding object or type.
     responses: {
       /** @description Successful Response */
+      // Begins the nested block or object completed below.
       200: {
+        // Defines the headers field in the surrounding object or type.
         headers: {
+          // Executes this line as the next step in the surrounding logic.
           [name: string]: unknown;
+          // Closes the expression, call, or declaration started above.
         };
+        // Defines the content field in the surrounding object or type.
         content: {
+          // Executes this line as the next step in the surrounding logic.
           'application/json': components['schemas']['AdminPage_AdminChallengeItem_'];
+          // Closes the expression, call, or declaration started above.
         };
+        // Closes the expression, call, or declaration started above.
       };
       /** @description Validation Error */
+      // Begins the nested block or object completed below.
       422: {
+        // Defines the headers field in the surrounding object or type.
         headers: {
+          // Executes this line as the next step in the surrounding logic.
           [name: string]: unknown;
+          // Closes the expression, call, or declaration started above.
         };
+        // Defines the content field in the surrounding object or type.
         content: {
+          // Executes this line as the next step in the surrounding logic.
           'application/json': components['schemas']['HTTPValidationError'];
+          // Closes the expression, call, or declaration started above.
         };
+        // Closes the expression, call, or declaration started above.
       };
+      // Closes the expression, call, or declaration started above.
     };
+    // Closes the expression, call, or declaration started above.
   };
+  // Defines the leaderboard_review_route_v1_admin_leaderboard_review_get field in the surrounding object or type.
   leaderboard_review_route_v1_admin_leaderboard_review_get: {
+    // Defines the parameters field in the surrounding object or type.
     parameters: {
+      // Begins the nested block or object completed below.
       query?: {
+        // Executes this line as the next step in the surrounding logic.
         status?: string | null;
+        // Executes this line as the next step in the surrounding logic.
         page?: number;
+        // Executes this line as the next step in the surrounding logic.
         page_size?: number;
+        // Closes the expression, call, or declaration started above.
       };
+      // Begins the nested block or object completed below.
       header?: {
+        // Executes this line as the next step in the surrounding logic.
         authorization?: string | null;
+        // Closes the expression, call, or declaration started above.
       };
+      // Executes this line as the next step in the surrounding logic.
       path?: never;
+      // Executes this line as the next step in the surrounding logic.
       cookie?: never;
+      // Closes the expression, call, or declaration started above.
     };
+    // Executes this line as the next step in the surrounding logic.
     requestBody?: never;
+    // Defines the responses field in the surrounding object or type.
     responses: {
       /** @description Successful Response */
+      // Begins the nested block or object completed below.
       200: {
+        // Defines the headers field in the surrounding object or type.
         headers: {
+          // Executes this line as the next step in the surrounding logic.
           [name: string]: unknown;
+          // Closes the expression, call, or declaration started above.
         };
+        // Defines the content field in the surrounding object or type.
         content: {
+          // Executes this line as the next step in the surrounding logic.
           'application/json': components['schemas']['AdminPage_AdminLeaderboardItem_'];
+          // Closes the expression, call, or declaration started above.
         };
+        // Closes the expression, call, or declaration started above.
       };
       /** @description Validation Error */
+      // Begins the nested block or object completed below.
       422: {
+        // Defines the headers field in the surrounding object or type.
         headers: {
+          // Executes this line as the next step in the surrounding logic.
           [name: string]: unknown;
+          // Closes the expression, call, or declaration started above.
         };
+        // Defines the content field in the surrounding object or type.
         content: {
+          // Executes this line as the next step in the surrounding logic.
           'application/json': components['schemas']['HTTPValidationError'];
+          // Closes the expression, call, or declaration started above.
         };
+        // Closes the expression, call, or declaration started above.
       };
+      // Closes the expression, call, or declaration started above.
     };
+    // Closes the expression, call, or declaration started above.
   };
+  // Defines the summary_route_v1_admin_summary_get field in the surrounding object or type.
   summary_route_v1_admin_summary_get: {
+    // Defines the parameters field in the surrounding object or type.
     parameters: {
+      // Executes this line as the next step in the surrounding logic.
       query?: never;
+      // Begins the nested block or object completed below.
       header?: {
+        // Executes this line as the next step in the surrounding logic.
         authorization?: string | null;
+        // Closes the expression, call, or declaration started above.
       };
+      // Executes this line as the next step in the surrounding logic.
       path?: never;
+      // Executes this line as the next step in the surrounding logic.
       cookie?: never;
+      // Closes the expression, call, or declaration started above.
     };
+    // Executes this line as the next step in the surrounding logic.
     requestBody?: never;
+    // Defines the responses field in the surrounding object or type.
     responses: {
       /** @description Successful Response */
+      // Begins the nested block or object completed below.
       200: {
+        // Defines the headers field in the surrounding object or type.
         headers: {
+          // Executes this line as the next step in the surrounding logic.
           [name: string]: unknown;
+          // Closes the expression, call, or declaration started above.
         };
+        // Defines the content field in the surrounding object or type.
         content: {
+          // Executes this line as the next step in the surrounding logic.
           'application/json': components['schemas']['AdminSummary'];
+          // Closes the expression, call, or declaration started above.
         };
+        // Closes the expression, call, or declaration started above.
       };
       /** @description Validation Error */
+      // Begins the nested block or object completed below.
       422: {
+        // Defines the headers field in the surrounding object or type.
         headers: {
+          // Executes this line as the next step in the surrounding logic.
           [name: string]: unknown;
+          // Closes the expression, call, or declaration started above.
         };
+        // Defines the content field in the surrounding object or type.
         content: {
+          // Executes this line as the next step in the surrounding logic.
           'application/json': components['schemas']['HTTPValidationError'];
+          // Closes the expression, call, or declaration started above.
         };
+        // Closes the expression, call, or declaration started above.
       };
+      // Closes the expression, call, or declaration started above.
     };
+    // Closes the expression, call, or declaration started above.
   };
+  // Defines the flags_route_v1_admin_flags_get field in the surrounding object or type.
   flags_route_v1_admin_flags_get: {
+    // Defines the parameters field in the surrounding object or type.
     parameters: {
+      // Executes this line as the next step in the surrounding logic.
       query?: never;
+      // Begins the nested block or object completed below.
       header?: {
+        // Executes this line as the next step in the surrounding logic.
         authorization?: string | null;
+        // Closes the expression, call, or declaration started above.
       };
+      // Executes this line as the next step in the surrounding logic.
       path?: never;
+      // Executes this line as the next step in the surrounding logic.
       cookie?: never;
+      // Closes the expression, call, or declaration started above.
     };
+    // Executes this line as the next step in the surrounding logic.
     requestBody?: never;
+    // Defines the responses field in the surrounding object or type.
     responses: {
       /** @description Successful Response */
+      // Begins the nested block or object completed below.
       200: {
+        // Defines the headers field in the surrounding object or type.
         headers: {
+          // Executes this line as the next step in the surrounding logic.
           [name: string]: unknown;
+          // Closes the expression, call, or declaration started above.
         };
+        // Defines the content field in the surrounding object or type.
         content: {
+          // Executes this line as the next step in the surrounding logic.
           'application/json': components['schemas']['FeatureFlagResponse'][];
+          // Closes the expression, call, or declaration started above.
         };
+        // Closes the expression, call, or declaration started above.
       };
       /** @description Validation Error */
+      // Begins the nested block or object completed below.
       422: {
+        // Defines the headers field in the surrounding object or type.
         headers: {
+          // Executes this line as the next step in the surrounding logic.
           [name: string]: unknown;
+          // Closes the expression, call, or declaration started above.
         };
+        // Defines the content field in the surrounding object or type.
         content: {
+          // Executes this line as the next step in the surrounding logic.
           'application/json': components['schemas']['HTTPValidationError'];
+          // Closes the expression, call, or declaration started above.
         };
+        // Closes the expression, call, or declaration started above.
       };
+      // Closes the expression, call, or declaration started above.
     };
+    // Closes the expression, call, or declaration started above.
   };
+  // Defines the update_flag_route_v1_admin_flags__key__patch field in the surrounding object or type.
   update_flag_route_v1_admin_flags__key__patch: {
+    // Defines the parameters field in the surrounding object or type.
     parameters: {
+      // Executes this line as the next step in the surrounding logic.
       query?: never;
+      // Begins the nested block or object completed below.
       header?: {
+        // Executes this line as the next step in the surrounding logic.
         authorization?: string | null;
+        // Closes the expression, call, or declaration started above.
       };
+      // Defines the path field in the surrounding object or type.
       path: {
+        // Defines the key field in the surrounding object or type.
         key: string;
+        // Closes the expression, call, or declaration started above.
       };
+      // Executes this line as the next step in the surrounding logic.
       cookie?: never;
+      // Closes the expression, call, or declaration started above.
     };
+    // Defines the requestBody field in the surrounding object or type.
     requestBody: {
+      // Defines the content field in the surrounding object or type.
       content: {
+        // Executes this line as the next step in the surrounding logic.
         'application/json': components['schemas']['AdminActionRequest'];
+        // Closes the expression, call, or declaration started above.
       };
+      // Closes the expression, call, or declaration started above.
     };
+    // Defines the responses field in the surrounding object or type.
     responses: {
       /** @description Successful Response */
+      // Begins the nested block or object completed below.
       200: {
+        // Defines the headers field in the surrounding object or type.
         headers: {
+          // Executes this line as the next step in the surrounding logic.
           [name: string]: unknown;
+          // Closes the expression, call, or declaration started above.
         };
+        // Defines the content field in the surrounding object or type.
         content: {
+          // Executes this line as the next step in the surrounding logic.
           'application/json': components['schemas']['FeatureFlagResponse'];
+          // Closes the expression, call, or declaration started above.
         };
+        // Closes the expression, call, or declaration started above.
       };
       /** @description Validation Error */
+      // Begins the nested block or object completed below.
       422: {
+        // Defines the headers field in the surrounding object or type.
         headers: {
+          // Executes this line as the next step in the surrounding logic.
           [name: string]: unknown;
+          // Closes the expression, call, or declaration started above.
         };
+        // Defines the content field in the surrounding object or type.
         content: {
+          // Executes this line as the next step in the surrounding logic.
           'application/json': components['schemas']['HTTPValidationError'];
+          // Closes the expression, call, or declaration started above.
         };
+        // Closes the expression, call, or declaration started above.
       };
+      // Closes the expression, call, or declaration started above.
     };
+    // Closes the expression, call, or declaration started above.
   };
+  // Defines the invalidate_leaderboard_route_v1_admin_leaderboard__entry_id__invalidate_post field in the surrounding object or type.
   invalidate_leaderboard_route_v1_admin_leaderboard__entry_id__invalidate_post: {
+    // Defines the parameters field in the surrounding object or type.
     parameters: {
+      // Executes this line as the next step in the surrounding logic.
       query?: never;
+      // Begins the nested block or object completed below.
       header?: {
+        // Executes this line as the next step in the surrounding logic.
         authorization?: string | null;
+        // Closes the expression, call, or declaration started above.
       };
+      // Defines the path field in the surrounding object or type.
       path: {
+        // Defines the entry_id field in the surrounding object or type.
         entry_id: string;
+        // Closes the expression, call, or declaration started above.
       };
+      // Executes this line as the next step in the surrounding logic.
       cookie?: never;
+      // Closes the expression, call, or declaration started above.
     };
+    // Defines the requestBody field in the surrounding object or type.
     requestBody: {
+      // Defines the content field in the surrounding object or type.
       content: {
+        // Executes this line as the next step in the surrounding logic.
         'application/json': components['schemas']['AdminActionRequest'];
+        // Closes the expression, call, or declaration started above.
       };
+      // Closes the expression, call, or declaration started above.
     };
+    // Defines the responses field in the surrounding object or type.
     responses: {
       /** @description Successful Response */
+      // Begins the nested block or object completed below.
       200: {
+        // Defines the headers field in the surrounding object or type.
         headers: {
+          // Executes this line as the next step in the surrounding logic.
           [name: string]: unknown;
+          // Closes the expression, call, or declaration started above.
         };
+        // Defines the content field in the surrounding object or type.
         content: {
+          // Begins the nested block or object completed below.
           'application/json': {
+            // Executes this line as the next step in the surrounding logic.
             [key: string]: boolean;
+            // Closes the expression, call, or declaration started above.
           };
+          // Closes the expression, call, or declaration started above.
         };
+        // Closes the expression, call, or declaration started above.
       };
       /** @description Validation Error */
+      // Begins the nested block or object completed below.
       422: {
+        // Defines the headers field in the surrounding object or type.
         headers: {
+          // Executes this line as the next step in the surrounding logic.
           [name: string]: unknown;
+          // Closes the expression, call, or declaration started above.
         };
+        // Defines the content field in the surrounding object or type.
         content: {
+          // Executes this line as the next step in the surrounding logic.
           'application/json': components['schemas']['HTTPValidationError'];
+          // Closes the expression, call, or declaration started above.
         };
+        // Closes the expression, call, or declaration started above.
       };
+      // Closes the expression, call, or declaration started above.
     };
+    // Closes the expression, call, or declaration started above.
   };
+  // Defines the restore_leaderboard_route_v1_admin_leaderboard__entry_id__restore_post field in the surrounding object or type.
   restore_leaderboard_route_v1_admin_leaderboard__entry_id__restore_post: {
+    // Defines the parameters field in the surrounding object or type.
     parameters: {
+      // Executes this line as the next step in the surrounding logic.
       query?: never;
+      // Begins the nested block or object completed below.
       header?: {
+        // Executes this line as the next step in the surrounding logic.
         authorization?: string | null;
+        // Closes the expression, call, or declaration started above.
       };
+      // Defines the path field in the surrounding object or type.
       path: {
+        // Defines the entry_id field in the surrounding object or type.
         entry_id: string;
+        // Closes the expression, call, or declaration started above.
       };
+      // Executes this line as the next step in the surrounding logic.
       cookie?: never;
+      // Closes the expression, call, or declaration started above.
     };
+    // Defines the requestBody field in the surrounding object or type.
     requestBody: {
+      // Defines the content field in the surrounding object or type.
       content: {
+        // Executes this line as the next step in the surrounding logic.
         'application/json': components['schemas']['AdminActionRequest'];
+        // Closes the expression, call, or declaration started above.
       };
+      // Closes the expression, call, or declaration started above.
     };
+    // Defines the responses field in the surrounding object or type.
     responses: {
       /** @description Successful Response */
+      // Begins the nested block or object completed below.
       200: {
+        // Defines the headers field in the surrounding object or type.
         headers: {
+          // Executes this line as the next step in the surrounding logic.
           [name: string]: unknown;
+          // Closes the expression, call, or declaration started above.
         };
+        // Defines the content field in the surrounding object or type.
         content: {
+          // Begins the nested block or object completed below.
           'application/json': {
+            // Executes this line as the next step in the surrounding logic.
             [key: string]: boolean;
+            // Closes the expression, call, or declaration started above.
           };
+          // Closes the expression, call, or declaration started above.
         };
+        // Closes the expression, call, or declaration started above.
       };
       /** @description Validation Error */
+      // Begins the nested block or object completed below.
       422: {
+        // Defines the headers field in the surrounding object or type.
         headers: {
+          // Executes this line as the next step in the surrounding logic.
           [name: string]: unknown;
+          // Closes the expression, call, or declaration started above.
         };
+        // Defines the content field in the surrounding object or type.
         content: {
+          // Executes this line as the next step in the surrounding logic.
           'application/json': components['schemas']['HTTPValidationError'];
+          // Closes the expression, call, or declaration started above.
         };
+        // Closes the expression, call, or declaration started above.
       };
+      // Closes the expression, call, or declaration started above.
     };
+    // Closes the expression, call, or declaration started above.
   };
+  // Defines the moderate_profile_route_v1_admin_profiles__user_id__moderate_post field in the surrounding object or type.
   moderate_profile_route_v1_admin_profiles__user_id__moderate_post: {
+    // Defines the parameters field in the surrounding object or type.
     parameters: {
+      // Executes this line as the next step in the surrounding logic.
       query?: never;
+      // Begins the nested block or object completed below.
       header?: {
+        // Executes this line as the next step in the surrounding logic.
         authorization?: string | null;
+        // Closes the expression, call, or declaration started above.
       };
+      // Defines the path field in the surrounding object or type.
       path: {
+        // Defines the user_id field in the surrounding object or type.
         user_id: string;
+        // Closes the expression, call, or declaration started above.
       };
+      // Executes this line as the next step in the surrounding logic.
       cookie?: never;
+      // Closes the expression, call, or declaration started above.
     };
+    // Defines the requestBody field in the surrounding object or type.
     requestBody: {
+      // Defines the content field in the surrounding object or type.
       content: {
+        // Executes this line as the next step in the surrounding logic.
         'application/json': components['schemas']['AdminActionRequest'];
+        // Closes the expression, call, or declaration started above.
       };
+      // Closes the expression, call, or declaration started above.
     };
+    // Defines the responses field in the surrounding object or type.
     responses: {
       /** @description Successful Response */
+      // Begins the nested block or object completed below.
       200: {
+        // Defines the headers field in the surrounding object or type.
         headers: {
+          // Executes this line as the next step in the surrounding logic.
           [name: string]: unknown;
+          // Closes the expression, call, or declaration started above.
         };
+        // Defines the content field in the surrounding object or type.
         content: {
+          // Begins the nested block or object completed below.
           'application/json': {
+            // Executes this line as the next step in the surrounding logic.
             [key: string]: boolean;
+            // Closes the expression, call, or declaration started above.
           };
+          // Closes the expression, call, or declaration started above.
         };
+        // Closes the expression, call, or declaration started above.
       };
       /** @description Validation Error */
+      // Begins the nested block or object completed below.
       422: {
+        // Defines the headers field in the surrounding object or type.
         headers: {
+          // Executes this line as the next step in the surrounding logic.
           [name: string]: unknown;
+          // Closes the expression, call, or declaration started above.
         };
+        // Defines the content field in the surrounding object or type.
         content: {
+          // Executes this line as the next step in the surrounding logic.
           'application/json': components['schemas']['HTTPValidationError'];
+          // Closes the expression, call, or declaration started above.
         };
+        // Closes the expression, call, or declaration started above.
       };
+      // Closes the expression, call, or declaration started above.
     };
+    // Closes the expression, call, or declaration started above.
   };
+  // Defines the admin_revoke_challenge_route_v1_admin_challenges__challenge_id__revoke_post field in the surrounding object or type.
   admin_revoke_challenge_route_v1_admin_challenges__challenge_id__revoke_post: {
+    // Defines the parameters field in the surrounding object or type.
     parameters: {
+      // Executes this line as the next step in the surrounding logic.
       query?: never;
+      // Begins the nested block or object completed below.
       header?: {
+        // Executes this line as the next step in the surrounding logic.
         authorization?: string | null;
+        // Closes the expression, call, or declaration started above.
       };
+      // Defines the path field in the surrounding object or type.
       path: {
+        // Defines the challenge_id field in the surrounding object or type.
         challenge_id: string;
+        // Closes the expression, call, or declaration started above.
       };
+      // Executes this line as the next step in the surrounding logic.
       cookie?: never;
+      // Closes the expression, call, or declaration started above.
     };
+    // Defines the requestBody field in the surrounding object or type.
     requestBody: {
+      // Defines the content field in the surrounding object or type.
       content: {
+        // Executes this line as the next step in the surrounding logic.
         'application/json': components['schemas']['AdminActionRequest'];
+        // Closes the expression, call, or declaration started above.
       };
+      // Closes the expression, call, or declaration started above.
     };
+    // Defines the responses field in the surrounding object or type.
     responses: {
       /** @description Successful Response */
+      // Begins the nested block or object completed below.
       200: {
+        // Defines the headers field in the surrounding object or type.
         headers: {
+          // Executes this line as the next step in the surrounding logic.
           [name: string]: unknown;
+          // Closes the expression, call, or declaration started above.
         };
+        // Defines the content field in the surrounding object or type.
         content: {
+          // Begins the nested block or object completed below.
           'application/json': {
+            // Executes this line as the next step in the surrounding logic.
             [key: string]: boolean;
+            // Closes the expression, call, or declaration started above.
           };
+          // Closes the expression, call, or declaration started above.
         };
+        // Closes the expression, call, or declaration started above.
       };
       /** @description Validation Error */
+      // Begins the nested block or object completed below.
       422: {
+        // Defines the headers field in the surrounding object or type.
         headers: {
+          // Executes this line as the next step in the surrounding logic.
           [name: string]: unknown;
+          // Closes the expression, call, or declaration started above.
         };
+        // Defines the content field in the surrounding object or type.
         content: {
+          // Executes this line as the next step in the surrounding logic.
           'application/json': components['schemas']['HTTPValidationError'];
+          // Closes the expression, call, or declaration started above.
         };
+        // Closes the expression, call, or declaration started above.
       };
+      // Closes the expression, call, or declaration started above.
     };
+    // Closes the expression, call, or declaration started above.
   };
+  // Defines the terminate_room_route_v1_admin_rooms__room_id__terminate_post field in the surrounding object or type.
   terminate_room_route_v1_admin_rooms__room_id__terminate_post: {
+    // Defines the parameters field in the surrounding object or type.
     parameters: {
+      // Executes this line as the next step in the surrounding logic.
       query?: never;
+      // Begins the nested block or object completed below.
       header?: {
+        // Executes this line as the next step in the surrounding logic.
         authorization?: string | null;
+        // Closes the expression, call, or declaration started above.
       };
+      // Defines the path field in the surrounding object or type.
       path: {
+        // Defines the room_id field in the surrounding object or type.
         room_id: string;
+        // Closes the expression, call, or declaration started above.
       };
+      // Executes this line as the next step in the surrounding logic.
       cookie?: never;
+      // Closes the expression, call, or declaration started above.
     };
+    // Defines the requestBody field in the surrounding object or type.
     requestBody: {
+      // Defines the content field in the surrounding object or type.
       content: {
+        // Executes this line as the next step in the surrounding logic.
         'application/json': components['schemas']['AdminActionRequest'];
+        // Closes the expression, call, or declaration started above.
       };
+      // Closes the expression, call, or declaration started above.
     };
+    // Defines the responses field in the surrounding object or type.
     responses: {
       /** @description Successful Response */
+      // Begins the nested block or object completed below.
       200: {
+        // Defines the headers field in the surrounding object or type.
         headers: {
+          // Executes this line as the next step in the surrounding logic.
           [name: string]: unknown;
+          // Closes the expression, call, or declaration started above.
         };
+        // Defines the content field in the surrounding object or type.
         content: {
+          // Begins the nested block or object completed below.
           'application/json': {
+            // Executes this line as the next step in the surrounding logic.
             [key: string]: boolean;
+            // Closes the expression, call, or declaration started above.
           };
+          // Closes the expression, call, or declaration started above.
         };
+        // Closes the expression, call, or declaration started above.
       };
       /** @description Validation Error */
+      // Begins the nested block or object completed below.
       422: {
+        // Defines the headers field in the surrounding object or type.
         headers: {
+          // Executes this line as the next step in the surrounding logic.
           [name: string]: unknown;
+          // Closes the expression, call, or declaration started above.
         };
+        // Defines the content field in the surrounding object or type.
         content: {
+          // Executes this line as the next step in the surrounding logic.
           'application/json': components['schemas']['HTTPValidationError'];
+          // Closes the expression, call, or declaration started above.
         };
+        // Closes the expression, call, or declaration started above.
       };
+      // Closes the expression, call, or declaration started above.
     };
+    // Closes the expression, call, or declaration started above.
   };
+  // Defines the audit_route_v1_admin_audit_get field in the surrounding object or type.
   audit_route_v1_admin_audit_get: {
+    // Defines the parameters field in the surrounding object or type.
     parameters: {
+      // Begins the nested block or object completed below.
       query?: {
+        // Executes this line as the next step in the surrounding logic.
         limit?: number;
+        // Closes the expression, call, or declaration started above.
       };
+      // Begins the nested block or object completed below.
       header?: {
+        // Executes this line as the next step in the surrounding logic.
         authorization?: string | null;
+        // Closes the expression, call, or declaration started above.
       };
+      // Executes this line as the next step in the surrounding logic.
       path?: never;
+      // Executes this line as the next step in the surrounding logic.
       cookie?: never;
+      // Closes the expression, call, or declaration started above.
     };
+    // Executes this line as the next step in the surrounding logic.
     requestBody?: never;
+    // Defines the responses field in the surrounding object or type.
     responses: {
       /** @description Successful Response */
+      // Begins the nested block or object completed below.
       200: {
+        // Defines the headers field in the surrounding object or type.
         headers: {
+          // Executes this line as the next step in the surrounding logic.
           [name: string]: unknown;
+          // Closes the expression, call, or declaration started above.
         };
+        // Defines the content field in the surrounding object or type.
         content: {
+          // Executes this line as the next step in the surrounding logic.
           'application/json': components['schemas']['AuditEventResponse'][];
+          // Closes the expression, call, or declaration started above.
         };
+        // Closes the expression, call, or declaration started above.
       };
       /** @description Validation Error */
+      // Begins the nested block or object completed below.
       422: {
+        // Defines the headers field in the surrounding object or type.
         headers: {
+          // Executes this line as the next step in the surrounding logic.
           [name: string]: unknown;
+          // Closes the expression, call, or declaration started above.
         };
+        // Defines the content field in the surrounding object or type.
         content: {
+          // Executes this line as the next step in the surrounding logic.
           'application/json': components['schemas']['HTTPValidationError'];
+          // Closes the expression, call, or declaration started above.
         };
+        // Closes the expression, call, or declaration started above.
       };
+      // Closes the expression, call, or declaration started above.
     };
+    // Closes the expression, call, or declaration started above.
   };
+  // Closes the expression, call, or declaration started above.
 }

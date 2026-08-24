@@ -1,6 +1,6 @@
-# ruff: noqa: I001 -- line explanations intentionally separate imports.
 # Imports selected names from `.app` for use in this module.
 from .app import MastermindCLI
+
 # Imports selected names from `.storage` for use in this module.
 from .storage import CSVScoreStore, ScoreRecord
 

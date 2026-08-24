@@ -1,14 +1,15 @@
-# ruff: noqa: I001 -- line explanations intentionally separate imports.
 # Defers annotation evaluation so modern type hints work without runtime lookups.
 from __future__ import annotations
 
 # Imports `re` so its functionality is available below.
 import re
+
 # Imports selected names from `collections.abc` for use in this module.
 from collections.abc import Sequence
 
 # Imports selected names from `.errors` for use in this module.
 from .errors import DomainError
+
 # Imports selected names from `.models` for use in this module.
 from .models import GameConfig
 
@@ -38,8 +39,10 @@ def normalize_code(value: str | Sequence[str]) -> tuple[str, ...]:
             raise DomainError(
                 # Adds the `MALFORMED_GUESS", "Separate colour codes with spaces, commas, or
                 # hyphens.` string to the surrounding call or ordered collection.
-                "MALFORMED_GUESS", "Separate colour codes with spaces, commas, or hyphens."
-            # Closes the multiline call or collection started on an earlier line.
+                "MALFORMED_GUESS",
+                # Supplies this string to the surrounding call or collection.
+                "Separate colour codes with spaces, commas, or hyphens.",
+                # Closes the multiline call or collection started on an earlier line.
             )
         # Computes `(` and stores the result in `tokens` for later use.
         tokens = (
@@ -49,7 +52,7 @@ def normalize_code(value: str | Sequence[str]) -> tuple[str, ...]:
             if stripped.isalpha() and len(stripped) > 1
             # Continues the surrounding expression or executes the next required operation.
             else SEPARATOR_RE.split(stripped)
-        # Closes the multiline call or collection started on an earlier line.
+            # Closes the multiline call or collection started on an earlier line.
         )
     # Handles the remaining case when the preceding conditions were false.
     else:
@@ -79,7 +82,7 @@ def validate_code(value: str | Sequence[str], config: GameConfig) -> tuple[str, 
             "INVALID_GUESS_LENGTH",
             # Adds this formatted text segment to the message being constructed.
             f"Your guess must contain exactly {config.code_length} pegs.",
-        # Closes the multiline call or collection started on an earlier line.
+            # Closes the multiline call or collection started on an earlier line.
         )
     # Computes `sorted(set(code).difference(config.colours))` and stores the result in `unknown`
     # for later use.
@@ -92,7 +95,7 @@ def validate_code(value: str | Sequence[str], config: GameConfig) -> tuple[str, 
             "UNKNOWN_COLOUR",
             # Adds this formatted text segment to the message being constructed.
             f"Unknown or disabled colour: {', '.join(unknown)}.",
-        # Closes the multiline call or collection started on an earlier line.
+            # Closes the multiline call or collection started on an earlier line.
         )
     # Tests `not config.duplicates_allowed and len(set(code)) != len(code)` before running the
     # nested branch.

@@ -1,14 +1,15 @@
-# ruff: noqa: I001 -- line explanations intentionally separate imports.
 # Defers annotation evaluation so modern type hints work without runtime lookups.
 from __future__ import annotations
 
 # Imports selected names from `collections` for use in this module.
 from collections import Counter
+
 # Imports selected names from `collections.abc` for use in this module.
 from collections.abc import Sequence
 
 # Imports selected names from `.errors` for use in this module.
 from .errors import DomainError
+
 # Imports selected names from `.models` for use in this module.
 from .models import Feedback
 

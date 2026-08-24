@@ -1,19 +1,24 @@
-# ruff: noqa: I001 -- line explanations intentionally separate imports.
 # Defers annotation evaluation so modern type hints work without runtime lookups.
 from __future__ import annotations
 
 # Imports `csv` so its functionality is available below.
 import csv
+
 # Imports `os` so its functionality is available below.
 import os
+
 # Imports `tempfile` so its functionality is available below.
 import tempfile
+
 # Imports `warnings` so its functionality is available below.
 import warnings
+
 # Imports selected names from `dataclasses` for use in this module.
 from dataclasses import asdict, dataclass
+
 # Imports selected names from `datetime` for use in this module.
 from datetime import UTC, datetime
+
 # Imports selected names from `pathlib` for use in this module.
 from pathlib import Path
 
@@ -45,7 +50,7 @@ CSV_FIELDS = (
     "scoring_version",
     # Adds the `result` string to the surrounding call or ordered collection.
     "result",
-# Closes the multiline call or collection started on an earlier line.
+    # Closes the multiline call or collection started on an earlier line.
 )
 
 
@@ -155,7 +160,7 @@ class CSVScoreStore:
                         RuntimeWarning,
                         # Provides `2` as the `stacklevel` parameter or argument.
                         stacklevel=2,
-                    # Closes the multiline call or collection started on an earlier line.
+                        # Closes the multiline call or collection started on an earlier line.
                     )
                     # Returns `[]` to the caller as this function's result.
                     return []
@@ -206,10 +211,10 @@ class CSVScoreStore:
                                 # Provides `row["result"]` as the `result` parameter or
                                 # argument.
                                 result=row["result"],
-                            # Closes the multiline call or collection started on an earlier
-                            # line.
+                                # Closes the multiline call or collection started on an earlier
+                                # line.
                             )
-                        # Closes the multiline call or collection started on an earlier line.
+                            # Closes the multiline call or collection started on an earlier line.
                         )
                     # Handles the listed exception types so the program can recover safely.
                     except (KeyError, TypeError, ValueError):
@@ -223,7 +228,7 @@ class CSVScoreStore:
                             RuntimeWarning,
                             # Provides `2` as the `stacklevel` parameter or argument.
                             stacklevel=2,
-                        # Closes the multiline call or collection started on an earlier line.
+                            # Closes the multiline call or collection started on an earlier line.
                         )
                         # Skips the rest of this iteration and starts the next loop iteration.
                         continue
@@ -237,7 +242,7 @@ class CSVScoreStore:
                 RuntimeWarning,
                 # Provides `2` as the `stacklevel` parameter or argument.
                 stacklevel=2,
-            # Closes the multiline call or collection started on an earlier line.
+                # Closes the multiline call or collection started on an earlier line.
             )
             # Returns `[]` to the caller as this function's result.
             return []
@@ -257,8 +262,14 @@ class CSVScoreStore:
         descriptor, temporary_name = tempfile.mkstemp(
             # Computes `target.parent, prefix=f".{target.name}.", suffix=".tmp", text=True` and
             # stores the result in `dir` for later use.
-            dir=target.parent, prefix=f".{target.name}.", suffix=".tmp", text=True
-        # Closes the multiline call or collection started on an earlier line.
+            dir=target.parent,
+            # Provides the `prefix` value to the surrounding call.
+            prefix=f".{target.name}.",
+            # Provides the `suffix` value to the surrounding call.
+            suffix=".tmp",
+            # Provides the `text` value to the surrounding call.
+            text=True,
+            # Closes the multiline call or collection started on an earlier line.
         )
         # Starts a protected operation whose expected failures are handled below.
         try:

@@ -1,13 +1,15 @@
-# ruff: noqa: I001 -- line explanations intentionally separate imports.
 # Defers annotation evaluation so modern type hints work without runtime lookups.
 from __future__ import annotations
 
 # Imports `csv` so its functionality is available below.
 import csv
+
 # Imports selected names from `collections.abc` for use in this module.
 from collections.abc import Callable
+
 # Imports selected names from `getpass` for use in this module.
 from getpass import getpass
+
 # Imports selected names from `pathlib` for use in this module.
 from pathlib import Path
 
@@ -39,7 +41,7 @@ from mastermind_core import (
     submit_guess,
     # Includes `validate_code` in the surrounding import, call, or collection.
     validate_code,
-# Closes the multiline call or collection started on an earlier line.
+    # Closes the multiline call or collection started on an earlier line.
 )
 
 # Imports selected names from `.storage` for use in this module.
@@ -76,7 +78,7 @@ class MastermindCLI:
         output_fn: Output = print,
         # Provides `None` as the `store` parameter or argument.
         store: CSVScoreStore | None = None,
-    # Completes the function signature and declares the type returned to callers.
+        # Completes the function signature and declares the type returned to callers.
     ) -> None:
         # Stores `input_fn` on this instance as `self.input` for later method calls.
         self.input = input_fn
@@ -185,7 +187,7 @@ class MastermindCLI:
             config,
             # Supplies this value to the surrounding multiline call or collection.
             GameMode.PASS_AND_PLAY if config.code_maker is CodeMakerType.HUMAN else GameMode.SOLO,
-        # Closes the multiline call or collection started on an earlier line.
+            # Closes the multiline call or collection started on an earlier line.
         )
         # Sends this user-facing message through the configured output function.
         self.output(
@@ -193,7 +195,7 @@ class MastermindCLI:
             f"Available colours: {' '.join(config.colours)} | "
             # Adds this formatted text segment to the message being constructed.
             f"Code length: {config.code_length} | Attempts: {config.max_attempts}"
-        # Closes the multiline call or collection started on an earlier line.
+            # Closes the multiline call or collection started on an earlier line.
         )
         # Repeats the nested block while `state.status is GameStatus.ACTIVE` remains true.
         while state.status is GameStatus.ACTIVE:
@@ -274,9 +276,9 @@ class MastermindCLI:
                     scoring_version=state.score.version if state.score else "score_v1",
                     # Provides `state.status.value` as the `result` parameter or argument.
                     result=state.status.value,
-                # Closes the multiline call or collection started on an earlier line.
+                    # Closes the multiline call or collection started on an earlier line.
                 )
-            # Closes the multiline call or collection started on an earlier line.
+                # Closes the multiline call or collection started on an earlier line.
             )
         # Handles the listed exception types so the program can recover safely.
         except (OSError, csv.Error, UnicodeError) as exc:
@@ -295,7 +297,7 @@ class MastermindCLI:
                 f"{attempt.number:>7}  {' '.join(attempt.guess):<18}  "
                 # Adds this formatted text segment to the message being constructed.
                 f"{attempt.feedback.black:>5}  {attempt.feedback.white:>5}"
-            # Closes the multiline call or collection started on an earlier line.
+                # Closes the multiline call or collection started on an earlier line.
             )
         # Continues the surrounding expression or executes the next required operation.
         label = "attempt" if state.attempts_remaining == 1 else "attempts"
@@ -334,7 +336,7 @@ class MastermindCLI:
             code_maker=CodeMakerType.HUMAN if human else CodeMakerType.COMPUTER,
             # Provides `False` as the `ranked` parameter or argument.
             ranked=False,
-        # Closes the multiline call or collection started on an earlier line.
+            # Closes the multiline call or collection started on an earlier line.
         )
 
     # Defines the `_choose_secret` function and begins its typed parameter list.
@@ -427,7 +429,7 @@ class MastermindCLI:
                 f"{rank:>4}  {record.player_name[:24]:<24}  {record.difficulty:<10}  "
                 # Adds this formatted text segment to the message being constructed.
                 f"{record.score:>5}  {record.attempts_used}/{record.maximum_attempts}"
-            # Closes the multiline call or collection started on an earlier line.
+                # Closes the multiline call or collection started on an earlier line.
             )
 
     # Defines the `export_scores` function and begins its typed parameter list.

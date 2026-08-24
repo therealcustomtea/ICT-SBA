@@ -1,9 +1,9 @@
-# ruff: noqa: I001 -- line explanations intentionally separate imports.
 # Defers annotation evaluation so modern type hints work without runtime lookups.
 from __future__ import annotations
 
 # Imports selected names from `.errors` for use in this module.
 from .errors import DomainError
+
 # Imports selected names from `.models` for use in this module.
 from .models import COLOUR_IDS, GameConfig
 
@@ -21,7 +21,7 @@ PRESETS: dict[str, GameConfig] = {
     # Maps the `expert` field to `GameConfig(COLOUR_IDS, 6, 8, True, ranked=True)` in the
     # dictionary.
     "expert": GameConfig(COLOUR_IDS, 6, 8, True, ranked=True),
-# Closes the multiline call or collection started on an earlier line.
+    # Closes the multiline call or collection started on an earlier line.
 }
 
 
@@ -37,8 +37,10 @@ def get_preset(name: str) -> GameConfig:
         raise DomainError(
             # Adds the `UNKNOWN_DIFFICULTY", "Difficulty must be easy, normal, hard, or expert.`
             # string to the surrounding call or ordered collection.
-            "UNKNOWN_DIFFICULTY", "Difficulty must be easy, normal, hard, or expert."
-        # Continues the surrounding expression or executes the next required operation.
+            "UNKNOWN_DIFFICULTY",
+            # Supplies this string to the surrounding call or collection.
+            "Difficulty must be easy, normal, hard, or expert.",
+            # Continues the surrounding expression or executes the next required operation.
         ) from exc
 
 
