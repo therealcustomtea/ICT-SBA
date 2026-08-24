@@ -282,6 +282,8 @@ async def test_background_finalization_awards_duelist(api: APIContext) -> None:
         )
         # Computes and stores `persisted_loser` for subsequent operations.
         persisted_loser = await session.get(GameSession, losing_game.id)
+        # Computes and stores `persisted_room` for subsequent operations.
+        persisted_room = await session.get(MultiplayerRoom, room_id)
     # Asserts this invariant so an unexpected test state fails immediately.
     assert duelist is not None
     # Asserts this invariant so an unexpected test state fails immediately.
@@ -293,7 +295,9 @@ async def test_background_finalization_awards_duelist(api: APIContext) -> None:
     # Asserts this invariant so an unexpected test state fails immediately.
     assert persisted_loser.completed_at is not None
     # Asserts this invariant so an unexpected test state fails immediately.
-    assert persisted_loser.completed_at.replace(tzinfo=UTC) == room.tie_deadline
+    assert persisted_room is not None and persisted_room.tie_deadline is not None
+    # Asserts this invariant so an unexpected test state fails immediately.
+    assert persisted_loser.completed_at == persisted_room.tie_deadline
     # Asserts this invariant so an unexpected test state fails immediately.
     assert persisted_loser.final_score == 0
     # Asserts this invariant so an unexpected test state fails immediately.
