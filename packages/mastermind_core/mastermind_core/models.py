@@ -25,6 +25,34 @@ RULE_SET_VERSION = "rules_v1"
 SCORING_VERSION = "score_v1"
 
 
+# Converts persisted Boolean values without treating every non-empty string as true.
+def _parse_bool(value: Any, field_name: str) -> bool:
+    # Returns native Boolean values unchanged.
+    if isinstance(value, bool):
+        # Returns the computed result and ends the current callable.
+        return value
+    # Accepts the two explicit text forms produced by common JSON and CSV exports.
+    if isinstance(value, str):
+        # Stores `normalized` because later steps depend on this value.
+        normalized = value.strip().lower()
+        # Guards the nested operation so it runs only when this condition is satisfied.
+        if normalized == "true":
+            # Returns the computed result and ends the current callable.
+            return True
+        # Guards the nested operation so it runs only when this condition is satisfied.
+        if normalized == "false":
+            # Returns the computed result and ends the current callable.
+            return False
+    # Rejects ambiguous values so invalid saved data cannot silently change game rules.
+    raise DomainError(
+        # Supplies this literal value to the surrounding declaration or call.
+        "INVALID_BOOLEAN",
+        # Supplies this required nested value.
+        f"{field_name} must be true or false.",
+    # Closes the multiline declaration, call, or collection opened above.
+    )
+
+
 # Defines `GameMode` as a specialization of `StrEnum`.
 class GameMode(StrEnum):
     # Assigns `"solo"` to the named `SOLO` constant used by the application.
@@ -211,10 +239,12 @@ class GameConfig:
                 value["maxAttempts"] if "maxAttempts" in value else value["max_attempts"]
                 # Closes the multiline call or collection started on an earlier line.
             ),
-            # Computes `bool(` and stores the result in `duplicates_allowed` for later use.
-            duplicates_allowed=bool(
-                # Calls `value.get` to perform this step with the supplied arguments.
-                value.get("duplicatesAllowed", value.get("duplicates_allowed"))
+            # Parses the stored value explicitly so the text "false" remains false.
+            duplicates_allowed=_parse_bool(
+                # Reads the camel-case or snake-case representation.
+                value.get("duplicatesAllowed", value.get("duplicates_allowed", False)),
+                # Names the field in any safe validation error.
+                "duplicatesAllowed",
                 # Closes the multiline call or collection started on an earlier line.
             ),
             # Provides `CodeMakerType(value.get("codeMaker", value.get("code_maker",

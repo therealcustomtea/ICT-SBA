@@ -179,6 +179,60 @@ def test_snake_case_config_deserialization_and_value_serializers() -> None:
     assert ScoreBreakdown(100, 200, 30, 330).to_dict()["version"] == "score_v1"
 
 
+# Verifies that text Boolean values retain their intended meaning during deserialization.
+@pytest.mark.parametrize(("stored_value", "expected"), [("false", False), ("true", True)])
+# Defines this callable to implement the operation described by its name.
+def test_config_deserialization_parses_boolean_text(
+    # Declares this typed field so the surrounding contract is explicit.
+    stored_value: str,
+    # Declares this typed field so the surrounding contract is explicit.
+    expected: bool,
+# Closes the multiline declaration, call, or collection opened above.
+) -> None:
+    # Deserializes a representative persisted game configuration.
+    config = GameConfig.from_dict(
+        # Supplies this required nested value.
+        {
+            # Supplies this literal value to the surrounding declaration or call.
+            "colours": list("RBGYW"),
+            # Supplies this literal value to the surrounding declaration or call.
+            "codeLength": 4,
+            # Supplies this literal value to the surrounding declaration or call.
+            "maxAttempts": 10,
+            # Supplies this literal value to the surrounding declaration or call.
+            "duplicatesAllowed": stored_value,
+        # Closes the multiline declaration, call, or collection opened above.
+        }
+    # Closes the multiline declaration, call, or collection opened above.
+    )
+    # Confirms that the text value was not interpreted using Python string truthiness.
+    assert config.duplicates_allowed is expected
+
+
+# Verifies that ambiguous Boolean text is rejected instead of silently becoming true.
+def test_config_deserialization_rejects_invalid_boolean_text() -> None:
+    # Acquires this managed resource and guarantees cleanup afterward.
+    with pytest.raises(DomainError) as error:
+        # Attempts to deserialize a configuration containing an unsupported Boolean word.
+        GameConfig.from_dict(
+            # Supplies this required nested value.
+            {
+                # Supplies this literal value to the surrounding declaration or call.
+                "colours": list("RBGYW"),
+                # Supplies this literal value to the surrounding declaration or call.
+                "codeLength": 4,
+                # Supplies this literal value to the surrounding declaration or call.
+                "maxAttempts": 10,
+                # Supplies this literal value to the surrounding declaration or call.
+                "duplicatesAllowed": "sometimes",
+            # Closes the multiline declaration, call, or collection opened above.
+            }
+        # Closes the multiline declaration, call, or collection opened above.
+        )
+    # Confirms that callers receive a stable validation code.
+    assert error.value.code == "INVALID_BOOLEAN"
+
+
 # Defines the `test_negative_feedback_is_rejected` callable and its typed interface.
 def test_negative_feedback_is_rejected() -> None:
     # Acquires this managed resource and guarantees cleanup afterward.
