@@ -42,19 +42,25 @@ def pass_and_play_payload() -> dict[str, object]:
         # Supplies this literal value to the surrounding declaration or call.
         "mode": "pass_and_play",
         # Supplies this literal value to the surrounding declaration or call.
-        "codeMaker": "human",
-        # Supplies this literal value to the surrounding declaration or call.
         "secret": ["R", "B", "G", "Y"],
+        # Supplies this literal value to the surrounding declaration or call.
+        "idempotencyKey": "profile-game-0001",
         # Supplies this literal value to the surrounding declaration or call.
         "config": {
             # Supplies this literal value to the surrounding declaration or call.
             "codeLength": 4,
             # Supplies this literal value to the surrounding declaration or call.
-            "colors": ["R", "B", "G", "Y", "O", "P"],
+            "colours": ["R", "B", "G", "Y", "O", "P"],
             # Supplies this literal value to the surrounding declaration or call.
-            "allowDuplicates": True,
+            "duplicatesAllowed": True,
             # Supplies this literal value to the surrounding declaration or call.
-            "maximumAttempts": 10,
+            "maxAttempts": 10,
+            # Supplies this literal value to the surrounding declaration or call.
+            "codeMaker": "human",
+            # Supplies this literal value to the surrounding declaration or call.
+            "visibility": "private",
+            # Supplies this literal value to the surrounding declaration or call.
+            "ranked": False,
             # Closes the multiline declaration, call, or collection opened above.
         },
         # Closes the multiline declaration, call, or collection opened above.
@@ -121,7 +127,7 @@ async def test_profile_stats_and_archive_export(api: APIContext) -> None:
     # Scopes this resource so acquisition and cleanup remain paired.
     with zipfile.ZipFile(io.BytesIO(exported.content)) as archive:
         # Performs this required operation before the surrounding flow continues.
-        assert {"profile.json", "games.json", "attempts.json"} <= set(archive.namelist())
+        assert {"profile.json", "games.csv", "attempts.csv"} <= set(archive.namelist())
 
 
 # Defines this callable to implement the operation described by its name.
