@@ -32,7 +32,7 @@ The message is safe for people; the code drives localized web copy. Internal exc
 
 ## Authentication and authorization
 
-All game creation uses a real Supabase subject, including guests. Public challenge descriptions and leaderboards disclose only safe public fields. The API checks ownership or membership in the database query; a client knowing a UUID or share code is not authorization. Admin access is denied by default and depends on a server-side grant, not route obscurity or editable user metadata.
+All game creation uses a real first-party authentication subject, including guests. Public challenge descriptions and leaderboards disclose only safe public fields. The API checks ownership or membership in the database query; a client knowing a UUID or share code is not authorization. Admin access is denied by default and depends on a server-side grant, not route obscurity or editable user metadata.
 
 ## Idempotency and retry
 
@@ -46,7 +46,7 @@ Registered profiles may own at most 25 unexpired, unrevoked friend challenges; g
 
 `GET /v1/challenges/{id}/results` is creator-only and paginated. It returns aggregate statistics plus ranked, pseudonymous result rows; it never returns a user ID, display name, email address, guess history, or secret. Rows use the documented score, attempt, validated-time, completion-time, and stable-ID tie-break order. `GET /v1/me/stats` bounds daily completion history to the latest 90 UTC challenge dates and exposes only the server-calculated `logic_week` progress pair, capped at its target of seven distinct completed daily challenges.
 
-`GET /v1/me/export` is registered-account-only and returns `cipherboard-data.zip`. The archive contains a manifest, profile JSON, and separate game, attempt, achievement, challenge, and room CSV files. It excludes Auth data, secret codes, invite tokens, idempotency keys, and encryption material. `DELETE /v1/me` is also registered-account-only, requires the exact JSON body `{ "confirmation": "DELETE" }` and a bearer session authenticated within the configured recent-authentication window. It hides and anonymizes application data first, globally revokes the presented Supabase session, and then deletes the Auth identity. Provider failure leaves a durable retry row consumed by the bounded application worker.
+`GET /v1/me/export` is registered-account-only and returns `cipherboard-data.zip`. The archive contains a manifest, profile JSON, and separate game, attempt, achievement, challenge, and room CSV files. It excludes Auth data, secret codes, invite tokens, idempotency keys, and encryption material. `DELETE /v1/me` is also registered-account-only, requires the exact JSON body `{ "confirmation": "DELETE" }` and a bearer session authenticated within the configured recent-authentication window. It hides and anonymizes application data first, globally revokes the presented first-party authentication session, and then deletes the Auth identity. Provider failure leaves a durable retry row consumed by the bounded application worker.
 
 Analytics collection is disabled unless both the environment and database feature flags permit it. The endpoint requires `consent: true` and the supported consent version, accepts only documented event-specific enum and bounded numeric fields, derives the anonymous flag from the verified principal, and stores no user identifier, IP address, title, guess, secret, token, or arbitrary property object. Client event UUIDs make safe retries idempotent.
 

@@ -26,4 +26,4 @@ Events never contain secret codes, complete guess sequences, authentication or r
 
 Product-event retention is documented in `docs/privacy/RETENTION.md`. Access is restricted to authorized operators. Analytics records are omitted from user-facing rankings and are not a gameplay source of truth.
 
-The database uses typed nullable columns with allowlist check constraints rather than a general JSON payload. It stores no user/profile foreign key. Event identifiers are at-most-once retry keys: the first accepted payload wins, and later collisions are acknowledged without reading or mutating the insert-only analytics table. Event rows receive an expiry timestamp at collection time.
+The collection uses an allowlisted document shape rather than accepting arbitrary properties. It stores no user/profile identifier. Event identifiers are at-most-once retry keys: the first accepted payload wins, and later collisions are acknowledged without reading or mutating the insert-only event collection. Events receive an expiry timestamp at collection time.

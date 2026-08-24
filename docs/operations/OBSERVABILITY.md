@@ -12,7 +12,7 @@ Optional error reporting sends only an allowlisted envelope (`code`, route templ
 - `mastermind_active_games` and `mastermind_active_rooms`
 - `mastermind_websocket_connections` and `mastermind_websocket_reconnects_total`
 - `mastermind_leaderboard_query_duration_seconds`
-- `mastermind_dependency_ready{dependency="postgresql|redis"}`
+- `mastermind_dependency_ready{dependency="mongodb|redis"}`
 
 Routes are FastAPI templates, not raw URLs, so invite codes and game IDs never become labels. Metrics contain no profile, room, game, IP, email, or challenge identifiers.
 
