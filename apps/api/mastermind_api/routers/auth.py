@@ -100,9 +100,9 @@ from ..rate_limit import RateLimiter
 from ..schemas import APIModel
 
 # Stores `router` because later steps depend on this value.
-router = APIRouter(prefix='/v1/auth', tags=['auth'])
+router = APIRouter(prefix="/v1/auth", tags=["auth"])
 # Stores `_ALLOWED_NEXT` because later steps depend on this value.
-_ALLOWED_NEXT = re.compile(r'^/(?:en|zh-Hant)(?:/[A-Za-z0-9_\-/]*)?$')
+_ALLOWED_NEXT = re.compile(r"^/(?:en|zh-Hant)(?:/[A-Za-z0-9_\-/]*)?$")
 
 
 # Groups the state and behavior owned by `AuthUserResponse`.
@@ -132,10 +132,10 @@ class EmailLinkRequest(APIModel):
     # Stores `email` because later steps depend on this value.
     email: str = Field(min_length=3, max_length=254)
     # Stores `next` because later steps depend on this value.
-    next: str = Field(default='/en/profile', max_length=200)
+    next: str = Field(default="/en/profile", max_length=200)
 
     # Applies this decorator to configure the declaration immediately below.
-    @field_validator('email')
+    @field_validator("email")
     # Applies this decorator to configure the declaration immediately below.
     @classmethod
     # Defines this callable to implement the operation described by its name.
@@ -143,9 +143,9 @@ class EmailLinkRequest(APIModel):
         # Stores `normalized` because later steps depend on this value.
         normalized = value.strip().casefold()
         # Guards the nested operation so it runs only when this condition is satisfied.
-        if re.fullmatch(r'[^\s@]+@[^\s@]+\.[^\s@]+', normalized) is None:
+        if re.fullmatch(r"[^\s@]+@[^\s@]+\.[^\s@]+", normalized) is None:
             # Raises this error so invalid state cannot continue silently.
-            raise ValueError('Enter a valid email address.')
+            raise ValueError("Enter a valid email address.")
         # Returns the computed result and ends the current callable.
         return normalized
 
@@ -167,7 +167,7 @@ class TotpSetupResponse(APIModel):
 # Groups the state and behavior owned by `TotpVerifyRequest`.
 class TotpVerifyRequest(APIModel):
     # Stores `code` because later steps depend on this value.
-    code: str = Field(min_length=6, max_length=6, pattern=r'^\d{6}$')
+    code: str = Field(min_length=6, max_length=6, pattern=r"^\d{6}$")
 
 
 # Groups the state and behavior owned by `AccessTokenResponse`.
@@ -185,10 +185,10 @@ def _request_fingerprints(request: Request, settings: Settings) -> tuple[str | N
         # Supplies this required nested value.
         request.client.host if request.client else None,
         # Supplies this required nested value.
-        request.headers.get('x-forwarded-for'),
+        request.headers.get("x-forwarded-for"),
         # Supplies this required nested value.
         settings.trusted_proxy_ips,
-    # Closes the multiline declaration, call, or collection opened above.
+        # Closes the multiline declaration, call, or collection opened above.
     )
     # Stores `ip_hash` because later steps depend on this value.
     ip_hash = (
@@ -198,10 +198,10 @@ def _request_fingerprints(request: Request, settings: Settings) -> tuple[str | N
         if peer
         # Supplies this required nested value.
         else None
-    # Closes the multiline declaration, call, or collection opened above.
+        # Closes the multiline declaration, call, or collection opened above.
     )
     # Stores `user_agent` because later steps depend on this value.
-    user_agent = request.headers.get('user-agent', '')[:512]
+    user_agent = request.headers.get("user-agent", "")[:512]
     # Stores `user_agent_hash` because later steps depend on this value.
     user_agent_hash = hashlib.sha256(user_agent.encode()).hexdigest() if user_agent else None
     # Returns the computed result and ends the current callable.
@@ -220,7 +220,7 @@ def _auth_user_response(user: AuthUser) -> AuthUserResponse:
         is_anonymous=user.is_anonymous,
         # Stores `mfa_enabled` because later steps depend on this value.
         mfa_enabled=user.totp_enabled_at is not None,
-    # Closes the multiline declaration, call, or collection opened above.
+        # Closes the multiline declaration, call, or collection opened above.
     )
 
 
@@ -234,7 +234,7 @@ def _session_response(issued: IssuedSession, user: AuthUser) -> AuthSessionRespo
         expires_in=issued.expires_in,
         # Stores `user` because later steps depend on this value.
         user=_auth_user_response(user),
-    # Closes the multiline declaration, call, or collection opened above.
+        # Closes the multiline declaration, call, or collection opened above.
     )
 
 
@@ -249,14 +249,14 @@ def _set_refresh_cookie(response: Response, refresh_token: str, settings: Settin
         # Stores `max_age` because later steps depend on this value.
         max_age=settings.auth_refresh_token_days * 24 * 60 * 60,
         # Stores `path` because later steps depend on this value.
-        path='/v1/auth',
+        path="/v1/auth",
         # Stores `secure` because later steps depend on this value.
         secure=settings.auth_cookie_secure,
         # Stores `httponly` because later steps depend on this value.
         httponly=True,
         # Stores `samesite` because later steps depend on this value.
         samesite=settings.auth_cookie_samesite,
-    # Closes the multiline declaration, call, or collection opened above.
+        # Closes the multiline declaration, call, or collection opened above.
     )
 
 
@@ -267,14 +267,14 @@ def _clear_refresh_cookie(response: Response, settings: Settings) -> None:
         # Supplies this required nested value.
         settings.auth_cookie_name,
         # Stores `path` because later steps depend on this value.
-        path='/v1/auth',
+        path="/v1/auth",
         # Stores `secure` because later steps depend on this value.
         secure=settings.auth_cookie_secure,
         # Stores `httponly` because later steps depend on this value.
         httponly=True,
         # Stores `samesite` because later steps depend on this value.
         samesite=settings.auth_cookie_samesite,
-    # Closes the multiline declaration, call, or collection opened above.
+        # Closes the multiline declaration, call, or collection opened above.
     )
 
 
@@ -283,18 +283,18 @@ async def _send_email(settings: Settings, recipient: str, link: str) -> None:
     # Stores `message` because later steps depend on this value.
     message = EmailMessage()
     # Supplies this required nested value.
-    message['Subject'] = f'Sign in to {settings.product_name}'
+    message["Subject"] = f"Sign in to {settings.product_name}"
     # Supplies this required nested value.
-    message['From'] = settings.auth_email_sender
+    message["From"] = settings.auth_email_sender
     # Supplies this required nested value.
-    message['To'] = recipient
+    message["To"] = recipient
     # Supplies this required nested value.
     message.set_content(
         # Supplies this required nested value.
-        f'Use this one-time link to sign in to {settings.product_name}:\n\n{link}\n\n'
+        f"Use this one-time link to sign in to {settings.product_name}:\n\n{link}\n\n"
         # Supplies this literal value to the surrounding declaration or call.
-        'The link expires in 15 minutes. If you did not request it, ignore this message.'
-    # Closes the multiline declaration, call, or collection opened above.
+        "The link expires in 15 minutes. If you did not request it, ignore this message."
+        # Closes the multiline declaration, call, or collection opened above.
     )
 
     # Defines this callable to implement the operation described by its name.
@@ -321,13 +321,15 @@ async def _send_email(settings: Settings, recipient: str, link: str) -> None:
         # Raises this error so invalid state cannot continue silently.
         raise APIError(
             # Supplies this required nested value.
-            503, 'EMAIL_UNAVAILABLE', 'Sign-in email is temporarily unavailable.'
-        # Closes the multiline declaration, call, or collection opened above.
+            503,
+            "EMAIL_UNAVAILABLE",
+            "Sign-in email is temporarily unavailable.",
+            # Closes the multiline declaration, call, or collection opened above.
         ) from exc
 
 
 # Applies this decorator to configure the declaration immediately below.
-@router.post('/guest', response_model=AuthSessionResponse, status_code=status.HTTP_201_CREATED)
+@router.post("/guest", response_model=AuthSessionResponse, status_code=status.HTTP_201_CREATED)
 # Defines this callable to implement the operation described by its name.
 async def create_guest_session(
     # Declares this typed field so the surrounding contract is explicit.
@@ -338,14 +340,14 @@ async def create_guest_session(
     settings: Settings = Depends(get_settings),
     # Stores `session` because later steps depend on this value.
     session: MongoSession = Depends(get_session),
-# Closes the multiline declaration, call, or collection opened above.
+    # Closes the multiline declaration, call, or collection opened above.
 ) -> AuthSessionResponse:
     # Stores `limiter` because later steps depend on this value.
     limiter: RateLimiter = request.app.state.rate_limiter
     # Supplies this required nested value.
     ip_hash, user_agent_hash = _request_fingerprints(request, settings)
     # Performs this required operation before the surrounding flow continues.
-    await limiter.check(f'auth-guest:{ip_hash or "unknown"}', weight=4)
+    await limiter.check(f"auth-guest:{ip_hash or 'unknown'}", weight=4)
     # Stores `user` because later steps depend on this value.
     user = AuthUser()
     # Supplies this required nested value.
@@ -362,7 +364,7 @@ async def create_guest_session(
         ip_hash=ip_hash,
         # Stores `user_agent_hash` because later steps depend on this value.
         user_agent_hash=user_agent_hash,
-    # Closes the multiline declaration, call, or collection opened above.
+        # Closes the multiline declaration, call, or collection opened above.
     )
     # Supplies this required nested value.
     _set_refresh_cookie(response, issued.refresh_token, settings)
@@ -371,7 +373,7 @@ async def create_guest_session(
 
 
 # Applies this decorator to configure the declaration immediately below.
-@router.post('/refresh', response_model=AuthSessionResponse)
+@router.post("/refresh", response_model=AuthSessionResponse)
 # Defines this callable to implement the operation described by its name.
 async def refresh_session(
     # Declares this typed field so the surrounding contract is explicit.
@@ -382,14 +384,14 @@ async def refresh_session(
     settings: Settings = Depends(get_settings),
     # Stores `session` because later steps depend on this value.
     session: MongoSession = Depends(get_session),
-# Closes the multiline declaration, call, or collection opened above.
+    # Closes the multiline declaration, call, or collection opened above.
 ) -> AuthSessionResponse:
     # Stores `refresh_token` because later steps depend on this value.
     refresh_token = request.cookies.get(settings.auth_cookie_name)
     # Guards the nested operation so it runs only when this condition is satisfied.
     if not refresh_token:
         # Raises this error so invalid state cannot continue silently.
-        raise APIError(401, 'INVALID_REFRESH_TOKEN', 'Your session has expired. Sign in again.')
+        raise APIError(401, "INVALID_REFRESH_TOKEN", "Your session has expired. Sign in again.")
     # Supplies this required nested value.
     ip_hash, user_agent_hash = _request_fingerprints(request, settings)
     # Stores `issued` because later steps depend on this value.
@@ -404,7 +406,7 @@ async def refresh_session(
         ip_hash=ip_hash,
         # Stores `user_agent_hash` because later steps depend on this value.
         user_agent_hash=user_agent_hash,
-    # Closes the multiline declaration, call, or collection opened above.
+        # Closes the multiline declaration, call, or collection opened above.
     )
     # Stores `user` because later steps depend on this value.
     user = await session.get(AuthUser, issued.principal.user_id)
@@ -417,7 +419,7 @@ async def refresh_session(
 
 
 # Applies this decorator to configure the declaration immediately below.
-@router.post('/logout', status_code=status.HTTP_204_NO_CONTENT)
+@router.post("/logout", status_code=status.HTTP_204_NO_CONTENT)
 # Defines this callable to implement the operation described by its name.
 async def logout(
     # Declares this typed field so the surrounding contract is explicit.
@@ -428,7 +430,7 @@ async def logout(
     settings: Settings = Depends(get_settings),
     # Stores `session` because later steps depend on this value.
     session: MongoSession = Depends(get_session),
-# Closes the multiline declaration, call, or collection opened above.
+    # Closes the multiline declaration, call, or collection opened above.
 ) -> None:
     # Stores `refresh_token` because later steps depend on this value.
     refresh_token = request.cookies.get(settings.auth_cookie_name)
@@ -437,8 +439,9 @@ async def logout(
         # Stores `auth_session` because later steps depend on this value.
         auth_session = await session.find_one(
             # Supplies this required nested value.
-            AuthSession, {'refresh_token_hash': token_hash(refresh_token, settings)}
-        # Closes the multiline declaration, call, or collection opened above.
+            AuthSession,
+            {"refresh_token_hash": token_hash(refresh_token, settings)},
+            # Closes the multiline declaration, call, or collection opened above.
         )
         # Guards the nested operation so it runs only when this condition is satisfied.
         if auth_session is not None:
@@ -451,7 +454,7 @@ async def logout(
 
 
 # Applies this decorator to configure the declaration immediately below.
-@router.post('/email', response_model=EmailLinkAccepted, status_code=status.HTTP_202_ACCEPTED)
+@router.post("/email", response_model=EmailLinkAccepted, status_code=status.HTTP_202_ACCEPTED)
 # Defines this callable to implement the operation described by its name.
 async def send_email_link(
     # Declares this typed field so the surrounding contract is explicit.
@@ -464,12 +467,12 @@ async def send_email_link(
     settings: Settings = Depends(get_settings),
     # Stores `session` because later steps depend on this value.
     session: MongoSession = Depends(get_session),
-# Closes the multiline declaration, call, or collection opened above.
+    # Closes the multiline declaration, call, or collection opened above.
 ) -> EmailLinkAccepted:
     # Guards the nested operation so it runs only when this condition is satisfied.
     if not settings.feature_account_registration:
         # Raises this error so invalid state cannot continue silently.
-        raise APIError(503, 'ACCOUNT_REGISTRATION_DISABLED', 'Account registration is unavailable.')
+        raise APIError(503, "ACCOUNT_REGISTRATION_DISABLED", "Account registration is unavailable.")
     # Stores `normalized_email` because later steps depend on this value.
     normalized_email = str(payload.email).strip().casefold()
     # Stores `limiter` because later steps depend on this value.
@@ -479,23 +482,25 @@ async def send_email_link(
     # Stores `email_hash` because later steps depend on this value.
     email_hash = hmac.new(
         # Supplies this required nested value.
-        settings.auth_signing_key.encode(), normalized_email.encode(), hashlib.sha256
-    # Closes the multiline declaration, call, or collection opened above.
+        settings.auth_signing_key.encode(),
+        normalized_email.encode(),
+        hashlib.sha256,
+        # Closes the multiline declaration, call, or collection opened above.
     ).hexdigest()
     # Performs this required operation before the surrounding flow continues.
-    await limiter.check(f'auth-email:{ip_hash or "unknown"}:{email_hash}', weight=12)
+    await limiter.check(f"auth-email:{ip_hash or 'unknown'}:{email_hash}", weight=12)
     # Stores `current_user` because later steps depend on this value.
     current_user = await session.get(AuthUser, principal.user_id)
     # Guards the nested operation so it runs only when this condition is satisfied.
     if current_user is None or current_user.deleted_at is not None:
         # Raises this error so invalid state cannot continue silently.
-        raise APIError(401, 'INVALID_ACCESS_TOKEN', 'Your session is invalid or has expired.')
+        raise APIError(401, "INVALID_ACCESS_TOKEN", "Your session is invalid or has expired.")
     # Stores `existing_user` because later steps depend on this value.
-    existing_user = await session.find_one(AuthUser, {'normalized_email': normalized_email})
+    existing_user = await session.find_one(AuthUser, {"normalized_email": normalized_email})
     # Stores `target_user` because later steps depend on this value.
     target_user = existing_user or current_user
     # Stores `purpose` because later steps depend on this value.
-    purpose = 'signin' if existing_user is not None else 'upgrade'
+    purpose = "signin" if existing_user is not None else "upgrade"
     # Stores `raw_token` because later steps depend on this value.
     raw_token = new_refresh_token()
     # Stores `email_token` because later steps depend on this value.
@@ -510,18 +515,18 @@ async def send_email_link(
         purpose=purpose,
         # Stores `expires_at` because later steps depend on this value.
         expires_at=datetime.now(UTC) + timedelta(seconds=settings.auth_email_token_seconds),
-    # Closes the multiline declaration, call, or collection opened above.
+        # Closes the multiline declaration, call, or collection opened above.
     )
     # Supplies this required nested value.
     session.add(email_token)
     # Performs this required operation before the surrounding flow continues.
     await session.commit()
     # Stores `requested_next` because later steps depend on this value.
-    requested_next = payload.next if _ALLOWED_NEXT.fullmatch(payload.next) else '/en/profile'
+    requested_next = payload.next if _ALLOWED_NEXT.fullmatch(payload.next) else "/en/profile"
     # Stores `query` because later steps depend on this value.
-    query = urllib.parse.urlencode({'token': raw_token, 'next': requested_next})
+    query = urllib.parse.urlencode({"token": raw_token, "next": requested_next})
     # Stores `link` because later steps depend on this value.
-    link = f'{settings.auth_issuer}/v1/auth/email/verify?{query}'
+    link = f"{settings.auth_issuer}/v1/auth/email/verify?{query}"
     # Performs this required operation before the surrounding flow continues.
     await _send_email(settings, normalized_email, link)
     # Returns the computed result and ends the current callable.
@@ -529,21 +534,21 @@ async def send_email_link(
 
 
 # Applies this decorator to configure the declaration immediately below.
-@router.get('/email/verify')
+@router.get("/email/verify")
 # Defines this callable to implement the operation described by its name.
 async def verify_email_link(
     # Declares this typed field so the surrounding contract is explicit.
     token: str,
     # Stores `next` because later steps depend on this value.
-    next: str = '/en/profile',
+    next: str = "/en/profile",
     # Stores `settings` because later steps depend on this value.
     settings: Settings = Depends(get_settings),
     # Stores `session` because later steps depend on this value.
     session: MongoSession = Depends(get_session),
-# Closes the multiline declaration, call, or collection opened above.
+    # Closes the multiline declaration, call, or collection opened above.
 ) -> RedirectResponse:
     # Stores `normalized_next` because later steps depend on this value.
-    normalized_next = next if _ALLOWED_NEXT.fullmatch(next) else '/en/profile'
+    normalized_next = next if _ALLOWED_NEXT.fullmatch(next) else "/en/profile"
     # Stores `email_token` because later steps depend on this value.
     email_token = await session.find_one(
         # Supplies this required nested value.
@@ -551,22 +556,23 @@ async def verify_email_link(
         # Supplies this required nested value.
         {
             # Supplies this literal value to the surrounding declaration or call.
-            'token_hash': token_hash(token, settings),
+            "token_hash": token_hash(token, settings),
             # Supplies this literal value to the surrounding declaration or call.
-            'consumed_at': None,
+            "consumed_at": None,
             # Supplies this literal value to the surrounding declaration or call.
-            'expires_at': {'$gt': datetime.now(UTC)},
-        # Closes the multiline declaration, call, or collection opened above.
+            "expires_at": {"$gt": datetime.now(UTC)},
+            # Closes the multiline declaration, call, or collection opened above.
         },
-    # Closes the multiline declaration, call, or collection opened above.
+        # Closes the multiline declaration, call, or collection opened above.
     )
     # Guards the nested operation so it runs only when this condition is satisfied.
     if email_token is None:
         # Returns the computed result and ends the current callable.
         return RedirectResponse(
             # Supplies this required nested value.
-            f'{settings.product_origin}/en/auth?error=invalid_callback', status_code=303
-        # Closes the multiline declaration, call, or collection opened above.
+            f"{settings.product_origin}/en/auth?error=invalid_callback",
+            status_code=303,
+            # Closes the multiline declaration, call, or collection opened above.
         )
     # Stores `user` because later steps depend on this value.
     user = await session.get(AuthUser, email_token.user_id)
@@ -575,15 +581,16 @@ async def verify_email_link(
         # Returns the computed result and ends the current callable.
         return RedirectResponse(
             # Supplies this required nested value.
-            f'{settings.product_origin}/en/auth?error=invalid_callback', status_code=303
-        # Closes the multiline declaration, call, or collection opened above.
+            f"{settings.product_origin}/en/auth?error=invalid_callback",
+            status_code=303,
+            # Closes the multiline declaration, call, or collection opened above.
         )
     # Stores `now` because later steps depend on this value.
     now = datetime.now(UTC)
     # Stores `email_token.consumed_at` because later steps depend on this value.
     email_token.consumed_at = now
     # Guards the nested operation so it runs only when this condition is satisfied.
-    if email_token.purpose == 'upgrade':
+    if email_token.purpose == "upgrade":
         # Stores `user.email` because later steps depend on this value.
         user.email = email_token.normalized_email
         # Stores `user.normalized_email` because later steps depend on this value.
@@ -610,10 +617,10 @@ async def verify_email_link(
         ip_hash=ip_hash,
         # Stores `user_agent_hash` because later steps depend on this value.
         user_agent_hash=user_agent_hash,
-    # Closes the multiline declaration, call, or collection opened above.
+        # Closes the multiline declaration, call, or collection opened above.
     )
     # Stores `destination` because later steps depend on this value.
-    destination = f'{settings.product_origin}{normalized_next}'
+    destination = f"{settings.product_origin}{normalized_next}"
     # Stores `response` because later steps depend on this value.
     response = RedirectResponse(destination, status_code=303)
     # Supplies this required nested value.
@@ -625,13 +632,13 @@ async def verify_email_link(
 # Defines this callable to implement the operation described by its name.
 def _totp(secret: bytes, counter: int) -> str:
     # Stores `digest` because later steps depend on this value.
-    digest = hmac.new(secret, struct.pack('>Q', counter), hashlib.sha1).digest()
+    digest = hmac.new(secret, struct.pack(">Q", counter), hashlib.sha1).digest()
     # Stores `offset` because later steps depend on this value.
     offset = digest[-1] & 0x0F
     # Stores `value` because later steps depend on this value.
-    value = (struct.unpack('>I', digest[offset : offset + 4])[0] & 0x7FFFFFFF) % 1_000_000
+    value = (struct.unpack(">I", digest[offset : offset + 4])[0] & 0x7FFFFFFF) % 1_000_000
     # Returns the computed result and ends the current callable.
-    return f'{value:06d}'
+    return f"{value:06d}"
 
 
 # Defines this callable to implement the operation described by its name.
@@ -645,11 +652,11 @@ def _valid_totp(secret: bytes, code: str, now: int | None = None) -> bool:
 # Defines this callable to implement the operation described by its name.
 def _totp_context(user_id: uuid.UUID) -> str:
     # Returns the computed result and ends the current callable.
-    return f'auth-totp:{user_id}'
+    return f"auth-totp:{user_id}"
 
 
 # Applies this decorator to configure the declaration immediately below.
-@router.post('/mfa/totp/setup', response_model=TotpSetupResponse)
+@router.post("/mfa/totp/setup", response_model=TotpSetupResponse)
 # Defines this callable to implement the operation described by its name.
 async def setup_totp(
     # Stores `principal` because later steps depend on this value.
@@ -660,22 +667,22 @@ async def setup_totp(
     cipher: SecretCipher = Depends(get_cipher),
     # Stores `settings` because later steps depend on this value.
     settings: Settings = Depends(get_settings),
-# Closes the multiline declaration, call, or collection opened above.
+    # Closes the multiline declaration, call, or collection opened above.
 ) -> TotpSetupResponse:
     # Guards the nested operation so it runs only when this condition is satisfied.
     if principal.is_anonymous:
         # Raises this error so invalid state cannot continue silently.
-        raise APIError(403, 'REGISTERED_ACCOUNT_REQUIRED', 'Register before enabling MFA.')
+        raise APIError(403, "REGISTERED_ACCOUNT_REQUIRED", "Register before enabling MFA.")
     # Stores `user` because later steps depend on this value.
     user = await session.get(AuthUser, principal.user_id)
     # Guards the nested operation so it runs only when this condition is satisfied.
     if user is None or not user.normalized_email:
         # Raises this error so invalid state cannot continue silently.
-        raise APIError(404, 'ACCOUNT_NOT_FOUND', 'Account not found.')
+        raise APIError(404, "ACCOUNT_NOT_FOUND", "Account not found.")
     # Stores `secret` because later steps depend on this value.
     secret = secrets.token_bytes(20)
     # Stores `encoded_secret` because later steps depend on this value.
-    encoded_secret = base64.b32encode(secret).decode().rstrip('=')
+    encoded_secret = base64.b32encode(secret).decode().rstrip("=")
     # Stores `encrypted` because later steps depend on this value.
     encrypted = cipher.encrypt((encoded_secret,), context=_totp_context(user.id))
     # Stores `user.totp_secret_ciphertext` because later steps depend on this value.
@@ -689,17 +696,17 @@ async def setup_totp(
     # Performs this required operation before the surrounding flow continues.
     await session.commit()
     # Stores `label` because later steps depend on this value.
-    label = urllib.parse.quote(f'{settings.product_name}:{user.normalized_email}')
+    label = urllib.parse.quote(f"{settings.product_name}:{user.normalized_email}")
     # Stores `issuer` because later steps depend on this value.
     issuer = urllib.parse.quote(settings.product_name)
     # Stores `uri` because later steps depend on this value.
-    uri = f'otpauth://totp/{label}?secret={encoded_secret}&issuer={issuer}&algorithm=SHA1&digits=6&period=30'
+    uri = f"otpauth://totp/{label}?secret={encoded_secret}&issuer={issuer}&algorithm=SHA1&digits=6&period=30"
     # Returns the computed result and ends the current callable.
     return TotpSetupResponse(secret=encoded_secret, uri=uri)
 
 
 # Applies this decorator to configure the declaration immediately below.
-@router.post('/mfa/totp/verify', response_model=AccessTokenResponse)
+@router.post("/mfa/totp/verify", response_model=AccessTokenResponse)
 # Defines this callable to implement the operation described by its name.
 async def verify_totp(
     # Declares this typed field so the surrounding contract is explicit.
@@ -714,12 +721,12 @@ async def verify_totp(
     cipher: SecretCipher = Depends(get_cipher),
     # Stores `settings` because later steps depend on this value.
     settings: Settings = Depends(get_settings),
-# Closes the multiline declaration, call, or collection opened above.
+    # Closes the multiline declaration, call, or collection opened above.
 ) -> AccessTokenResponse:
     # Stores `limiter` because later steps depend on this value.
     limiter: RateLimiter = request.app.state.rate_limiter
     # Performs this required operation before the surrounding flow continues.
-    await limiter.check(f'auth-totp:{principal.user_id}', weight=20)
+    await limiter.check(f"auth-totp:{principal.user_id}", weight=20)
     # Stores `user` because later steps depend on this value.
     user = await session.get(AuthUser, principal.user_id)
     # Stores `auth_session` because later steps depend on this value.
@@ -730,7 +737,7 @@ async def verify_totp(
         if principal.session_id
         # Supplies this required nested value.
         else None
-    # Closes the multiline declaration, call, or collection opened above.
+        # Closes the multiline declaration, call, or collection opened above.
     )
     # Guards the nested operation so it runs only when this condition is satisfied.
     if (
@@ -744,10 +751,10 @@ async def verify_totp(
         or user.totp_secret_nonce is None
         # Supplies this required nested value.
         or user.totp_secret_key_version is None
-    # Closes the multiline declaration, call, or collection opened above.
+        # Closes the multiline declaration, call, or collection opened above.
     ):
         # Raises this error so invalid state cannot continue silently.
-        raise APIError(409, 'MFA_NOT_CONFIGURED', 'Set up MFA before verifying a code.')
+        raise APIError(409, "MFA_NOT_CONFIGURED", "Set up MFA before verifying a code.")
     # Stores `encoded_secret` because later steps depend on this value.
     encoded_secret = cipher.decrypt(
         # Supplies this required nested value.
@@ -758,22 +765,22 @@ async def verify_totp(
         user.totp_secret_key_version,
         # Stores `context` because later steps depend on this value.
         context=_totp_context(user.id),
-    # Closes the multiline declaration, call, or collection opened above.
+        # Closes the multiline declaration, call, or collection opened above.
     )[0]
     # Stores `padded` because later steps depend on this value.
-    padded = encoded_secret + '=' * (-len(encoded_secret) % 8)
+    padded = encoded_secret + "=" * (-len(encoded_secret) % 8)
     # Stores `secret` because later steps depend on this value.
     secret = base64.b32decode(padded, casefold=True)
     # Guards the nested operation so it runs only when this condition is satisfied.
     if not _valid_totp(secret, payload.code):
         # Raises this error so invalid state cannot continue silently.
-        raise APIError(401, 'INVALID_MFA_CODE', 'The authentication code is invalid.')
+        raise APIError(401, "INVALID_MFA_CODE", "The authentication code is invalid.")
     # Stores `now` because later steps depend on this value.
     now = datetime.now(UTC)
     # Stores `user.totp_enabled_at` because later steps depend on this value.
     user.totp_enabled_at = user.totp_enabled_at or now
     # Stores `auth_session.assurance_level` because later steps depend on this value.
-    auth_session.assurance_level = 'aal2'
+    auth_session.assurance_level = "aal2"
     # Stores `auth_session.authenticated_at` because later steps depend on this value.
     auth_session.authenticated_at = now
     # Performs this required operation before the surrounding flow continues.
@@ -783,6 +790,7 @@ async def verify_totp(
     # Returns the computed result and ends the current callable.
     return AccessTokenResponse(
         # Stores `access_token` because later steps depend on this value.
-        access_token=access_token, expires_in=settings.auth_access_token_seconds
-    # Closes the multiline declaration, call, or collection opened above.
+        access_token=access_token,
+        expires_in=settings.auth_access_token_seconds,
+        # Closes the multiline declaration, call, or collection opened above.
     )

@@ -209,7 +209,7 @@ async def get_games_route(
     # Completes the signature and declares the callable return type.
 ) -> PaginatedGames:
     # Executes this statement as the next step in the surrounding logic.
-    owner_filter = {'owner_id': principal.user_id}
+    owner_filter = {"owner_id": principal.user_id}
     # Stores `total` because later steps depend on this value.
     total = await session.count(GameSession, owner_filter)
     # Stores `games` because later steps depend on this value.
@@ -219,12 +219,12 @@ async def get_games_route(
         # Supplies this required nested value.
         owner_filter,
         # Stores `sort` because later steps depend on this value.
-        sort=[('created_at', DESCENDING)],
+        sort=[("created_at", DESCENDING)],
         # Stores `skip` because later steps depend on this value.
         skip=(page - 1) * page_size,
         # Stores `limit` because later steps depend on this value.
         limit=page_size,
-    # Closes the multiline declaration, call, or collection opened above.
+        # Closes the multiline declaration, call, or collection opened above.
     )
     # Returns this result to the caller and ends the current function.
     return PaginatedGames(
@@ -254,7 +254,7 @@ async def get_stats_route(
     # Waits for this asynchronous operation to complete.
     await ensure_profile(session, principal)
     # Computes and stores `games` for subsequent operations.
-    games = await session.find_many(GameSession, {'owner_id': principal.user_id})
+    games = await session.find_many(GameSession, {"owner_id": principal.user_id})
     # Stores `daily_ids` because later steps depend on this value.
     daily_ids = {game.daily_challenge_id for game in games if game.daily_challenge_id is not None}
     # Stores `daily_dates_by_id` because later steps depend on this value.
@@ -262,8 +262,8 @@ async def get_stats_route(
         # Supplies this required nested value.
         daily.id: daily.challenge_date
         # Iterates over these values so each item receives the same processing.
-        for daily in await session.find_many(DailyChallenge, {'_id': {'$in': list(daily_ids)}})
-    # Closes the multiline declaration, call, or collection opened above.
+        for daily in await session.find_many(DailyChallenge, {"_id": {"$in": list(daily_ids)}})
+        # Closes the multiline declaration, call, or collection opened above.
     }
     # Computes and stores `played` for subsequent operations.
     played = sum(row.status in {"won", "lost", "abandoned"} for row in games)
@@ -306,12 +306,12 @@ async def get_stats_route(
             # Supplies this required nested value.
             UserAchievement,
             # Supplies this required nested value.
-            {'user_id': principal.user_id},
+            {"user_id": principal.user_id},
             # Stores `sort` because later steps depend on this value.
-            sort=[('awarded_at', 1)],
-        # Closes the multiline declaration, call, or collection opened above.
+            sort=[("awarded_at", 1)],
+            # Closes the multiline declaration, call, or collection opened above.
         )
-    # Closes the multiline declaration, call, or collection opened above.
+        # Closes the multiline declaration, call, or collection opened above.
     ]
     # Computes and stores `mode_counts` for subsequent operations.
     mode_counts = Counter(row.mode for row in games)
@@ -330,14 +330,14 @@ async def get_stats_route(
         # Iterates over these values so each item receives the same processing.
         for row in games
         # Guards the nested operation so it runs only when this condition is satisfied.
-        if row.mode == 'daily'
+        if row.mode == "daily"
         # Supplies this required nested value.
-        and row.status in {'won', 'lost'}
+        and row.status in {"won", "lost"}
         # Supplies this required nested value.
         and row.daily_challenge_id is not None
         # Supplies this required nested value.
         and (challenge_date := daily_dates_by_id.get(row.daily_challenge_id)) is not None
-    # Closes the multiline declaration, call, or collection opened above.
+        # Closes the multiline declaration, call, or collection opened above.
     }
     # Stores `daily_dates` because later steps depend on this value.
     daily_dates = sorted(daily_date_values, reverse=True)
@@ -569,14 +569,14 @@ async def delete_account_route(
         # Supplies this required nested value.
         settings.auth_cookie_name,
         # Stores `path` because later steps depend on this value.
-        path='/v1/auth',
+        path="/v1/auth",
         # Stores `secure` because later steps depend on this value.
         secure=settings.auth_cookie_secure,
         # Stores `httponly` because later steps depend on this value.
         httponly=True,
         # Stores `samesite` because later steps depend on this value.
         samesite=settings.auth_cookie_samesite,
-    # Closes the multiline declaration, call, or collection opened above.
+        # Closes the multiline declaration, call, or collection opened above.
     )
     # Returns this result to the caller and ends the current function.
     return DeleteAccountResponse(deleted=True)

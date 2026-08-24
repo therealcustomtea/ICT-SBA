@@ -81,8 +81,9 @@ async def test_daily_consistency_official_uniqueness_and_practice_replay(api: AP
         # Computes and stores `rows` for subsequent operations.
         rows = await session.find_many(
             # Supplies this required nested value.
-            GameSession, {'owner_id': api.current['principal'].user_id}
-        # Closes the multiline declaration, call, or collection opened above.
+            GameSession,
+            {"owner_id": api.current["principal"].user_id},
+            # Closes the multiline declaration, call, or collection opened above.
         )
         # Asserts this invariant so an unexpected test state fails immediately.
         assert sum(row.daily_challenge_id is not None for row in rows) == 1

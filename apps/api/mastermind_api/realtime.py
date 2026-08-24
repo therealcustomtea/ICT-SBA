@@ -396,8 +396,8 @@ async def award_duelist_if_eligible(
         # Supplies this required nested value.
         GameSession,
         # Supplies this required nested value.
-        {'room_id': room.id, 'owner_id': room.winner_id, 'status': 'won'},
-    # Closes the multiline declaration, call, or collection opened above.
+        {"room_id": room.id, "owner_id": room.winner_id, "status": "won"},
+        # Closes the multiline declaration, call, or collection opened above.
     )
     # Guards the nested operation so it runs only when this condition is satisfied.
     if game is None:
@@ -408,8 +408,8 @@ async def award_duelist_if_eligible(
         # Supplies this required nested value.
         UserAchievement,
         # Supplies this required nested value.
-        {'user_id': room.winner_id, 'achievement_key': 'duelist'},
-    # Closes the multiline declaration, call, or collection opened above.
+        {"user_id": room.winner_id, "achievement_key": "duelist"},
+        # Closes the multiline declaration, call, or collection opened above.
     )
     # Guards the nested operation so it runs only when this condition is satisfied.
     if existing is None:
@@ -420,12 +420,12 @@ async def award_duelist_if_eligible(
                 # Stores `user_id` because later steps depend on this value.
                 user_id=room.winner_id,
                 # Stores `achievement_key` because later steps depend on this value.
-                achievement_key='duelist',
+                achievement_key="duelist",
                 # Stores `game_id` because later steps depend on this value.
                 game_id=game.id,
-            # Closes the multiline declaration, call, or collection opened above.
+                # Closes the multiline declaration, call, or collection opened above.
             )
-        # Closes the multiline declaration, call, or collection opened above.
+            # Closes the multiline declaration, call, or collection opened above.
         )
 
 
@@ -451,10 +451,10 @@ async def finalize_active_room_games(
         # Supplies this required nested value.
         GameSession,
         # Supplies this required nested value.
-        {'room_id': room.id, 'status': GameStatus.ACTIVE.value},
+        {"room_id": room.id, "status": GameStatus.ACTIVE.value},
         # Stores `sort` because later steps depend on this value.
-        sort=[('_id', 1)],
-    # Closes the multiline declaration, call, or collection opened above.
+        sort=[("_id", 1)],
+        # Closes the multiline declaration, call, or collection opened above.
     )
     # Checks this condition before executing the nested branch.
     if not active_games:
@@ -529,8 +529,9 @@ async def record_room_completion(
     # Computes and stores `existing` for subsequent operations.
     existing = await session.find_one(
         # Supplies this required nested value.
-        MultiplayerEvent, {'room_id': room.id, 'event_type': 'room_completed'}
-    # Closes the multiline declaration, call, or collection opened above.
+        MultiplayerEvent,
+        {"room_id": room.id, "event_type": "room_completed"},
+        # Closes the multiline declaration, call, or collection opened above.
     )
     # Checks this condition before executing the nested branch.
     if existing is not None:
@@ -588,18 +589,18 @@ async def finalize_due_rooms_once(
             # Supplies this required nested value.
             {
                 # Supplies this literal value to the surrounding declaration or call.
-                'status': 'active',
+                "status": "active",
                 # Supplies this literal value to the surrounding declaration or call.
-                'winner_id': {'$ne': None},
+                "winner_id": {"$ne": None},
                 # Supplies this literal value to the surrounding declaration or call.
-                'tie_deadline': {'$ne': None, '$lte': effective_now},
-            # Closes the multiline declaration, call, or collection opened above.
+                "tie_deadline": {"$ne": None, "$lte": effective_now},
+                # Closes the multiline declaration, call, or collection opened above.
             },
             # Stores `sort` because later steps depend on this value.
-            sort=[('tie_deadline', 1), ('_id', 1)],
+            sort=[("tie_deadline", 1), ("_id", 1)],
             # Stores `limit` because later steps depend on this value.
             limit=limit,
-        # Closes the multiline declaration, call, or collection opened above.
+            # Closes the multiline declaration, call, or collection opened above.
         )
         # Iterates through the supplied values for the nested operation.
         for room in rooms:
@@ -655,12 +656,12 @@ async def cleanup_stale_presence_once(
             # Supplies this required nested value.
             MultiplayerMember,
             # Supplies this required nested value.
-            {'connected': True, 'last_seen_at': {'$lte': stale_before}},
+            {"connected": True, "last_seen_at": {"$lte": stale_before}},
             # Stores `sort` because later steps depend on this value.
-            sort=[('last_seen_at', 1), ('_id', 1)],
+            sort=[("last_seen_at", 1), ("_id", 1)],
             # Stores `limit` because later steps depend on this value.
             limit=limit,
-        # Closes the multiline declaration, call, or collection opened above.
+            # Closes the multiline declaration, call, or collection opened above.
         )
         # Stores `rows` because later steps depend on this value.
         rows = []
@@ -669,7 +670,7 @@ async def cleanup_stale_presence_once(
             # Stores `room` because later steps depend on this value.
             room = await session.get(MultiplayerRoom, member.room_id)
             # Guards the nested operation so it runs only when this condition is satisfied.
-            if room is not None and room.status in {'waiting', 'active'}:
+            if room is not None and room.status in {"waiting", "active"}:
                 # Supplies this required nested value.
                 rows.append((member, room))
         # Iterates through the supplied values for the nested operation.

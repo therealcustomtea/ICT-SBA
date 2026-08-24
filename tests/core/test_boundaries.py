@@ -187,7 +187,7 @@ def test_config_deserialization_parses_boolean_text(
     stored_value: str,
     # Declares this typed field so the surrounding contract is explicit.
     expected: bool,
-# Closes the multiline declaration, call, or collection opened above.
+    # Closes the multiline declaration, call, or collection opened above.
 ) -> None:
     # Deserializes a representative persisted game configuration.
     config = GameConfig.from_dict(
@@ -201,9 +201,9 @@ def test_config_deserialization_parses_boolean_text(
             "maxAttempts": 10,
             # Supplies this literal value to the surrounding declaration or call.
             "duplicatesAllowed": stored_value,
-        # Closes the multiline declaration, call, or collection opened above.
+            # Closes the multiline declaration, call, or collection opened above.
         }
-    # Closes the multiline declaration, call, or collection opened above.
+        # Closes the multiline declaration, call, or collection opened above.
     )
     # Confirms that the text value was not interpreted using Python string truthiness.
     assert config.duplicates_allowed is expected
@@ -225,9 +225,9 @@ def test_config_deserialization_rejects_invalid_boolean_text() -> None:
                 "maxAttempts": 10,
                 # Supplies this literal value to the surrounding declaration or call.
                 "duplicatesAllowed": "sometimes",
-            # Closes the multiline declaration, call, or collection opened above.
+                # Closes the multiline declaration, call, or collection opened above.
             }
-        # Closes the multiline declaration, call, or collection opened above.
+            # Closes the multiline declaration, call, or collection opened above.
         )
     # Confirms that callers receive a stable validation code.
     assert error.value.code == "INVALID_BOOLEAN"

@@ -149,9 +149,9 @@ async def test_create_secret_omission_attempt_idempotency_and_terminal(api: APIC
     # Acquires this asynchronous managed resource for the nested operation.
     async with api.sessions() as session:
         # Asserts this invariant so an unexpected test state fails immediately.
-        assert len((await session.find_one(GameSession, {'public_id': game['id']})).attempts) == 1
+        assert len((await session.find_one(GameSession, {"public_id": game["id"]})).attempts) == 1
         # Computes and stores `stored` for subsequent operations.
-        stored = await session.find_one(GameSession, {'public_id': game['id']})
+        stored = await session.find_one(GameSession, {"public_id": game["id"]})
         # Asserts this invariant so an unexpected test state fails immediately.
         assert stored is not None
         # Asserts this invariant so an unexpected test state fails immediately.
@@ -315,10 +315,11 @@ async def test_unranked_win_does_not_suppress_first_eligible_break(
             # Iterates over these values so each item receives the same processing.
             for item in await session.find_many(
                 # Supplies this required nested value.
-                UserAchievement, {'user_id': api.current['principal'].user_id}
-            # Closes the multiline declaration, call, or collection opened above.
+                UserAchievement,
+                {"user_id": api.current["principal"].user_id},
+                # Closes the multiline declaration, call, or collection opened above.
             )
-        # Closes the multiline declaration, call, or collection opened above.
+            # Closes the multiline declaration, call, or collection opened above.
         }
         # Asserts this invariant so an unexpected test state fails immediately.
         assert "first_break" in achievements

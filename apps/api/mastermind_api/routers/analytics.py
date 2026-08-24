@@ -134,10 +134,10 @@ async def collect_event_route(
         # Supplies this required nested value.
         ProductEvent,
         # Supplies this required nested value.
-        {'client_event_id': payload.client_event_id},
+        {"client_event_id": payload.client_event_id},
         # Supplies this required nested value.
-        {'$setOnInsert': document_to_bson(event)},
-    # Closes the multiline declaration, call, or collection opened above.
+        {"$setOnInsert": document_to_bson(event)},
+        # Closes the multiline declaration, call, or collection opened above.
     )
     # Waits for this asynchronous operation to complete.
     await session.commit()

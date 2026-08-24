@@ -35,29 +35,29 @@ from .conftest import APIContext
 # Defines this callable to implement the operation described by its name.
 def make_game(*, started_at: datetime, expires_at: datetime) -> GameSession:
     # Stores `config` because later steps depend on this value.
-    config = get_preset('easy')
+    config = get_preset("easy")
     # Returns the computed result and ends the current callable.
     return GameSession(
         # Stores `public_id` because later steps depend on this value.
-        public_id=f'game-{uuid.uuid4().hex}',
+        public_id=f"game-{uuid.uuid4().hex}",
         # Stores `owner_id` because later steps depend on this value.
         owner_id=uuid.uuid4(),
         # Stores `mode` because later steps depend on this value.
-        mode='solo',
+        mode="solo",
         # Stores `config` because later steps depend on this value.
         config=config.to_dict(),
         # Stores `status` because later steps depend on this value.
-        status='active',
+        status="active",
         # Stores `rule_set_version` because later steps depend on this value.
         rule_set_version=RULE_SET_VERSION,
         # Stores `scoring_version` because later steps depend on this value.
         scoring_version=SCORING_VERSION,
         # Stores `encrypted_secret` because later steps depend on this value.
-        encrypted_secret=b'ciphertext',
+        encrypted_secret=b"ciphertext",
         # Stores `secret_nonce` because later steps depend on this value.
-        secret_nonce=b'nonce',
+        secret_nonce=b"nonce",
         # Stores `secret_key_version` because later steps depend on this value.
-        secret_key_version='v1',
+        secret_key_version="v1",
         # Stores `maximum_attempts` because later steps depend on this value.
         maximum_attempts=config.max_attempts,
         # Stores `started_at` because later steps depend on this value.
@@ -65,8 +65,8 @@ def make_game(*, started_at: datetime, expires_at: datetime) -> GameSession:
         # Stores `expires_at` because later steps depend on this value.
         expires_at=expires_at,
         # Stores `ranked_eligibility` because later steps depend on this value.
-        ranked_eligibility='eligible',
-    # Closes the multiline declaration, call, or collection opened above.
+        ranked_eligibility="eligible",
+        # Closes the multiline declaration, call, or collection opened above.
     )
 
 
@@ -75,13 +75,13 @@ def test_game_expiry_uses_mode_and_linked_deadline() -> None:
     # Stores `started_at` because later steps depend on this value.
     started_at = datetime(2026, 1, 1, tzinfo=UTC)
     # Performs this required operation before the surrounding flow continues.
-    assert game_expiry_for_mode('daily', started_at) == started_at + DAILY_ACTIVE_LIFETIME
+    assert game_expiry_for_mode("daily", started_at) == started_at + DAILY_ACTIVE_LIFETIME
     # Stores `linked` because later steps depend on this value.
     linked = started_at + timedelta(minutes=30)
     # Performs this required operation before the surrounding flow continues.
-    assert game_expiry_for_mode('duel', started_at, linked_expires_at=linked) == linked
+    assert game_expiry_for_mode("duel", started_at, linked_expires_at=linked) == linked
     # Performs this required operation before the surrounding flow continues.
-    assert game_expiry_for_mode('duel', started_at) == started_at + DUEL_ACTIVE_LIFETIME
+    assert game_expiry_for_mode("duel", started_at) == started_at + DUEL_ACTIVE_LIFETIME
 
 
 # Defines this callable to implement the operation described by its name.
@@ -94,11 +94,11 @@ def test_expire_game_record_is_idempotent() -> None:
     # Performs this required operation before the surrounding flow continues.
     assert expire_game_record(game, now=now) is True
     # Performs this required operation before the surrounding flow continues.
-    assert game.status == 'expired'
+    assert game.status == "expired"
     # Performs this required operation before the surrounding flow continues.
     assert game.final_score == 0
     # Performs this required operation before the surrounding flow continues.
-    assert game.ranked_eligibility == 'unranked'
+    assert game.ranked_eligibility == "unranked"
     # Performs this required operation before the surrounding flow continues.
     assert expire_game_record(game, now=now) is False
 
@@ -114,16 +114,16 @@ async def test_retention_expires_games_and_deletes_events(api: APIContext) -> No
         # Stores `client_event_id` because later steps depend on this value.
         client_event_id=uuid.uuid4(),
         # Stores `event_name` because later steps depend on this value.
-        event_name='game_started',
+        event_name="game_started",
         # Stores `anonymous` because later steps depend on this value.
         anonymous=True,
         # Stores `consent_version` because later steps depend on this value.
-        consent_version='v1',
+        consent_version="v1",
         # Stores `release` because later steps depend on this value.
-        release='test',
+        release="test",
         # Stores `expires_at` because later steps depend on this value.
         expires_at=now - timedelta(seconds=1),
-    # Closes the multiline declaration, call, or collection opened above.
+        # Closes the multiline declaration, call, or collection opened above.
     )
     # Scopes this resource so acquisition and cleanup remain paired.
     async with api.sessions() as session:
@@ -147,6 +147,6 @@ async def test_retention_expires_games_and_deletes_events(api: APIContext) -> No
     # Performs this required operation before the surrounding flow continues.
     assert stored_game is not None
     # Performs this required operation before the surrounding flow continues.
-    assert stored_game.status == 'expired'
+    assert stored_game.status == "expired"
     # Performs this required operation before the surrounding flow continues.
     assert stored_event is None

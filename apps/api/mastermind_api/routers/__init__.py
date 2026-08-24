@@ -20,7 +20,7 @@ from . import (
     rooms,
     # Supplies this required nested value.
     support,
-# Closes the multiline declaration, call, or collection opened above.
+    # Closes the multiline declaration, call, or collection opened above.
 )
 
 # Computes and stores `__all__` for subsequent operations.

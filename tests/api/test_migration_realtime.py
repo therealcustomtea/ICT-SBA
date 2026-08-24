@@ -37,17 +37,17 @@ async def test_mongodb_indexes_and_seed_documents_are_initialized(api: APIContex
     # Scopes this resource so acquisition and cleanup remain paired.
     async with api.sessions() as session:
         # Performs this required operation before the surrounding flow continues.
-        assert 'ICT-SBA' in await session.database.list_collection_names()
+        assert "ICT-SBA" in await session.database.list_collection_names()
         # Stores `flag` because later steps depend on this value.
-        flag = await session.get(FeatureFlag, 'daily')
+        flag = await session.get(FeatureFlag, "daily")
         # Performs this required operation before the surrounding flow continues.
         assert flag is not None and flag.enabled is True
         # Stores `indexes` because later steps depend on this value.
-        indexes = await session.database['auth_sessions'].index_information()
+        indexes = await session.database["auth_sessions"].index_information()
         # Performs this required operation before the surrounding flow continues.
-        assert any(index.get('unique') for index in indexes.values())
+        assert any(index.get("unique") for index in indexes.values())
         # Performs this required operation before the surrounding flow continues.
-        assert any(index.get('expireAfterSeconds') == 0 for index in indexes.values())
+        assert any(index.get("expireAfterSeconds") == 0 for index in indexes.values())
 
 
 # Defines this callable to implement the operation described by its name.
@@ -59,11 +59,11 @@ async def test_mongodb_transaction_rolls_back_failed_unit_of_work(api: APIContex
         # Scopes this resource so acquisition and cleanup remain paired.
         async with api.sessions() as session:
             # Supplies this required nested value.
-            session.add(Profile(id=user_id, display_name='Temporary'))
+            session.add(Profile(id=user_id, display_name="Temporary"))
             # Performs this required operation before the surrounding flow continues.
             await session.flush()
             # Raises this error so invalid state cannot continue silently.
-            raise RuntimeError('force rollback')
+            raise RuntimeError("force rollback")
     # Scopes this resource so acquisition and cleanup remain paired.
     async with api.sessions() as session:
         # Performs this required operation before the surrounding flow continues.
@@ -75,11 +75,11 @@ async def test_in_memory_broker_fans_out_and_unsubscribes() -> None:
     # Stores `broker` because later steps depend on this value.
     broker = InMemoryBroker()
     # Scopes this resource so acquisition and cleanup remain paired.
-    async with broker.subscribe('room') as first, broker.subscribe('room') as second:
+    async with broker.subscribe("room") as first, broker.subscribe("room") as second:
         # Stores `event` because later steps depend on this value.
-        event = {'version': 1, 'sequence': 1, 'type': 'presence', 'payload': {}}
+        event = {"version": 1, "sequence": 1, "type": "presence", "payload": {}}
         # Performs this required operation before the surrounding flow continues.
-        await broker.publish('room', event)
+        await broker.publish("room", event)
         # Performs this required operation before the surrounding flow continues.
         assert await asyncio.wait_for(anext(first), timeout=1) == event
         # Performs this required operation before the surrounding flow continues.
@@ -95,19 +95,19 @@ def test_realtime_envelopes_are_versioned_and_reject_unknown_versions() -> None:
         # Stores `version` because later steps depend on this value.
         version=1,
         # Stores `type` because later steps depend on this value.
-        type='guess',
+        type="guess",
         # Stores `guess` because later steps depend on this value.
-        guess=['R', 'B', 'G', 'Y'],
+        guess=["R", "B", "G", "Y"],
         # Stores `idempotency_key` because later steps depend on this value.
-        idempotency_key='realtime-test-001',
-    # Closes the multiline declaration, call, or collection opened above.
+        idempotency_key="realtime-test-001",
+        # Closes the multiline declaration, call, or collection opened above.
     )
     # Performs this required operation before the surrounding flow continues.
     assert message.version == 1
     # Scopes this resource so acquisition and cleanup remain paired.
     with pytest.raises(ValidationError):
         # Supplies this required nested value.
-        RoomClientMessage.model_validate({'version': 2, 'type': 'heartbeat'})
+        RoomClientMessage.model_validate({"version": 2, "type": "heartbeat"})
 
 
 # Defines this callable to implement the operation described by its name.

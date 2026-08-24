@@ -20,16 +20,17 @@ async def process_account_deletion(
     session: MongoSession,
     # Declares this typed field so the surrounding contract is explicit.
     principal: AuthPrincipal,
-# Closes the multiline declaration, call, or collection opened above.
+    # Closes the multiline declaration, call, or collection opened above.
 ) -> None:
     # Stores `deletion` because later steps depend on this value.
     deletion = await session.find_one(
         # Supplies this required nested value.
-        AccountDeletionRequest, {'user_id': principal.user_id}
-    # Closes the multiline declaration, call, or collection opened above.
+        AccountDeletionRequest,
+        {"user_id": principal.user_id},
+        # Closes the multiline declaration, call, or collection opened above.
     )
     # Guards the nested operation so it runs only when this condition is satisfied.
-    if deletion is not None and deletion.status == 'completed':
+    if deletion is not None and deletion.status == "completed":
         # Returns the computed result and ends the current callable.
         return
     # Guards the nested operation so it runs only when this condition is satisfied.
@@ -39,7 +40,7 @@ async def process_account_deletion(
         # Supplies this required nested value.
         session.add(deletion)
     # Stores `deletion.status` because later steps depend on this value.
-    deletion.status = 'pending'
+    deletion.status = "pending"
     # Stores `deletion.last_attempt_at` because later steps depend on this value.
     deletion.last_attempt_at = utcnow()
     # Performs this required operation before the surrounding flow continues.
@@ -47,7 +48,7 @@ async def process_account_deletion(
     # Performs this required operation before the surrounding flow continues.
     await revoke_user_sessions(session, principal.user_id)
     # Performs this required operation before the surrounding flow continues.
-    await session.delete_many(AuthEmailToken, {'user_id': principal.user_id})
+    await session.delete_many(AuthEmailToken, {"user_id": principal.user_id})
     # Stores `user` because later steps depend on this value.
     user = await session.get(AuthUser, principal.user_id)
     # Guards the nested operation so it runs only when this condition is satisfied.
@@ -65,7 +66,7 @@ async def process_account_deletion(
         # Stores `user.totp_secret_key_version` because later steps depend on this value.
         user.totp_secret_key_version = None
     # Stores `deletion.status` because later steps depend on this value.
-    deletion.status = 'completed'
+    deletion.status = "completed"
     # Stores `deletion.last_error_code` because later steps depend on this value.
     deletion.last_error_code = None
     # Stores `deletion.completed_at` because later steps depend on this value.

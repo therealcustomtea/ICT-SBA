@@ -291,8 +291,8 @@ async def _refresh_connection(
     # Computes and stores `pipeline` for subsequent operations.
     pipeline = redis.pipeline(transaction=True)
     # Removes abandoned sockets before extending the lifetime of the connection sets.
-    pipeline.zremrangebyscore(user_key, '-inf', cutoff)
-    pipeline.zremrangebyscore(ip_key, '-inf', cutoff)
+    pipeline.zremrangebyscore(user_key, "-inf", cutoff)
+    pipeline.zremrangebyscore(ip_key, "-inf", cutoff)
     # Calls `pipeline.zadd` with the supplied values.
     pipeline.zadd(user_key, {token: now}, xx=True)
     # Calls `pipeline.zadd` with the supplied values.
@@ -795,8 +795,9 @@ async def _lock_duel_attempt_state(
     # Computes and stores `game` for subsequent operations.
     game = await session.find_one(
         # Supplies this required nested value.
-        GameSession, {'room_id': room_id, 'owner_id': principal.user_id}
-    # Closes the multiline declaration, call, or collection opened above.
+        GameSession,
+        {"room_id": room_id, "owner_id": principal.user_id},
+        # Closes the multiline declaration, call, or collection opened above.
     )
     # Checks this condition before executing the nested branch.
     if game is None:
@@ -905,8 +906,8 @@ async def _submit_duel_attempt_transaction(
         # Supplies this required nested value.
         (game.owner_id, game.status)
         # Iterates over these values so each item receives the same processing.
-        for game in await session.find_many(GameSession, {'room_id': room_id})
-    # Closes the multiline declaration, call, or collection opened above.
+        for game in await session.find_many(GameSession, {"room_id": room_id})
+        # Closes the multiline declaration, call, or collection opened above.
     ]
     # Computes and stores `terminal_statuses` for subsequent operations.
     terminal_statuses = {"won", "lost", "abandoned", "expired"}
@@ -1179,8 +1180,8 @@ async def room_events(websocket: WebSocket, room_id: uuid.UUID) -> None:
             # Supplies this required nested value.
             MultiplayerMember,
             # Supplies this required nested value.
-            {'room_id': room.id, 'user_id': principal.user_id},
-        # Closes the multiline declaration, call, or collection opened above.
+            {"room_id": room.id, "user_id": principal.user_id},
+            # Closes the multiline declaration, call, or collection opened above.
         )
         # Checks this condition before executing the nested branch.
         if member_exists is None:
@@ -1358,8 +1359,8 @@ async def room_events(websocket: WebSocket, room_id: uuid.UUID) -> None:
             # Supplies this required nested value.
             MultiplayerMember,
             # Supplies this required nested value.
-            {'room_id': room.id, 'user_id': principal.user_id},
-        # Closes the multiline declaration, call, or collection opened above.
+            {"room_id": room.id, "user_id": principal.user_id},
+            # Closes the multiline declaration, call, or collection opened above.
         )
         # Checks this condition before executing the nested branch.
         if member is None:
@@ -1423,16 +1424,16 @@ async def room_events(websocket: WebSocket, room_id: uuid.UUID) -> None:
                 # Supplies this required nested value.
                 {
                     # Supplies this literal value to the surrounding declaration or call.
-                    'room_id': room_id,
+                    "room_id": room_id,
                     # Supplies this literal value to the surrounding declaration or call.
-                    'sequence': {'$gt': after, '$lte': snapshot_sequence},
-                # Closes the multiline declaration, call, or collection opened above.
+                    "sequence": {"$gt": after, "$lte": snapshot_sequence},
+                    # Closes the multiline declaration, call, or collection opened above.
                 },
                 # Stores `sort` because later steps depend on this value.
-                sort=[('sequence', 1)],
+                sort=[("sequence", 1)],
                 # Stores `limit` because later steps depend on this value.
                 limit=MAX_REPLAY_EVENTS + 1,
-            # Closes the multiline declaration, call, or collection opened above.
+                # Closes the multiline declaration, call, or collection opened above.
             )
             # Computes and stores `replay_gap` for subsequent operations.
             replay_gap = replay_gap or len(replay_events) > MAX_REPLAY_EVENTS
@@ -1620,8 +1621,8 @@ async def room_events(websocket: WebSocket, room_id: uuid.UUID) -> None:
                         # Supplies this required nested value.
                         MultiplayerMember,
                         # Supplies this required nested value.
-                        {'room_id': room_id, 'user_id': principal.user_id},
-                    # Closes the multiline declaration, call, or collection opened above.
+                        {"room_id": room_id, "user_id": principal.user_id},
+                        # Closes the multiline declaration, call, or collection opened above.
                     )
                     # Checks this condition before executing the nested branch.
                     if heartbeat_member:
@@ -1875,8 +1876,8 @@ async def room_events(websocket: WebSocket, room_id: uuid.UUID) -> None:
                         # Supplies this required nested value.
                         MultiplayerMember,
                         # Supplies this required nested value.
-                        {'room_id': room_id, 'user_id': principal.user_id},
-                    # Closes the multiline declaration, call, or collection opened above.
+                        {"room_id": room_id, "user_id": principal.user_id},
+                        # Closes the multiline declaration, call, or collection opened above.
                     )
                     # Checks this condition before executing the nested branch.
                     if close_member:

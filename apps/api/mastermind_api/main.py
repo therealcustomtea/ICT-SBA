@@ -886,12 +886,13 @@ def create_app(settings: Settings | None = None) -> FastAPI:
                 from .models import GameSession, MultiplayerRoom
 
                 # Stores `active_games` because later steps depend on this value.
-                active_games = await session.count(GameSession, {'status': 'active'})
+                active_games = await session.count(GameSession, {"status": "active"})
                 # Stores `active_rooms` because later steps depend on this value.
                 active_rooms = await session.count(
                     # Supplies this required nested value.
-                    MultiplayerRoom, {'status': {'$in': ['waiting', 'active']}}
-                # Closes the multiline declaration, call, or collection opened above.
+                    MultiplayerRoom,
+                    {"status": {"$in": ["waiting", "active"]}},
+                    # Closes the multiline declaration, call, or collection opened above.
                 )
                 # Calls `ACTIVE_GAMES.set` with the supplied values.
                 ACTIVE_GAMES.set(int(active_games or 0))

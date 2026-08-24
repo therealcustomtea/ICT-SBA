@@ -95,19 +95,19 @@ async def get_leaderboard_route(
         # Raises this exception to report an invalid or failed operation.
         raise APIError(503, "FEATURE_DISABLED", "Public leaderboards are temporarily unavailable.")
     # Computes and stores `conditions` for subsequent operations.
-    match: dict[str, object] = {'review_status': 'approved', 'invalidated_at': None}
+    match: dict[str, object] = {"review_status": "approved", "invalidated_at": None}
     # Checks this condition before executing the nested branch.
     if difficulty:
         # Calls `conditions.append` with the supplied values.
-        match['category'] = difficulty
+        match["category"] = difficulty
     # Handles the remaining case not matched by earlier branches.
     else:
         # Calls `conditions.append` with the supplied values.
-        match['category'] = {'$in': ['easy', 'normal', 'hard', 'expert']}
+        match["category"] = {"$in": ["easy", "normal", "hard", "expert"]}
     # Checks this condition before executing the nested branch.
     if period == "weekly":
         # Calls `conditions.append` with the supplied values.
-        match['completed_at'] = {'$gte': weekly_period_start(utcnow())}
+        match["completed_at"] = {"$gte": weekly_period_start(utcnow())}
     # Computes and stores `redis` for subsequent operations.
     redis = request.app.state.redis
     # Computes and stores `principal_cache_key` for subsequent operations.
@@ -152,7 +152,7 @@ async def get_leaderboard_route(
         page=page,
         # Stores `page_size` because later steps depend on this value.
         page_size=page_size,
-    # Closes the multiline declaration, call, or collection opened above.
+        # Closes the multiline declaration, call, or collection opened above.
     )
     # Computes and stores `response` for subsequent operations.
     response = PaginatedLeaderboard(
@@ -161,19 +161,19 @@ async def get_leaderboard_route(
             # Calls `LeaderboardItem` with the supplied values.
             LeaderboardItem(
                 # Provides the `rank` parameter or keyword argument.
-                rank=row['rank'],
+                rank=row["rank"],
                 # Provides the `display_name` parameter or keyword argument.
-                display_name=row.get('display_name') or "Anonymous breaker",
+                display_name=row.get("display_name") or "Anonymous breaker",
                 # Provides the `score` parameter or keyword argument.
-                score=row['score'],
+                score=row["score"],
                 # Provides the `attempts_used` parameter or keyword argument.
-                attempts_used=row['attempts_used'],
+                attempts_used=row["attempts_used"],
                 # Provides the `elapsed_seconds` parameter or keyword argument.
-                elapsed_seconds=row['elapsed_seconds'],
+                elapsed_seconds=row["elapsed_seconds"],
                 # Provides the `completed_at` parameter or keyword argument.
-                completed_at=row['completed_at'],
+                completed_at=row["completed_at"],
                 # Provides the `is_current_user` parameter or keyword argument.
-                is_current_user=row['user_id'] == principal.user_id,
+                is_current_user=row["user_id"] == principal.user_id,
                 # Closes the multiline call, declaration, or collection started above.
             )
             # Iterates through the supplied values for the nested operation.

@@ -169,7 +169,7 @@ async def test_secret_recovery_failure_is_a_retryable_service_error(api: APICont
     # Acquires this asynchronous managed resource for the nested operation.
     async with api.sessions() as session:
         # Computes and stores `game` for subsequent operations.
-        game = await session.find_one(GameSession, {'public_id': created.json()['id']})
+        game = await session.find_one(GameSession, {"public_id": created.json()["id"]})
         # Asserts this invariant so an unexpected test state fails immediately.
         assert game is not None
         # Computes and stores `game.secret_key_version` for subsequent operations.

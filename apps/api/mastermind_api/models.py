@@ -27,7 +27,7 @@ class Document:
     # Declares this typed field so the surrounding contract is explicit.
     collection: ClassVar[str]
     # Stores `primary_key` because later steps depend on this value.
-    primary_key: ClassVar[str] = 'id'
+    primary_key: ClassVar[str] = "id"
 
 
 # Applies this decorator to configure the declaration immediately below.
@@ -45,7 +45,7 @@ class TimestampedDocument(Document):
 # Groups the state and behavior owned by `Profile`.
 class Profile(TimestampedDocument):
     # Stores `collection` because later steps depend on this value.
-    collection: ClassVar[str] = 'profiles'
+    collection: ClassVar[str] = "profiles"
     # Declares this typed field so the surrounding contract is explicit.
     id: uuid.UUID
     # Stores `display_name` because later steps depend on this value.
@@ -67,7 +67,7 @@ class Profile(TimestampedDocument):
 # Groups the state and behavior owned by `AuthUser`.
 class AuthUser(TimestampedDocument):
     # Stores `collection` because later steps depend on this value.
-    collection: ClassVar[str] = 'auth_users'
+    collection: ClassVar[str] = "auth_users"
     # Stores `id` because later steps depend on this value.
     id: uuid.UUID = field(default_factory=uuid.uuid4)
     # Stores `email` because later steps depend on this value.
@@ -95,7 +95,7 @@ class AuthUser(TimestampedDocument):
 # Groups the state and behavior owned by `AuthSession`.
 class AuthSession(Document):
     # Stores `collection` because later steps depend on this value.
-    collection: ClassVar[str] = 'auth_sessions'
+    collection: ClassVar[str] = "auth_sessions"
     # Stores `id` because later steps depend on this value.
     id: uuid.UUID = field(default_factory=uuid.uuid4)
     # Declares this typed field so the surrounding contract is explicit.
@@ -115,7 +115,7 @@ class AuthSession(Document):
     # Stores `revoked_at` because later steps depend on this value.
     revoked_at: datetime | None = None
     # Stores `assurance_level` because later steps depend on this value.
-    assurance_level: str = 'aal1'
+    assurance_level: str = "aal1"
     # Stores `last_ip_hash` because later steps depend on this value.
     last_ip_hash: str | None = None
     # Stores `user_agent_hash` because later steps depend on this value.
@@ -127,7 +127,7 @@ class AuthSession(Document):
 # Groups the state and behavior owned by `AuthEmailToken`.
 class AuthEmailToken(Document):
     # Stores `collection` because later steps depend on this value.
-    collection: ClassVar[str] = 'auth_email_tokens'
+    collection: ClassVar[str] = "auth_email_tokens"
     # Stores `id` because later steps depend on this value.
     id: uuid.UUID = field(default_factory=uuid.uuid4)
     # Declares this typed field so the surrounding contract is explicit.
@@ -151,7 +151,7 @@ class AuthEmailToken(Document):
 # Groups the state and behavior owned by `DailyChallenge`.
 class DailyChallenge(TimestampedDocument):
     # Stores `collection` because later steps depend on this value.
-    collection: ClassVar[str] = 'daily_challenges'
+    collection: ClassVar[str] = "daily_challenges"
     # Stores `id` because later steps depend on this value.
     id: uuid.UUID = field(default_factory=uuid.uuid4)
     # Declares this typed field so the surrounding contract is explicit.
@@ -173,7 +173,7 @@ class DailyChallenge(TimestampedDocument):
 # Groups the state and behavior owned by `FriendChallenge`.
 class FriendChallenge(TimestampedDocument):
     # Stores `collection` because later steps depend on this value.
-    collection: ClassVar[str] = 'friend_challenges'
+    collection: ClassVar[str] = "friend_challenges"
     # Stores `id` because later steps depend on this value.
     id: uuid.UUID = field(default_factory=uuid.uuid4)
     # Declares this typed field so the surrounding contract is explicit.
@@ -207,7 +207,7 @@ class FriendChallenge(TimestampedDocument):
 # Groups the state and behavior owned by `MultiplayerRoom`.
 class MultiplayerRoom(TimestampedDocument):
     # Stores `collection` because later steps depend on this value.
-    collection: ClassVar[str] = 'multiplayer_rooms'
+    collection: ClassVar[str] = "multiplayer_rooms"
     # Stores `id` because later steps depend on this value.
     id: uuid.UUID = field(default_factory=uuid.uuid4)
     # Declares this typed field so the surrounding contract is explicit.
@@ -229,7 +229,7 @@ class MultiplayerRoom(TimestampedDocument):
     # Stores `creation_request_fingerprint` because later steps depend on this value.
     creation_request_fingerprint: str | None = None
     # Stores `status` because later steps depend on this value.
-    status: str = 'waiting'
+    status: str = "waiting"
     # Stores `winner_id` because later steps depend on this value.
     winner_id: uuid.UUID | None = None
     # Stores `winner_at` because later steps depend on this value.
@@ -271,7 +271,7 @@ class GameAttempt:
 # Groups the state and behavior owned by `GameSession`.
 class GameSession(TimestampedDocument):
     # Stores `collection` because later steps depend on this value.
-    collection: ClassVar[str] = 'game_sessions'
+    collection: ClassVar[str] = "game_sessions"
     # Stores `id` because later steps depend on this value.
     id: uuid.UUID = field(default_factory=uuid.uuid4)
     # Declares this typed field so the surrounding contract is explicit.
@@ -337,7 +337,7 @@ class GameSession(TimestampedDocument):
 # Groups the state and behavior owned by `MultiplayerMember`.
 class MultiplayerMember(Document):
     # Stores `collection` because later steps depend on this value.
-    collection: ClassVar[str] = 'multiplayer_members'
+    collection: ClassVar[str] = "multiplayer_members"
     # Stores `id` because later steps depend on this value.
     id: uuid.UUID = field(default_factory=uuid.uuid4)
     # Declares this typed field so the surrounding contract is explicit.
@@ -361,7 +361,7 @@ class MultiplayerMember(Document):
 # Groups the state and behavior owned by `MultiplayerEvent`.
 class MultiplayerEvent(Document):
     # Stores `collection` because later steps depend on this value.
-    collection: ClassVar[str] = 'multiplayer_events'
+    collection: ClassVar[str] = "multiplayer_events"
     # Stores `id` because later steps depend on this value.
     id: uuid.UUID = field(default_factory=uuid.uuid4)
     # Declares this typed field so the surrounding contract is explicit.
@@ -381,7 +381,7 @@ class MultiplayerEvent(Document):
 # Groups the state and behavior owned by `LeaderboardEntry`.
 class LeaderboardEntry(TimestampedDocument):
     # Stores `collection` because later steps depend on this value.
-    collection: ClassVar[str] = 'leaderboard_entries'
+    collection: ClassVar[str] = "leaderboard_entries"
     # Stores `id` because later steps depend on this value.
     id: uuid.UUID = field(default_factory=uuid.uuid4)
     # Declares this typed field so the surrounding contract is explicit.
@@ -399,7 +399,7 @@ class LeaderboardEntry(TimestampedDocument):
     # Declares this typed field so the surrounding contract is explicit.
     completed_at: datetime
     # Stores `review_status` because later steps depend on this value.
-    review_status: str = 'approved'
+    review_status: str = "approved"
     # Stores `invalidated_at` because later steps depend on this value.
     invalidated_at: datetime | None = None
 
@@ -409,9 +409,9 @@ class LeaderboardEntry(TimestampedDocument):
 # Groups the state and behavior owned by `Achievement`.
 class Achievement(Document):
     # Stores `collection` because later steps depend on this value.
-    collection: ClassVar[str] = 'achievements'
+    collection: ClassVar[str] = "achievements"
     # Stores `primary_key` because later steps depend on this value.
-    primary_key: ClassVar[str] = 'key'
+    primary_key: ClassVar[str] = "key"
     # Declares this typed field so the surrounding contract is explicit.
     key: str
     # Declares this typed field so the surrounding contract is explicit.
@@ -427,7 +427,7 @@ class Achievement(Document):
 # Groups the state and behavior owned by `UserAchievement`.
 class UserAchievement(Document):
     # Stores `collection` because later steps depend on this value.
-    collection: ClassVar[str] = 'user_achievements'
+    collection: ClassVar[str] = "user_achievements"
     # Stores `id` because later steps depend on this value.
     id: uuid.UUID = field(default_factory=uuid.uuid4)
     # Declares this typed field so the surrounding contract is explicit.
@@ -445,9 +445,9 @@ class UserAchievement(Document):
 # Groups the state and behavior owned by `FeatureFlag`.
 class FeatureFlag(TimestampedDocument):
     # Stores `collection` because later steps depend on this value.
-    collection: ClassVar[str] = 'feature_flags'
+    collection: ClassVar[str] = "feature_flags"
     # Stores `primary_key` because later steps depend on this value.
-    primary_key: ClassVar[str] = 'key'
+    primary_key: ClassVar[str] = "key"
     # Declares this typed field so the surrounding contract is explicit.
     key: str
     # Declares this typed field so the surrounding contract is explicit.
@@ -461,7 +461,7 @@ class FeatureFlag(TimestampedDocument):
 # Groups the state and behavior owned by `ModerationAction`.
 class ModerationAction(Document):
     # Stores `collection` because later steps depend on this value.
-    collection: ClassVar[str] = 'moderation_actions'
+    collection: ClassVar[str] = "moderation_actions"
     # Stores `id` because later steps depend on this value.
     id: uuid.UUID = field(default_factory=uuid.uuid4)
     # Declares this typed field so the surrounding contract is explicit.
@@ -481,7 +481,7 @@ class ModerationAction(Document):
 # Groups the state and behavior owned by `AuditEvent`.
 class AuditEvent(Document):
     # Stores `collection` because later steps depend on this value.
-    collection: ClassVar[str] = 'audit_events'
+    collection: ClassVar[str] = "audit_events"
     # Stores `id` because later steps depend on this value.
     id: uuid.UUID = field(default_factory=uuid.uuid4)
     # Declares this typed field so the surrounding contract is explicit.
@@ -505,9 +505,9 @@ class AuditEvent(Document):
 # Groups the state and behavior owned by `AdminGrant`.
 class AdminGrant(Document):
     # Stores `collection` because later steps depend on this value.
-    collection: ClassVar[str] = 'admin_grants'
+    collection: ClassVar[str] = "admin_grants"
     # Stores `primary_key` because later steps depend on this value.
-    primary_key: ClassVar[str] = 'user_id'
+    primary_key: ClassVar[str] = "user_id"
     # Declares this typed field so the surrounding contract is explicit.
     user_id: uuid.UUID
     # Stores `granted_by` because later steps depend on this value.
@@ -523,7 +523,7 @@ class AdminGrant(Document):
 # Groups the state and behavior owned by `SupportRequest`.
 class SupportRequest(Document):
     # Stores `collection` because later steps depend on this value.
-    collection: ClassVar[str] = 'support_requests'
+    collection: ClassVar[str] = "support_requests"
     # Stores `id` because later steps depend on this value.
     id: uuid.UUID = field(default_factory=uuid.uuid4)
     # Declares this typed field so the surrounding contract is explicit.
@@ -535,7 +535,7 @@ class SupportRequest(Document):
     # Declares this typed field so the surrounding contract is explicit.
     message: str
     # Stores `status` because later steps depend on this value.
-    status: str = 'received'
+    status: str = "received"
     # Stores `created_at` because later steps depend on this value.
     created_at: datetime = field(default_factory=utcnow)
 
@@ -545,13 +545,13 @@ class SupportRequest(Document):
 # Groups the state and behavior owned by `AccountDeletionRequest`.
 class AccountDeletionRequest(Document):
     # Stores `collection` because later steps depend on this value.
-    collection: ClassVar[str] = 'account_deletion_requests'
+    collection: ClassVar[str] = "account_deletion_requests"
     # Stores `id` because later steps depend on this value.
     id: uuid.UUID = field(default_factory=uuid.uuid4)
     # Declares this typed field so the surrounding contract is explicit.
     user_id: uuid.UUID
     # Stores `status` because later steps depend on this value.
-    status: str = 'pending'
+    status: str = "pending"
     # Stores `provider_attempts` because later steps depend on this value.
     provider_attempts: int = 0
     # Stores `last_error_code` because later steps depend on this value.
@@ -569,7 +569,7 @@ class AccountDeletionRequest(Document):
 # Groups the state and behavior owned by `ProductEvent`.
 class ProductEvent(Document):
     # Stores `collection` because later steps depend on this value.
-    collection: ClassVar[str] = 'product_events'
+    collection: ClassVar[str] = "product_events"
     # Stores `id` because later steps depend on this value.
     id: uuid.UUID = field(default_factory=uuid.uuid4)
     # Declares this typed field so the surrounding contract is explicit.
@@ -664,5 +664,5 @@ DOCUMENT_TYPES = (
     AccountDeletionRequest,
     # Supplies this required nested value.
     ProductEvent,
-# Closes the multiline declaration, call, or collection opened above.
+    # Closes the multiline declaration, call, or collection opened above.
 )

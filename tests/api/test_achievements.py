@@ -87,12 +87,12 @@ async def test_comeback_is_awarded_on_the_final_available_attempt(
             # Supplies this required nested value.
             {
                 # Supplies this literal value to the surrounding declaration or call.
-                'user_id': api.current['principal'].user_id,
+                "user_id": api.current["principal"].user_id,
                 # Supplies this literal value to the surrounding declaration or call.
-                'achievement_key': 'comeback',
-            # Closes the multiline declaration, call, or collection opened above.
+                "achievement_key": "comeback",
+                # Closes the multiline declaration, call, or collection opened above.
             },
-        # Closes the multiline declaration, call, or collection opened above.
+            # Closes the multiline declaration, call, or collection opened above.
         )
     # Asserts this invariant so an unexpected test state fails immediately.
     assert achievement is not None

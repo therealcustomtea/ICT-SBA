@@ -214,8 +214,8 @@ async def test_friend_invite_hash_revoke_expiry_and_replay(api: APIContext) -> N
             # Supplies this required nested value.
             FriendChallenge,
             # Supplies this required nested value.
-            {'share_code_hash': {'$ne': first_challenge.share_code_hash}},
-        # Closes the multiline declaration, call, or collection opened above.
+            {"share_code_hash": {"$ne": first_challenge.share_code_hash}},
+            # Closes the multiline declaration, call, or collection opened above.
         )
         # Asserts this invariant so an unexpected test state fails immediately.
         assert expiring is not None
@@ -297,7 +297,7 @@ async def test_friend_results_follow_score_tie_breaks_and_keep_players_private(
     # Acquires this asynchronous managed resource for the nested operation.
     async with api.sessions() as session:
         # Computes and stores `games` for subsequent operations.
-        games = await session.find_many(GameSession, {'public_id': {'$in': game_ids}})
+        games = await session.find_many(GameSession, {"public_id": {"$in": game_ids}})
         # Computes and stores `by_public_id` for subsequent operations.
         by_public_id = {game.public_id: game for game in games}
         # Higher score, fewer attempts, shorter time, earlier completion, then public ID.
@@ -574,8 +574,8 @@ async def test_room_code_hash_membership_and_one_use_ws_ticket(api: APIContext) 
             # Supplies this required nested value.
             MultiplayerEvent,
             # Supplies this required nested value.
-            {'room_id': uuid.UUID(room['id']), 'event_type': 'room_completed'},
-        # Closes the multiline declaration, call, or collection opened above.
+            {"room_id": uuid.UUID(room["id"]), "event_type": "room_completed"},
+            # Closes the multiline declaration, call, or collection opened above.
         )
         # Asserts this invariant so an unexpected test state fails immediately.
         assert stored_event is not None

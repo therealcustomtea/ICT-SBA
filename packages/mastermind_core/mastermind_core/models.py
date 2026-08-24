@@ -49,7 +49,7 @@ def _parse_bool(value: Any, field_name: str) -> bool:
         "INVALID_BOOLEAN",
         # Supplies this required nested value.
         f"{field_name} must be true or false.",
-    # Closes the multiline declaration, call, or collection opened above.
+        # Closes the multiline declaration, call, or collection opened above.
     )
 
 

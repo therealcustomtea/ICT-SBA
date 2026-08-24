@@ -63,7 +63,7 @@ from .models import (
 )
 
 # Stores `TDocument` because later steps depend on this value.
-TDocument = TypeVar('TDocument', bound=Document)
+TDocument = TypeVar("TDocument", bound=Document)
 
 # Stores `_client` because later steps depend on this value.
 _client: AsyncMongoClient[dict[str, Any]] | None = None
@@ -80,7 +80,7 @@ def configure_database(settings: Settings) -> None:
     # Guards the nested operation so it runs only when this condition is satisfied.
     if _client is not None:
         # Raises this error so invalid state cannot continue silently.
-        raise RuntimeError('Database settings cannot change while a MongoDB client is active.')
+        raise RuntimeError("Database settings cannot change while a MongoDB client is active.")
     # Stores `_settings_override` because later steps depend on this value.
     _settings_override = settings
 
@@ -133,10 +133,10 @@ def document_to_bson(instance: Document) -> dict[str, Any]:
         for item in fields(instance)
         # Guards the nested operation so it runs only when this condition is satisfied.
         if item.name != primary_key
-    # Closes the multiline declaration, call, or collection opened above.
+        # Closes the multiline declaration, call, or collection opened above.
     }
     # Supplies this required nested value.
-    document['_id'] = _encode(getattr(instance, primary_key))
+    document["_id"] = _encode(getattr(instance, primary_key))
     # Returns the computed result and ends the current callable.
     return document
 
@@ -146,15 +146,15 @@ def document_from_bson[T: Document](model: type[T], raw: dict[str, Any]) -> T:
     # Stores `values` because later steps depend on this value.
     values = dict(raw)
     # Supplies this required nested value.
-    values[model.primary_key] = values.pop('_id')
+    values[model.primary_key] = values.pop("_id")
     # Guards the nested operation so it runs only when this condition is satisfied.
     if model is GameSession:
         # Supplies this required nested value.
-        values['attempts'] = [GameAttempt(**attempt) for attempt in values.get('attempts', [])]
+        values["attempts"] = [GameAttempt(**attempt) for attempt in values.get("attempts", [])]
     # Guards the nested operation so it runs only when this condition is satisfied.
-    if 'challenge_date' in values and isinstance(values['challenge_date'], str):
+    if "challenge_date" in values and isinstance(values["challenge_date"], str):
         # Supplies this required nested value.
-        values['challenge_date'] = date.fromisoformat(values['challenge_date'])
+        values["challenge_date"] = date.fromisoformat(values["challenge_date"])
     # Returns the computed result and ends the current callable.
     return model(**values)
 
@@ -172,12 +172,12 @@ def get_client() -> AsyncMongoClient[dict[str, Any]]:
             # Supplies this required nested value.
             settings.mongodb_url,
             # Stores `appname` because later steps depend on this value.
-            appname='cipherboard-api',
+            appname="cipherboard-api",
             # Stores `retryWrites` because later steps depend on this value.
             retryWrites=True,
             # Stores `uuidRepresentation` because later steps depend on this value.
-            uuidRepresentation='standard',
-        # Closes the multiline declaration, call, or collection opened above.
+            uuidRepresentation="standard",
+            # Closes the multiline declaration, call, or collection opened above.
         )
     # Returns the computed result and ends the current callable.
     return _client
@@ -199,13 +199,14 @@ def get_database() -> AsyncDatabase[dict[str, Any]]:
             tzinfo=UTC,
             # Stores `uuid_representation` because later steps depend on this value.
             uuid_representation=UuidRepresentation.STANDARD,
-        # Closes the multiline declaration, call, or collection opened above.
+            # Closes the multiline declaration, call, or collection opened above.
         )
         # Stores `_database` because later steps depend on this value.
         _database = get_client().get_database(
             # Supplies this required nested value.
-            settings.mongodb_database, codec_options=codec_options
-        # Closes the multiline declaration, call, or collection opened above.
+            settings.mongodb_database,
+            codec_options=codec_options,
+            # Closes the multiline declaration, call, or collection opened above.
         )
     # Returns the computed result and ends the current callable.
     return _database
@@ -314,8 +315,9 @@ class MongoSession:
         # Stores `raw` because later steps depend on this value.
         raw = await self.collection(model).find_one(
             # Supplies this required nested value.
-            {'_id': _encode(primary_value)}, session=self._mongo_session
-        # Closes the multiline declaration, call, or collection opened above.
+            {"_id": _encode(primary_value)},
+            session=self._mongo_session,
+            # Closes the multiline declaration, call, or collection opened above.
         )
         # Returns the computed result and ends the current callable.
         return self._track(document_from_bson(model, raw)) if raw else None
@@ -332,13 +334,15 @@ class MongoSession:
         *,
         # Stores `sort` because later steps depend on this value.
         sort: list[tuple[str, int]] | None = None,
-    # Closes the multiline declaration, call, or collection opened above.
+        # Closes the multiline declaration, call, or collection opened above.
     ) -> TDocument | None:
         # Stores `raw` because later steps depend on this value.
         raw = await self.collection(model).find_one(
             # Supplies this required nested value.
-            _encode_filter(filter), sort=sort, session=self._mongo_session
-        # Closes the multiline declaration, call, or collection opened above.
+            _encode_filter(filter),
+            sort=sort,
+            session=self._mongo_session,
+            # Closes the multiline declaration, call, or collection opened above.
         )
         # Returns the computed result and ends the current callable.
         return self._track(document_from_bson(model, raw)) if raw else None
@@ -359,13 +363,14 @@ class MongoSession:
         skip: int = 0,
         # Stores `limit` because later steps depend on this value.
         limit: int = 0,
-    # Closes the multiline declaration, call, or collection opened above.
+        # Closes the multiline declaration, call, or collection opened above.
     ) -> list[TDocument]:
         # Stores `cursor` because later steps depend on this value.
         cursor = self.collection(model).find(
             # Supplies this required nested value.
-            _encode_filter(filter or {}), session=self._mongo_session
-        # Closes the multiline declaration, call, or collection opened above.
+            _encode_filter(filter or {}),
+            session=self._mongo_session,
+            # Closes the multiline declaration, call, or collection opened above.
         )
         # Guards the nested operation so it runs only when this condition is satisfied.
         if sort:
@@ -387,21 +392,25 @@ class MongoSession:
         # Returns the computed result and ends the current callable.
         return await self.collection(model).count_documents(
             # Supplies this required nested value.
-            _encode_filter(filter or {}), session=self._mongo_session
-        # Closes the multiline declaration, call, or collection opened above.
+            _encode_filter(filter or {}),
+            session=self._mongo_session,
+            # Closes the multiline declaration, call, or collection opened above.
         )
 
     # Defines this callable to implement the operation described by its name.
     async def aggregate(
         # Supplies this required nested value.
-        self, model: type[TDocument], pipeline: list[dict[str, Any]]
-    # Closes the multiline declaration, call, or collection opened above.
+        self,
+        model: type[TDocument],
+        pipeline: list[dict[str, Any]],
+        # Closes the multiline declaration, call, or collection opened above.
     ) -> list[dict[str, Any]]:
         # Stores `cursor` because later steps depend on this value.
         cursor = await self.collection(model).aggregate(
             # Supplies this required nested value.
-            _encode_filter(pipeline), session=self._mongo_session
-        # Closes the multiline declaration, call, or collection opened above.
+            _encode_filter(pipeline),
+            session=self._mongo_session,
+            # Closes the multiline declaration, call, or collection opened above.
         )
         # Returns the computed result and ends the current callable.
         return await cursor.to_list()
@@ -428,14 +437,19 @@ class MongoSession:
     # Defines this callable to implement the operation described by its name.
     async def update_many(
         # Supplies this required nested value.
-        self, model: type[TDocument], filter: dict[str, Any], update: dict[str, Any]
-    # Closes the multiline declaration, call, or collection opened above.
+        self,
+        model: type[TDocument],
+        filter: dict[str, Any],
+        update: dict[str, Any],
+        # Closes the multiline declaration, call, or collection opened above.
     ) -> int:
         # Stores `result` because later steps depend on this value.
         result = await self.collection(model).update_many(
             # Supplies this required nested value.
-            _encode_filter(filter), _encode_filter(update), session=self._mongo_session
-        # Closes the multiline declaration, call, or collection opened above.
+            _encode_filter(filter),
+            _encode_filter(update),
+            session=self._mongo_session,
+            # Closes the multiline declaration, call, or collection opened above.
         )
         # Returns the computed result and ends the current callable.
         return result.modified_count
@@ -450,7 +464,7 @@ class MongoSession:
         filter: dict[str, Any],
         # Declares this typed field so the surrounding contract is explicit.
         update: dict[str, Any],
-    # Closes the multiline declaration, call, or collection opened above.
+        # Closes the multiline declaration, call, or collection opened above.
     ) -> None:
         # Performs this required operation before the surrounding flow continues.
         await self.collection(model).update_one(
@@ -462,7 +476,7 @@ class MongoSession:
             upsert=True,
             # Stores `session` because later steps depend on this value.
             session=self._mongo_session,
-        # Closes the multiline declaration, call, or collection opened above.
+            # Closes the multiline declaration, call, or collection opened above.
         )
 
     # Defines this callable to implement the operation described by its name.
@@ -470,8 +484,9 @@ class MongoSession:
         # Stores `result` because later steps depend on this value.
         result = await self.collection(model).delete_many(
             # Supplies this required nested value.
-            _encode_filter(filter), session=self._mongo_session
-        # Closes the multiline declaration, call, or collection opened above.
+            _encode_filter(filter),
+            session=self._mongo_session,
+            # Closes the multiline declaration, call, or collection opened above.
         )
         # Returns the computed result and ends the current callable.
         return result.deleted_count
@@ -485,8 +500,9 @@ class MongoSession:
             # Performs this required operation before the surrounding flow continues.
             await self.collection(model).delete_one(
                 # Supplies this required nested value.
-                {'_id': _encode(primary_value)}, session=self._mongo_session
-            # Closes the multiline declaration, call, or collection opened above.
+                {"_id": _encode(primary_value)},
+                session=self._mongo_session,
+                # Closes the multiline declaration, call, or collection opened above.
             )
             # Supplies this required nested value.
             self._tracked.pop(key, None)
@@ -524,8 +540,10 @@ class MongoSession:
                 # Performs this required operation before the surrounding flow continues.
                 await collection.replace_one(
                     # Supplies this required nested value.
-                    {'_id': document['_id']}, document, session=self._mongo_session
-                # Closes the multiline declaration, call, or collection opened above.
+                    {"_id": document["_id"]},
+                    document,
+                    session=self._mongo_session,
+                    # Closes the multiline declaration, call, or collection opened above.
                 )
             # Supplies this required nested value.
             self._snapshots[key] = document
@@ -590,208 +608,209 @@ async def initialize_database() -> None:
     # Stores `database` because later steps depend on this value.
     database = get_database()
     # Guards the nested operation so it runs only when this condition is satisfied.
-    if 'ICT-SBA' not in await database.list_collection_names():
+    if "ICT-SBA" not in await database.list_collection_names():
         # Scopes this resource so acquisition and cleanup remain paired.
         with suppress(CollectionInvalid):
             # Performs this required operation before the surrounding flow continues.
-            await database.create_collection('ICT-SBA')
+            await database.create_collection("ICT-SBA")
     # Stores `index_sets` because later steps depend on this value.
     index_sets: dict[str, list[IndexModel]] = {
         # Supplies this literal value to the surrounding declaration or call.
-        'profiles': [
+        "profiles": [
             # Supplies this required nested value.
             IndexModel(
                 # Supplies this required nested value.
-                [('normalized_display_name', ASCENDING)],
+                [("normalized_display_name", ASCENDING)],
                 # Stores `unique` because later steps depend on this value.
                 unique=True,
                 # Stores `partialFilterExpression` because later steps depend on this value.
-                partialFilterExpression={'normalized_display_name': {'$type': 'string'}},
-            # Closes the multiline declaration, call, or collection opened above.
+                partialFilterExpression={"normalized_display_name": {"$type": "string"}},
+                # Closes the multiline declaration, call, or collection opened above.
             )
-        # Closes the multiline declaration, call, or collection opened above.
+            # Closes the multiline declaration, call, or collection opened above.
         ],
         # Supplies this literal value to the surrounding declaration or call.
-        'auth_users': [
+        "auth_users": [
             # Supplies this required nested value.
             IndexModel(
                 # Supplies this required nested value.
-                [('normalized_email', ASCENDING)],
+                [("normalized_email", ASCENDING)],
                 # Stores `unique` because later steps depend on this value.
                 unique=True,
                 # Stores `partialFilterExpression` because later steps depend on this value.
-                partialFilterExpression={'normalized_email': {'$type': 'string'}},
-            # Closes the multiline declaration, call, or collection opened above.
+                partialFilterExpression={"normalized_email": {"$type": "string"}},
+                # Closes the multiline declaration, call, or collection opened above.
             )
-        # Closes the multiline declaration, call, or collection opened above.
-        ],
-        # Supplies this literal value to the surrounding declaration or call.
-        'auth_sessions': [
-            # Supplies this required nested value.
-            IndexModel([('refresh_token_hash', ASCENDING)], unique=True),
-            # Supplies this required nested value.
-            IndexModel([('user_id', ASCENDING), ('revoked_at', ASCENDING)]),
-            # Supplies this required nested value.
-            IndexModel([('expires_at', ASCENDING)], expireAfterSeconds=0),
-        # Closes the multiline declaration, call, or collection opened above.
-        ],
-        # Supplies this literal value to the surrounding declaration or call.
-        'auth_email_tokens': [
-            # Supplies this required nested value.
-            IndexModel([('token_hash', ASCENDING)], unique=True),
-            # Supplies this required nested value.
-            IndexModel([('expires_at', ASCENDING)], expireAfterSeconds=0),
-        # Closes the multiline declaration, call, or collection opened above.
-        ],
-        # Supplies this literal value to the surrounding declaration or call.
-        'daily_challenges': [
-            # Supplies this required nested value.
-            IndexModel([('public_id', ASCENDING)], unique=True),
-            # Supplies this required nested value.
-            IndexModel(
-                # Supplies this required nested value.
-                [('challenge_date', ASCENDING), ('rule_set_version', ASCENDING)], unique=True
             # Closes the multiline declaration, call, or collection opened above.
-            ),
-        # Closes the multiline declaration, call, or collection opened above.
         ],
         # Supplies this literal value to the surrounding declaration or call.
-        'friend_challenges': [
+        "auth_sessions": [
             # Supplies this required nested value.
-            IndexModel([('share_code_hash', ASCENDING)], unique=True),
+            IndexModel([("refresh_token_hash", ASCENDING)], unique=True),
             # Supplies this required nested value.
-            IndexModel([('creator_id', ASCENDING), ('created_at', DESCENDING)]),
+            IndexModel([("user_id", ASCENDING), ("revoked_at", ASCENDING)]),
+            # Supplies this required nested value.
+            IndexModel([("expires_at", ASCENDING)], expireAfterSeconds=0),
+            # Closes the multiline declaration, call, or collection opened above.
+        ],
+        # Supplies this literal value to the surrounding declaration or call.
+        "auth_email_tokens": [
+            # Supplies this required nested value.
+            IndexModel([("token_hash", ASCENDING)], unique=True),
+            # Supplies this required nested value.
+            IndexModel([("expires_at", ASCENDING)], expireAfterSeconds=0),
+            # Closes the multiline declaration, call, or collection opened above.
+        ],
+        # Supplies this literal value to the surrounding declaration or call.
+        "daily_challenges": [
+            # Supplies this required nested value.
+            IndexModel([("public_id", ASCENDING)], unique=True),
             # Supplies this required nested value.
             IndexModel(
                 # Supplies this required nested value.
-                [('creator_id', ASCENDING), ('creation_idempotency_key', ASCENDING)],
+                [("challenge_date", ASCENDING), ("rule_set_version", ASCENDING)],
+                unique=True,
+                # Closes the multiline declaration, call, or collection opened above.
+            ),
+            # Closes the multiline declaration, call, or collection opened above.
+        ],
+        # Supplies this literal value to the surrounding declaration or call.
+        "friend_challenges": [
+            # Supplies this required nested value.
+            IndexModel([("share_code_hash", ASCENDING)], unique=True),
+            # Supplies this required nested value.
+            IndexModel([("creator_id", ASCENDING), ("created_at", DESCENDING)]),
+            # Supplies this required nested value.
+            IndexModel(
+                # Supplies this required nested value.
+                [("creator_id", ASCENDING), ("creation_idempotency_key", ASCENDING)],
                 # Stores `unique` because later steps depend on this value.
                 unique=True,
                 # Stores `partialFilterExpression` because later steps depend on this value.
-                partialFilterExpression={'creation_idempotency_key': {'$type': 'string'}},
-            # Closes the multiline declaration, call, or collection opened above.
+                partialFilterExpression={"creation_idempotency_key": {"$type": "string"}},
+                # Closes the multiline declaration, call, or collection opened above.
             ),
-        # Closes the multiline declaration, call, or collection opened above.
+            # Closes the multiline declaration, call, or collection opened above.
         ],
         # Supplies this literal value to the surrounding declaration or call.
-        'multiplayer_rooms': [
+        "multiplayer_rooms": [
             # Supplies this required nested value.
-            IndexModel([('room_code_hash', ASCENDING)], unique=True),
+            IndexModel([("room_code_hash", ASCENDING)], unique=True),
             # Supplies this required nested value.
-            IndexModel([('status', ASCENDING), ('expires_at', ASCENDING)]),
+            IndexModel([("status", ASCENDING), ("expires_at", ASCENDING)]),
             # Supplies this required nested value.
             IndexModel(
                 # Supplies this required nested value.
-                [('owner_id', ASCENDING), ('creation_idempotency_key', ASCENDING)],
+                [("owner_id", ASCENDING), ("creation_idempotency_key", ASCENDING)],
                 # Stores `unique` because later steps depend on this value.
                 unique=True,
                 # Stores `partialFilterExpression` because later steps depend on this value.
-                partialFilterExpression={'creation_idempotency_key': {'$type': 'string'}},
-            # Closes the multiline declaration, call, or collection opened above.
+                partialFilterExpression={"creation_idempotency_key": {"$type": "string"}},
+                # Closes the multiline declaration, call, or collection opened above.
             ),
-        # Closes the multiline declaration, call, or collection opened above.
+            # Closes the multiline declaration, call, or collection opened above.
         ],
         # Supplies this literal value to the surrounding declaration or call.
-        'game_sessions': [
+        "game_sessions": [
             # Supplies this required nested value.
-            IndexModel([('public_id', ASCENDING)], unique=True),
+            IndexModel([("public_id", ASCENDING)], unique=True),
             # Supplies this required nested value.
-            IndexModel([('owner_id', ASCENDING), ('created_at', DESCENDING)]),
+            IndexModel([("owner_id", ASCENDING), ("created_at", DESCENDING)]),
             # Supplies this required nested value.
-            IndexModel([('status', ASCENDING), ('expires_at', ASCENDING)]),
-            # Supplies this required nested value.
-            IndexModel(
-                # Supplies this required nested value.
-                [('owner_id', ASCENDING), ('creation_idempotency_key', ASCENDING)],
-                # Stores `unique` because later steps depend on this value.
-                unique=True,
-                # Stores `partialFilterExpression` because later steps depend on this value.
-                partialFilterExpression={'creation_idempotency_key': {'$type': 'string'}},
-            # Closes the multiline declaration, call, or collection opened above.
-            ),
+            IndexModel([("status", ASCENDING), ("expires_at", ASCENDING)]),
             # Supplies this required nested value.
             IndexModel(
                 # Supplies this required nested value.
-                [('owner_id', ASCENDING), ('daily_challenge_id', ASCENDING)],
+                [("owner_id", ASCENDING), ("creation_idempotency_key", ASCENDING)],
                 # Stores `unique` because later steps depend on this value.
                 unique=True,
                 # Stores `partialFilterExpression` because later steps depend on this value.
-                partialFilterExpression={'daily_challenge_id': {'$type': 'binData'}},
-            # Closes the multiline declaration, call, or collection opened above.
+                partialFilterExpression={"creation_idempotency_key": {"$type": "string"}},
+                # Closes the multiline declaration, call, or collection opened above.
             ),
             # Supplies this required nested value.
             IndexModel(
                 # Supplies this required nested value.
-                [('owner_id', ASCENDING), ('friend_challenge_id', ASCENDING)],
+                [("owner_id", ASCENDING), ("daily_challenge_id", ASCENDING)],
                 # Stores `unique` because later steps depend on this value.
                 unique=True,
                 # Stores `partialFilterExpression` because later steps depend on this value.
-                partialFilterExpression={'friend_challenge_id': {'$type': 'binData'}},
-            # Closes the multiline declaration, call, or collection opened above.
+                partialFilterExpression={"daily_challenge_id": {"$type": "binData"}},
+                # Closes the multiline declaration, call, or collection opened above.
             ),
             # Supplies this required nested value.
             IndexModel(
                 # Supplies this required nested value.
-                [('owner_id', ASCENDING), ('room_id', ASCENDING)],
+                [("owner_id", ASCENDING), ("friend_challenge_id", ASCENDING)],
                 # Stores `unique` because later steps depend on this value.
                 unique=True,
                 # Stores `partialFilterExpression` because later steps depend on this value.
-                partialFilterExpression={'room_id': {'$type': 'binData'}},
-            # Closes the multiline declaration, call, or collection opened above.
+                partialFilterExpression={"friend_challenge_id": {"$type": "binData"}},
+                # Closes the multiline declaration, call, or collection opened above.
             ),
-        # Closes the multiline declaration, call, or collection opened above.
+            # Supplies this required nested value.
+            IndexModel(
+                # Supplies this required nested value.
+                [("owner_id", ASCENDING), ("room_id", ASCENDING)],
+                # Stores `unique` because later steps depend on this value.
+                unique=True,
+                # Stores `partialFilterExpression` because later steps depend on this value.
+                partialFilterExpression={"room_id": {"$type": "binData"}},
+                # Closes the multiline declaration, call, or collection opened above.
+            ),
+            # Closes the multiline declaration, call, or collection opened above.
         ],
         # Supplies this literal value to the surrounding declaration or call.
-        'multiplayer_members': [
+        "multiplayer_members": [
             # Supplies this required nested value.
-            IndexModel([('room_id', ASCENDING), ('user_id', ASCENDING)], unique=True)
-        # Closes the multiline declaration, call, or collection opened above.
+            IndexModel([("room_id", ASCENDING), ("user_id", ASCENDING)], unique=True)
+            # Closes the multiline declaration, call, or collection opened above.
         ],
         # Supplies this literal value to the surrounding declaration or call.
-        'multiplayer_events': [
+        "multiplayer_events": [
             # Supplies this required nested value.
-            IndexModel([('room_id', ASCENDING), ('sequence', ASCENDING)], unique=True)
-        # Closes the multiline declaration, call, or collection opened above.
+            IndexModel([("room_id", ASCENDING), ("sequence", ASCENDING)], unique=True)
+            # Closes the multiline declaration, call, or collection opened above.
         ],
         # Supplies this literal value to the surrounding declaration or call.
-        'leaderboard_entries': [
+        "leaderboard_entries": [
             # Supplies this required nested value.
-            IndexModel([('game_id', ASCENDING)], unique=True),
+            IndexModel([("game_id", ASCENDING)], unique=True),
             # Supplies this required nested value.
             IndexModel(
                 # Supplies this required nested value.
                 [
                     # Supplies this required nested value.
-                    ('category', ASCENDING),
+                    ("category", ASCENDING),
                     # Supplies this required nested value.
-                    ('score', DESCENDING),
+                    ("score", DESCENDING),
                     # Supplies this required nested value.
-                    ('attempts_used', ASCENDING),
+                    ("attempts_used", ASCENDING),
                     # Supplies this required nested value.
-                    ('elapsed_seconds', ASCENDING),
-                # Closes the multiline declaration, call, or collection opened above.
+                    ("elapsed_seconds", ASCENDING),
+                    # Closes the multiline declaration, call, or collection opened above.
                 ]
-            # Closes the multiline declaration, call, or collection opened above.
+                # Closes the multiline declaration, call, or collection opened above.
             ),
-        # Closes the multiline declaration, call, or collection opened above.
+            # Closes the multiline declaration, call, or collection opened above.
         ],
         # Supplies this literal value to the surrounding declaration or call.
-        'user_achievements': [
+        "user_achievements": [
             # Supplies this required nested value.
-            IndexModel([('user_id', ASCENDING), ('achievement_key', ASCENDING)], unique=True)
-        # Closes the multiline declaration, call, or collection opened above.
+            IndexModel([("user_id", ASCENDING), ("achievement_key", ASCENDING)], unique=True)
+            # Closes the multiline declaration, call, or collection opened above.
         ],
         # Supplies this literal value to the surrounding declaration or call.
-        'account_deletion_requests': [IndexModel([('user_id', ASCENDING)], unique=True)],
+        "account_deletion_requests": [IndexModel([("user_id", ASCENDING)], unique=True)],
         # Supplies this literal value to the surrounding declaration or call.
-        'product_events': [
+        "product_events": [
             # Supplies this required nested value.
-            IndexModel([('client_event_id', ASCENDING)], unique=True),
+            IndexModel([("client_event_id", ASCENDING)], unique=True),
             # Supplies this required nested value.
-            IndexModel([('expires_at', ASCENDING)], expireAfterSeconds=0),
-        # Closes the multiline declaration, call, or collection opened above.
+            IndexModel([("expires_at", ASCENDING)], expireAfterSeconds=0),
+            # Closes the multiline declaration, call, or collection opened above.
         ],
-    # Closes the multiline declaration, call, or collection opened above.
+        # Closes the multiline declaration, call, or collection opened above.
     }
     # Iterates over these values so each item receives the same processing.
     for collection_name, indexes in index_sets.items():
@@ -801,84 +820,84 @@ async def initialize_database() -> None:
     # Stores `achievements` because later steps depend on this value.
     achievements = (
         # Supplies this required nested value.
-        ('first_break', 'First Break', 'Win your first game.'),
+        ("first_break", "First Break", "Win your first game."),
         # Supplies this required nested value.
-        ('one_shot', 'One Shot', 'Solve a code on your first attempt.'),
+        ("one_shot", "One Shot", "Solve a code on your first attempt."),
         # Supplies this required nested value.
-        ('no_waste', 'No Waste', 'Win without an invalid submission.'),
+        ("no_waste", "No Waste", "Win without an invalid submission."),
         # Supplies this required nested value.
-        ('daily_debut', 'Daily Debut', 'Complete your first daily challenge.'),
+        ("daily_debut", "Daily Debut", "Complete your first daily challenge."),
         # Supplies this required nested value.
-        ('logic_week', 'Logic Week', 'Complete seven daily challenges.'),
+        ("logic_week", "Logic Week", "Complete seven daily challenges."),
         # Supplies this required nested value.
-        ('hard_mode', 'Hard Mode', 'Win an official Hard game.'),
+        ("hard_mode", "Hard Mode", "Win an official Hard game."),
         # Supplies this required nested value.
-        ('expert_breaker', 'Expert Breaker', 'Win an official Expert game.'),
+        ("expert_breaker", "Expert Breaker", "Win an official Expert game."),
         # Supplies this required nested value.
-        ('challenger', 'Challenger', 'Complete a friend challenge.'),
+        ("challenger", "Challenger", "Complete a friend challenge."),
         # Supplies this required nested value.
-        ('duelist', 'Duelist', 'Win a private real-time duel.'),
+        ("duelist", "Duelist", "Win a private real-time duel."),
         # Supplies this required nested value.
-        ('comeback', 'Comeback', 'Win a duel after trailing your opponent.'),
-    # Closes the multiline declaration, call, or collection opened above.
+        ("comeback", "Comeback", "Win a duel after trailing your opponent."),
+        # Closes the multiline declaration, call, or collection opened above.
     )
     # Iterates over these values so each item receives the same processing.
     for key, name, description in achievements:
         # Performs this required operation before the surrounding flow continues.
         await database[Achievement.collection].update_one(
             # Supplies this required nested value.
-            {'_id': key},
+            {"_id": key},
             # Supplies this required nested value.
             {
                 # Supplies this literal value to the surrounding declaration or call.
-                '$setOnInsert': document_to_bson(
+                "$setOnInsert": document_to_bson(
                     # Supplies this required nested value.
                     Achievement(key=key, name=name, description=description)
-                # Closes the multiline declaration, call, or collection opened above.
+                    # Closes the multiline declaration, call, or collection opened above.
                 )
-            # Closes the multiline declaration, call, or collection opened above.
+                # Closes the multiline declaration, call, or collection opened above.
             },
             # Stores `upsert` because later steps depend on this value.
             upsert=True,
-        # Closes the multiline declaration, call, or collection opened above.
+            # Closes the multiline declaration, call, or collection opened above.
         )
     # Stores `flags` because later steps depend on this value.
     flags = {
         # Supplies this literal value to the surrounding declaration or call.
-        'daily': 'Official daily challenge',
+        "daily": "Official daily challenge",
         # Supplies this literal value to the surrounding declaration or call.
-        'leaderboards': 'Public leaderboards',
+        "leaderboards": "Public leaderboards",
         # Supplies this literal value to the surrounding declaration or call.
-        'friend_challenges': 'Private asynchronous challenges',
+        "friend_challenges": "Private asynchronous challenges",
         # Supplies this literal value to the surrounding declaration or call.
-        'multiplayer': 'Private real-time duels',
+        "multiplayer": "Private real-time duels",
         # Supplies this literal value to the surrounding declaration or call.
-        'achievements': 'Achievement awarding',
+        "achievements": "Achievement awarding",
         # Supplies this literal value to the surrounding declaration or call.
-        'account_registration': 'Registered account upgrades',
+        "account_registration": "Registered account upgrades",
         # Supplies this literal value to the surrounding declaration or call.
-        'analytics': 'Privacy-conscious first-party analytics',
-    # Closes the multiline declaration, call, or collection opened above.
+        "analytics": "Privacy-conscious first-party analytics",
+        # Closes the multiline declaration, call, or collection opened above.
     }
     # Iterates over these values so each item receives the same processing.
     for key, description in flags.items():
         # Performs this required operation before the surrounding flow continues.
         await database[FeatureFlag.collection].update_one(
             # Supplies this required nested value.
-            {'_id': key},
+            {"_id": key},
             # Supplies this required nested value.
             {
                 # Supplies this literal value to the surrounding declaration or call.
-                '$setOnInsert': document_to_bson(
+                "$setOnInsert": document_to_bson(
                     # Supplies this required nested value.
                     FeatureFlag(key=key, enabled=True, description=description)
-                # Closes the multiline declaration, call, or collection opened above.
+                    # Closes the multiline declaration, call, or collection opened above.
                 )
-            # Closes the multiline declaration, call, or collection opened above.
+                # Closes the multiline declaration, call, or collection opened above.
             },
             # Stores `upsert` because later steps depend on this value.
             upsert=True,
-        # Closes the multiline declaration, call, or collection opened above.
+            # Closes the multiline declaration, call, or collection opened above.
         )
 
 
@@ -901,7 +920,7 @@ async def database_ready() -> bool:
     # Starts an operation whose expected failures are handled below.
     try:
         # Performs this required operation before the surrounding flow continues.
-        await get_database().command('ping')
+        await get_database().command("ping")
     # Converts this expected failure into the controlled behavior below.
     except Exception:
         # Returns the computed result and ends the current callable.
@@ -931,24 +950,24 @@ def main() -> None:
 # Stores `__all__` because later steps depend on this value.
 __all__ = [
     # Supplies this literal value to the surrounding declaration or call.
-    'ASCENDING',
+    "ASCENDING",
     # Supplies this literal value to the surrounding declaration or call.
-    'DESCENDING',
+    "DESCENDING",
     # Supplies this literal value to the surrounding declaration or call.
-    'MongoSession',
+    "MongoSession",
     # Supplies this literal value to the surrounding declaration or call.
-    'SessionFactory',
+    "SessionFactory",
     # Supplies this literal value to the surrounding declaration or call.
-    'close_database',
+    "close_database",
     # Supplies this literal value to the surrounding declaration or call.
-    'configure_database',
+    "configure_database",
     # Supplies this literal value to the surrounding declaration or call.
-    'database_ready',
+    "database_ready",
     # Supplies this literal value to the surrounding declaration or call.
-    'get_database',
+    "get_database",
     # Supplies this literal value to the surrounding declaration or call.
-    'get_session',
+    "get_session",
     # Supplies this literal value to the surrounding declaration or call.
-    'initialize_database',
-# Closes the multiline declaration, call, or collection opened above.
+    "initialize_database",
+    # Closes the multiline declaration, call, or collection opened above.
 ]

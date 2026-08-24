@@ -89,7 +89,7 @@ class AccessTokenVerifier:
         # Guards the nested operation so it runs only when this condition is satisfied.
         if len(settings.auth_signing_key.encode()) < 32:
             # Raises this error so invalid state cannot continue silently.
-            raise RuntimeError('MASTERMIND_AUTH_SIGNING_KEY is required for authentication.')
+            raise RuntimeError("MASTERMIND_AUTH_SIGNING_KEY is required for authentication.")
         # Stores `self.key` because later steps depend on this value.
         self.key = settings.auth_signing_key
         # Stores `self.issuer` because later steps depend on this value.
@@ -108,7 +108,7 @@ class AccessTokenVerifier:
                 # Supplies this required nested value.
                 self.key,
                 # Stores `algorithms` because later steps depend on this value.
-                algorithms=['HS256'],
+                algorithms=["HS256"],
                 # Stores `audience` because later steps depend on this value.
                 audience=self.audience,
                 # Stores `issuer` because later steps depend on this value.
@@ -116,15 +116,15 @@ class AccessTokenVerifier:
                 # Stores `leeway` because later steps depend on this value.
                 leeway=JWT_CLOCK_SKEW_SECONDS,
                 # Stores `options` because later steps depend on this value.
-                options={'require': ['exp', 'iat', 'iss', 'aud', 'sub', 'session_id']},
-            # Closes the multiline declaration, call, or collection opened above.
+                options={"require": ["exp", "iat", "iss", "aud", "sub", "session_id"]},
+                # Closes the multiline declaration, call, or collection opened above.
             )
             # Stores `user_id` because later steps depend on this value.
-            user_id = uuid.UUID(str(claims['sub']))
+            user_id = uuid.UUID(str(claims["sub"]))
             # Stores `session_id` because later steps depend on this value.
-            session_id = str(uuid.UUID(str(claims['session_id'])))
+            session_id = str(uuid.UUID(str(claims["session_id"])))
             # Stores `authenticated_at_value` because later steps depend on this value.
-            authenticated_at_value = claims.get('auth_time')
+            authenticated_at_value = claims.get("auth_time")
             # Stores `authenticated_at` because later steps depend on this value.
             authenticated_at = (
                 # Supplies this required nested value.
@@ -133,23 +133,23 @@ class AccessTokenVerifier:
                 if isinstance(authenticated_at_value, int | float)
                 # Supplies this required nested value.
                 else None
-            # Closes the multiline declaration, call, or collection opened above.
+                # Closes the multiline declaration, call, or collection opened above.
             )
             # Returns the computed result and ends the current callable.
             return AuthPrincipal(
                 # Stores `user_id` because later steps depend on this value.
                 user_id=user_id,
                 # Stores `is_anonymous` because later steps depend on this value.
-                is_anonymous=bool(claims.get('is_anonymous', False)),
+                is_anonymous=bool(claims.get("is_anonymous", False)),
                 # Stores `session_id` because later steps depend on this value.
                 session_id=session_id,
                 # Stores `issued_at` because later steps depend on this value.
-                issued_at=datetime.fromtimestamp(int(claims['iat']), tz=UTC),
+                issued_at=datetime.fromtimestamp(int(claims["iat"]), tz=UTC),
                 # Stores `authenticated_at` because later steps depend on this value.
                 authenticated_at=authenticated_at,
                 # Stores `assurance_level` because later steps depend on this value.
-                assurance_level=str(claims.get('aal', 'aal1')),
-            # Closes the multiline declaration, call, or collection opened above.
+                assurance_level=str(claims.get("aal", "aal1")),
+                # Closes the multiline declaration, call, or collection opened above.
             )
         # Converts this expected failure into the controlled behavior below.
         except (InvalidTokenError, ValueError, KeyError) as exc:
@@ -158,10 +158,10 @@ class AccessTokenVerifier:
                 # Supplies this required nested value.
                 401,
                 # Supplies this literal value to the surrounding declaration or call.
-                'INVALID_ACCESS_TOKEN',
+                "INVALID_ACCESS_TOKEN",
                 # Supplies this literal value to the surrounding declaration or call.
-                'Your session is invalid or has expired.',
-            # Closes the multiline declaration, call, or collection opened above.
+                "Your session is invalid or has expired.",
+                # Closes the multiline declaration, call, or collection opened above.
             ) from exc
 
 
@@ -174,16 +174,16 @@ def _cached_verifier(signing_key: str, issuer: str, audience: str) -> AccessToke
         # Supplies this required nested value.
         Settings(
             # Stores `environment` because later steps depend on this value.
-            environment='test',
+            environment="test",
             # Stores `auth_signing_key` because later steps depend on this value.
             auth_signing_key=signing_key,
             # Stores `auth_issuer` because later steps depend on this value.
             auth_issuer=issuer,
             # Stores `auth_audience` because later steps depend on this value.
             auth_audience=audience,
-        # Closes the multiline declaration, call, or collection opened above.
+            # Closes the multiline declaration, call, or collection opened above.
         )
-    # Closes the multiline declaration, call, or collection opened above.
+        # Closes the multiline declaration, call, or collection opened above.
     )
 
 
@@ -208,8 +208,10 @@ def new_refresh_token() -> str:
 # Defines this callable to implement the operation described by its name.
 def mint_access_token(
     # Declares this typed field so the surrounding contract is explicit.
-    user: AuthUser, auth_session: AuthSession, settings: Settings
-# Closes the multiline declaration, call, or collection opened above.
+    user: AuthUser,
+    auth_session: AuthSession,
+    settings: Settings,
+    # Closes the multiline declaration, call, or collection opened above.
 ) -> tuple[str, AuthPrincipal]:
     # Stores `now` because later steps depend on this value.
     now = datetime.now(UTC)
@@ -227,34 +229,34 @@ def mint_access_token(
         authenticated_at=auth_session.authenticated_at,
         # Stores `assurance_level` because later steps depend on this value.
         assurance_level=auth_session.assurance_level,
-    # Closes the multiline declaration, call, or collection opened above.
+        # Closes the multiline declaration, call, or collection opened above.
     )
     # Stores `payload` because later steps depend on this value.
     payload = {
         # Supplies this literal value to the surrounding declaration or call.
-        'iss': settings.auth_issuer,
+        "iss": settings.auth_issuer,
         # Supplies this literal value to the surrounding declaration or call.
-        'aud': settings.auth_audience,
+        "aud": settings.auth_audience,
         # Supplies this literal value to the surrounding declaration or call.
-        'sub': str(user.id),
+        "sub": str(user.id),
         # Supplies this literal value to the surrounding declaration or call.
-        'session_id': str(auth_session.id),
+        "session_id": str(auth_session.id),
         # Supplies this literal value to the surrounding declaration or call.
-        'is_anonymous': user.is_anonymous,
+        "is_anonymous": user.is_anonymous,
         # Supplies this literal value to the surrounding declaration or call.
-        'aal': auth_session.assurance_level,
+        "aal": auth_session.assurance_level,
         # Supplies this literal value to the surrounding declaration or call.
-        'auth_time': int(auth_session.authenticated_at.timestamp()),
+        "auth_time": int(auth_session.authenticated_at.timestamp()),
         # Supplies this literal value to the surrounding declaration or call.
-        'iat': int(now.timestamp()),
+        "iat": int(now.timestamp()),
         # Supplies this literal value to the surrounding declaration or call.
-        'exp': int((now + timedelta(seconds=settings.auth_access_token_seconds)).timestamp()),
+        "exp": int((now + timedelta(seconds=settings.auth_access_token_seconds)).timestamp()),
         # Supplies this literal value to the surrounding declaration or call.
-        'jti': uuid.uuid4().hex,
-    # Closes the multiline declaration, call, or collection opened above.
+        "jti": uuid.uuid4().hex,
+        # Closes the multiline declaration, call, or collection opened above.
     }
     # Returns the computed result and ends the current callable.
-    return jwt.encode(payload, settings.auth_signing_key, algorithm='HS256'), principal
+    return jwt.encode(payload, settings.auth_signing_key, algorithm="HS256"), principal
 
 
 # Defines this callable to implement the operation described by its name.
@@ -268,12 +270,12 @@ async def create_auth_session(
     # Supplies this required nested value.
     *,
     # Stores `assurance_level` because later steps depend on this value.
-    assurance_level: str = 'aal1',
+    assurance_level: str = "aal1",
     # Stores `ip_hash` because later steps depend on this value.
     ip_hash: str | None = None,
     # Stores `user_agent_hash` because later steps depend on this value.
     user_agent_hash: str | None = None,
-# Closes the multiline declaration, call, or collection opened above.
+    # Closes the multiline declaration, call, or collection opened above.
 ) -> IssuedSession:
     # Stores `refresh_token` because later steps depend on this value.
     refresh_token = new_refresh_token()
@@ -299,7 +301,7 @@ async def create_auth_session(
         last_ip_hash=ip_hash,
         # Stores `user_agent_hash` because later steps depend on this value.
         user_agent_hash=user_agent_hash,
-    # Closes the multiline declaration, call, or collection opened above.
+        # Closes the multiline declaration, call, or collection opened above.
     )
     # Supplies this required nested value.
     session.add(auth_session)
@@ -317,7 +319,7 @@ async def create_auth_session(
         expires_in=settings.auth_access_token_seconds,
         # Stores `principal` because later steps depend on this value.
         principal=principal,
-    # Closes the multiline declaration, call, or collection opened above.
+        # Closes the multiline declaration, call, or collection opened above.
     )
 
 
@@ -328,10 +330,10 @@ async def revoke_user_sessions(session: MongoSession, user_id: uuid.UUID) -> Non
         # Supplies this required nested value.
         AuthSession,
         # Supplies this required nested value.
-        {'user_id': user_id, 'revoked_at': None},
+        {"user_id": user_id, "revoked_at": None},
         # Supplies this required nested value.
-        {'$set': {'revoked_at': datetime.now(UTC), 'updated_at': datetime.now(UTC)}},
-    # Closes the multiline declaration, call, or collection opened above.
+        {"$set": {"revoked_at": datetime.now(UTC), "updated_at": datetime.now(UTC)}},
+        # Closes the multiline declaration, call, or collection opened above.
     )
 
 
@@ -349,19 +351,20 @@ async def rotate_refresh_session(
     ip_hash: str | None = None,
     # Stores `user_agent_hash` because later steps depend on this value.
     user_agent_hash: str | None = None,
-# Closes the multiline declaration, call, or collection opened above.
+    # Closes the multiline declaration, call, or collection opened above.
 ) -> IssuedSession:
     # Stores `presented_hash` because later steps depend on this value.
     presented_hash = token_hash(refresh_token, settings)
     # Stores `auth_session` because later steps depend on this value.
-    auth_session = await session.find_one(AuthSession, {'refresh_token_hash': presented_hash})
+    auth_session = await session.find_one(AuthSession, {"refresh_token_hash": presented_hash})
     # Guards the nested operation so it runs only when this condition is satisfied.
     if auth_session is None:
         # Stores `reused` because later steps depend on this value.
         reused = await session.find_one(
             # Supplies this required nested value.
-            AuthSession, {'previous_refresh_token_hash': presented_hash}
-        # Closes the multiline declaration, call, or collection opened above.
+            AuthSession,
+            {"previous_refresh_token_hash": presented_hash},
+            # Closes the multiline declaration, call, or collection opened above.
         )
         # Guards the nested operation so it runs only when this condition is satisfied.
         if reused is not None:
@@ -370,13 +373,13 @@ async def rotate_refresh_session(
             # Performs this required operation before the surrounding flow continues.
             await session.commit()
         # Raises this error so invalid state cannot continue silently.
-        raise APIError(401, 'INVALID_REFRESH_TOKEN', 'Your session has expired. Sign in again.')
+        raise APIError(401, "INVALID_REFRESH_TOKEN", "Your session has expired. Sign in again.")
     # Stores `now` because later steps depend on this value.
     now = datetime.now(UTC)
     # Guards the nested operation so it runs only when this condition is satisfied.
     if auth_session.revoked_at is not None or auth_session.expires_at <= now:
         # Raises this error so invalid state cannot continue silently.
-        raise APIError(401, 'INVALID_REFRESH_TOKEN', 'Your session has expired. Sign in again.')
+        raise APIError(401, "INVALID_REFRESH_TOKEN", "Your session has expired. Sign in again.")
     # Stores `user` because later steps depend on this value.
     user = await session.get(AuthUser, auth_session.user_id)
     # Guards the nested operation so it runs only when this condition is satisfied.
@@ -386,7 +389,7 @@ async def rotate_refresh_session(
         # Performs this required operation before the surrounding flow continues.
         await session.commit()
         # Raises this error so invalid state cannot continue silently.
-        raise APIError(401, 'INVALID_REFRESH_TOKEN', 'Your session has expired. Sign in again.')
+        raise APIError(401, "INVALID_REFRESH_TOKEN", "Your session has expired. Sign in again.")
     # Stores `replacement` because later steps depend on this value.
     replacement = new_refresh_token()
     # Stores `auth_session.previous_refresh_token_hash` because later steps depend on this value.
@@ -413,7 +416,7 @@ async def rotate_refresh_session(
         expires_in=settings.auth_access_token_seconds,
         # Stores `principal` because later steps depend on this value.
         principal=principal,
-    # Closes the multiline declaration, call, or collection opened above.
+        # Closes the multiline declaration, call, or collection opened above.
     )
 
 
@@ -427,18 +430,18 @@ async def get_current_user(
     verifier: AccessTokenVerifier = Depends(get_verifier),
     # Stores `session` because later steps depend on this value.
     session: MongoSession = Depends(get_session),
-# Closes the multiline declaration, call, or collection opened above.
+    # Closes the multiline declaration, call, or collection opened above.
 ) -> AuthPrincipal:
     # Guards the nested operation so it runs only when this condition is satisfied.
-    if not authorization or not authorization.startswith('Bearer '):
+    if not authorization or not authorization.startswith("Bearer "):
         # Raises this error so invalid state cannot continue silently.
-        raise APIError(401, 'AUTHENTICATION_REQUIRED', 'Sign in or continue as a guest to play.')
+        raise APIError(401, "AUTHENTICATION_REQUIRED", "Sign in or continue as a guest to play.")
     # Stores `token` because later steps depend on this value.
-    token = authorization.removeprefix('Bearer ').strip()
+    token = authorization.removeprefix("Bearer ").strip()
     # Guards the nested operation so it runs only when this condition is satisfied.
     if not token:
         # Raises this error so invalid state cannot continue silently.
-        raise APIError(401, 'AUTHENTICATION_REQUIRED', 'Sign in or continue as a guest to play.')
+        raise APIError(401, "AUTHENTICATION_REQUIRED", "Sign in or continue as a guest to play.")
     # Stores `token_principal` because later steps depend on this value.
     token_principal = verifier.verify(token)
     # Performs this required operation before the surrounding flow continues.
@@ -463,10 +466,10 @@ async def get_current_user(
         or auth_session.expires_at <= now
         # Supplies this required nested value.
         or user.deleted_at is not None
-    # Closes the multiline declaration, call, or collection opened above.
+        # Closes the multiline declaration, call, or collection opened above.
     ):
         # Raises this error so invalid state cannot continue silently.
-        raise APIError(401, 'INVALID_ACCESS_TOKEN', 'Your session is invalid or has expired.')
+        raise APIError(401, "INVALID_ACCESS_TOKEN", "Your session is invalid or has expired.")
     # Stores `principal` because later steps depend on this value.
     principal = AuthPrincipal(
         # Stores `user_id` because later steps depend on this value.
@@ -481,7 +484,7 @@ async def get_current_user(
         authenticated_at=auth_session.authenticated_at,
         # Stores `assurance_level` because later steps depend on this value.
         assurance_level=auth_session.assurance_level,
-    # Closes the multiline declaration, call, or collection opened above.
+        # Closes the multiline declaration, call, or collection opened above.
     )
     # Stores `request.state.principal_id` because later steps depend on this value.
     request.state.principal_id = str(principal.user_id)
@@ -495,29 +498,29 @@ async def require_admin(
     principal: AuthPrincipal = Depends(get_current_user),
     # Stores `session` because later steps depend on this value.
     session: MongoSession = Depends(get_session),
-# Closes the multiline declaration, call, or collection opened above.
+    # Closes the multiline declaration, call, or collection opened above.
 ) -> AuthPrincipal:
     # Stores `settings` because later steps depend on this value.
     settings = get_settings()
     # Guards the nested operation so it runs only when this condition is satisfied.
     if principal.is_anonymous:
         # Raises this error so invalid state cannot continue silently.
-        raise APIError(403, 'ADMIN_REQUIRED', 'Administrator access is required.')
+        raise APIError(403, "ADMIN_REQUIRED", "Administrator access is required.")
     # Guards the nested operation so it runs only when this condition is satisfied.
     if not principal.session_id:
         # Raises this error so invalid state cannot continue silently.
-        raise APIError(401, 'SESSION_REQUIRED', 'Sign in again before using administrator tools.')
+        raise APIError(401, "SESSION_REQUIRED", "Sign in again before using administrator tools.")
     # Guards the nested operation so it runs only when this condition is satisfied.
-    if principal.assurance_level != 'aal2':
+    if principal.assurance_level != "aal2":
         # Raises this error so invalid state cannot continue silently.
         raise APIError(
             # Supplies this required nested value.
             401,
             # Supplies this literal value to the surrounding declaration or call.
-            'MFA_REQUIRED',
+            "MFA_REQUIRED",
             # Supplies this literal value to the surrounding declaration or call.
-            'Complete multi-factor authentication before using administrator tools.',
-        # Closes the multiline declaration, call, or collection opened above.
+            "Complete multi-factor authentication before using administrator tools.",
+            # Closes the multiline declaration, call, or collection opened above.
         )
     # Guards the nested operation so it runs only when this condition is satisfied.
     if (
@@ -527,17 +530,17 @@ async def require_admin(
         or (datetime.now(UTC) - principal.authenticated_at).total_seconds()
         # Supplies this required nested value.
         > settings.admin_recent_auth_seconds
-    # Closes the multiline declaration, call, or collection opened above.
+        # Closes the multiline declaration, call, or collection opened above.
     ):
         # Raises this error so invalid state cannot continue silently.
         raise APIError(
             # Supplies this required nested value.
             401,
             # Supplies this literal value to the surrounding declaration or call.
-            'RECENT_AUTH_REQUIRED',
+            "RECENT_AUTH_REQUIRED",
             # Supplies this literal value to the surrounding declaration or call.
-            'Sign in again before using administrator tools.',
-        # Closes the multiline declaration, call, or collection opened above.
+            "Sign in again before using administrator tools.",
+            # Closes the multiline declaration, call, or collection opened above.
         )
     # Stores `grant` because later steps depend on this value.
     grant = await session.get(AdminGrant, principal.user_id)
@@ -555,9 +558,9 @@ async def require_admin(
         or profile.deleted_at is not None
         # Supplies this required nested value.
         or profile.is_banned
-    # Closes the multiline declaration, call, or collection opened above.
+        # Closes the multiline declaration, call, or collection opened above.
     ):
         # Raises this error so invalid state cannot continue silently.
-        raise APIError(403, 'ADMIN_REQUIRED', 'Administrator access is required.')
+        raise APIError(403, "ADMIN_REQUIRED", "Administrator access is required.")
     # Returns the computed result and ends the current callable.
     return principal

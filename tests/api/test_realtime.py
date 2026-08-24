@@ -238,14 +238,16 @@ async def test_background_finalization_awards_duelist(api: APIContext) -> None:
         # Computes and stores `winning_game` for subsequent operations.
         winning_game = await session.find_one(
             # Supplies this required nested value.
-            GameSession, {'room_id': room_id, 'owner_id': host.user_id}
-        # Closes the multiline declaration, call, or collection opened above.
+            GameSession,
+            {"room_id": room_id, "owner_id": host.user_id},
+            # Closes the multiline declaration, call, or collection opened above.
         )
         # Computes and stores `losing_game` for subsequent operations.
         losing_game = await session.find_one(
             # Supplies this required nested value.
-            GameSession, {'room_id': room_id, 'owner_id': guest.user_id}
-        # Closes the multiline declaration, call, or collection opened above.
+            GameSession,
+            {"room_id": room_id, "owner_id": guest.user_id},
+            # Closes the multiline declaration, call, or collection opened above.
         )
         # Asserts this invariant so an unexpected test state fails immediately.
         assert room is not None and winning_game is not None and losing_game is not None
@@ -275,8 +277,8 @@ async def test_background_finalization_awards_duelist(api: APIContext) -> None:
             # Supplies this required nested value.
             UserAchievement,
             # Supplies this required nested value.
-            {'user_id': host.user_id, 'achievement_key': 'duelist'},
-        # Closes the multiline declaration, call, or collection opened above.
+            {"user_id": host.user_id, "achievement_key": "duelist"},
+            # Closes the multiline declaration, call, or collection opened above.
         )
         # Computes and stores `persisted_loser` for subsequent operations.
         persisted_loser = await session.get(GameSession, losing_game.id)
@@ -325,7 +327,7 @@ async def test_stale_presence_is_cleared_and_published(api: APIContext) -> None:
     # Acquires this asynchronous managed resource for the nested operation.
     async with api.sessions() as session:
         # Computes and stores `member` for subsequent operations.
-        member = await session.find_one(MultiplayerMember, {'room_id': room_id})
+        member = await session.find_one(MultiplayerMember, {"room_id": room_id})
         # Asserts this invariant so an unexpected test state fails immediately.
         assert member is not None
         # Computes and stores `member.connected` for subsequent operations.
@@ -363,7 +365,7 @@ async def test_stale_presence_is_cleared_and_published(api: APIContext) -> None:
     # Acquires this asynchronous managed resource for the nested operation.
     async with api.sessions() as session:
         # Computes and stores `member` for subsequent operations.
-        member = await session.find_one(MultiplayerMember, {'room_id': room_id})
+        member = await session.find_one(MultiplayerMember, {"room_id": room_id})
         # Asserts this invariant so an unexpected test state fails immediately.
         assert member is not None and member.connected is False
     # Waits for this asynchronous operation to complete.
@@ -410,9 +412,7 @@ async def test_redis_broker_keeps_polling_after_an_idle_read() -> None:
             self.poll_arguments.append((ignore_subscribe_messages, timeout))
             await asyncio.sleep(0)
             if self.polls == 2:
-                return {
-                    "data": '{"version":1,"sequence":1,"type":"presence","payload":{}}'
-                }
+                return {"data": '{"version":1,"sequence":1,"type":"presence","payload":{}}'}
             return None
 
         async def unsubscribe(self, _channel: str) -> None:

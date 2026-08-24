@@ -245,12 +245,12 @@ async def daily_leaderboard_route(
         # Stores `match` because later steps depend on this value.
         match={
             # Supplies this literal value to the surrounding declaration or call.
-            'category': category,
+            "category": category,
             # Supplies this literal value to the surrounding declaration or call.
-            'review_status': 'approved',
+            "review_status": "approved",
             # Supplies this literal value to the surrounding declaration or call.
-            'invalidated_at': None,
-        # Closes the multiline declaration, call, or collection opened above.
+            "invalidated_at": None,
+            # Closes the multiline declaration, call, or collection opened above.
         },
         # Stores `user_id` because later steps depend on this value.
         user_id=principal.user_id,
@@ -258,7 +258,7 @@ async def daily_leaderboard_route(
         page=page,
         # Stores `page_size` because later steps depend on this value.
         page_size=page_size,
-    # Closes the multiline declaration, call, or collection opened above.
+        # Closes the multiline declaration, call, or collection opened above.
     )
     # Computes and stores `response` for subsequent operations.
     response = PaginatedLeaderboard(
@@ -267,19 +267,19 @@ async def daily_leaderboard_route(
             # Calls `LeaderboardItem` with the supplied values.
             LeaderboardItem(
                 # Provides the `rank` parameter or keyword argument.
-                rank=row['rank'],
+                rank=row["rank"],
                 # Provides the `display_name` parameter or keyword argument.
-                display_name=row.get('display_name') or "Anonymous breaker",
+                display_name=row.get("display_name") or "Anonymous breaker",
                 # Provides the `score` parameter or keyword argument.
-                score=row['score'],
+                score=row["score"],
                 # Provides the `attempts_used` parameter or keyword argument.
-                attempts_used=row['attempts_used'],
+                attempts_used=row["attempts_used"],
                 # Provides the `elapsed_seconds` parameter or keyword argument.
-                elapsed_seconds=row['elapsed_seconds'],
+                elapsed_seconds=row["elapsed_seconds"],
                 # Provides the `completed_at` parameter or keyword argument.
-                completed_at=row['completed_at'],
+                completed_at=row["completed_at"],
                 # Provides the `is_current_user` parameter or keyword argument.
-                is_current_user=row['user_id'] == principal.user_id,
+                is_current_user=row["user_id"] == principal.user_id,
                 # Closes the multiline call, declaration, or collection started above.
             )
             # Iterates through the supplied values for the nested operation.

@@ -99,7 +99,7 @@ def game_expiry_for_mode(
     *,
     # Stores `linked_expires_at` because later steps depend on this value.
     linked_expires_at: datetime | None = None,
-# Closes the multiline declaration, call, or collection opened above.
+    # Closes the multiline declaration, call, or collection opened above.
 ) -> datetime:
     # Stores `normalized_mode` because later steps depend on this value.
     normalized_mode = GameMode(mode)
@@ -119,7 +119,7 @@ def game_expiry_for_mode(
         GameMode.FRIEND_CHALLENGE: FRIEND_ACTIVE_LIFETIME,
         # Supplies this required nested value.
         GameMode.DUEL: DUEL_ACTIVE_LIFETIME,
-    # Closes the multiline declaration, call, or collection opened above.
+        # Closes the multiline declaration, call, or collection opened above.
     }[normalized_mode]
     # Stores `default_expiry` because later steps depend on this value.
     default_expiry = started + lifetime
@@ -132,7 +132,7 @@ def game_expiry_for_mode(
     # Guards the nested operation so it runs only when this condition is satisfied.
     if linked_expiry <= started:
         # Raises this error so invalid state cannot continue silently.
-        raise ValueError('A linked challenge or room must remain active after game creation.')
+        raise ValueError("A linked challenge or room must remain active after game creation.")
     # Returns the computed result and ends the current callable.
     return min(default_expiry, linked_expiry)
 
@@ -157,7 +157,7 @@ def expire_game_record(game: GameSession, *, now: datetime) -> bool:
         attempts_used=game.attempts_used,
         # Stores `elapsed_seconds` because later steps depend on this value.
         elapsed_seconds=elapsed_seconds,
-    # Closes the multiline declaration, call, or collection opened above.
+        # Closes the multiline declaration, call, or collection opened above.
     )
     # Stores `game.status` because later steps depend on this value.
     game.status = GameStatus.EXPIRED.value
@@ -212,7 +212,7 @@ class RetentionSummary:
             + self.rooms_deleted
             # Supplies this required nested value.
             + self.game_sessions_deleted
-        # Closes the multiline declaration, call, or collection opened above.
+            # Closes the multiline declaration, call, or collection opened above.
         )
 
     # Defines this callable to implement the operation described by its name.
@@ -230,13 +230,13 @@ async def _delete_games(session: MongoSession, game_ids: list[object]) -> int:
         # Returns the computed result and ends the current callable.
         return 0
     # Stores `match` because later steps depend on this value.
-    match = {'$in': game_ids}
+    match = {"$in": game_ids}
     # Performs this required operation before the surrounding flow continues.
-    await session.delete_many(LeaderboardEntry, {'game_id': match})
+    await session.delete_many(LeaderboardEntry, {"game_id": match})
     # Performs this required operation before the surrounding flow continues.
-    await session.delete_many(UserAchievement, {'game_id': match})
+    await session.delete_many(UserAchievement, {"game_id": match})
     # Returns the computed result and ends the current callable.
-    return await session.delete_many(GameSession, {'_id': match})
+    return await session.delete_many(GameSession, {"_id": match})
 
 
 # Defines this callable to implement the operation described by its name.
@@ -249,12 +249,12 @@ async def run_retention_batch(
     now: datetime | None = None,
     # Stores `batch_size` because later steps depend on this value.
     batch_size: int = 500,
-# Closes the multiline declaration, call, or collection opened above.
+    # Closes the multiline declaration, call, or collection opened above.
 ) -> RetentionSummary:
     # Guards the nested operation so it runs only when this condition is satisfied.
     if not 1 <= batch_size <= MAX_BATCH_SIZE:
         # Raises this error so invalid state cannot continue silently.
-        raise ValueError(f'batch_size must be between 1 and {MAX_BATCH_SIZE}')
+        raise ValueError(f"batch_size must be between 1 and {MAX_BATCH_SIZE}")
     # Stores `cutoff` because later steps depend on this value.
     cutoff = _aware(now or datetime.now(UTC))
     # Stores `summary` because later steps depend on this value.
@@ -265,10 +265,10 @@ async def run_retention_batch(
         # Supplies this required nested value.
         GameSession,
         # Supplies this required nested value.
-        {'status': GameStatus.ACTIVE.value, 'expires_at': {'$lte': cutoff}},
+        {"status": GameStatus.ACTIVE.value, "expires_at": {"$lte": cutoff}},
         # Stores `limit` because later steps depend on this value.
         limit=batch_size,
-    # Closes the multiline declaration, call, or collection opened above.
+        # Closes the multiline declaration, call, or collection opened above.
     )
     # Stores `summary.game_sessions_expired` because later steps depend on this value.
     summary.game_sessions_expired = sum(expire_game_record(game, now=cutoff) for game in due_games)
@@ -278,15 +278,15 @@ async def run_retention_batch(
         # Supplies this required nested value.
         MultiplayerRoom,
         # Supplies this required nested value.
-        {'status': {'$in': ['waiting', 'active']}, 'expires_at': {'$lte': cutoff}},
+        {"status": {"$in": ["waiting", "active"]}, "expires_at": {"$lte": cutoff}},
         # Stores `limit` because later steps depend on this value.
         limit=batch_size,
-    # Closes the multiline declaration, call, or collection opened above.
+        # Closes the multiline declaration, call, or collection opened above.
     )
     # Iterates over these values so each item receives the same processing.
     for room in due_rooms:
         # Stores `room.status` because later steps depend on this value.
-        room.status = 'expired'
+        room.status = "expired"
     # Stores `summary.rooms_expired` because later steps depend on this value.
     summary.rooms_expired = len(due_rooms)
 
@@ -297,18 +297,21 @@ async def run_retention_batch(
         # Iterates over these values so each item receives the same processing.
         for event in await session.find_many(
             # Supplies this required nested value.
-            ProductEvent, {'expires_at': {'$lte': cutoff}}, limit=batch_size
-        # Closes the multiline declaration, call, or collection opened above.
+            ProductEvent,
+            {"expires_at": {"$lte": cutoff}},
+            limit=batch_size,
+            # Closes the multiline declaration, call, or collection opened above.
         )
-    # Closes the multiline declaration, call, or collection opened above.
+        # Closes the multiline declaration, call, or collection opened above.
     ]
     # Guards the nested operation so it runs only when this condition is satisfied.
     if event_ids:
         # Stores `summary.product_events_deleted` because later steps depend on this value.
         summary.product_events_deleted = await session.delete_many(
             # Supplies this required nested value.
-            ProductEvent, {'_id': {'$in': event_ids}}
-        # Closes the multiline declaration, call, or collection opened above.
+            ProductEvent,
+            {"_id": {"$in": event_ids}},
+            # Closes the multiline declaration, call, or collection opened above.
         )
 
     # Stores `challenge_ids` because later steps depend on this value.
@@ -320,20 +323,21 @@ async def run_retention_batch(
             # Supplies this required nested value.
             FriendChallenge,
             # Supplies this required nested value.
-            {'expires_at': {'$lte': cutoff - FRIEND_COMPLETION_RETENTION}},
+            {"expires_at": {"$lte": cutoff - FRIEND_COMPLETION_RETENTION}},
             # Stores `limit` because later steps depend on this value.
             limit=batch_size,
-        # Closes the multiline declaration, call, or collection opened above.
+            # Closes the multiline declaration, call, or collection opened above.
         )
-    # Closes the multiline declaration, call, or collection opened above.
+        # Closes the multiline declaration, call, or collection opened above.
     ]
     # Guards the nested operation so it runs only when this condition is satisfied.
     if challenge_ids:
         # Stores `summary.friend_challenges_deleted` because later steps depend on this value.
         summary.friend_challenges_deleted = await session.delete_many(
             # Supplies this required nested value.
-            FriendChallenge, {'_id': {'$in': challenge_ids}}
-        # Closes the multiline declaration, call, or collection opened above.
+            FriendChallenge,
+            {"_id": {"$in": challenge_ids}},
+            # Closes the multiline declaration, call, or collection opened above.
         )
 
     # Stores `old_rooms` because later steps depend on this value.
@@ -343,30 +347,31 @@ async def run_retention_batch(
         # Supplies this required nested value.
         {
             # Supplies this literal value to the surrounding declaration or call.
-            'status': {'$in': ['completed', 'expired']},
+            "status": {"$in": ["completed", "expired"]},
             # Supplies this literal value to the surrounding declaration or call.
-            'updated_at': {'$lte': cutoff - ROOM_RETENTION},
-        # Closes the multiline declaration, call, or collection opened above.
+            "updated_at": {"$lte": cutoff - ROOM_RETENTION},
+            # Closes the multiline declaration, call, or collection opened above.
         },
         # Stores `limit` because later steps depend on this value.
         limit=batch_size,
-    # Closes the multiline declaration, call, or collection opened above.
+        # Closes the multiline declaration, call, or collection opened above.
     )
     # Stores `room_ids` because later steps depend on this value.
     room_ids = [room.id for room in old_rooms]
     # Guards the nested operation so it runs only when this condition is satisfied.
     if room_ids:
         # Stores `room_match` because later steps depend on this value.
-        room_match = {'$in': room_ids}
+        room_match = {"$in": room_ids}
         # Performs this required operation before the surrounding flow continues.
-        await session.delete_many(MultiplayerMember, {'room_id': room_match})
+        await session.delete_many(MultiplayerMember, {"room_id": room_match})
         # Performs this required operation before the surrounding flow continues.
-        await session.delete_many(MultiplayerEvent, {'room_id': room_match})
+        await session.delete_many(MultiplayerEvent, {"room_id": room_match})
         # Stores `summary.rooms_deleted` because later steps depend on this value.
         summary.rooms_deleted = await session.delete_many(
             # Supplies this required nested value.
-            MultiplayerRoom, {'_id': room_match}
-        # Closes the multiline declaration, call, or collection opened above.
+            MultiplayerRoom,
+            {"_id": room_match},
+            # Closes the multiline declaration, call, or collection opened above.
         )
 
     # Stores `old_games` because later steps depend on this value.
@@ -376,36 +381,37 @@ async def run_retention_batch(
         # Supplies this required nested value.
         {
             # Supplies this literal value to the surrounding declaration or call.
-            '$or': [
+            "$or": [
                 # Supplies this required nested value.
                 {
                     # Supplies this literal value to the surrounding declaration or call.
-                    'completed_at': {'$lte': cutoff - RANKED_GAME_RETENTION},
+                    "completed_at": {"$lte": cutoff - RANKED_GAME_RETENTION},
                     # Supplies this literal value to the surrounding declaration or call.
-                    'ranked_eligibility': LeaderboardEligibility.ELIGIBLE.value,
-                # Closes the multiline declaration, call, or collection opened above.
+                    "ranked_eligibility": LeaderboardEligibility.ELIGIBLE.value,
+                    # Closes the multiline declaration, call, or collection opened above.
                 },
                 # Supplies this required nested value.
                 {
                     # Supplies this literal value to the surrounding declaration or call.
-                    'completed_at': {'$lte': cutoff - UNRANKED_GAME_RETENTION},
+                    "completed_at": {"$lte": cutoff - UNRANKED_GAME_RETENTION},
                     # Supplies this literal value to the surrounding declaration or call.
-                    'ranked_eligibility': {'$ne': LeaderboardEligibility.ELIGIBLE.value},
-                # Closes the multiline declaration, call, or collection opened above.
+                    "ranked_eligibility": {"$ne": LeaderboardEligibility.ELIGIBLE.value},
+                    # Closes the multiline declaration, call, or collection opened above.
                 },
-            # Closes the multiline declaration, call, or collection opened above.
+                # Closes the multiline declaration, call, or collection opened above.
             ]
-        # Closes the multiline declaration, call, or collection opened above.
+            # Closes the multiline declaration, call, or collection opened above.
         },
         # Stores `limit` because later steps depend on this value.
         limit=batch_size,
-    # Closes the multiline declaration, call, or collection opened above.
+        # Closes the multiline declaration, call, or collection opened above.
     )
     # Stores `summary.game_sessions_deleted` because later steps depend on this value.
     summary.game_sessions_deleted = await _delete_games(
         # Supplies this required nested value.
-        session, [game.id for game in old_games]
-    # Closes the multiline declaration, call, or collection opened above.
+        session,
+        [game.id for game in old_games],
+        # Closes the multiline declaration, call, or collection opened above.
     )
     # Performs this required operation before the surrounding flow continues.
     await session.commit()
@@ -425,12 +431,12 @@ async def run_retention(
     max_batches: int = 20,
     # Stores `now` because later steps depend on this value.
     now: datetime | None = None,
-# Closes the multiline declaration, call, or collection opened above.
+    # Closes the multiline declaration, call, or collection opened above.
 ) -> RetentionSummary:
     # Guards the nested operation so it runs only when this condition is satisfied.
     if not 1 <= max_batches <= MAX_BATCHES:
         # Raises this error so invalid state cannot continue silently.
-        raise ValueError(f'max_batches must be between 1 and {MAX_BATCHES}')
+        raise ValueError(f"max_batches must be between 1 and {MAX_BATCHES}")
     # Stores `total` because later steps depend on this value.
     total = RetentionSummary()
     # Iterates over these values so each item receives the same processing.
@@ -456,8 +462,10 @@ async def _run_from_environment(batch_size: int, max_batches: int) -> RetentionS
         # Returns the computed result and ends the current callable.
         return await run_retention(
             # Supplies this required nested value.
-            SessionFactory, batch_size=batch_size, max_batches=max_batches
-        # Closes the multiline declaration, call, or collection opened above.
+            SessionFactory,
+            batch_size=batch_size,
+            max_batches=max_batches,
+            # Closes the multiline declaration, call, or collection opened above.
         )
     # Ensures this cleanup runs whether the protected operation succeeds or fails.
     finally:
@@ -468,22 +476,22 @@ async def _run_from_environment(batch_size: int, max_batches: int) -> RetentionS
 # Defines this callable to implement the operation described by its name.
 def main() -> None:
     # Stores `parser` because later steps depend on this value.
-    parser = argparse.ArgumentParser(description='Run bounded Cipherboard retention cleanup.')
+    parser = argparse.ArgumentParser(description="Run bounded Cipherboard retention cleanup.")
     # Supplies this required nested value.
-    parser.add_argument('--batch-size', type=int, default=500)
+    parser.add_argument("--batch-size", type=int, default=500)
     # Supplies this required nested value.
-    parser.add_argument('--max-batches', type=int, default=20)
+    parser.add_argument("--max-batches", type=int, default=20)
     # Stores `args` because later steps depend on this value.
     args = parser.parse_args()
     # Stores `summary` because later steps depend on this value.
     summary = asyncio.run(_run_from_environment(args.batch_size, args.max_batches))
     # Stores `result` because later steps depend on this value.
-    result = asdict(summary) | {'records_changed': summary.records_changed}
+    result = asdict(summary) | {"records_changed": summary.records_changed}
     # Supplies this required nested value.
     print(json.dumps(result, sort_keys=True))
 
 
 # Guards the nested operation so it runs only when this condition is satisfied.
-if __name__ == '__main__':
+if __name__ == "__main__":
     # Supplies this required nested value.
     main()

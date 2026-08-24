@@ -52,7 +52,7 @@ async def test_room_starts_only_after_both_members_are_ready(api: APIContext) ->
     # Acquires this asynchronous managed resource for the nested operation.
     async with api.sessions() as session:
         # Computes and stores `game_count` for subsequent operations.
-        game_count = await session.count(GameSession, {'room_id': room_id})
+        game_count = await session.count(GameSession, {"room_id": room_id})
         # Asserts this invariant so an unexpected test state fails immediately.
         assert game_count == 0
 
@@ -97,11 +97,13 @@ async def test_room_starts_only_after_both_members_are_ready(api: APIContext) ->
         # Computes and stores `games` for subsequent operations.
         games = await session.find_many(
             # Supplies this required nested value.
-            GameSession, {'room_id': room_id}, sort=[('owner_id', 1)]
-        # Closes the multiline declaration, call, or collection opened above.
+            GameSession,
+            {"room_id": room_id},
+            sort=[("owner_id", 1)],
+            # Closes the multiline declaration, call, or collection opened above.
         )
         # Computes and stores `members` for subsequent operations.
-        members = await session.find_many(MultiplayerMember, {'room_id': room_id})
+        members = await session.find_many(MultiplayerMember, {"room_id": room_id})
         # Computes and stores `event_types` for subsequent operations.
         event_types = [
             # Supplies this required nested value.
@@ -109,10 +111,12 @@ async def test_room_starts_only_after_both_members_are_ready(api: APIContext) ->
             # Iterates over these values so each item receives the same processing.
             for event in await session.find_many(
                 # Supplies this required nested value.
-                MultiplayerEvent, {'room_id': room_id}, sort=[('sequence', 1)]
-            # Closes the multiline declaration, call, or collection opened above.
+                MultiplayerEvent,
+                {"room_id": room_id},
+                sort=[("sequence", 1)],
+                # Closes the multiline declaration, call, or collection opened above.
             )
-        # Closes the multiline declaration, call, or collection opened above.
+            # Closes the multiline declaration, call, or collection opened above.
         ]
     # Asserts this invariant so an unexpected test state fails immediately.
     assert len(games) == 2

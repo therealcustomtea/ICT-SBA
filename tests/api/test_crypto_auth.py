@@ -35,11 +35,11 @@ from .conftest import APIContext
 # Defines this callable to implement the operation described by its name.
 def test_aes_gcm_round_trip_tamper_and_key_version() -> None:
     # Stores `key` because later steps depend on this value.
-    key = base64.b64encode(b'k' * 32).decode()
+    key = base64.b64encode(b"k" * 32).decode()
     # Stores `cipher` because later steps depend on this value.
-    cipher = SecretCipher({'v1': base64.b64decode(key)}, 'v1')
+    cipher = SecretCipher({"v1": base64.b64decode(key)}, "v1")
     # Stores `encrypted` because later steps depend on this value.
-    encrypted = cipher.encrypt(('R', 'B', 'G', 'Y'), context='game:test')
+    encrypted = cipher.encrypt(("R", "B", "G", "Y"), context="game:test")
     # Performs this required operation before the surrounding flow continues.
     assert cipher.decrypt(
         # Supplies this required nested value.
@@ -49,9 +49,9 @@ def test_aes_gcm_round_trip_tamper_and_key_version() -> None:
         # Supplies this required nested value.
         encrypted.key_version,
         # Stores `context` because later steps depend on this value.
-        context='game:test',
-    # Closes the multiline declaration, call, or collection opened above.
-    ) == ('R', 'B', 'G', 'Y')
+        context="game:test",
+        # Closes the multiline declaration, call, or collection opened above.
+    ) == ("R", "B", "G", "Y")
     # Scopes this resource so acquisition and cleanup remain paired.
     with pytest.raises(DomainError):
         # Supplies this required nested value.
@@ -63,33 +63,33 @@ def test_aes_gcm_round_trip_tamper_and_key_version() -> None:
             # Supplies this required nested value.
             encrypted.key_version,
             # Stores `context` because later steps depend on this value.
-            context='game:other',
-        # Closes the multiline declaration, call, or collection opened above.
+            context="game:other",
+            # Closes the multiline declaration, call, or collection opened above.
         )
 
 
 # Defines this callable to implement the operation described by its name.
 def test_configuration_validates_auth_and_crypto_key_material() -> None:
     # Stores `key` because later steps depend on this value.
-    key = base64.b64encode(b'e' * 32).decode()
+    key = base64.b64encode(b"e" * 32).decode()
     # Stores `settings` because later steps depend on this value.
     settings = Settings(
         # Stores `environment` because later steps depend on this value.
-        environment='test',
+        environment="test",
         # Stores `auth_signing_key` because later steps depend on this value.
-        auth_signing_key='a' * 32,
+        auth_signing_key="a" * 32,
         # Stores `secret_encryption_keys` because later steps depend on this value.
-        secret_encryption_keys=json.dumps({'v1': key}),
+        secret_encryption_keys=json.dumps({"v1": key}),
         # Stores `daily_hmac_key` because later steps depend on this value.
-        daily_hmac_key='d' * 32,
+        daily_hmac_key="d" * 32,
         # Stores `public_identifier_hmac_key` because later steps depend on this value.
-        public_identifier_hmac_key='i' * 32,
-    # Closes the multiline declaration, call, or collection opened above.
+        public_identifier_hmac_key="i" * 32,
+        # Closes the multiline declaration, call, or collection opened above.
     )
     # Performs this required operation before the surrounding flow continues.
-    assert settings.secret_encryption_keyring()['v1'] == b'e' * 32
+    assert settings.secret_encryption_keyring()["v1"] == b"e" * 32
     # Performs this required operation before the surrounding flow continues.
-    assert settings.daily_hmac_keyring()['v1'] == b'd' * 32
+    assert settings.daily_hmac_keyring()["v1"] == b"d" * 32
 
 
 # Defines this callable to implement the operation described by its name.
@@ -97,14 +97,14 @@ def test_access_token_verifier_rejects_wrong_audience_and_tampering() -> None:
     # Stores `settings` because later steps depend on this value.
     settings = Settings(
         # Stores `environment` because later steps depend on this value.
-        environment='test',
+        environment="test",
         # Stores `auth_issuer` because later steps depend on this value.
-        auth_issuer='https://api.example.test',
+        auth_issuer="https://api.example.test",
         # Stores `auth_audience` because later steps depend on this value.
-        auth_audience='cipherboard-web',
+        auth_audience="cipherboard-web",
         # Stores `auth_signing_key` because later steps depend on this value.
-        auth_signing_key='s' * 40,
-    # Closes the multiline declaration, call, or collection opened above.
+        auth_signing_key="s" * 40,
+        # Closes the multiline declaration, call, or collection opened above.
     )
     # Stores `verifier` because later steps depend on this value.
     verifier = AccessTokenVerifier(settings)
@@ -113,28 +113,28 @@ def test_access_token_verifier_rejects_wrong_audience_and_tampering() -> None:
         # Supplies this required nested value.
         {
             # Supplies this literal value to the surrounding declaration or call.
-            'sub': 'bc6b03a1-3e6f-4812-b0e5-e4ec3108551f',
+            "sub": "bc6b03a1-3e6f-4812-b0e5-e4ec3108551f",
             # Supplies this literal value to the surrounding declaration or call.
-            'sid': 'bf6d8b03-e19b-42f4-85f1-b46cb021904a',
+            "sid": "bf6d8b03-e19b-42f4-85f1-b46cb021904a",
             # Supplies this literal value to the surrounding declaration or call.
-            'iss': settings.auth_issuer,
+            "iss": settings.auth_issuer,
             # Supplies this literal value to the surrounding declaration or call.
-            'aud': 'another-app',
+            "aud": "another-app",
             # Supplies this literal value to the surrounding declaration or call.
-            'exp': 4_102_444_800,
+            "exp": 4_102_444_800,
             # Supplies this literal value to the surrounding declaration or call.
-            'iat': 1_700_000_000,
+            "iat": 1_700_000_000,
             # Supplies this literal value to the surrounding declaration or call.
-            'anonymous': False,
+            "anonymous": False,
             # Supplies this literal value to the surrounding declaration or call.
-            'aal': 'aal1',
-        # Closes the multiline declaration, call, or collection opened above.
+            "aal": "aal1",
+            # Closes the multiline declaration, call, or collection opened above.
         },
         # Supplies this required nested value.
         settings.auth_signing_key,
         # Stores `algorithm` because later steps depend on this value.
-        algorithm='HS256',
-    # Closes the multiline declaration, call, or collection opened above.
+        algorithm="HS256",
+        # Closes the multiline declaration, call, or collection opened above.
     )
     # Scopes this resource so acquisition and cleanup remain paired.
     with pytest.raises(APIError):
@@ -143,39 +143,41 @@ def test_access_token_verifier_rejects_wrong_audience_and_tampering() -> None:
     # Scopes this resource so acquisition and cleanup remain paired.
     with pytest.raises(APIError):
         # Supplies this required nested value.
-        verifier.verify(f'{wrong_audience[:-1]}x')
+        verifier.verify(f"{wrong_audience[:-1]}x")
 
 
 # Defines this callable to implement the operation described by its name.
 async def test_refresh_rotation_detects_reuse_and_revokes_the_family(api: APIContext) -> None:
     # Stores `guest` because later steps depend on this value.
-    guest = await api.client.post('/v1/auth/guest')
+    guest = await api.client.post("/v1/auth/guest")
     # Performs this required operation before the surrounding flow continues.
     assert guest.status_code == 201
     # Stores `old_cookie` because later steps depend on this value.
-    old_cookie = api.client.cookies['cipherboard_refresh']
+    old_cookie = api.client.cookies["cipherboard_refresh"]
     # Stores `refreshed` because later steps depend on this value.
-    refreshed = await api.client.post('/v1/auth/refresh')
+    refreshed = await api.client.post("/v1/auth/refresh")
     # Performs this required operation before the surrounding flow continues.
     assert refreshed.status_code == 200
     # Stores `new_cookie` because later steps depend on this value.
-    new_cookie = api.client.cookies['cipherboard_refresh']
+    new_cookie = api.client.cookies["cipherboard_refresh"]
     # Performs this required operation before the surrounding flow continues.
     assert new_cookie != old_cookie
 
     # Stores `replay` because later steps depend on this value.
     replay = await api.client.post(
         # Supplies this literal value to the surrounding declaration or call.
-        '/v1/auth/refresh', headers={'Cookie': f'cipherboard_refresh={old_cookie}'}
-    # Closes the multiline declaration, call, or collection opened above.
+        "/v1/auth/refresh",
+        headers={"Cookie": f"cipherboard_refresh={old_cookie}"},
+        # Closes the multiline declaration, call, or collection opened above.
     )
     # Performs this required operation before the surrounding flow continues.
     assert replay.status_code == 401
     # Stores `revoked` because later steps depend on this value.
     revoked = await api.client.post(
         # Supplies this literal value to the surrounding declaration or call.
-        '/v1/auth/refresh', headers={'Cookie': f'cipherboard_refresh={new_cookie}'}
-    # Closes the multiline declaration, call, or collection opened above.
+        "/v1/auth/refresh",
+        headers={"Cookie": f"cipherboard_refresh={new_cookie}"},
+        # Closes the multiline declaration, call, or collection opened above.
     )
     # Performs this required operation before the surrounding flow continues.
     assert revoked.status_code == 401
