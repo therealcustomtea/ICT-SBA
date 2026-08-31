@@ -808,7 +808,7 @@ async def _lock_duel_attempt_state(
 
 
 # Defines the `_submit_duel_attempt_transaction` callable and its typed interface.
-async def _submit_duel_attempt_transaction(
+async def _apply_duel_attempt_transaction(
     # Declares the typed `session` data field.
     session: MongoSession,
     # Declares the typed `room_id` data field.
@@ -979,6 +979,37 @@ async def _submit_duel_attempt_transaction(
         finalization_deadline,
         # Closes the multiline call, declaration, or collection started above.
     )
+
+
+async def _submit_duel_attempt_transaction(
+    session: MongoSession,
+    room_id: uuid.UUID,
+    principal: AuthPrincipal,
+    guess: list[str],
+    idempotency_key: str,
+    request_id: str,
+    cipher: SecretCipher,
+    settings: Settings,
+    redis: Any,
+) -> DuelAttemptOutcome:
+    """Serialize room mutations so simultaneous duel guesses cannot conflict in MongoDB."""
+
+    lock = redis.lock(
+        f"mastermind:room:{room_id}:attempt",
+        timeout=5,
+        blocking_timeout=5,
+    )
+    async with lock:
+        return await _apply_duel_attempt_transaction(
+            session,
+            room_id,
+            principal,
+            guess,
+            idempotency_key,
+            request_id,
+            cipher,
+            settings,
+        )
 
 
 # Defines the `_finalize_room_after_tie_window` callable and its typed interface.
@@ -1663,6 +1694,8 @@ async def room_events(websocket: WebSocket, room_id: uuid.UUID) -> None:
                         get_cipher(settings),
                         # Supplies this item to the surrounding call or collection.
                         settings,
+                        # Serializes updates to the shared room document across API workers.
+                        redis,
                         # Closes the multiline call, declaration, or collection started above.
                     )
                 # Handles the listed exception so failure remains controlled.

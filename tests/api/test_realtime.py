@@ -13,11 +13,18 @@ from datetime import UTC, datetime, timedelta
 # Imports selected names from `types` for use in this module.
 from types import SimpleNamespace
 
+# Imports selected names from `typing` for use in this module.
+from typing import cast
+
 # Imports `pytest` so the module can use that dependency.
 import pytest
 
 # Imports selected names from `mastermind_api.config` for use in this module.
 from mastermind_api.config import Settings
+
+# Imports the types used by the serialized duel-attempt helper.
+from mastermind_api.crypto import SecretCipher
+from mastermind_api.database import MongoSession
 
 # Imports selected names from `mastermind_api.errors` for use in this module.
 from mastermind_api.errors import APIError
@@ -61,6 +68,8 @@ from mastermind_api.routers.rooms import (
     # Supplies this item to the surrounding call or collection.
     _release_connection,
     # Supplies this item to the surrounding call or collection.
+    _submit_duel_attempt_transaction,
+    # Supplies this item to the surrounding call or collection.
     _ticket_from_protocol_header,
     # Closes the multiline call, declaration, or collection started above.
 )
@@ -70,6 +79,67 @@ from redis.exceptions import ConnectionError
 
 # Imports selected names from `.conftest` for use in this module.
 from .conftest import APIContext, principal
+
+
+async def test_simultaneous_duel_attempts_are_serialized_per_room(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    room_id = uuid.uuid4()
+    active = 0
+    maximum_active = 0
+    outcomes = [object(), object()]
+
+    async def apply_attempt(*_args: object) -> object:
+        nonlocal active, maximum_active
+        active += 1
+        maximum_active = max(maximum_active, active)
+        await asyncio.sleep(0)
+        active -= 1
+        return outcomes.pop()
+
+    class RoomLockRedis:
+        def __init__(self) -> None:
+            self.locks: dict[str, asyncio.Lock] = {}
+
+        def lock(self, name: str, *, timeout: int, blocking_timeout: int) -> asyncio.Lock:
+            assert timeout == 5
+            assert blocking_timeout == 5
+            return self.locks.setdefault(name, asyncio.Lock())
+
+    monkeypatch.setattr(
+        "mastermind_api.routers.rooms._apply_duel_attempt_transaction", apply_attempt
+    )
+    redis = RoomLockRedis()
+    session = cast(MongoSession, object())
+    cipher = cast(SecretCipher, object())
+
+    results = await asyncio.gather(
+        _submit_duel_attempt_transaction(
+            session,
+            room_id,
+            principal(),
+            ["R", "B", "G", "Y"],
+            "attempt-a",
+            "request-a",
+            cipher,
+            Settings.model_construct(),
+            redis,
+        ),
+        _submit_duel_attempt_transaction(
+            session,
+            room_id,
+            principal(),
+            ["R", "B", "G", "Y"],
+            "attempt-b",
+            "request-b",
+            cipher,
+            Settings.model_construct(),
+            redis,
+        ),
+    )
+
+    assert len(results) == 2
+    assert maximum_active == 1
 
 
 # Defines the `RecoveringRedis` class and its related behavior.
