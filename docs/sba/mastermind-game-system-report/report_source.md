@@ -712,10 +712,6 @@ References were selected for software-development fundamentals, Python standard-
 7. pytest development team. “pytest Documentation.” https://docs.pytest.org/en/stable/
 8. Astral. “Running Commands in Projects.” https://docs.astral.sh/uv/concepts/projects/run/
 
-## 9.1.2: AI Tools
-
-OpenAI Codex was used as a development and documentation assistant for repository inspection, structured drafting, visual generation, and verification orchestration. Technical claims were checked against source code and executed commands. AI assistance does not replace the student's responsibility to understand, edit, validate, and declare the submitted work according to school and HKEAA requirements.
-
 ## 9.2: Gantt Chart
 
 The following chart expresses the iterative development schedule. Analysis and design overlap because rule discoveries feed back into constraints. Testing begins before feature completion and continues through packaging and documentation.

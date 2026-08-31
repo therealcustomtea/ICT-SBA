@@ -7,7 +7,7 @@ This directory contains the submission-ready, CLI-centred HKDSE ICT School-based
 - [Report source](report_source.md) — inspectable 9,000-word manuscript.
 - [Generated figures](assets) — 22 architecture, flow, code, test, and evaluation visuals.
 
-Candidate name, candidate number, school, signatures, and date are intentionally blank. Complete and review those fields before formal submission.
+The report identifies the candidate as **CHAN, YU SHING**, candidate number **Student ID s202101127**, of **CCC Ming Kei College**. Signatures and the declaration date remain blank for completion before formal submission.
 
 ## Reproducing the report
 

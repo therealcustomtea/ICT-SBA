@@ -31,6 +31,10 @@ PALE_BLUE = "EAF2F4"
 INK = "1F2933"
 MUTED = "647383"
 WHITE = "FFFFFF"
+
+CANDIDATE_NAME = "CHAN, YU SHING"
+CANDIDATE_NUMBER = "Student ID s202101127"
+SCHOOL_NAME = "CCC Ming Kei College"
 GRID = "C9D6DB"
 
 FIGURE_RE = re.compile(r"^\[\[FIGURE:([^|]+)\|(.+)\]\]$")
@@ -453,9 +457,9 @@ def add_cover(document: Document) -> None:
     set_table_fixed(details, [2.15, 4.4])
     set_repeat_table_header(details.rows[0])
     values = (
-        ("Candidate name", "____________________________________________"),
-        ("Candidate number", "____________________________________________"),
-        ("School", "____________________________________________"),
+        ("Candidate name", CANDIDATE_NAME),
+        ("Candidate number", CANDIDATE_NUMBER),
+        ("School", SCHOOL_NAME),
         ("Submission", "1 September 2026  •  CLI-centred system report"),
     )
     for row, pair in zip(details.rows, values, strict=True):
@@ -487,7 +491,7 @@ def add_front_matter(document: Document) -> None:
     title.paragraph_format.page_break_before = False
     add_bookmark(title, "front_declaration", 9000)
     for text in (
-        "This report documents the Mastermind Game System implemented in the accompanying repository. Candidate identity fields are left blank for completion before formal submission. The student should confirm authorship, cite all assistance required by school policy, and retain the tested repository baseline.",
+        f"This report documents the Mastermind Game System implemented by {CANDIDATE_NAME} ({CANDIDATE_NUMBER}) of {SCHOOL_NAME} in the accompanying repository. The student should confirm authorship, cite all assistance required by school policy, and retain the tested repository baseline.",
         "Technical statements are grounded in source code at commit 31509d956b0bb8614b646887065ee40549238446 and verification executed on 1 September 2026. The report does not claim that every reconstructed debugging scenario corresponds to an individually preserved historical commit; Section 7 identifies the final safeguards and their regression evidence.",
     ):
         p = document.add_paragraph()
@@ -778,10 +782,10 @@ def build(output: Path, page_map_path: Path | None = None) -> None:
         "School-based Assessment — Mastermind Game System"
     )
     props.subject = "CLI-centred Mastermind system analysis, design, implementation, and evaluation"
-    props.author = "Candidate"
+    props.author = CANDIDATE_NAME
     props.keywords = "HKDSE, ICT, SBA, Mastermind, CLI, Python, testing"
     props.comments = "Generated reproducibly from report_source.md and repository evidence."
-    props.last_modified_by = "Candidate"
+    props.last_modified_by = CANDIDATE_NAME
     output.parent.mkdir(parents=True, exist_ok=True)
     document.save(output)
 
