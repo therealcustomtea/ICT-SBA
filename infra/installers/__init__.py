@@ -1,0 +1,1 @@
+"""Desktop installer packaging support."""

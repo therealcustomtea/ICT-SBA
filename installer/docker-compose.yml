@@ -1,0 +1,129 @@
+name: cipherboard-desktop
+
+x-api-build: &api-build
+  context: ..
+  dockerfile: infra/docker/api.Dockerfile
+
+services:
+  postgres:
+    image: postgres:17.5-alpine@sha256:6567bca8d7bc8c82c5922425a0baee57be8402df92bae5eacad5f01ae9544daa
+    environment:
+      POSTGRES_DB: mastermind
+      POSTGRES_USER: mastermind
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Installer configuration is missing}
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U mastermind -d mastermind']
+      interval: 5s
+      timeout: 3s
+      retries: 30
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+
+  redis:
+    image: redis:7.4.5-alpine@sha256:bb186d083732f669da90be8b0f975a37812b15e913465bb14d845db72a4e3e08
+    command: ['redis-server', '--appendonly', 'yes', '--save', '60', '1000']
+    volumes:
+      - redis-data:/data
+    healthcheck:
+      test: ['CMD', 'redis-cli', 'ping']
+      interval: 5s
+      timeout: 3s
+      retries: 30
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+
+  migrate:
+    build: *api-build
+    environment:
+      MASTERMIND_ENVIRONMENT: development
+      MASTERMIND_DATABASE_URL: postgresql+asyncpg://mastermind:${POSTGRES_PASSWORD}@postgres:5432/mastermind
+    command: ['alembic', '-c', 'apps/api/alembic.ini', 'upgrade', 'head']
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: 'no'
+
+  api:
+    build: *api-build
+    environment:
+      MASTERMIND_ENVIRONMENT: development
+      MASTERMIND_RELEASE: ${MASTERMIND_RELEASE:-desktop}
+      MASTERMIND_DATABASE_URL: postgresql+asyncpg://mastermind:${POSTGRES_PASSWORD}@postgres:5432/mastermind
+      MASTERMIND_REDIS_URL: redis://redis:6379/0
+      MASTERMIND_ALLOWED_ORIGINS: '["http://127.0.0.1:3000","http://localhost:3000"]'
+      MASTERMIND_SUPABASE_URL: http://127.0.0.1:54321
+      MASTERMIND_SUPABASE_INTERNAL_URL: http://host.docker.internal:54321
+      MASTERMIND_SUPABASE_SERVICE_ROLE_KEY: ${SUPABASE_SERVICE_ROLE_KEY:?Installer configuration is missing}
+      MASTERMIND_SUPABASE_JWT_AUDIENCE: authenticated
+      MASTERMIND_SECRET_ENCRYPTION_KEYS: ${MASTERMIND_SECRET_ENCRYPTION_KEYS:?Installer configuration is missing}
+      MASTERMIND_SECRET_ACTIVE_KEY_VERSION: v1
+      MASTERMIND_DAILY_HMAC_KEY: ${MASTERMIND_DAILY_HMAC_KEY:?Installer configuration is missing}
+      MASTERMIND_PUBLIC_IDENTIFIER_HMAC_KEY: ${MASTERMIND_PUBLIC_IDENTIFIER_HMAC_KEY:?Installer configuration is missing}
+      MASTERMIND_FEATURE_ANALYTICS: 'false'
+    ports:
+      - '127.0.0.1:8000:8000'
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      migrate:
+        condition: service_completed_successfully
+    init: true
+    restart: unless-stopped
+    read_only: true
+    tmpfs:
+      - /tmp:size=64m,mode=1777
+    cap_drop: ['ALL']
+    security_opt:
+      - no-new-privileges:true
+
+  web:
+    build:
+      context: ..
+      dockerfile: infra/docker/web.Dockerfile
+      args:
+        NEXT_PUBLIC_API_ORIGIN: http://127.0.0.1:8000
+        NEXT_PUBLIC_PRODUCT_ORIGIN: http://127.0.0.1:3000
+        NEXT_PUBLIC_SUPABASE_URL: http://127.0.0.1:54321
+        NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: ${SUPABASE_PUBLISHABLE_KEY:?Installer configuration is missing}
+        NEXT_PUBLIC_PRODUCT_NAME: Cipherboard
+        NEXT_PUBLIC_SUPPORT_EMAIL: support@localhost.invalid
+        NEXT_PUBLIC_LEGAL_ENTITY: Local Installation
+        NEXT_PUBLIC_JURISDICTION: Local Installation
+        NEXT_PUBLIC_POLICY_DATE: '2026-07-15'
+    environment:
+      NODE_ENV: production
+      VALIDATE_LAUNCH_CONFIGURATION: 'false'
+    ports:
+      - '127.0.0.1:3000:3000'
+    depends_on:
+      api:
+        condition: service_healthy
+    init: true
+    restart: unless-stopped
+    read_only: true
+    tmpfs:
+      - /tmp:size=64m,mode=1777
+    cap_drop: ['ALL']
+    security_opt:
+      - no-new-privileges:true
+
+  cli:
+    build: *api-build
+    command: ['mastermind']
+    profiles: ['cli']
+    stdin_open: true
+    tty: true
+    volumes:
+      - ../../data:/app/data
+    security_opt:
+      - no-new-privileges:true
+
+volumes:
+  postgres-data:
+  redis-data:

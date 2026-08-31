@@ -134,6 +134,8 @@ def test_production_configuration_rejects_local_services_and_mutable_release() -
         production_settings(allowed_origins=("ftp://play.cipherboard.internal",))
     with pytest.raises(ValueError, match="Supabase URL must be an exact HTTPS origin"):
         production_settings(supabase_url="https://abcdefghijklmnop.supabase.co/auth/v1")
+    with pytest.raises(ValueError, match="internal Supabase URL must be an exact HTTPS origin"):
+        production_settings(supabase_internal_url="http://auth.cipherboard.internal")
     with pytest.raises(ValueError, match="local development host"):
         production_settings(
             database_url=(
@@ -191,6 +193,7 @@ def test_production_configuration_rejects_local_services_and_mutable_release() -
         },
         {"redis_url": "rediss://cache.example.invalid/0"},
         {"supabase_url": "https://project.supabase.co"},
+        {"supabase_internal_url": "https://auth.example.invalid"},
         {"allowed_origins": ("https://play.example.invalid",)},
         {"supabase_service_role_key": "ci-only-service-role-material-32-bytes"},
     ],
@@ -321,6 +324,20 @@ def test_jwt_verifies_signature_issuer_audience_expiry_and_subject() -> None:
     with pytest.raises(APIError) as error:
         verifier.verify(expired)
     assert error.value.code == "INVALID_ACCESS_TOKEN"
+
+
+def test_jwt_can_fetch_keys_over_an_internal_provider_route() -> None:
+    settings = Settings(
+        environment="test",
+        supabase_url="http://127.0.0.1:54321",
+        supabase_internal_url="http://host.docker.internal:54321",
+    )
+
+    verifier = SupabaseJWTVerifier(settings)
+
+    assert verifier.issuer == "http://127.0.0.1:54321/auth/v1"
+    assert verifier.jwks.uri == ("http://host.docker.internal:54321/auth/v1/.well-known/jwks.json")
+    assert settings.supabase_server_url == "http://host.docker.internal:54321"
 
 
 def test_structured_log_redaction_is_recursive_and_catches_formatted_exceptions() -> None:

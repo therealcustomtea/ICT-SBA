@@ -37,8 +37,9 @@ class SupabaseJWTVerifier:
             raise RuntimeError("MASTERMIND_SUPABASE_URL is required for authentication.")
         self.issuer = f"{settings.supabase_url.rstrip('/')}/auth/v1"
         self.audience = settings.supabase_jwt_audience
+        server_issuer = f"{settings.supabase_server_url.rstrip('/')}/auth/v1"
         self.jwks = PyJWKClient(
-            f"{self.issuer}/.well-known/jwks.json",
+            f"{server_issuer}/.well-known/jwks.json",
             cache_jwk_set=True,
             lifespan=600,
             cache_keys=True,
@@ -85,14 +86,25 @@ class SupabaseJWTVerifier:
 
 
 @lru_cache
-def _cached_verifier(supabase_url: str, audience: str) -> SupabaseJWTVerifier:
+def _cached_verifier(
+    supabase_url: str, supabase_internal_url: str, audience: str
+) -> SupabaseJWTVerifier:
     return SupabaseJWTVerifier(
-        Settings(environment="test", supabase_url=supabase_url, supabase_jwt_audience=audience)
+        Settings(
+            environment="test",
+            supabase_url=supabase_url,
+            supabase_internal_url=supabase_internal_url,
+            supabase_jwt_audience=audience,
+        )
     )
 
 
 def get_verifier(settings: Settings = Depends(get_settings)) -> SupabaseJWTVerifier:
-    return _cached_verifier(settings.supabase_url, settings.supabase_jwt_audience)
+    return _cached_verifier(
+        settings.supabase_url,
+        settings.supabase_internal_url,
+        settings.supabase_jwt_audience,
+    )
 
 
 def get_current_user(

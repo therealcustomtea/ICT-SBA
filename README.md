@@ -81,6 +81,12 @@ pnpm install --frozen-lockfile
 uv sync --frozen --all-extras
 ```
 
+### Guided desktop installers
+
+Release archives include guided macOS and Windows installers for both the GUI and CLI. They ask for the installation folder, install and start the complete local service stack, create launchers, verify readiness, and write a report describing everything installed and how to use it. Docker Desktop is the only system-level prerequisite; if it is missing, the installer offers to install the official signed package.
+
+See [desktop installers](docs/operations/DESKTOP_INSTALLERS.md) for installation, CLI/GUI usage, service management, data locations, and release packaging.
+
 ## Local development
 
 One command builds and starts PostgreSQL, Redis, the migrated API, and the web application:

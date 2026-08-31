@@ -125,6 +125,7 @@ class Settings(BaseSettings):
     redis_url: str | None = "redis://localhost:6379/0"
     allowed_origins: tuple[str, ...] = ("http://localhost:3000",)
     supabase_url: str = ""
+    supabase_internal_url: str = ""
     supabase_service_role_key: str = ""
     supabase_jwt_audience: str = "authenticated"
     secret_encryption_keys: str = ""
@@ -222,6 +223,12 @@ class Settings(BaseSettings):
                 raise ValueError("The product name cannot have surrounding whitespace.")
             if not _is_exact_https_origin(self.supabase_url):
                 raise ValueError("The production Supabase URL must be an exact HTTPS origin.")
+            if self.supabase_internal_url and not _is_exact_https_origin(
+                self.supabase_internal_url
+            ):
+                raise ValueError(
+                    "The production internal Supabase URL must be an exact HTTPS origin."
+                )
             self.daily_hmac_keyring()
             validate_deployed_postgres_url(
                 self.database_url,
@@ -241,6 +248,7 @@ class Settings(BaseSettings):
                         self.database_url,
                         self.redis_url or "",
                         self.supabase_url,
+                        self.supabase_internal_url,
                         self.error_reporting_url,
                         *self.allowed_origins,
                     )
@@ -256,6 +264,12 @@ class Settings(BaseSettings):
             if len(self.public_identifier_hmac_key.encode()) < 32:
                 raise ValueError("The public identifier HMAC key must contain at least 32 bytes.")
         return self
+
+    @property
+    def supabase_server_url(self) -> str:
+        """Return the server-reachable provider URL without changing the JWT issuer."""
+
+        return self.supabase_internal_url or self.supabase_url
 
     def secret_encryption_keyring(self) -> dict[str, bytes]:
         """Decode and validate every configured AES-GCM key version."""

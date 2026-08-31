@@ -73,7 +73,7 @@ def _provider(supabase_url: str, service_role_key: str) -> SupabaseAdminClient:
 
 
 def get_deletion_provider(settings: Settings = Depends(get_settings)) -> SupabaseAdminClient:
-    return _provider(settings.supabase_url, settings.supabase_service_role_key)
+    return _provider(settings.supabase_server_url, settings.supabase_service_role_key)
 
 
 async def process_account_deletion(

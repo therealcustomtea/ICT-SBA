@@ -18,7 +18,8 @@ Production and staging fail deployment when a required value is absent. Startup 
 | `DATABASE_RETENTION_URL` | Yes | Scheduled maintenance | Separate login inheriting only `mastermind_retention`; required by `mastermind-retention` and never present in API containers |
 | `MASTERMIND_REDIS_URL` | Yes | Yes | TLS/authenticated managed Redis URL in deployed environments |
 | `MASTERMIND_ALLOWED_ORIGINS` | No | Yes | JSON array of exact HTTPS web origins; wildcard and HTTP are rejected in production |
-| `MASTERMIND_SUPABASE_URL` | No | Yes | Exact project URL used to form issuer/JWKS endpoints |
+| `MASTERMIND_SUPABASE_URL` | No | Yes | Exact browser-visible project URL used to validate the JWT issuer |
+| `MASTERMIND_SUPABASE_INTERNAL_URL` | No | No | Optional server-reachable route to the same project for JWKS/admin calls; useful only when container networking cannot reach the public route directly, and it does not change the accepted token issuer |
 | `MASTERMIND_SUPABASE_SERVICE_ROLE_KEY` | Yes | Yes | Server-only Supabase admin credential used for session revocation/account deletion; never a browser variable |
 | `MASTERMIND_SUPABASE_JWT_AUDIENCE` | No | Yes | Expected access-token audience, normally `authenticated` |
 | `MASTERMIND_SECRET_ENCRYPTION_KEYS` | Yes | Yes | JSON object mapping versions to base64 32-byte AES keys |

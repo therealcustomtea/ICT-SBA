@@ -181,7 +181,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
                 account_deletion_retry_worker(
                     SessionFactory,
                     SupabaseAdminClient(
-                        config.supabase_url,
+                        config.supabase_server_url,
                         config.supabase_service_role_key,
                     ),
                 )
