@@ -443,7 +443,9 @@ test.describe('real product flows', () => {
     // Waits for this asynchronous operation to complete.
     await expect(page.locator('html')).toHaveAttribute('lang', 'zh-Hant');
     // Waits for this asynchronous operation to complete.
-    await expect(page.getByRole('heading', { name: '每日挑戰', exact: true })).toBeVisible();
+    await expect(
+      page.locator('.page-heading').getByRole('heading', { name: '每日挑戰', exact: true }),
+    ).toBeVisible();
     // Calls expect with the supplied values.
     expect((await (await restoreResponse).json()).id).toBe(game.id);
     // Waits for this asynchronous operation to complete.
@@ -841,15 +843,9 @@ test.describe('real product flows', () => {
         ]);
         // Waits for this asynchronous operation to complete.
         await Promise.all([
-          // Calls page.getByRole with the supplied values.
-          page.getByRole('button', { name: 'Submit guess', exact: true }).dispatchEvent('click'),
-          // Executes this line as the next step in the surrounding logic.
-          opponent
-            // Executes this line as the next step in the surrounding logic.
-            .getByRole('button', { name: 'Submit guess', exact: true })
-            // Supplies this item to the surrounding call or collection.
-            .dispatchEvent('click'),
-          // Closes the expression, call, or declaration started above.
+          // Use trusted pointer actions so both React handlers reliably send their WebSocket guesses.
+          page.getByRole('button', { name: 'Submit guess', exact: true }).click(),
+          opponent.getByRole('button', { name: 'Submit guess', exact: true }).click(),
         ]);
 
         // Waits for this asynchronous operation to complete.
