@@ -1,6 +1,6 @@
 # Load profiles
 
-These k6 profiles exercise real authenticated API paths; they do not use mock responses or create sample production users. Run them against an isolated load environment with production-like PostgreSQL/Redis topology and a test Supabase project. Set `K6_TARGET_ENVIRONMENT` for every non-loopback target; use `load` or `staging` for an approved non-production environment.
+These k6 profiles exercise real authenticated API paths; they do not use mock responses or create sample production users. Run them against an isolated load environment with production-like MongoDB/Redis topology and a test first-party authentication project. Set `K6_TARGET_ENVIRONMENT` for every non-loopback target; use `load` or `staging` for an approved non-production environment.
 
 Gameplay creation, first-attempt, and leaderboard reads:
 

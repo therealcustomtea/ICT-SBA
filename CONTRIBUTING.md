@@ -11,8 +11,8 @@ cp .env.example .env
 infra/scripts/bootstrap-local-env.sh
 uv sync --all-extras --frozen
 pnpm install --frozen-lockfile
-docker compose up -d postgres redis
-uv run alembic -c apps/api/alembic.ini upgrade head
+docker compose up -d mongo redis mailpit
+uv run mastermind-initialize
 ```
 
 Run the API, web application, or CLI with the commands in `README.md`. Never commit `.env`, credentials, generated local data, dependency directories, or build output.
@@ -22,7 +22,7 @@ Run the API, web application, or CLI with the commands in `README.md`. Never com
 1. Branch from the current integration branch with a descriptive `feat/`, `fix/`, `docs/`, or `chore/` name.
 2. Inspect adjacent implementation, tests, migrations, contracts, and documentation before editing.
 3. Keep authoritative rules in `mastermind_core`; clients never calculate accepted feedback, ranked scores, or terminal state.
-4. Add a reversible Alembic migration for schema changes. Do not create production schema at application startup.
+4. Make MongoDB document changes backward compatible and update the idempotent initializer/index definitions.
 5. Regenerate the OpenAPI client when the public API changes and review the generated diff.
 6. Add focused tests for success, denial, malformed input, retries, and concurrency where relevant.
 7. Run the applicable checks from `docs/operations/TESTING.md`.

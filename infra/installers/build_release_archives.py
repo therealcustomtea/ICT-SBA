@@ -25,7 +25,6 @@ PAYLOAD_PATHS = (
     "packages/shared_config",
     "packages/mastermind_core",
     "infra/docker",
-    "supabase",
     "installer",
 )
 EXCLUDED_PARTS = {

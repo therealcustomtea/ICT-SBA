@@ -1,0 +1,37 @@
+5B_04_CHAN_YU_SHING - MASTERMIND SOURCE FILE MANIFEST
+
+Root entry point
+- 5B_04_Chan_Yu_Shing_main.py
+
+Terminal application
+- apps/cli/mastermind_cli/__init__.py
+- apps/cli/mastermind_cli/__main__.py
+- apps/cli/mastermind_cli/app.py
+- apps/cli/mastermind_cli/storage.py
+
+Reusable Mastermind engine
+- packages/mastermind_core/mastermind_core/__init__.py
+- packages/mastermind_core/mastermind_core/daily.py
+- packages/mastermind_core/mastermind_core/engine.py
+- packages/mastermind_core/mastermind_core/errors.py
+- packages/mastermind_core/mastermind_core/feedback.py
+- packages/mastermind_core/mastermind_core/models.py
+- packages/mastermind_core/mastermind_core/presets.py
+- packages/mastermind_core/mastermind_core/scoring.py
+- packages/mastermind_core/mastermind_core/validation.py
+
+Peer-review regression test
+- tests/core/test_boundaries.py
+
+Run from the extracted folder on macOS/Linux:
+  PYTHONPATH=apps/cli:packages/mastermind_core python3 5B_04_Chan_Yu_Shing_main.py
+
+Run from the extracted folder on Windows Command Prompt:
+  set PYTHONPATH=apps/cli;packages/mastermind_core
+  py 5B_04_Chan_Yu_Shing_main.py
+
+The CLI and engine source files use only the Python standard library.
+Python 3.12 or newer is recommended and matches the project configuration.
+
+To run the peer-review regression test when pytest is available:
+  PYTHONPATH=apps/cli:packages/mastermind_core python3 -m pytest tests/core/test_boundaries.py -q

@@ -14,7 +14,6 @@ on:
       - 'infra/installers/**'
       - 'installer/**'
       - 'packages/**'
-      - 'supabase/**'
       - 'tests/installer/**'
   workflow_dispatch:
   push:
@@ -45,9 +44,7 @@ jobs:
           bash -n installer/runtime/macos/Cipherboard.app/Contents/MacOS/Cipherboard
       - name: Validate Compose configuration
         env:
-          POSTGRES_PASSWORD: installer-test
-          SUPABASE_PUBLISHABLE_KEY: installer-test-public
-          SUPABASE_SERVICE_ROLE_KEY: installer-test-service
+          MASTERMIND_AUTH_SIGNING_KEY: installer-test-auth-signing-key-material
           MASTERMIND_SECRET_ENCRYPTION_KEYS: '{"v1":"MDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDA="}'
           MASTERMIND_DAILY_HMAC_KEY: installer-test-daily-key-material
           MASTERMIND_PUBLIC_IDENTIFIER_HMAC_KEY: installer-test-identifier-key-material

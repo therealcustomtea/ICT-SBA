@@ -33,7 +33,5 @@ def test_installer_archives_contain_launchers_and_sanitized_payload(tmp_path: Pa
         assert "Install-Cipherboard.ps1" in names
         assert "payload/installer/runtime/windows/cipherboard.cmd" in names
         assert not any("/.env" in name or "/node_modules/" in name for name in names)
-        assert not any(
-            "/supabase/.temp/" in name or "/supabase/.branches/" in name for name in names
-        )
+        assert not any("/supabase/" in name for name in names)
         assert not any(name.endswith(".tsbuildinfo") for name in names)

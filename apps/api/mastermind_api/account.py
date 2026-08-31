@@ -1,202 +1,75 @@
+# Defers annotation evaluation so modern type hints remain safe at runtime.
 from __future__ import annotations
 
-import asyncio
-import uuid
-from collections.abc import Awaitable, Callable
-from datetime import timedelta
-from functools import lru_cache
+# Imports the required names from `.auth` for this module.
+from .auth import AuthPrincipal, revoke_user_sessions
 
-import httpx
-import structlog
-from fastapi import Depends
-from sqlalchemy import or_, select
-from sqlalchemy.exc import SQLAlchemyError
-from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker
+# Imports the required names from `.database` for this module.
+from .database import MongoSession
 
-from .auth import AuthPrincipal
-from .config import Settings, get_settings
-from .errors import APIError
-from .models import AccountDeletionRequest
-from .services import delete_account, ensure_aware, utcnow
+# Imports the required names from `.models` for this module.
+from .models import AccountDeletionRequest, AuthEmailToken, AuthUser
+
+# Imports the required names from `.services` for this module.
+from .services import delete_account, utcnow
 
 
-class IdentityProviderError(RuntimeError):
-    pass
-
-
-RETRY_LEASE_SECONDS = 30
-
-
-class SupabaseAdminClient:
-    def __init__(self, supabase_url: str, service_role_key: str) -> None:
-        self._url = supabase_url.rstrip("/")
-        self._service_role_key = service_role_key
-
-    async def delete_user(self, user_id: uuid.UUID) -> None:
-        if not self._url or not self._service_role_key:
-            raise IdentityProviderError("provider_not_configured")
-        try:
-            async with httpx.AsyncClient(timeout=httpx.Timeout(10.0)) as client:
-                response = await client.delete(
-                    f"{self._url}/auth/v1/admin/users/{user_id}",
-                    headers={
-                        "apikey": self._service_role_key,
-                        "Authorization": f"Bearer {self._service_role_key}",
-                    },
-                )
-        except httpx.HTTPError as exc:
-            raise IdentityProviderError("provider_unavailable") from exc
-        if response.status_code not in {200, 204, 404}:
-            raise IdentityProviderError("provider_rejected")
-
-    async def revoke_sessions(self, access_token: str) -> None:
-        if not self._url or not self._service_role_key:
-            raise IdentityProviderError("provider_not_configured")
-        try:
-            async with httpx.AsyncClient(timeout=httpx.Timeout(10.0)) as client:
-                response = await client.post(
-                    f"{self._url}/auth/v1/logout?scope=global",
-                    headers={
-                        "apikey": self._service_role_key,
-                        "Authorization": f"Bearer {access_token}",
-                    },
-                )
-        except httpx.HTTPError as exc:
-            raise IdentityProviderError("provider_unavailable") from exc
-        if response.status_code not in {200, 204, 401, 404}:
-            raise IdentityProviderError("provider_rejected")
-
-
-@lru_cache
-def _provider(supabase_url: str, service_role_key: str) -> SupabaseAdminClient:
-    return SupabaseAdminClient(supabase_url, service_role_key)
-
-
-def get_deletion_provider(settings: Settings = Depends(get_settings)) -> SupabaseAdminClient:
-    return _provider(settings.supabase_server_url, settings.supabase_service_role_key)
-
-
+# Defines this callable to implement the operation described by its name.
 async def process_account_deletion(
-    session: AsyncSession,
+    # Declares this typed field so the surrounding contract is explicit.
+    session: MongoSession,
+    # Declares this typed field so the surrounding contract is explicit.
     principal: AuthPrincipal,
-    provider: SupabaseAdminClient,
-    access_token: str,
+    # Closes the multiline declaration, call, or collection opened above.
 ) -> None:
-    deletion = await session.scalar(
-        select(AccountDeletionRequest).where(AccountDeletionRequest.user_id == principal.user_id)
+    # Stores `deletion` because later steps depend on this value.
+    deletion = await session.find_one(
+        # Supplies this required nested value.
+        AccountDeletionRequest,
+        {"user_id": principal.user_id},
+        # Closes the multiline declaration, call, or collection opened above.
     )
-    if deletion and deletion.status == "completed":
+    # Guards the nested operation so it runs only when this condition is satisfied.
+    if deletion is not None and deletion.status == "completed":
+        # Returns the computed result and ends the current callable.
         return
+    # Guards the nested operation so it runs only when this condition is satisfied.
     if deletion is None:
+        # Stores `deletion` because later steps depend on this value.
         deletion = AccountDeletionRequest(user_id=principal.user_id)
+        # Supplies this required nested value.
         session.add(deletion)
-        await session.flush()
-    await delete_account(session, principal)
+    # Stores `deletion.status` because later steps depend on this value.
     deletion.status = "pending"
-    deletion.provider_attempts += 1
+    # Stores `deletion.last_attempt_at` because later steps depend on this value.
     deletion.last_attempt_at = utcnow()
-    await session.commit()
-    try:
-        await provider.revoke_sessions(access_token)
-        await provider.delete_user(principal.user_id)
-    except IdentityProviderError as exc:
-        deletion.status = "provider_failed"
-        deletion.last_error_code = str(exc)
-        await session.commit()
-        raise APIError(
-            503,
-            "ACCOUNT_DELETION_PENDING",
-            "Account deletion is pending and will retry automatically.",
-        ) from exc
+    # Performs this required operation before the surrounding flow continues.
+    await delete_account(session, principal)
+    # Performs this required operation before the surrounding flow continues.
+    await revoke_user_sessions(session, principal.user_id)
+    # Performs this required operation before the surrounding flow continues.
+    await session.delete_many(AuthEmailToken, {"user_id": principal.user_id})
+    # Stores `user` because later steps depend on this value.
+    user = await session.get(AuthUser, principal.user_id)
+    # Guards the nested operation so it runs only when this condition is satisfied.
+    if user is not None:
+        # Stores `user.email` because later steps depend on this value.
+        user.email = None
+        # Stores `user.normalized_email` because later steps depend on this value.
+        user.normalized_email = None
+        # Stores `user.deleted_at` because later steps depend on this value.
+        user.deleted_at = utcnow()
+        # Stores `user.totp_secret_ciphertext` because later steps depend on this value.
+        user.totp_secret_ciphertext = None
+        # Stores `user.totp_secret_nonce` because later steps depend on this value.
+        user.totp_secret_nonce = None
+        # Stores `user.totp_secret_key_version` because later steps depend on this value.
+        user.totp_secret_key_version = None
+    # Stores `deletion.status` because later steps depend on this value.
     deletion.status = "completed"
+    # Stores `deletion.last_error_code` because later steps depend on this value.
     deletion.last_error_code = None
+    # Stores `deletion.completed_at` because later steps depend on this value.
     deletion.completed_at = utcnow()
+    # Performs this required operation before the surrounding flow continues.
     await session.commit()
-
-
-async def retry_pending_account_deletions(
-    sessions: async_sessionmaker[AsyncSession],
-    provider: SupabaseAdminClient,
-    *,
-    batch_size: int = 25,
-) -> int:
-    """Lease and retry a bounded batch without holding a transaction over HTTP."""
-    retry_before = utcnow() - timedelta(seconds=RETRY_LEASE_SECONDS)
-    async with sessions() as session:
-        user_ids = list(
-            await session.scalars(
-                select(AccountDeletionRequest.user_id)
-                .where(
-                    AccountDeletionRequest.status.in_(["pending", "provider_failed"]),
-                    or_(
-                        AccountDeletionRequest.last_attempt_at.is_(None),
-                        AccountDeletionRequest.last_attempt_at <= retry_before,
-                    ),
-                )
-                .order_by(AccountDeletionRequest.requested_at)
-                .limit(batch_size)
-            )
-        )
-    completed = 0
-    for user_id in user_ids:
-        async with sessions() as session:
-            deletion = await session.scalar(
-                select(AccountDeletionRequest)
-                .where(AccountDeletionRequest.user_id == user_id)
-                .with_for_update(skip_locked=True)
-            )
-            if (
-                deletion is None
-                or deletion.status not in {"pending", "provider_failed"}
-                or (
-                    deletion.last_attempt_at is not None
-                    and ensure_aware(deletion.last_attempt_at) > retry_before
-                )
-            ):
-                continue
-            deletion.provider_attempts += 1
-            deletion.last_attempt_at = utcnow()
-            await session.commit()
-        try:
-            await provider.delete_user(user_id)
-        except IdentityProviderError as exc:
-            async with sessions() as session:
-                deletion = await session.scalar(
-                    select(AccountDeletionRequest)
-                    .where(AccountDeletionRequest.user_id == user_id)
-                    .with_for_update()
-                )
-                if deletion is not None and deletion.status != "completed":
-                    deletion.status = "provider_failed"
-                    deletion.last_error_code = str(exc)
-                    await session.commit()
-        else:
-            async with sessions() as session:
-                deletion = await session.scalar(
-                    select(AccountDeletionRequest)
-                    .where(AccountDeletionRequest.user_id == user_id)
-                    .with_for_update()
-                )
-                if deletion is None:
-                    continue
-                deletion.status = "completed"
-                deletion.last_error_code = None
-                deletion.completed_at = utcnow()
-                await session.commit()
-            completed += 1
-    return completed
-
-
-async def account_deletion_retry_worker(
-    sessions: async_sessionmaker[AsyncSession],
-    provider: SupabaseAdminClient,
-    *,
-    interval_seconds: float = 30,
-    wait: Callable[[float], Awaitable[None]] = asyncio.sleep,
-) -> None:
-    while True:
-        try:
-            await retry_pending_account_deletions(sessions, provider)
-        except SQLAlchemyError:
-            structlog.get_logger().exception("account_deletion_retry_failed")
-        await wait(interval_seconds)

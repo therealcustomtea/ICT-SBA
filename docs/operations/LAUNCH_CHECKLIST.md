@@ -12,8 +12,8 @@ Every item requires an owner and link to evidence in the private launch record. 
 
 ## Identity, privacy, and administration
 
-- [ ] Supabase production project uses asymmetric signing keys, exact HTTPS redirects, short access tokens, refresh rotation, custom SMTP, CAPTCHA/Turnstile, and reviewed Auth limits.
-- [ ] Browser bundle contains only the publishable key; service/secret/admin credentials are absent from source, image, logs, and artifacts.
+- [ ] first-party authentication production project uses asymmetric signing keys, exact HTTPS redirects, short access tokens, refresh rotation, custom SMTP, CAPTCHA/Turnstile, and reviewed Auth limits.
+- [ ] Browser bundle contains no database, SMTP, Redis, auth-signing, or encryption credentials.
 - [ ] Guest creation, same-sub identity upgrade, registered login, expiry, sign-out, and revoked-session behavior pass.
 - [ ] Owner/member/BOLA tests pass for every game/challenge/room/profile route and WebSocket reconnect.
 - [ ] Admin is permanent-account-only, server-role-authorized, recent-auth/MFA protected, denied by default, and audited.
@@ -24,10 +24,10 @@ Every item requires an owner and link to evidence in the private launch record. 
 
 ## Game and data integrity
 
-- [ ] Empty-database migration and current upgrade/downgrade/upgrade validation pass on PostgreSQL.
+- [ ] Empty-database migration and current upgrade/downgrade/upgrade validation pass on MongoDB.
 - [ ] Runtime role cannot migrate/drop; migrator is absent from app containers; Data API/browser roles cannot access tables/functions.
-- [ ] Runtime and migrator connections both verify the PostgreSQL hostname against the fingerprint-verified provider CA mounted read-only into their containers.
-- [ ] Constraints and indexes cover attempt/idempotency uniqueness, one official run, membership, event sequence, leaderboard, and foreign keys.
+- [ ] Runtime MongoDB and Redis connections use TLS and provider-verified endpoints.
+- [ ] Unique and partial indexes cover identity, idempotency, one official run, membership, event sequence, and leaderboard invariants.
 - [ ] Concurrent attempts, final-attempt win, post-terminal rejection, same/different idempotency replay, daily rollover, and simultaneous duel tests pass.
 - [ ] Scores/times/config eligibility are server-authoritative and custom/guest/invalidated records cannot enter public boards.
 - [ ] Representative leaderboard queries use intended indexes and bounded deterministic pagination with the immutable row identifier as the final tie-breaker.
@@ -56,7 +56,7 @@ Every item requires an owner and link to evidence in the private launch record. 
 ## Reliability, performance, and observability
 
 - [ ] Production load profile meets documented p95 targets without N+1 queries, pool starvation, lock spikes, or unbounded labels.
-- [ ] Liveness/readiness accurately cover process, PostgreSQL, and Redis degraded rules; graceful shutdown/draining is exercised.
+- [ ] Liveness/readiness accurately cover process, MongoDB, and Redis degraded rules; graceful shutdown/draining is exercised.
 - [ ] Dashboards/alerts cover release, errors, latency, DB/Redis, auth failure, limits, decrypt failure, sockets, replay, deletion backlog, and jobs.
 - [ ] Logs are structured, access-restricted, retained 30 days, and pass token/secret/PII/guess canary scans.
 - [ ] Backup/PITR is enabled; quarterly isolated restore and encryption-key recovery meet RPO/RTO.

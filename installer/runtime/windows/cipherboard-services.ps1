@@ -8,7 +8,6 @@ $HomeDirectory = [System.IO.Path]::GetFullPath((Join-Path $PSScriptRoot '..'))
 $AppDirectory = Join-Path $HomeDirectory 'app'
 $ComposeFile = Join-Path $AppDirectory 'installer\docker-compose.yml'
 $EnvironmentFile = Join-Path $AppDirectory '.installer.env'
-$Supabase = Join-Path $HomeDirectory 'tools\supabase.exe'
 
 $dockerCandidates = @(
     (Join-Path $Env:ProgramFiles 'Docker\Docker\resources\bin\docker.exe'),
@@ -63,10 +62,7 @@ function Wait-ForUrl {
 
 function Start-Cipherboard {
     Assert-Docker
-    Write-Host 'Starting local authentication...'
-    & $Supabase --workdir $AppDirectory start | Out-Null
-    if ($LASTEXITCODE -ne 0) { throw 'Local authentication failed to start.' }
-    Write-Host 'Starting the database, API, and GUI...'
+    Write-Host 'Starting MongoDB, Redis, Mailpit, the API, and the GUI...'
     Invoke-Compose up -d
     Wait-ForUrl 'Cipherboard API' 'http://127.0.0.1:8000/health/ready'
     Wait-ForUrl 'Cipherboard GUI' 'http://127.0.0.1:3000/en'
@@ -82,8 +78,6 @@ switch ($Command) {
     'stop' {
         Assert-Docker
         Invoke-Compose down
-        & $Supabase --workdir $AppDirectory stop
-        if ($LASTEXITCODE -ne 0) { throw 'Local authentication failed to stop.' }
         Write-Host 'Cipherboard services stopped. Saved games and CLI scores were preserved.'
     }
     'restart' {
@@ -93,13 +87,10 @@ switch ($Command) {
     'status' {
         Assert-Docker
         Invoke-Compose ps
-        & $Supabase --workdir $AppDirectory status *> $null
-        if ($LASTEXITCODE -eq 0) { Write-Host 'Local authentication: running' }
-        else { Write-Host 'Local authentication: stopped' }
     }
     'logs' {
         Assert-Docker
-        Invoke-Compose logs --tail=150 -f api web postgres redis
+        Invoke-Compose logs --tail=150 -f api web mongo redis mailpit
     }
     'cli' {
         Assert-Docker

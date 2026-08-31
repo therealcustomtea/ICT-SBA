@@ -3,2956 +3,6018 @@
  * Do not make direct changes to the file.
  */
 
+// Generated declaration: exports the paths interface for consumers of the OpenAPI contract.
 export interface paths {
-  '/v1/games': {
+  // Generated declaration: opens the object for the /v1/auth/guest property.
+  '/v1/auth/guest': {
+    // Generated declaration: opens the object for the parameters property.
     parameters: {
+      // Generated declaration: defines the generated type of the query property.
       query?: never;
+      // Generated declaration: defines the generated type of the header property.
       header?: never;
+      // Generated declaration: defines the generated type of the path property.
       path?: never;
+      // Generated declaration: defines the generated type of the cookie property.
       cookie?: never;
+      // Generated declaration: closes the generated declaration opened above.
     };
+    // Generated declaration: defines the generated type of the get property.
     get?: never;
+    // Generated declaration: defines the generated type of the put property.
+    put?: never;
+    /** Create Guest Session */
+    // Generated declaration: defines the generated type of the post property.
+    post: operations['create_guest_session_v1_auth_guest_post'];
+    // Generated declaration: defines the generated type of the delete property.
+    delete?: never;
+    // Generated declaration: defines the generated type of the options property.
+    options?: never;
+    // Generated declaration: defines the generated type of the head property.
+    head?: never;
+    // Generated declaration: defines the generated type of the patch property.
+    patch?: never;
+    // Generated declaration: defines the generated type of the trace property.
+    trace?: never;
+    // Generated declaration: closes the generated declaration opened above.
+  };
+  // Generated declaration: opens the object for the /v1/auth/refresh property.
+  '/v1/auth/refresh': {
+    // Generated declaration: opens the object for the parameters property.
+    parameters: {
+      // Generated declaration: defines the generated type of the query property.
+      query?: never;
+      // Generated declaration: defines the generated type of the header property.
+      header?: never;
+      // Generated declaration: defines the generated type of the path property.
+      path?: never;
+      // Generated declaration: defines the generated type of the cookie property.
+      cookie?: never;
+      // Generated declaration: closes the generated declaration opened above.
+    };
+    // Generated declaration: defines the generated type of the get property.
+    get?: never;
+    // Generated declaration: defines the generated type of the put property.
+    put?: never;
+    /** Refresh Session */
+    // Generated declaration: defines the generated type of the post property.
+    post: operations['refresh_session_v1_auth_refresh_post'];
+    // Generated declaration: defines the generated type of the delete property.
+    delete?: never;
+    // Generated declaration: defines the generated type of the options property.
+    options?: never;
+    // Generated declaration: defines the generated type of the head property.
+    head?: never;
+    // Generated declaration: defines the generated type of the patch property.
+    patch?: never;
+    // Generated declaration: defines the generated type of the trace property.
+    trace?: never;
+    // Generated declaration: closes the generated declaration opened above.
+  };
+  // Generated declaration: opens the object for the /v1/auth/logout property.
+  '/v1/auth/logout': {
+    // Generated declaration: opens the object for the parameters property.
+    parameters: {
+      // Generated declaration: defines the generated type of the query property.
+      query?: never;
+      // Generated declaration: defines the generated type of the header property.
+      header?: never;
+      // Generated declaration: defines the generated type of the path property.
+      path?: never;
+      // Generated declaration: defines the generated type of the cookie property.
+      cookie?: never;
+      // Generated declaration: closes the generated declaration opened above.
+    };
+    // Generated declaration: defines the generated type of the get property.
+    get?: never;
+    // Generated declaration: defines the generated type of the put property.
+    put?: never;
+    /** Logout */
+    // Generated declaration: defines the generated type of the post property.
+    post: operations['logout_v1_auth_logout_post'];
+    // Generated declaration: defines the generated type of the delete property.
+    delete?: never;
+    // Generated declaration: defines the generated type of the options property.
+    options?: never;
+    // Generated declaration: defines the generated type of the head property.
+    head?: never;
+    // Generated declaration: defines the generated type of the patch property.
+    patch?: never;
+    // Generated declaration: defines the generated type of the trace property.
+    trace?: never;
+    // Generated declaration: closes the generated declaration opened above.
+  };
+  // Generated declaration: opens the object for the /v1/auth/email property.
+  '/v1/auth/email': {
+    // Generated declaration: opens the object for the parameters property.
+    parameters: {
+      // Generated declaration: defines the generated type of the query property.
+      query?: never;
+      // Generated declaration: defines the generated type of the header property.
+      header?: never;
+      // Generated declaration: defines the generated type of the path property.
+      path?: never;
+      // Generated declaration: defines the generated type of the cookie property.
+      cookie?: never;
+      // Generated declaration: closes the generated declaration opened above.
+    };
+    // Generated declaration: defines the generated type of the get property.
+    get?: never;
+    // Generated declaration: defines the generated type of the put property.
+    put?: never;
+    /** Send Email Link */
+    // Generated declaration: defines the generated type of the post property.
+    post: operations['send_email_link_v1_auth_email_post'];
+    // Generated declaration: defines the generated type of the delete property.
+    delete?: never;
+    // Generated declaration: defines the generated type of the options property.
+    options?: never;
+    // Generated declaration: defines the generated type of the head property.
+    head?: never;
+    // Generated declaration: defines the generated type of the patch property.
+    patch?: never;
+    // Generated declaration: defines the generated type of the trace property.
+    trace?: never;
+    // Generated declaration: closes the generated declaration opened above.
+  };
+  // Generated declaration: opens the object for the /v1/auth/email/verify property.
+  '/v1/auth/email/verify': {
+    // Generated declaration: opens the object for the parameters property.
+    parameters: {
+      // Generated declaration: defines the generated type of the query property.
+      query?: never;
+      // Generated declaration: defines the generated type of the header property.
+      header?: never;
+      // Generated declaration: defines the generated type of the path property.
+      path?: never;
+      // Generated declaration: defines the generated type of the cookie property.
+      cookie?: never;
+      // Generated declaration: closes the generated declaration opened above.
+    };
+    /** Verify Email Link */
+    // Generated declaration: defines the generated type of the get property.
+    get: operations['verify_email_link_v1_auth_email_verify_get'];
+    // Generated declaration: defines the generated type of the put property.
+    put?: never;
+    // Generated declaration: defines the generated type of the post property.
+    post?: never;
+    // Generated declaration: defines the generated type of the delete property.
+    delete?: never;
+    // Generated declaration: defines the generated type of the options property.
+    options?: never;
+    // Generated declaration: defines the generated type of the head property.
+    head?: never;
+    // Generated declaration: defines the generated type of the patch property.
+    patch?: never;
+    // Generated declaration: defines the generated type of the trace property.
+    trace?: never;
+    // Generated declaration: closes the generated declaration opened above.
+  };
+  // Generated declaration: opens the object for the /v1/auth/mfa/totp/setup property.
+  '/v1/auth/mfa/totp/setup': {
+    // Generated declaration: opens the object for the parameters property.
+    parameters: {
+      // Generated declaration: defines the generated type of the query property.
+      query?: never;
+      // Generated declaration: defines the generated type of the header property.
+      header?: never;
+      // Generated declaration: defines the generated type of the path property.
+      path?: never;
+      // Generated declaration: defines the generated type of the cookie property.
+      cookie?: never;
+      // Generated declaration: closes the generated declaration opened above.
+    };
+    // Generated declaration: defines the generated type of the get property.
+    get?: never;
+    // Generated declaration: defines the generated type of the put property.
+    put?: never;
+    /** Setup Totp */
+    // Generated declaration: defines the generated type of the post property.
+    post: operations['setup_totp_v1_auth_mfa_totp_setup_post'];
+    // Generated declaration: defines the generated type of the delete property.
+    delete?: never;
+    // Generated declaration: defines the generated type of the options property.
+    options?: never;
+    // Generated declaration: defines the generated type of the head property.
+    head?: never;
+    // Generated declaration: defines the generated type of the patch property.
+    patch?: never;
+    // Generated declaration: defines the generated type of the trace property.
+    trace?: never;
+    // Generated declaration: closes the generated declaration opened above.
+  };
+  // Generated declaration: opens the object for the /v1/auth/mfa/totp/verify property.
+  '/v1/auth/mfa/totp/verify': {
+    // Generated declaration: opens the object for the parameters property.
+    parameters: {
+      // Generated declaration: defines the generated type of the query property.
+      query?: never;
+      // Generated declaration: defines the generated type of the header property.
+      header?: never;
+      // Generated declaration: defines the generated type of the path property.
+      path?: never;
+      // Generated declaration: defines the generated type of the cookie property.
+      cookie?: never;
+      // Generated declaration: closes the generated declaration opened above.
+    };
+    // Generated declaration: defines the generated type of the get property.
+    get?: never;
+    // Generated declaration: defines the generated type of the put property.
+    put?: never;
+    /** Verify Totp */
+    // Generated declaration: defines the generated type of the post property.
+    post: operations['verify_totp_v1_auth_mfa_totp_verify_post'];
+    // Generated declaration: defines the generated type of the delete property.
+    delete?: never;
+    // Generated declaration: defines the generated type of the options property.
+    options?: never;
+    // Generated declaration: defines the generated type of the head property.
+    head?: never;
+    // Generated declaration: defines the generated type of the patch property.
+    patch?: never;
+    // Generated declaration: defines the generated type of the trace property.
+    trace?: never;
+    // Generated declaration: closes the generated declaration opened above.
+  };
+  // Generated declaration: opens the object for the /v1/games property.
+  '/v1/games': {
+    // Generated declaration: opens the object for the parameters property.
+    parameters: {
+      // Generated declaration: defines the generated type of the query property.
+      query?: never;
+      // Generated declaration: defines the generated type of the header property.
+      header?: never;
+      // Generated declaration: defines the generated type of the path property.
+      path?: never;
+      // Generated declaration: defines the generated type of the cookie property.
+      cookie?: never;
+      // Generated declaration: closes the generated declaration opened above.
+    };
+    // Generated declaration: defines the generated type of the get property.
+    get?: never;
+    // Generated declaration: defines the generated type of the put property.
     put?: never;
     /** Create Game Route */
+    // Generated declaration: defines the generated type of the post property.
     post: operations['create_game_route_v1_games_post'];
+    // Generated declaration: defines the generated type of the delete property.
     delete?: never;
+    // Generated declaration: defines the generated type of the options property.
     options?: never;
+    // Generated declaration: defines the generated type of the head property.
     head?: never;
+    // Generated declaration: defines the generated type of the patch property.
     patch?: never;
+    // Generated declaration: defines the generated type of the trace property.
     trace?: never;
+    // Generated declaration: closes the generated declaration opened above.
   };
+  // Generated declaration: opens the object for the /v1/games/{game_id} property.
   '/v1/games/{game_id}': {
+    // Generated declaration: opens the object for the parameters property.
     parameters: {
+      // Generated declaration: defines the generated type of the query property.
       query?: never;
+      // Generated declaration: defines the generated type of the header property.
       header?: never;
+      // Generated declaration: defines the generated type of the path property.
       path?: never;
+      // Generated declaration: defines the generated type of the cookie property.
       cookie?: never;
+      // Generated declaration: closes the generated declaration opened above.
     };
     /** Get Game Route */
+    // Generated declaration: defines the generated type of the get property.
     get: operations['get_game_route_v1_games__game_id__get'];
+    // Generated declaration: defines the generated type of the put property.
     put?: never;
+    // Generated declaration: defines the generated type of the post property.
     post?: never;
+    // Generated declaration: defines the generated type of the delete property.
     delete?: never;
+    // Generated declaration: defines the generated type of the options property.
     options?: never;
+    // Generated declaration: defines the generated type of the head property.
     head?: never;
+    // Generated declaration: defines the generated type of the patch property.
     patch?: never;
+    // Generated declaration: defines the generated type of the trace property.
     trace?: never;
+    // Generated declaration: closes the generated declaration opened above.
   };
+  // Generated declaration: opens the object for the /v1/games/{game_id}/attempts property.
   '/v1/games/{game_id}/attempts': {
+    // Generated declaration: opens the object for the parameters property.
     parameters: {
+      // Generated declaration: defines the generated type of the query property.
       query?: never;
+      // Generated declaration: defines the generated type of the header property.
       header?: never;
+      // Generated declaration: defines the generated type of the path property.
       path?: never;
+      // Generated declaration: defines the generated type of the cookie property.
       cookie?: never;
+      // Generated declaration: closes the generated declaration opened above.
     };
+    // Generated declaration: defines the generated type of the get property.
     get?: never;
+    // Generated declaration: defines the generated type of the put property.
     put?: never;
     /** Submit Attempt Route */
+    // Generated declaration: defines the generated type of the post property.
     post: operations['submit_attempt_route_v1_games__game_id__attempts_post'];
+    // Generated declaration: defines the generated type of the delete property.
     delete?: never;
+    // Generated declaration: defines the generated type of the options property.
     options?: never;
+    // Generated declaration: defines the generated type of the head property.
     head?: never;
+    // Generated declaration: defines the generated type of the patch property.
     patch?: never;
+    // Generated declaration: defines the generated type of the trace property.
     trace?: never;
+    // Generated declaration: closes the generated declaration opened above.
   };
+  // Generated declaration: opens the object for the /v1/games/{game_id}/abandon property.
   '/v1/games/{game_id}/abandon': {
+    // Generated declaration: opens the object for the parameters property.
     parameters: {
+      // Generated declaration: defines the generated type of the query property.
       query?: never;
+      // Generated declaration: defines the generated type of the header property.
       header?: never;
+      // Generated declaration: defines the generated type of the path property.
       path?: never;
+      // Generated declaration: defines the generated type of the cookie property.
       cookie?: never;
+      // Generated declaration: closes the generated declaration opened above.
     };
+    // Generated declaration: defines the generated type of the get property.
     get?: never;
+    // Generated declaration: defines the generated type of the put property.
     put?: never;
     /** Abandon Game Route */
+    // Generated declaration: defines the generated type of the post property.
     post: operations['abandon_game_route_v1_games__game_id__abandon_post'];
+    // Generated declaration: defines the generated type of the delete property.
     delete?: never;
+    // Generated declaration: defines the generated type of the options property.
     options?: never;
+    // Generated declaration: defines the generated type of the head property.
     head?: never;
+    // Generated declaration: defines the generated type of the patch property.
     patch?: never;
+    // Generated declaration: defines the generated type of the trace property.
     trace?: never;
+    // Generated declaration: closes the generated declaration opened above.
   };
+  // Generated declaration: opens the object for the /v1/daily property.
   '/v1/daily': {
+    // Generated declaration: opens the object for the parameters property.
     parameters: {
+      // Generated declaration: defines the generated type of the query property.
       query?: never;
+      // Generated declaration: defines the generated type of the header property.
       header?: never;
+      // Generated declaration: defines the generated type of the path property.
       path?: never;
+      // Generated declaration: defines the generated type of the cookie property.
       cookie?: never;
+      // Generated declaration: closes the generated declaration opened above.
     };
     /** Get Daily Route */
+    // Generated declaration: defines the generated type of the get property.
     get: operations['get_daily_route_v1_daily_get'];
+    // Generated declaration: defines the generated type of the put property.
     put?: never;
+    // Generated declaration: defines the generated type of the post property.
     post?: never;
+    // Generated declaration: defines the generated type of the delete property.
     delete?: never;
+    // Generated declaration: defines the generated type of the options property.
     options?: never;
+    // Generated declaration: defines the generated type of the head property.
     head?: never;
+    // Generated declaration: defines the generated type of the patch property.
     patch?: never;
+    // Generated declaration: defines the generated type of the trace property.
     trace?: never;
+    // Generated declaration: closes the generated declaration opened above.
   };
+  // Generated declaration: opens the object for the /v1/daily/start property.
   '/v1/daily/start': {
+    // Generated declaration: opens the object for the parameters property.
     parameters: {
+      // Generated declaration: defines the generated type of the query property.
       query?: never;
+      // Generated declaration: defines the generated type of the header property.
       header?: never;
+      // Generated declaration: defines the generated type of the path property.
       path?: never;
+      // Generated declaration: defines the generated type of the cookie property.
       cookie?: never;
+      // Generated declaration: closes the generated declaration opened above.
     };
+    // Generated declaration: defines the generated type of the get property.
     get?: never;
+    // Generated declaration: defines the generated type of the put property.
     put?: never;
     /** Start Daily Route */
+    // Generated declaration: defines the generated type of the post property.
     post: operations['start_daily_route_v1_daily_start_post'];
+    // Generated declaration: defines the generated type of the delete property.
     delete?: never;
+    // Generated declaration: defines the generated type of the options property.
     options?: never;
+    // Generated declaration: defines the generated type of the head property.
     head?: never;
+    // Generated declaration: defines the generated type of the patch property.
     patch?: never;
+    // Generated declaration: defines the generated type of the trace property.
     trace?: never;
+    // Generated declaration: closes the generated declaration opened above.
   };
+  // Generated declaration: opens the object for the /v1/daily/leaderboard property.
   '/v1/daily/leaderboard': {
+    // Generated declaration: opens the object for the parameters property.
     parameters: {
+      // Generated declaration: defines the generated type of the query property.
       query?: never;
+      // Generated declaration: defines the generated type of the header property.
       header?: never;
+      // Generated declaration: defines the generated type of the path property.
       path?: never;
+      // Generated declaration: defines the generated type of the cookie property.
       cookie?: never;
+      // Generated declaration: closes the generated declaration opened above.
     };
     /** Daily Leaderboard Route */
+    // Generated declaration: defines the generated type of the get property.
     get: operations['daily_leaderboard_route_v1_daily_leaderboard_get'];
+    // Generated declaration: defines the generated type of the put property.
     put?: never;
+    // Generated declaration: defines the generated type of the post property.
     post?: never;
+    // Generated declaration: defines the generated type of the delete property.
     delete?: never;
+    // Generated declaration: defines the generated type of the options property.
     options?: never;
+    // Generated declaration: defines the generated type of the head property.
     head?: never;
+    // Generated declaration: defines the generated type of the patch property.
     patch?: never;
+    // Generated declaration: defines the generated type of the trace property.
     trace?: never;
+    // Generated declaration: closes the generated declaration opened above.
   };
+  // Generated declaration: opens the object for the /v1/challenges/{challenge_id}/results property.
   '/v1/challenges/{challenge_id}/results': {
+    // Generated declaration: opens the object for the parameters property.
     parameters: {
+      // Generated declaration: defines the generated type of the query property.
       query?: never;
+      // Generated declaration: defines the generated type of the header property.
       header?: never;
+      // Generated declaration: defines the generated type of the path property.
       path?: never;
+      // Generated declaration: defines the generated type of the cookie property.
       cookie?: never;
+      // Generated declaration: closes the generated declaration opened above.
     };
     /** Challenge Results Route */
+    // Generated declaration: defines the generated type of the get property.
     get: operations['challenge_results_route_v1_challenges__challenge_id__results_get'];
+    // Generated declaration: defines the generated type of the put property.
     put?: never;
+    // Generated declaration: defines the generated type of the post property.
     post?: never;
+    // Generated declaration: defines the generated type of the delete property.
     delete?: never;
+    // Generated declaration: defines the generated type of the options property.
     options?: never;
+    // Generated declaration: defines the generated type of the head property.
     head?: never;
+    // Generated declaration: defines the generated type of the patch property.
     patch?: never;
+    // Generated declaration: defines the generated type of the trace property.
     trace?: never;
+    // Generated declaration: closes the generated declaration opened above.
   };
+  // Generated declaration: opens the object for the /v1/challenges property.
   '/v1/challenges': {
+    // Generated declaration: opens the object for the parameters property.
     parameters: {
+      // Generated declaration: defines the generated type of the query property.
       query?: never;
+      // Generated declaration: defines the generated type of the header property.
       header?: never;
+      // Generated declaration: defines the generated type of the path property.
       path?: never;
+      // Generated declaration: defines the generated type of the cookie property.
       cookie?: never;
+      // Generated declaration: closes the generated declaration opened above.
     };
+    // Generated declaration: defines the generated type of the get property.
     get?: never;
+    // Generated declaration: defines the generated type of the put property.
     put?: never;
     /** Create Challenge Route */
+    // Generated declaration: defines the generated type of the post property.
     post: operations['create_challenge_route_v1_challenges_post'];
+    // Generated declaration: defines the generated type of the delete property.
     delete?: never;
+    // Generated declaration: defines the generated type of the options property.
     options?: never;
+    // Generated declaration: defines the generated type of the head property.
     head?: never;
+    // Generated declaration: defines the generated type of the patch property.
     patch?: never;
+    // Generated declaration: defines the generated type of the trace property.
     trace?: never;
+    // Generated declaration: closes the generated declaration opened above.
   };
+  // Generated declaration: opens the object for the /v1/challenges/mine property.
   '/v1/challenges/mine': {
+    // Generated declaration: opens the object for the parameters property.
     parameters: {
+      // Generated declaration: defines the generated type of the query property.
       query?: never;
+      // Generated declaration: defines the generated type of the header property.
       header?: never;
+      // Generated declaration: defines the generated type of the path property.
       path?: never;
+      // Generated declaration: defines the generated type of the cookie property.
       cookie?: never;
+      // Generated declaration: closes the generated declaration opened above.
     };
     /** Owned Challenges Route */
+    // Generated declaration: defines the generated type of the get property.
     get: operations['owned_challenges_route_v1_challenges_mine_get'];
+    // Generated declaration: defines the generated type of the put property.
     put?: never;
+    // Generated declaration: defines the generated type of the post property.
     post?: never;
+    // Generated declaration: defines the generated type of the delete property.
     delete?: never;
+    // Generated declaration: defines the generated type of the options property.
     options?: never;
+    // Generated declaration: defines the generated type of the head property.
     head?: never;
+    // Generated declaration: defines the generated type of the patch property.
     patch?: never;
+    // Generated declaration: defines the generated type of the trace property.
     trace?: never;
+    // Generated declaration: closes the generated declaration opened above.
   };
+  // Generated declaration: opens the object for the /v1/challenges/{share_code} property.
   '/v1/challenges/{share_code}': {
+    // Generated declaration: opens the object for the parameters property.
     parameters: {
+      // Generated declaration: defines the generated type of the query property.
       query?: never;
+      // Generated declaration: defines the generated type of the header property.
       header?: never;
+      // Generated declaration: defines the generated type of the path property.
       path?: never;
+      // Generated declaration: defines the generated type of the cookie property.
       cookie?: never;
+      // Generated declaration: closes the generated declaration opened above.
     };
     /** Get Challenge Route */
+    // Generated declaration: defines the generated type of the get property.
     get: operations['get_challenge_route_v1_challenges__share_code__get'];
+    // Generated declaration: defines the generated type of the put property.
     put?: never;
+    // Generated declaration: defines the generated type of the post property.
     post?: never;
+    // Generated declaration: defines the generated type of the delete property.
     delete?: never;
+    // Generated declaration: defines the generated type of the options property.
     options?: never;
+    // Generated declaration: defines the generated type of the head property.
     head?: never;
+    // Generated declaration: defines the generated type of the patch property.
     patch?: never;
+    // Generated declaration: defines the generated type of the trace property.
     trace?: never;
+    // Generated declaration: closes the generated declaration opened above.
   };
+  // Generated declaration: opens the object for the /v1/challenges/{share_code}/start property.
   '/v1/challenges/{share_code}/start': {
+    // Generated declaration: opens the object for the parameters property.
     parameters: {
+      // Generated declaration: defines the generated type of the query property.
       query?: never;
+      // Generated declaration: defines the generated type of the header property.
       header?: never;
+      // Generated declaration: defines the generated type of the path property.
       path?: never;
+      // Generated declaration: defines the generated type of the cookie property.
       cookie?: never;
+      // Generated declaration: closes the generated declaration opened above.
     };
+    // Generated declaration: defines the generated type of the get property.
     get?: never;
+    // Generated declaration: defines the generated type of the put property.
     put?: never;
     /** Start Challenge Route */
+    // Generated declaration: defines the generated type of the post property.
     post: operations['start_challenge_route_v1_challenges__share_code__start_post'];
+    // Generated declaration: defines the generated type of the delete property.
     delete?: never;
+    // Generated declaration: defines the generated type of the options property.
     options?: never;
+    // Generated declaration: defines the generated type of the head property.
     head?: never;
+    // Generated declaration: defines the generated type of the patch property.
     patch?: never;
+    // Generated declaration: defines the generated type of the trace property.
     trace?: never;
+    // Generated declaration: closes the generated declaration opened above.
   };
+  // Generated declaration: opens the object for the /v1/challenges/{challenge_id} property.
   '/v1/challenges/{challenge_id}': {
+    // Generated declaration: opens the object for the parameters property.
     parameters: {
+      // Generated declaration: defines the generated type of the query property.
       query?: never;
+      // Generated declaration: defines the generated type of the header property.
       header?: never;
+      // Generated declaration: defines the generated type of the path property.
       path?: never;
+      // Generated declaration: defines the generated type of the cookie property.
       cookie?: never;
+      // Generated declaration: closes the generated declaration opened above.
     };
+    // Generated declaration: defines the generated type of the get property.
     get?: never;
+    // Generated declaration: defines the generated type of the put property.
     put?: never;
+    // Generated declaration: defines the generated type of the post property.
     post?: never;
     /** Revoke Challenge Route */
+    // Generated declaration: defines the generated type of the delete property.
     delete: operations['revoke_challenge_route_v1_challenges__challenge_id__delete'];
+    // Generated declaration: defines the generated type of the options property.
     options?: never;
+    // Generated declaration: defines the generated type of the head property.
     head?: never;
+    // Generated declaration: defines the generated type of the patch property.
     patch?: never;
+    // Generated declaration: defines the generated type of the trace property.
     trace?: never;
+    // Generated declaration: closes the generated declaration opened above.
   };
+  // Generated declaration: opens the object for the /v1/rooms/{room_id}/ws-ticket property.
   '/v1/rooms/{room_id}/ws-ticket': {
+    // Generated declaration: opens the object for the parameters property.
     parameters: {
+      // Generated declaration: defines the generated type of the query property.
       query?: never;
+      // Generated declaration: defines the generated type of the header property.
       header?: never;
+      // Generated declaration: defines the generated type of the path property.
       path?: never;
+      // Generated declaration: defines the generated type of the cookie property.
       cookie?: never;
+      // Generated declaration: closes the generated declaration opened above.
     };
+    // Generated declaration: defines the generated type of the get property.
     get?: never;
+    // Generated declaration: defines the generated type of the put property.
     put?: never;
     /** Create Websocket Ticket Route */
+    // Generated declaration: defines the generated type of the post property.
     post: operations['create_websocket_ticket_route_v1_rooms__room_id__ws_ticket_post'];
+    // Generated declaration: defines the generated type of the delete property.
     delete?: never;
+    // Generated declaration: defines the generated type of the options property.
     options?: never;
+    // Generated declaration: defines the generated type of the head property.
     head?: never;
+    // Generated declaration: defines the generated type of the patch property.
     patch?: never;
+    // Generated declaration: defines the generated type of the trace property.
     trace?: never;
+    // Generated declaration: closes the generated declaration opened above.
   };
+  // Generated declaration: opens the object for the /v1/rooms property.
   '/v1/rooms': {
+    // Generated declaration: opens the object for the parameters property.
     parameters: {
+      // Generated declaration: defines the generated type of the query property.
       query?: never;
+      // Generated declaration: defines the generated type of the header property.
       header?: never;
+      // Generated declaration: defines the generated type of the path property.
       path?: never;
+      // Generated declaration: defines the generated type of the cookie property.
       cookie?: never;
+      // Generated declaration: closes the generated declaration opened above.
     };
+    // Generated declaration: defines the generated type of the get property.
     get?: never;
+    // Generated declaration: defines the generated type of the put property.
     put?: never;
     /** Create Room Route */
+    // Generated declaration: defines the generated type of the post property.
     post: operations['create_room_route_v1_rooms_post'];
+    // Generated declaration: defines the generated type of the delete property.
     delete?: never;
+    // Generated declaration: defines the generated type of the options property.
     options?: never;
+    // Generated declaration: defines the generated type of the head property.
     head?: never;
+    // Generated declaration: defines the generated type of the patch property.
     patch?: never;
+    // Generated declaration: defines the generated type of the trace property.
     trace?: never;
+    // Generated declaration: closes the generated declaration opened above.
   };
+  // Generated declaration: opens the object for the /v1/rooms/{room_code}/join property.
   '/v1/rooms/{room_code}/join': {
+    // Generated declaration: opens the object for the parameters property.
     parameters: {
+      // Generated declaration: defines the generated type of the query property.
       query?: never;
+      // Generated declaration: defines the generated type of the header property.
       header?: never;
+      // Generated declaration: defines the generated type of the path property.
       path?: never;
+      // Generated declaration: defines the generated type of the cookie property.
       cookie?: never;
+      // Generated declaration: closes the generated declaration opened above.
     };
+    // Generated declaration: defines the generated type of the get property.
     get?: never;
+    // Generated declaration: defines the generated type of the put property.
     put?: never;
     /** Join Room Route */
+    // Generated declaration: defines the generated type of the post property.
     post: operations['join_room_route_v1_rooms__room_code__join_post'];
+    // Generated declaration: defines the generated type of the delete property.
     delete?: never;
+    // Generated declaration: defines the generated type of the options property.
     options?: never;
+    // Generated declaration: defines the generated type of the head property.
     head?: never;
+    // Generated declaration: defines the generated type of the patch property.
     patch?: never;
+    // Generated declaration: defines the generated type of the trace property.
     trace?: never;
+    // Generated declaration: closes the generated declaration opened above.
   };
+  // Generated declaration: opens the object for the /v1/rooms/{room_id}/ready property.
   '/v1/rooms/{room_id}/ready': {
+    // Generated declaration: opens the object for the parameters property.
     parameters: {
+      // Generated declaration: defines the generated type of the query property.
       query?: never;
+      // Generated declaration: defines the generated type of the header property.
       header?: never;
+      // Generated declaration: defines the generated type of the path property.
       path?: never;
+      // Generated declaration: defines the generated type of the cookie property.
       cookie?: never;
+      // Generated declaration: closes the generated declaration opened above.
     };
+    // Generated declaration: defines the generated type of the get property.
     get?: never;
+    // Generated declaration: defines the generated type of the put property.
     put?: never;
     /** Ready Room Route */
+    // Generated declaration: defines the generated type of the post property.
     post: operations['ready_room_route_v1_rooms__room_id__ready_post'];
+    // Generated declaration: defines the generated type of the delete property.
     delete?: never;
+    // Generated declaration: defines the generated type of the options property.
     options?: never;
+    // Generated declaration: defines the generated type of the head property.
     head?: never;
+    // Generated declaration: defines the generated type of the patch property.
     patch?: never;
+    // Generated declaration: defines the generated type of the trace property.
     trace?: never;
+    // Generated declaration: closes the generated declaration opened above.
   };
+  // Generated declaration: opens the object for the /v1/rooms/{room_id} property.
   '/v1/rooms/{room_id}': {
+    // Generated declaration: opens the object for the parameters property.
     parameters: {
+      // Generated declaration: defines the generated type of the query property.
       query?: never;
+      // Generated declaration: defines the generated type of the header property.
       header?: never;
+      // Generated declaration: defines the generated type of the path property.
       path?: never;
+      // Generated declaration: defines the generated type of the cookie property.
       cookie?: never;
+      // Generated declaration: closes the generated declaration opened above.
     };
     /** Get Room Route */
+    // Generated declaration: defines the generated type of the get property.
     get: operations['get_room_route_v1_rooms__room_id__get'];
+    // Generated declaration: defines the generated type of the put property.
     put?: never;
+    // Generated declaration: defines the generated type of the post property.
     post?: never;
+    // Generated declaration: defines the generated type of the delete property.
     delete?: never;
+    // Generated declaration: defines the generated type of the options property.
     options?: never;
+    // Generated declaration: defines the generated type of the head property.
     head?: never;
+    // Generated declaration: defines the generated type of the patch property.
     patch?: never;
+    // Generated declaration: defines the generated type of the trace property.
     trace?: never;
+    // Generated declaration: closes the generated declaration opened above.
   };
+  // Generated declaration: opens the object for the /v1/leaderboards property.
   '/v1/leaderboards': {
+    // Generated declaration: opens the object for the parameters property.
     parameters: {
+      // Generated declaration: defines the generated type of the query property.
       query?: never;
+      // Generated declaration: defines the generated type of the header property.
       header?: never;
+      // Generated declaration: defines the generated type of the path property.
       path?: never;
+      // Generated declaration: defines the generated type of the cookie property.
       cookie?: never;
+      // Generated declaration: closes the generated declaration opened above.
     };
     /** Get Leaderboard Route */
+    // Generated declaration: defines the generated type of the get property.
     get: operations['get_leaderboard_route_v1_leaderboards_get'];
+    // Generated declaration: defines the generated type of the put property.
     put?: never;
+    // Generated declaration: defines the generated type of the post property.
     post?: never;
+    // Generated declaration: defines the generated type of the delete property.
     delete?: never;
+    // Generated declaration: defines the generated type of the options property.
     options?: never;
+    // Generated declaration: defines the generated type of the head property.
     head?: never;
+    // Generated declaration: defines the generated type of the patch property.
     patch?: never;
+    // Generated declaration: defines the generated type of the trace property.
     trace?: never;
+    // Generated declaration: closes the generated declaration opened above.
   };
+  // Generated declaration: opens the object for the /v1/me/profile property.
   '/v1/me/profile': {
+    // Generated declaration: opens the object for the parameters property.
     parameters: {
+      // Generated declaration: defines the generated type of the query property.
       query?: never;
+      // Generated declaration: defines the generated type of the header property.
       header?: never;
+      // Generated declaration: defines the generated type of the path property.
       path?: never;
+      // Generated declaration: defines the generated type of the cookie property.
       cookie?: never;
+      // Generated declaration: closes the generated declaration opened above.
     };
     /** Get Profile Route */
+    // Generated declaration: defines the generated type of the get property.
     get: operations['get_profile_route_v1_me_profile_get'];
+    // Generated declaration: defines the generated type of the put property.
     put?: never;
+    // Generated declaration: defines the generated type of the post property.
     post?: never;
+    // Generated declaration: defines the generated type of the delete property.
     delete?: never;
+    // Generated declaration: defines the generated type of the options property.
     options?: never;
+    // Generated declaration: defines the generated type of the head property.
     head?: never;
     /** Update Profile Route */
+    // Generated declaration: defines the generated type of the patch property.
     patch: operations['update_profile_route_v1_me_profile_patch'];
+    // Generated declaration: defines the generated type of the trace property.
     trace?: never;
+    // Generated declaration: closes the generated declaration opened above.
   };
+  // Generated declaration: opens the object for the /v1/me/games property.
   '/v1/me/games': {
+    // Generated declaration: opens the object for the parameters property.
     parameters: {
+      // Generated declaration: defines the generated type of the query property.
       query?: never;
+      // Generated declaration: defines the generated type of the header property.
       header?: never;
+      // Generated declaration: defines the generated type of the path property.
       path?: never;
+      // Generated declaration: defines the generated type of the cookie property.
       cookie?: never;
+      // Generated declaration: closes the generated declaration opened above.
     };
     /** Get Games Route */
+    // Generated declaration: defines the generated type of the get property.
     get: operations['get_games_route_v1_me_games_get'];
+    // Generated declaration: defines the generated type of the put property.
     put?: never;
+    // Generated declaration: defines the generated type of the post property.
     post?: never;
+    // Generated declaration: defines the generated type of the delete property.
     delete?: never;
+    // Generated declaration: defines the generated type of the options property.
     options?: never;
+    // Generated declaration: defines the generated type of the head property.
     head?: never;
+    // Generated declaration: defines the generated type of the patch property.
     patch?: never;
+    // Generated declaration: defines the generated type of the trace property.
     trace?: never;
+    // Generated declaration: closes the generated declaration opened above.
   };
+  // Generated declaration: opens the object for the /v1/me/stats property.
   '/v1/me/stats': {
+    // Generated declaration: opens the object for the parameters property.
     parameters: {
+      // Generated declaration: defines the generated type of the query property.
       query?: never;
+      // Generated declaration: defines the generated type of the header property.
       header?: never;
+      // Generated declaration: defines the generated type of the path property.
       path?: never;
+      // Generated declaration: defines the generated type of the cookie property.
       cookie?: never;
+      // Generated declaration: closes the generated declaration opened above.
     };
     /** Get Stats Route */
+    // Generated declaration: defines the generated type of the get property.
     get: operations['get_stats_route_v1_me_stats_get'];
+    // Generated declaration: defines the generated type of the put property.
     put?: never;
+    // Generated declaration: defines the generated type of the post property.
     post?: never;
+    // Generated declaration: defines the generated type of the delete property.
     delete?: never;
+    // Generated declaration: defines the generated type of the options property.
     options?: never;
+    // Generated declaration: defines the generated type of the head property.
     head?: never;
+    // Generated declaration: defines the generated type of the patch property.
     patch?: never;
+    // Generated declaration: defines the generated type of the trace property.
     trace?: never;
+    // Generated declaration: closes the generated declaration opened above.
   };
+  // Generated declaration: opens the object for the /v1/me/export property.
   '/v1/me/export': {
+    // Generated declaration: opens the object for the parameters property.
     parameters: {
+      // Generated declaration: defines the generated type of the query property.
       query?: never;
+      // Generated declaration: defines the generated type of the header property.
       header?: never;
+      // Generated declaration: defines the generated type of the path property.
       path?: never;
+      // Generated declaration: defines the generated type of the cookie property.
       cookie?: never;
+      // Generated declaration: closes the generated declaration opened above.
     };
     /** Export Route */
+    // Generated declaration: defines the generated type of the get property.
     get: operations['export_route_v1_me_export_get'];
+    // Generated declaration: defines the generated type of the put property.
     put?: never;
+    // Generated declaration: defines the generated type of the post property.
     post?: never;
+    // Generated declaration: defines the generated type of the delete property.
     delete?: never;
+    // Generated declaration: defines the generated type of the options property.
     options?: never;
+    // Generated declaration: defines the generated type of the head property.
     head?: never;
+    // Generated declaration: defines the generated type of the patch property.
     patch?: never;
+    // Generated declaration: defines the generated type of the trace property.
     trace?: never;
+    // Generated declaration: closes the generated declaration opened above.
   };
+  // Generated declaration: opens the object for the /v1/me property.
   '/v1/me': {
+    // Generated declaration: opens the object for the parameters property.
     parameters: {
+      // Generated declaration: defines the generated type of the query property.
       query?: never;
+      // Generated declaration: defines the generated type of the header property.
       header?: never;
+      // Generated declaration: defines the generated type of the path property.
       path?: never;
+      // Generated declaration: defines the generated type of the cookie property.
       cookie?: never;
+      // Generated declaration: closes the generated declaration opened above.
     };
+    // Generated declaration: defines the generated type of the get property.
     get?: never;
+    // Generated declaration: defines the generated type of the put property.
     put?: never;
+    // Generated declaration: defines the generated type of the post property.
     post?: never;
     /** Delete Account Route */
+    // Generated declaration: defines the generated type of the delete property.
     delete: operations['delete_account_route_v1_me_delete'];
+    // Generated declaration: defines the generated type of the options property.
     options?: never;
+    // Generated declaration: defines the generated type of the head property.
     head?: never;
+    // Generated declaration: defines the generated type of the patch property.
     patch?: never;
+    // Generated declaration: defines the generated type of the trace property.
     trace?: never;
+    // Generated declaration: closes the generated declaration opened above.
   };
+  // Generated declaration: opens the object for the /v1/support property.
   '/v1/support': {
+    // Generated declaration: opens the object for the parameters property.
     parameters: {
+      // Generated declaration: defines the generated type of the query property.
       query?: never;
+      // Generated declaration: defines the generated type of the header property.
       header?: never;
+      // Generated declaration: defines the generated type of the path property.
       path?: never;
+      // Generated declaration: defines the generated type of the cookie property.
       cookie?: never;
+      // Generated declaration: closes the generated declaration opened above.
     };
+    // Generated declaration: defines the generated type of the get property.
     get?: never;
+    // Generated declaration: defines the generated type of the put property.
     put?: never;
     /** Create Support Request Route */
+    // Generated declaration: defines the generated type of the post property.
     post: operations['create_support_request_route_v1_support_post'];
+    // Generated declaration: defines the generated type of the delete property.
     delete?: never;
+    // Generated declaration: defines the generated type of the options property.
     options?: never;
+    // Generated declaration: defines the generated type of the head property.
     head?: never;
+    // Generated declaration: defines the generated type of the patch property.
     patch?: never;
+    // Generated declaration: defines the generated type of the trace property.
     trace?: never;
+    // Generated declaration: closes the generated declaration opened above.
   };
+  // Generated declaration: opens the object for the /v1/analytics/events property.
   '/v1/analytics/events': {
+    // Generated declaration: opens the object for the parameters property.
     parameters: {
+      // Generated declaration: defines the generated type of the query property.
       query?: never;
+      // Generated declaration: defines the generated type of the header property.
       header?: never;
+      // Generated declaration: defines the generated type of the path property.
       path?: never;
+      // Generated declaration: defines the generated type of the cookie property.
       cookie?: never;
+      // Generated declaration: closes the generated declaration opened above.
     };
+    // Generated declaration: defines the generated type of the get property.
     get?: never;
+    // Generated declaration: defines the generated type of the put property.
     put?: never;
     /** Collect Event Route */
+    // Generated declaration: defines the generated type of the post property.
     post: operations['collect_event_route_v1_analytics_events_post'];
+    // Generated declaration: defines the generated type of the delete property.
     delete?: never;
+    // Generated declaration: defines the generated type of the options property.
     options?: never;
+    // Generated declaration: defines the generated type of the head property.
     head?: never;
+    // Generated declaration: defines the generated type of the patch property.
     patch?: never;
+    // Generated declaration: defines the generated type of the trace property.
     trace?: never;
+    // Generated declaration: closes the generated declaration opened above.
   };
+  // Generated declaration: opens the object for the /v1/admin/games property.
   '/v1/admin/games': {
+    // Generated declaration: opens the object for the parameters property.
     parameters: {
+      // Generated declaration: defines the generated type of the query property.
       query?: never;
+      // Generated declaration: defines the generated type of the header property.
       header?: never;
+      // Generated declaration: defines the generated type of the path property.
       path?: never;
+      // Generated declaration: defines the generated type of the cookie property.
       cookie?: never;
+      // Generated declaration: closes the generated declaration opened above.
     };
     /** Games Route */
+    // Generated declaration: defines the generated type of the get property.
     get: operations['games_route_v1_admin_games_get'];
+    // Generated declaration: defines the generated type of the put property.
     put?: never;
+    // Generated declaration: defines the generated type of the post property.
     post?: never;
+    // Generated declaration: defines the generated type of the delete property.
     delete?: never;
+    // Generated declaration: defines the generated type of the options property.
     options?: never;
+    // Generated declaration: defines the generated type of the head property.
     head?: never;
+    // Generated declaration: defines the generated type of the patch property.
     patch?: never;
+    // Generated declaration: defines the generated type of the trace property.
     trace?: never;
+    // Generated declaration: closes the generated declaration opened above.
   };
+  // Generated declaration: opens the object for the /v1/admin/profiles property.
   '/v1/admin/profiles': {
+    // Generated declaration: opens the object for the parameters property.
     parameters: {
+      // Generated declaration: defines the generated type of the query property.
       query?: never;
+      // Generated declaration: defines the generated type of the header property.
       header?: never;
+      // Generated declaration: defines the generated type of the path property.
       path?: never;
+      // Generated declaration: defines the generated type of the cookie property.
       cookie?: never;
+      // Generated declaration: closes the generated declaration opened above.
     };
     /** Profiles Route */
+    // Generated declaration: defines the generated type of the get property.
     get: operations['profiles_route_v1_admin_profiles_get'];
+    // Generated declaration: defines the generated type of the put property.
     put?: never;
+    // Generated declaration: defines the generated type of the post property.
     post?: never;
+    // Generated declaration: defines the generated type of the delete property.
     delete?: never;
+    // Generated declaration: defines the generated type of the options property.
     options?: never;
+    // Generated declaration: defines the generated type of the head property.
     head?: never;
+    // Generated declaration: defines the generated type of the patch property.
     patch?: never;
+    // Generated declaration: defines the generated type of the trace property.
     trace?: never;
+    // Generated declaration: closes the generated declaration opened above.
   };
+  // Generated declaration: opens the object for the /v1/admin/rooms property.
   '/v1/admin/rooms': {
+    // Generated declaration: opens the object for the parameters property.
     parameters: {
+      // Generated declaration: defines the generated type of the query property.
       query?: never;
+      // Generated declaration: defines the generated type of the header property.
       header?: never;
+      // Generated declaration: defines the generated type of the path property.
       path?: never;
+      // Generated declaration: defines the generated type of the cookie property.
       cookie?: never;
+      // Generated declaration: closes the generated declaration opened above.
     };
     /** Rooms Route */
+    // Generated declaration: defines the generated type of the get property.
     get: operations['rooms_route_v1_admin_rooms_get'];
+    // Generated declaration: defines the generated type of the put property.
     put?: never;
+    // Generated declaration: defines the generated type of the post property.
     post?: never;
+    // Generated declaration: defines the generated type of the delete property.
     delete?: never;
+    // Generated declaration: defines the generated type of the options property.
     options?: never;
+    // Generated declaration: defines the generated type of the head property.
     head?: never;
+    // Generated declaration: defines the generated type of the patch property.
     patch?: never;
+    // Generated declaration: defines the generated type of the trace property.
     trace?: never;
+    // Generated declaration: closes the generated declaration opened above.
   };
+  // Generated declaration: opens the object for the /v1/admin/challenges property.
   '/v1/admin/challenges': {
+    // Generated declaration: opens the object for the parameters property.
     parameters: {
+      // Generated declaration: defines the generated type of the query property.
       query?: never;
+      // Generated declaration: defines the generated type of the header property.
       header?: never;
+      // Generated declaration: defines the generated type of the path property.
       path?: never;
+      // Generated declaration: defines the generated type of the cookie property.
       cookie?: never;
+      // Generated declaration: closes the generated declaration opened above.
     };
     /** Challenges Route */
+    // Generated declaration: defines the generated type of the get property.
     get: operations['challenges_route_v1_admin_challenges_get'];
+    // Generated declaration: defines the generated type of the put property.
     put?: never;
+    // Generated declaration: defines the generated type of the post property.
     post?: never;
+    // Generated declaration: defines the generated type of the delete property.
     delete?: never;
+    // Generated declaration: defines the generated type of the options property.
     options?: never;
+    // Generated declaration: defines the generated type of the head property.
     head?: never;
+    // Generated declaration: defines the generated type of the patch property.
     patch?: never;
+    // Generated declaration: defines the generated type of the trace property.
     trace?: never;
+    // Generated declaration: closes the generated declaration opened above.
   };
+  // Generated declaration: opens the object for the /v1/admin/leaderboard-review property.
   '/v1/admin/leaderboard-review': {
+    // Generated declaration: opens the object for the parameters property.
     parameters: {
+      // Generated declaration: defines the generated type of the query property.
       query?: never;
+      // Generated declaration: defines the generated type of the header property.
       header?: never;
+      // Generated declaration: defines the generated type of the path property.
       path?: never;
+      // Generated declaration: defines the generated type of the cookie property.
       cookie?: never;
+      // Generated declaration: closes the generated declaration opened above.
     };
     /** Leaderboard Review Route */
+    // Generated declaration: defines the generated type of the get property.
     get: operations['leaderboard_review_route_v1_admin_leaderboard_review_get'];
+    // Generated declaration: defines the generated type of the put property.
     put?: never;
+    // Generated declaration: defines the generated type of the post property.
     post?: never;
+    // Generated declaration: defines the generated type of the delete property.
     delete?: never;
+    // Generated declaration: defines the generated type of the options property.
     options?: never;
+    // Generated declaration: defines the generated type of the head property.
     head?: never;
+    // Generated declaration: defines the generated type of the patch property.
     patch?: never;
+    // Generated declaration: defines the generated type of the trace property.
     trace?: never;
+    // Generated declaration: closes the generated declaration opened above.
   };
+  // Generated declaration: opens the object for the /v1/admin/summary property.
   '/v1/admin/summary': {
+    // Generated declaration: opens the object for the parameters property.
     parameters: {
+      // Generated declaration: defines the generated type of the query property.
       query?: never;
+      // Generated declaration: defines the generated type of the header property.
       header?: never;
+      // Generated declaration: defines the generated type of the path property.
       path?: never;
+      // Generated declaration: defines the generated type of the cookie property.
       cookie?: never;
+      // Generated declaration: closes the generated declaration opened above.
     };
     /** Summary Route */
+    // Generated declaration: defines the generated type of the get property.
     get: operations['summary_route_v1_admin_summary_get'];
+    // Generated declaration: defines the generated type of the put property.
     put?: never;
+    // Generated declaration: defines the generated type of the post property.
     post?: never;
+    // Generated declaration: defines the generated type of the delete property.
     delete?: never;
+    // Generated declaration: defines the generated type of the options property.
     options?: never;
+    // Generated declaration: defines the generated type of the head property.
     head?: never;
+    // Generated declaration: defines the generated type of the patch property.
     patch?: never;
+    // Generated declaration: defines the generated type of the trace property.
     trace?: never;
+    // Generated declaration: closes the generated declaration opened above.
   };
+  // Generated declaration: opens the object for the /v1/admin/flags property.
   '/v1/admin/flags': {
+    // Generated declaration: opens the object for the parameters property.
     parameters: {
+      // Generated declaration: defines the generated type of the query property.
       query?: never;
+      // Generated declaration: defines the generated type of the header property.
       header?: never;
+      // Generated declaration: defines the generated type of the path property.
       path?: never;
+      // Generated declaration: defines the generated type of the cookie property.
       cookie?: never;
+      // Generated declaration: closes the generated declaration opened above.
     };
     /** Flags Route */
+    // Generated declaration: defines the generated type of the get property.
     get: operations['flags_route_v1_admin_flags_get'];
+    // Generated declaration: defines the generated type of the put property.
     put?: never;
+    // Generated declaration: defines the generated type of the post property.
     post?: never;
+    // Generated declaration: defines the generated type of the delete property.
     delete?: never;
+    // Generated declaration: defines the generated type of the options property.
     options?: never;
+    // Generated declaration: defines the generated type of the head property.
     head?: never;
+    // Generated declaration: defines the generated type of the patch property.
     patch?: never;
+    // Generated declaration: defines the generated type of the trace property.
     trace?: never;
+    // Generated declaration: closes the generated declaration opened above.
   };
+  // Generated declaration: opens the object for the /v1/admin/flags/{key} property.
   '/v1/admin/flags/{key}': {
+    // Generated declaration: opens the object for the parameters property.
     parameters: {
+      // Generated declaration: defines the generated type of the query property.
       query?: never;
+      // Generated declaration: defines the generated type of the header property.
       header?: never;
+      // Generated declaration: defines the generated type of the path property.
       path?: never;
+      // Generated declaration: defines the generated type of the cookie property.
       cookie?: never;
+      // Generated declaration: closes the generated declaration opened above.
     };
+    // Generated declaration: defines the generated type of the get property.
     get?: never;
+    // Generated declaration: defines the generated type of the put property.
     put?: never;
+    // Generated declaration: defines the generated type of the post property.
     post?: never;
+    // Generated declaration: defines the generated type of the delete property.
     delete?: never;
+    // Generated declaration: defines the generated type of the options property.
     options?: never;
+    // Generated declaration: defines the generated type of the head property.
     head?: never;
     /** Update Flag Route */
+    // Generated declaration: defines the generated type of the patch property.
     patch: operations['update_flag_route_v1_admin_flags__key__patch'];
+    // Generated declaration: defines the generated type of the trace property.
     trace?: never;
+    // Generated declaration: closes the generated declaration opened above.
   };
+  // Generated declaration: opens the object for the /v1/admin/leaderboard/{entry_id}/invalidate property.
   '/v1/admin/leaderboard/{entry_id}/invalidate': {
+    // Generated declaration: opens the object for the parameters property.
     parameters: {
+      // Generated declaration: defines the generated type of the query property.
       query?: never;
+      // Generated declaration: defines the generated type of the header property.
       header?: never;
+      // Generated declaration: defines the generated type of the path property.
       path?: never;
+      // Generated declaration: defines the generated type of the cookie property.
       cookie?: never;
+      // Generated declaration: closes the generated declaration opened above.
     };
+    // Generated declaration: defines the generated type of the get property.
     get?: never;
+    // Generated declaration: defines the generated type of the put property.
     put?: never;
     /** Invalidate Leaderboard Route */
+    // Generated declaration: defines the generated type of the post property.
     post: operations['invalidate_leaderboard_route_v1_admin_leaderboard__entry_id__invalidate_post'];
+    // Generated declaration: defines the generated type of the delete property.
     delete?: never;
+    // Generated declaration: defines the generated type of the options property.
     options?: never;
+    // Generated declaration: defines the generated type of the head property.
     head?: never;
+    // Generated declaration: defines the generated type of the patch property.
     patch?: never;
+    // Generated declaration: defines the generated type of the trace property.
     trace?: never;
+    // Generated declaration: closes the generated declaration opened above.
   };
+  // Generated declaration: opens the object for the /v1/admin/leaderboard/{entry_id}/restore property.
   '/v1/admin/leaderboard/{entry_id}/restore': {
+    // Generated declaration: opens the object for the parameters property.
     parameters: {
+      // Generated declaration: defines the generated type of the query property.
       query?: never;
+      // Generated declaration: defines the generated type of the header property.
       header?: never;
+      // Generated declaration: defines the generated type of the path property.
       path?: never;
+      // Generated declaration: defines the generated type of the cookie property.
       cookie?: never;
+      // Generated declaration: closes the generated declaration opened above.
     };
+    // Generated declaration: defines the generated type of the get property.
     get?: never;
+    // Generated declaration: defines the generated type of the put property.
     put?: never;
     /** Restore Leaderboard Route */
+    // Generated declaration: defines the generated type of the post property.
     post: operations['restore_leaderboard_route_v1_admin_leaderboard__entry_id__restore_post'];
+    // Generated declaration: defines the generated type of the delete property.
     delete?: never;
+    // Generated declaration: defines the generated type of the options property.
     options?: never;
+    // Generated declaration: defines the generated type of the head property.
     head?: never;
+    // Generated declaration: defines the generated type of the patch property.
     patch?: never;
+    // Generated declaration: defines the generated type of the trace property.
     trace?: never;
+    // Generated declaration: closes the generated declaration opened above.
   };
+  // Generated declaration: opens the object for the /v1/admin/profiles/{user_id}/moderate property.
   '/v1/admin/profiles/{user_id}/moderate': {
+    // Generated declaration: opens the object for the parameters property.
     parameters: {
+      // Generated declaration: defines the generated type of the query property.
       query?: never;
+      // Generated declaration: defines the generated type of the header property.
       header?: never;
+      // Generated declaration: defines the generated type of the path property.
       path?: never;
+      // Generated declaration: defines the generated type of the cookie property.
       cookie?: never;
+      // Generated declaration: closes the generated declaration opened above.
     };
+    // Generated declaration: defines the generated type of the get property.
     get?: never;
+    // Generated declaration: defines the generated type of the put property.
     put?: never;
     /** Moderate Profile Route */
+    // Generated declaration: defines the generated type of the post property.
     post: operations['moderate_profile_route_v1_admin_profiles__user_id__moderate_post'];
+    // Generated declaration: defines the generated type of the delete property.
     delete?: never;
+    // Generated declaration: defines the generated type of the options property.
     options?: never;
+    // Generated declaration: defines the generated type of the head property.
     head?: never;
+    // Generated declaration: defines the generated type of the patch property.
     patch?: never;
+    // Generated declaration: defines the generated type of the trace property.
     trace?: never;
+    // Generated declaration: closes the generated declaration opened above.
   };
+  // Generated declaration: opens the object for the /v1/admin/challenges/{challenge_id}/revoke property.
   '/v1/admin/challenges/{challenge_id}/revoke': {
+    // Generated declaration: opens the object for the parameters property.
     parameters: {
+      // Generated declaration: defines the generated type of the query property.
       query?: never;
+      // Generated declaration: defines the generated type of the header property.
       header?: never;
+      // Generated declaration: defines the generated type of the path property.
       path?: never;
+      // Generated declaration: defines the generated type of the cookie property.
       cookie?: never;
+      // Generated declaration: closes the generated declaration opened above.
     };
+    // Generated declaration: defines the generated type of the get property.
     get?: never;
+    // Generated declaration: defines the generated type of the put property.
     put?: never;
     /** Admin Revoke Challenge Route */
+    // Generated declaration: defines the generated type of the post property.
     post: operations['admin_revoke_challenge_route_v1_admin_challenges__challenge_id__revoke_post'];
+    // Generated declaration: defines the generated type of the delete property.
     delete?: never;
+    // Generated declaration: defines the generated type of the options property.
     options?: never;
+    // Generated declaration: defines the generated type of the head property.
     head?: never;
+    // Generated declaration: defines the generated type of the patch property.
     patch?: never;
+    // Generated declaration: defines the generated type of the trace property.
     trace?: never;
+    // Generated declaration: closes the generated declaration opened above.
   };
+  // Generated declaration: opens the object for the /v1/admin/rooms/{room_id}/terminate property.
   '/v1/admin/rooms/{room_id}/terminate': {
+    // Generated declaration: opens the object for the parameters property.
     parameters: {
+      // Generated declaration: defines the generated type of the query property.
       query?: never;
+      // Generated declaration: defines the generated type of the header property.
       header?: never;
+      // Generated declaration: defines the generated type of the path property.
       path?: never;
+      // Generated declaration: defines the generated type of the cookie property.
       cookie?: never;
+      // Generated declaration: closes the generated declaration opened above.
     };
+    // Generated declaration: defines the generated type of the get property.
     get?: never;
+    // Generated declaration: defines the generated type of the put property.
     put?: never;
     /** Terminate Room Route */
+    // Generated declaration: defines the generated type of the post property.
     post: operations['terminate_room_route_v1_admin_rooms__room_id__terminate_post'];
+    // Generated declaration: defines the generated type of the delete property.
     delete?: never;
+    // Generated declaration: defines the generated type of the options property.
     options?: never;
+    // Generated declaration: defines the generated type of the head property.
     head?: never;
+    // Generated declaration: defines the generated type of the patch property.
     patch?: never;
+    // Generated declaration: defines the generated type of the trace property.
     trace?: never;
+    // Generated declaration: closes the generated declaration opened above.
   };
+  // Generated declaration: opens the object for the /v1/admin/audit property.
   '/v1/admin/audit': {
+    // Generated declaration: opens the object for the parameters property.
     parameters: {
+      // Generated declaration: defines the generated type of the query property.
       query?: never;
+      // Generated declaration: defines the generated type of the header property.
       header?: never;
+      // Generated declaration: defines the generated type of the path property.
       path?: never;
+      // Generated declaration: defines the generated type of the cookie property.
       cookie?: never;
+      // Generated declaration: closes the generated declaration opened above.
     };
     /** Audit Route */
+    // Generated declaration: defines the generated type of the get property.
     get: operations['audit_route_v1_admin_audit_get'];
+    // Generated declaration: defines the generated type of the put property.
     put?: never;
+    // Generated declaration: defines the generated type of the post property.
     post?: never;
+    // Generated declaration: defines the generated type of the delete property.
     delete?: never;
+    // Generated declaration: defines the generated type of the options property.
     options?: never;
+    // Generated declaration: defines the generated type of the head property.
     head?: never;
+    // Generated declaration: defines the generated type of the patch property.
     patch?: never;
+    // Generated declaration: defines the generated type of the trace property.
     trace?: never;
+    // Generated declaration: closes the generated declaration opened above.
   };
+  // Generated declaration: closes the generated declaration opened above.
 }
+// Generated declaration: exports the webhooks type alias for consumers of the OpenAPI contract.
 export type webhooks = Record<string, never>;
+// Generated declaration: exports the components interface for consumers of the OpenAPI contract.
 export interface components {
+  // Generated declaration: opens the object for the schemas property.
   schemas: {
+    /** AccessTokenResponse */
+    // Generated declaration: opens the object for the AccessTokenResponse property.
+    AccessTokenResponse: {
+      /** Accesstoken */
+      // Generated declaration: defines the generated type of the accessToken property.
+      accessToken: string;
+      /** Expiresin */
+      // Generated declaration: defines the generated type of the expiresIn property.
+      expiresIn: number;
+      // Generated declaration: closes the generated declaration opened above.
+    };
     /** AchievementProgressSchema */
+    // Generated declaration: opens the object for the AchievementProgressSchema property.
     AchievementProgressSchema: {
       /** Current */
+      // Generated declaration: defines the generated type of the current property.
       current: number;
       /** Target */
+      // Generated declaration: defines the generated type of the target property.
       target: number;
+      // Generated declaration: closes the generated declaration opened above.
     };
     /** AdminActionRequest */
+    // Generated declaration: opens the object for the AdminActionRequest property.
     AdminActionRequest: {
       /** Reason */
+      // Generated declaration: defines the generated type of the reason property.
       reason: string;
       /** Enabled */
+      // Generated declaration: defines the generated type of the enabled property.
       enabled?: boolean | null;
       /** Displayname */
+      // Generated declaration: defines the generated type of the displayName property.
       displayName?: string | null;
+      // Generated declaration: closes the generated declaration opened above.
     };
     /** AdminChallengeItem */
+    // Generated declaration: opens the object for the AdminChallengeItem property.
     AdminChallengeItem: {
       /**
        * Id
        * Format: uuid
        */
+      // Generated declaration: defines the generated type of the id property.
       id: string;
       /**
        * Creatorid
        * Format: uuid
        */
+      // Generated declaration: defines the generated type of the creatorId property.
       creatorId: string;
       /** Title */
+      // Generated declaration: defines the generated type of the title property.
       title: string | null;
       /** Completedcount */
+      // Generated declaration: defines the generated type of the completedCount property.
       completedCount: number;
       /** Revokedat */
+      // Generated declaration: defines the generated type of the revokedAt property.
       revokedAt: string | null;
       /**
        * Expiresat
        * Format: date-time
        */
+      // Generated declaration: defines the generated type of the expiresAt property.
       expiresAt: string;
       /**
        * Createdat
        * Format: date-time
        */
+      // Generated declaration: defines the generated type of the createdAt property.
       createdAt: string;
+      // Generated declaration: closes the generated declaration opened above.
     };
     /** AdminGameItem */
+    // Generated declaration: opens the object for the AdminGameItem property.
     AdminGameItem: {
       /** Id */
+      // Generated declaration: defines the generated type of the id property.
       id: string;
       /**
        * Ownerid
        * Format: uuid
        */
+      // Generated declaration: defines the generated type of the ownerId property.
       ownerId: string;
       /** Mode */
+      // Generated declaration: defines the generated type of the mode property.
       mode: string;
       /** Status */
+      // Generated declaration: defines the generated type of the status property.
       status: string;
       /** Difficulty */
+      // Generated declaration: defines the generated type of the difficulty property.
       difficulty: string | null;
       /** Attemptsused */
+      // Generated declaration: defines the generated type of the attemptsUsed property.
       attemptsUsed: number;
       /** Maxattempts */
+      // Generated declaration: defines the generated type of the maxAttempts property.
       maxAttempts: number;
       /** Score */
+      // Generated declaration: defines the generated type of the score property.
       score: number | null;
       /** Rankedeligibility */
+      // Generated declaration: defines the generated type of the rankedEligibility property.
       rankedEligibility: string;
       /**
        * Startedat
        * Format: date-time
        */
+      // Generated declaration: defines the generated type of the startedAt property.
       startedAt: string;
       /** Completedat */
+      // Generated declaration: defines the generated type of the completedAt property.
       completedAt: string | null;
+      // Generated declaration: closes the generated declaration opened above.
     };
     /** AdminLeaderboardItem */
+    // Generated declaration: opens the object for the AdminLeaderboardItem property.
     AdminLeaderboardItem: {
       /**
        * Id
        * Format: uuid
        */
+      // Generated declaration: defines the generated type of the id property.
       id: string;
       /**
        * Gameid
        * Format: uuid
        */
+      // Generated declaration: defines the generated type of the gameId property.
       gameId: string;
       /**
        * Userid
        * Format: uuid
        */
+      // Generated declaration: defines the generated type of the userId property.
       userId: string;
       /** Category */
+      // Generated declaration: defines the generated type of the category property.
       category: string;
       /** Score */
+      // Generated declaration: defines the generated type of the score property.
       score: number;
       /** Attemptsused */
+      // Generated declaration: defines the generated type of the attemptsUsed property.
       attemptsUsed: number;
       /** Elapsedseconds */
+      // Generated declaration: defines the generated type of the elapsedSeconds property.
       elapsedSeconds: number;
       /** Reviewstatus */
+      // Generated declaration: defines the generated type of the reviewStatus property.
       reviewStatus: string;
       /** Invalidatedat */
+      // Generated declaration: defines the generated type of the invalidatedAt property.
       invalidatedAt: string | null;
       /**
        * Completedat
        * Format: date-time
        */
+      // Generated declaration: defines the generated type of the completedAt property.
       completedAt: string;
+      // Generated declaration: closes the generated declaration opened above.
     };
     /** AdminPage[AdminChallengeItem] */
+    // Generated declaration: opens the object for the AdminPage_AdminChallengeItem_ property.
     AdminPage_AdminChallengeItem_: {
       /** Items */
+      // Generated declaration: defines the generated type of the items property.
       items: components['schemas']['AdminChallengeItem'][];
       /** Page */
+      // Generated declaration: defines the generated type of the page property.
       page: number;
       /** Pagesize */
+      // Generated declaration: defines the generated type of the pageSize property.
       pageSize: number;
       /** Total */
+      // Generated declaration: defines the generated type of the total property.
       total: number;
+      // Generated declaration: closes the generated declaration opened above.
     };
     /** AdminPage[AdminGameItem] */
+    // Generated declaration: opens the object for the AdminPage_AdminGameItem_ property.
     AdminPage_AdminGameItem_: {
       /** Items */
+      // Generated declaration: defines the generated type of the items property.
       items: components['schemas']['AdminGameItem'][];
       /** Page */
+      // Generated declaration: defines the generated type of the page property.
       page: number;
       /** Pagesize */
+      // Generated declaration: defines the generated type of the pageSize property.
       pageSize: number;
       /** Total */
+      // Generated declaration: defines the generated type of the total property.
       total: number;
+      // Generated declaration: closes the generated declaration opened above.
     };
     /** AdminPage[AdminLeaderboardItem] */
+    // Generated declaration: opens the object for the AdminPage_AdminLeaderboardItem_ property.
     AdminPage_AdminLeaderboardItem_: {
       /** Items */
+      // Generated declaration: defines the generated type of the items property.
       items: components['schemas']['AdminLeaderboardItem'][];
       /** Page */
+      // Generated declaration: defines the generated type of the page property.
       page: number;
       /** Pagesize */
+      // Generated declaration: defines the generated type of the pageSize property.
       pageSize: number;
       /** Total */
+      // Generated declaration: defines the generated type of the total property.
       total: number;
+      // Generated declaration: closes the generated declaration opened above.
     };
     /** AdminPage[AdminProfileItem] */
+    // Generated declaration: opens the object for the AdminPage_AdminProfileItem_ property.
     AdminPage_AdminProfileItem_: {
       /** Items */
+      // Generated declaration: defines the generated type of the items property.
       items: components['schemas']['AdminProfileItem'][];
       /** Page */
+      // Generated declaration: defines the generated type of the page property.
       page: number;
       /** Pagesize */
+      // Generated declaration: defines the generated type of the pageSize property.
       pageSize: number;
       /** Total */
+      // Generated declaration: defines the generated type of the total property.
       total: number;
+      // Generated declaration: closes the generated declaration opened above.
     };
     /** AdminPage[AdminRoomItem] */
+    // Generated declaration: opens the object for the AdminPage_AdminRoomItem_ property.
     AdminPage_AdminRoomItem_: {
       /** Items */
+      // Generated declaration: defines the generated type of the items property.
       items: components['schemas']['AdminRoomItem'][];
       /** Page */
+      // Generated declaration: defines the generated type of the page property.
       page: number;
       /** Pagesize */
+      // Generated declaration: defines the generated type of the pageSize property.
       pageSize: number;
       /** Total */
+      // Generated declaration: defines the generated type of the total property.
       total: number;
+      // Generated declaration: closes the generated declaration opened above.
     };
     /** AdminProfileItem */
+    // Generated declaration: opens the object for the AdminProfileItem property.
     AdminProfileItem: {
       /**
        * Id
        * Format: uuid
        */
+      // Generated declaration: defines the generated type of the id property.
       id: string;
       /** Displayname */
+      // Generated declaration: defines the generated type of the displayName property.
       displayName: string | null;
       /** Isanonymous */
+      // Generated declaration: defines the generated type of the isAnonymous property.
       isAnonymous: boolean;
       /** Publicleaderboards */
+      // Generated declaration: defines the generated type of the publicLeaderboards property.
       publicLeaderboards: boolean;
       /** Isbanned */
+      // Generated declaration: defines the generated type of the isBanned property.
       isBanned: boolean;
       /** Deletedat */
+      // Generated declaration: defines the generated type of the deletedAt property.
       deletedAt: string | null;
       /**
        * Createdat
        * Format: date-time
        */
+      // Generated declaration: defines the generated type of the createdAt property.
       createdAt: string;
+      // Generated declaration: closes the generated declaration opened above.
     };
     /** AdminRoomItem */
+    // Generated declaration: opens the object for the AdminRoomItem property.
     AdminRoomItem: {
       /**
        * Id
        * Format: uuid
        */
+      // Generated declaration: defines the generated type of the id property.
       id: string;
       /** Status */
+      // Generated declaration: defines the generated type of the status property.
       status: string;
       /** Membercount */
+      // Generated declaration: defines the generated type of the memberCount property.
       memberCount: number;
       /** Winnerid */
+      // Generated declaration: defines the generated type of the winnerId property.
       winnerId: string | null;
       /** Istie */
+      // Generated declaration: defines the generated type of the isTie property.
       isTie: boolean;
       /**
        * Expiresat
        * Format: date-time
        */
+      // Generated declaration: defines the generated type of the expiresAt property.
       expiresAt: string;
       /**
        * Createdat
        * Format: date-time
        */
+      // Generated declaration: defines the generated type of the createdAt property.
       createdAt: string;
+      // Generated declaration: closes the generated declaration opened above.
     };
     /** AdminSummary */
+    // Generated declaration: opens the object for the AdminSummary property.
     AdminSummary: {
       /** Profiles */
+      // Generated declaration: defines the generated type of the profiles property.
       profiles: number;
       /** Activegames */
+      // Generated declaration: defines the generated type of the activeGames property.
       activeGames: number;
       /** Completedgames */
+      // Generated declaration: defines the generated type of the completedGames property.
       completedGames: number;
       /** Activerooms */
+      // Generated declaration: defines the generated type of the activeRooms property.
       activeRooms: number;
       /** Pendingreviewentries */
+      // Generated declaration: defines the generated type of the pendingReviewEntries property.
       pendingReviewEntries: number;
+      // Generated declaration: closes the generated declaration opened above.
     };
     /** AnalyticsEventRequest */
+    // Generated declaration: opens the object for the AnalyticsEventRequest property.
     AnalyticsEventRequest: {
       /**
        * Clienteventid
        * Format: uuid
        */
+      // Generated declaration: defines the generated type of the clientEventId property.
       clientEventId: string;
       /**
        * Eventname
        * @enum {string}
        */
+      // Generated declaration: defines the generated type of the eventName property.
       eventName:
+        // Generated declaration: adds another allowed type to the surrounding union.
         | 'game_started'
+        // Generated declaration: adds another allowed type to the surrounding union.
         | 'game_completed'
+        // Generated declaration: adds another allowed type to the surrounding union.
         | 'game_abandoned'
+        // Generated declaration: adds another allowed type to the surrounding union.
         | 'difficulty_selected'
+        // Generated declaration: adds another allowed type to the surrounding union.
         | 'daily_completed'
+        // Generated declaration: adds another allowed type to the surrounding union.
         | 'friend_challenge_created'
+        // Generated declaration: adds another allowed type to the surrounding union.
         | 'room_joined'
+        // Generated declaration: adds another allowed type to the surrounding union.
         | 'duel_completed'
+        // Generated declaration: adds another allowed type to the surrounding union.
         | 'validation_error'
+        // Generated declaration: adds another allowed type to the surrounding union.
         | 'reconnect'
+        // Generated declaration: adds another allowed type to the surrounding union.
         | 'account_upgraded';
       /**
        * Consent
        * @constant
        */
+      // Generated declaration: defines the generated type of the consent property.
       consent: true;
       /**
        * Consentversion
        * @constant
        */
+      // Generated declaration: defines the generated type of the consentVersion property.
       consentVersion: 'privacy-v1';
       /**
        * Locale
        * @enum {string}
        */
+      // Generated declaration: defines the generated type of the locale property.
       locale: 'en' | 'zh-Hant';
       /** Mode */
+      // Generated declaration: defines the generated type of the mode property.
       mode?: ('solo' | 'daily' | 'practice' | 'pass_and_play' | 'friend_challenge' | 'duel') | null;
       /** Difficulty */
+      // Generated declaration: defines the generated type of the difficulty property.
       difficulty?: ('easy' | 'normal' | 'hard' | 'expert' | 'custom') | null;
       /** Result */
+      // Generated declaration: defines the generated type of the result property.
       result?: ('won' | 'lost' | 'abandoned' | 'expired' | 'tie') | null;
       /** Attemptsused */
+      // Generated declaration: defines the generated type of the attemptsUsed property.
       attemptsUsed?: number | null;
       /** Ranked */
+      // Generated declaration: defines the generated type of the ranked property.
       ranked?: boolean | null;
       /** Scoreband */
+      // Generated declaration: defines the generated type of the scoreBand property.
       scoreBand?: ('zero' | '1-999' | '1000-1499' | '1500+') | null;
       /** Dailychallengeid */
+      // Generated declaration: defines the generated type of the dailyChallengeId property.
       dailyChallengeId?: string | null;
       /** Official */
+      // Generated declaration: defines the generated type of the official property.
       official?: boolean | null;
       /** Expiryband */
+      // Generated declaration: defines the generated type of the expiryBand property.
       expiryBand?: '30_days' | null;
       /** Roomstate */
+      // Generated declaration: defines the generated type of the roomState property.
       roomState?: ('waiting' | 'active' | 'completed' | 'expired' | 'terminated') | null;
       /** Reconnect */
+      // Generated declaration: defines the generated type of the reconnect property.
       reconnect?: boolean | null;
       /** Tie */
+      // Generated declaration: defines the generated type of the tie property.
       tie?: boolean | null;
       /** Validationcategory */
+      // Generated declaration: defines the generated type of the validationCategory property.
       validationCategory?:
+        // Generated declaration: continues the generated OpenAPI type declaration.
         ('game_config' | 'guess' | 'challenge' | 'room' | 'profile' | 'auth') | null;
       /** Surface */
+      // Generated declaration: defines the generated type of the surface property.
       surface?: ('game' | 'room' | 'daily' | 'challenge' | 'account') | null;
       /** Recovered */
+      // Generated declaration: defines the generated type of the recovered property.
       recovered?: boolean | null;
       /** Previousanonymous */
+      // Generated declaration: defines the generated type of the previousAnonymous property.
       previousAnonymous?: boolean | null;
+      // Generated declaration: closes the generated declaration opened above.
     };
     /** AnalyticsEventResponse */
+    // Generated declaration: opens the object for the AnalyticsEventResponse property.
     AnalyticsEventResponse: {
       /** Received */
+      // Generated declaration: defines the generated type of the received property.
       received: boolean;
+      // Generated declaration: closes the generated declaration opened above.
     };
     /** AttemptRequest */
+    // Generated declaration: opens the object for the AttemptRequest property.
     AttemptRequest: {
       /** Guess */
+      // Generated declaration: defines the generated type of the guess property.
       guess: string[];
       /** Idempotencykey */
+      // Generated declaration: defines the generated type of the idempotencyKey property.
       idempotencyKey: string;
+      // Generated declaration: closes the generated declaration opened above.
     };
     /** AttemptSchema */
+    // Generated declaration: opens the object for the AttemptSchema property.
     AttemptSchema: {
       /** Number */
+      // Generated declaration: defines the generated type of the number property.
       number: number;
       /** Guess */
+      // Generated declaration: defines the generated type of the guess property.
       guess: string[];
+      // Generated declaration: defines the generated type of the feedback property.
       feedback: components['schemas']['FeedbackSchema'];
       /**
        * Submittedat
        * Format: date-time
        */
+      // Generated declaration: defines the generated type of the submittedAt property.
       submittedAt: string;
+      // Generated declaration: closes the generated declaration opened above.
     };
     /** AuditEventResponse */
+    // Generated declaration: opens the object for the AuditEventResponse property.
     AuditEventResponse: {
       /**
        * Id
        * Format: uuid
        */
+      // Generated declaration: defines the generated type of the id property.
       id: string;
       /** Actorid */
+      // Generated declaration: defines the generated type of the actorId property.
       actorId: string | null;
       /** Action */
+      // Generated declaration: defines the generated type of the action property.
       action: string;
       /** Targettype */
+      // Generated declaration: defines the generated type of the targetType property.
       targetType: string;
       /** Targetid */
+      // Generated declaration: defines the generated type of the targetId property.
       targetId: string;
       /** Reason */
+      // Generated declaration: defines the generated type of the reason property.
       reason: string | null;
       /**
        * Createdat
        * Format: date-time
        */
+      // Generated declaration: defines the generated type of the createdAt property.
       createdAt: string;
+      // Generated declaration: closes the generated declaration opened above.
+    };
+    /** AuthSessionResponse */
+    // Generated declaration: opens the object for the AuthSessionResponse property.
+    AuthSessionResponse: {
+      /** Accesstoken */
+      // Generated declaration: defines the generated type of the accessToken property.
+      accessToken: string;
+      /** Expiresin */
+      // Generated declaration: defines the generated type of the expiresIn property.
+      expiresIn: number;
+      // Generated declaration: defines the generated type of the user property.
+      user: components['schemas']['AuthUserResponse'];
+      // Generated declaration: closes the generated declaration opened above.
+    };
+    /** AuthUserResponse */
+    // Generated declaration: opens the object for the AuthUserResponse property.
+    AuthUserResponse: {
+      /**
+       * Id
+       * Format: uuid
+       */
+      // Generated declaration: defines the generated type of the id property.
+      id: string;
+      /** Email */
+      // Generated declaration: defines the generated type of the email property.
+      email: string | null;
+      /** Isanonymous */
+      // Generated declaration: defines the generated type of the isAnonymous property.
+      isAnonymous: boolean;
+      /** Mfaenabled */
+      // Generated declaration: defines the generated type of the mfaEnabled property.
+      mfaEnabled: boolean;
+      // Generated declaration: closes the generated declaration opened above.
     };
     /** ChallengeResponse */
+    // Generated declaration: opens the object for the ChallengeResponse property.
     ChallengeResponse: {
       /** Id */
+      // Generated declaration: defines the generated type of the id property.
       id?: string | null;
       /** Sharecode */
+      // Generated declaration: defines the generated type of the shareCode property.
       shareCode: string;
       /** Title */
+      // Generated declaration: defines the generated type of the title property.
       title: string | null;
       /** Creatorname */
+      // Generated declaration: defines the generated type of the creatorName property.
       creatorName: string | null;
+      // Generated declaration: defines the generated type of the config property.
       config: components['schemas']['GameConfigSchema'];
       /**
        * Expiresat
        * Format: date-time
        */
+      // Generated declaration: defines the generated type of the expiresAt property.
       expiresAt: string;
       /** Revoked */
+      // Generated declaration: defines the generated type of the revoked property.
       revoked: boolean;
       /**
        * Completedcount
        * @default 0
        */
+      // Generated declaration: defines the generated type of the completedCount property.
       completedCount: number;
+      // Generated declaration: closes the generated declaration opened above.
     };
     /** ChallengeResultItem */
+    // Generated declaration: opens the object for the ChallengeResultItem property.
     ChallengeResultItem: {
       /** Rank */
+      // Generated declaration: defines the generated type of the rank property.
       rank: number;
       /** Playerlabel */
+      // Generated declaration: defines the generated type of the playerLabel property.
       playerLabel: string;
       /** Result */
+      // Generated declaration: defines the generated type of the result property.
       result: string;
       /** Attemptsused */
+      // Generated declaration: defines the generated type of the attemptsUsed property.
       attemptsUsed: number;
       /** Maxattempts */
+      // Generated declaration: defines the generated type of the maxAttempts property.
       maxAttempts: number;
       /** Score */
+      // Generated declaration: defines the generated type of the score property.
       score: number;
       /** Elapsedseconds */
+      // Generated declaration: defines the generated type of the elapsedSeconds property.
       elapsedSeconds: number | null;
       /**
        * Completedat
        * Format: date-time
        */
+      // Generated declaration: defines the generated type of the completedAt property.
       completedAt: string;
+      // Generated declaration: closes the generated declaration opened above.
     };
     /** ChallengeResultsResponse */
+    // Generated declaration: opens the object for the ChallengeResultsResponse property.
     ChallengeResultsResponse: {
       /** Completedcount */
+      // Generated declaration: defines the generated type of the completedCount property.
       completedCount: number;
       /** Winrate */
+      // Generated declaration: defines the generated type of the winRate property.
       winRate: number;
       /** Averageattempts */
+      // Generated declaration: defines the generated type of the averageAttempts property.
       averageAttempts: number | null;
       /** Scoredistribution */
+      // Generated declaration: opens the object for the scoreDistribution property.
       scoreDistribution: {
+        // Generated declaration: defines an index signature for generated OpenAPI keys and values.
         [key: string]: number;
+        // Generated declaration: closes the generated declaration opened above.
       };
       /** Items */
+      // Generated declaration: defines the generated type of the items property.
       items: components['schemas']['ChallengeResultItem'][];
       /** Page */
+      // Generated declaration: defines the generated type of the page property.
       page: number;
       /** Pagesize */
+      // Generated declaration: defines the generated type of the pageSize property.
       pageSize: number;
       /** Total */
+      // Generated declaration: defines the generated type of the total property.
       total: number;
+      // Generated declaration: closes the generated declaration opened above.
     };
     /**
      * CodeMakerType
      * @enum {string}
      */
+    // Generated declaration: defines the generated type of the CodeMakerType property.
     CodeMakerType: 'computer' | 'human';
     /** CreateChallengeRequest */
+    // Generated declaration: opens the object for the CreateChallengeRequest property.
     CreateChallengeRequest: {
       /** Difficulty */
+      // Generated declaration: defines the generated type of the difficulty property.
       difficulty?: ('easy' | 'normal' | 'hard' | 'expert') | null;
+      // Generated declaration: defines the generated type of the config property.
       config?: components['schemas']['GameConfigSchema'] | null;
       /** Secret */
+      // Generated declaration: defines the generated type of the secret property.
       secret?: string[] | null;
       /** Title */
+      // Generated declaration: defines the generated type of the title property.
       title?: string | null;
       /**
        * Showcreatorname
        * @default true
        */
+      // Generated declaration: defines the generated type of the showCreatorName property.
       showCreatorName: boolean;
       /** Idempotencykey */
+      // Generated declaration: defines the generated type of the idempotencyKey property.
       idempotencyKey?: string | null;
+      // Generated declaration: closes the generated declaration opened above.
     };
     /** CreateGameRequest */
+    // Generated declaration: opens the object for the CreateGameRequest property.
     CreateGameRequest: {
       /** @default solo */
+      // Generated declaration: defines the generated type of the mode property.
       mode: components['schemas']['GameMode'];
       /** Difficulty */
+      // Generated declaration: defines the generated type of the difficulty property.
       difficulty?: ('easy' | 'normal' | 'hard' | 'expert') | null;
+      // Generated declaration: defines the generated type of the config property.
       config?: components['schemas']['GameConfigSchema'] | null;
       /** Secret */
+      // Generated declaration: defines the generated type of the secret property.
       secret?: string[] | null;
       /** Idempotencykey */
+      // Generated declaration: defines the generated type of the idempotencyKey property.
       idempotencyKey?: string | null;
+      // Generated declaration: closes the generated declaration opened above.
     };
     /** CreateRoomRequest */
+    // Generated declaration: opens the object for the CreateRoomRequest property.
     CreateRoomRequest: {
       /**
        * Difficulty
        * @default normal
        * @enum {string}
        */
+      // Generated declaration: defines the generated type of the difficulty property.
       difficulty: 'easy' | 'normal' | 'hard' | 'expert';
       /** Idempotencykey */
+      // Generated declaration: defines the generated type of the idempotencyKey property.
       idempotencyKey?: string | null;
+      // Generated declaration: closes the generated declaration opened above.
     };
     /** DailyDefinitionResponse */
+    // Generated declaration: opens the object for the DailyDefinitionResponse property.
     DailyDefinitionResponse: {
       /** Id */
+      // Generated declaration: defines the generated type of the id property.
       id: string;
       /**
        * Date
        * Format: date
        */
+      // Generated declaration: defines the generated type of the date property.
       date: string;
       /** Rulesetversion */
+      // Generated declaration: defines the generated type of the ruleSetVersion property.
       ruleSetVersion: string;
       /** Derivationversion */
+      // Generated declaration: defines the generated type of the derivationVersion property.
       derivationVersion: string;
+      // Generated declaration: defines the generated type of the config property.
       config: components['schemas']['GameConfigSchema'];
       /**
        * Rolloverat
        * Format: date-time
        */
+      // Generated declaration: defines the generated type of the rolloverAt property.
       rolloverAt: string;
+      // Generated declaration: closes the generated declaration opened above.
     };
     /** DeleteAccountRequest */
+    // Generated declaration: opens the object for the DeleteAccountRequest property.
     DeleteAccountRequest: {
       /**
        * Confirmation
        * @constant
        */
+      // Generated declaration: defines the generated type of the confirmation property.
       confirmation: 'DELETE';
+      // Generated declaration: closes the generated declaration opened above.
     };
     /** DeleteAccountResponse */
+    // Generated declaration: opens the object for the DeleteAccountResponse property.
     DeleteAccountResponse: {
       /** Deleted */
+      // Generated declaration: defines the generated type of the deleted property.
       deleted: boolean;
+      // Generated declaration: closes the generated declaration opened above.
+    };
+    /** EmailLinkAccepted */
+    // Generated declaration: opens the object for the EmailLinkAccepted property.
+    EmailLinkAccepted: {
+      /**
+       * Accepted
+       * @default true
+       */
+      // Generated declaration: defines the generated type of the accepted property.
+      accepted: boolean;
+      // Generated declaration: closes the generated declaration opened above.
+    };
+    /** EmailLinkRequest */
+    // Generated declaration: opens the object for the EmailLinkRequest property.
+    EmailLinkRequest: {
+      /** Email */
+      // Generated declaration: defines the generated type of the email property.
+      email: string;
+      /**
+       * Next
+       * @default /en/profile
+       */
+      // Generated declaration: defines the generated type of the next property.
+      next: string;
+      // Generated declaration: closes the generated declaration opened above.
     };
     /** FeatureFlagResponse */
+    // Generated declaration: opens the object for the FeatureFlagResponse property.
     FeatureFlagResponse: {
       /** Key */
+      // Generated declaration: defines the generated type of the key property.
       key: string;
       /** Enabled */
+      // Generated declaration: defines the generated type of the enabled property.
       enabled: boolean;
+      // Generated declaration: closes the generated declaration opened above.
     };
     /** FeedbackSchema */
+    // Generated declaration: opens the object for the FeedbackSchema property.
     FeedbackSchema: {
       /** Black */
+      // Generated declaration: defines the generated type of the black property.
       black: number;
       /** White */
+      // Generated declaration: defines the generated type of the white property.
       white: number;
+      // Generated declaration: closes the generated declaration opened above.
     };
     /** GameConfigSchema */
+    // Generated declaration: opens the object for the GameConfigSchema property.
     GameConfigSchema: {
       /** Colours */
+      // Generated declaration: defines the generated type of the colours property.
       colours: string[];
       /** Codelength */
+      // Generated declaration: defines the generated type of the codeLength property.
       codeLength: number;
       /** Maxattempts */
+      // Generated declaration: defines the generated type of the maxAttempts property.
       maxAttempts: number;
       /** Duplicatesallowed */
+      // Generated declaration: defines the generated type of the duplicatesAllowed property.
       duplicatesAllowed: boolean;
       /** @default computer */
+      // Generated declaration: defines the generated type of the codeMaker property.
       codeMaker: components['schemas']['CodeMakerType'];
       /** @default private */
+      // Generated declaration: defines the generated type of the visibility property.
       visibility: components['schemas']['GameVisibility'];
       /**
        * Ranked
        * @default false
        */
+      // Generated declaration: defines the generated type of the ranked property.
       ranked: boolean;
       /**
        * Timebonuscap
        * @default 300
        */
+      // Generated declaration: defines the generated type of the timeBonusCap property.
       timeBonusCap: number;
+      // Generated declaration: closes the generated declaration opened above.
     };
     /**
      * GameMode
      * @enum {string}
      */
+    // Generated declaration: defines the generated type of the GameMode property.
     GameMode: 'solo' | 'daily' | 'practice' | 'pass_and_play' | 'friend_challenge' | 'duel';
     /** GameResponse */
+    // Generated declaration: opens the object for the GameResponse property.
     GameResponse: {
       /** Id */
+      // Generated declaration: defines the generated type of the id property.
       id: string;
       /** Mode */
+      // Generated declaration: defines the generated type of the mode property.
       mode: string;
       /** Status */
+      // Generated declaration: defines the generated type of the status property.
       status: string;
       /** Difficulty */
+      // Generated declaration: defines the generated type of the difficulty property.
       difficulty: string | null;
+      // Generated declaration: defines the generated type of the config property.
       config: components['schemas']['GameConfigSchema'];
       /** Attempts */
+      // Generated declaration: defines the generated type of the attempts property.
       attempts: components['schemas']['AttemptSchema'][];
       /** Attemptsused */
+      // Generated declaration: defines the generated type of the attemptsUsed property.
       attemptsUsed: number;
       /** Maxattempts */
+      // Generated declaration: defines the generated type of the maxAttempts property.
       maxAttempts: number;
       /** Attemptsremaining */
+      // Generated declaration: defines the generated type of the attemptsRemaining property.
       attemptsRemaining: number;
       /**
        * Startedat
        * Format: date-time
        */
+      // Generated declaration: defines the generated type of the startedAt property.
       startedAt: string;
       /** Completedat */
+      // Generated declaration: defines the generated type of the completedAt property.
       completedAt: string | null;
       /** Score */
+      // Generated declaration: defines the generated type of the score property.
       score: number | null;
+      // Generated declaration: defines the generated type of the scoreBreakdown property.
       scoreBreakdown: components['schemas']['ScoreBreakdownSchema'] | null;
       /** Secret */
+      // Generated declaration: defines the generated type of the secret property.
       secret?: string[] | null;
       /** Ranked */
+      // Generated declaration: defines the generated type of the ranked property.
       ranked: boolean;
+      // Generated declaration: closes the generated declaration opened above.
     };
     /**
      * GameVisibility
      * @enum {string}
      */
+    // Generated declaration: defines the generated type of the GameVisibility property.
     GameVisibility: 'private' | 'shareable' | 'public';
     /** HTTPValidationError */
+    // Generated declaration: opens the object for the HTTPValidationError property.
     HTTPValidationError: {
       /** Detail */
+      // Generated declaration: defines the generated type of the detail property.
       detail?: components['schemas']['ValidationError'][];
+      // Generated declaration: closes the generated declaration opened above.
     };
     /** LeaderboardItem */
+    // Generated declaration: opens the object for the LeaderboardItem property.
     LeaderboardItem: {
       /** Rank */
+      // Generated declaration: defines the generated type of the rank property.
       rank: number;
       /** Displayname */
+      // Generated declaration: defines the generated type of the displayName property.
       displayName: string;
       /** Score */
+      // Generated declaration: defines the generated type of the score property.
       score: number;
       /** Attemptsused */
+      // Generated declaration: defines the generated type of the attemptsUsed property.
       attemptsUsed: number;
       /** Elapsedseconds */
+      // Generated declaration: defines the generated type of the elapsedSeconds property.
       elapsedSeconds: number;
       /**
        * Completedat
        * Format: date-time
        */
+      // Generated declaration: defines the generated type of the completedAt property.
       completedAt: string;
       /** Iscurrentuser */
+      // Generated declaration: defines the generated type of the isCurrentUser property.
       isCurrentUser: boolean;
+      // Generated declaration: closes the generated declaration opened above.
     };
     /** OwnedChallengeItem */
+    // Generated declaration: opens the object for the OwnedChallengeItem property.
     OwnedChallengeItem: {
       /**
        * Id
        * Format: uuid
        */
+      // Generated declaration: defines the generated type of the id property.
       id: string;
       /** Title */
+      // Generated declaration: defines the generated type of the title property.
       title: string | null;
       /** Showcreatorname */
+      // Generated declaration: defines the generated type of the showCreatorName property.
       showCreatorName: boolean;
+      // Generated declaration: defines the generated type of the config property.
       config: components['schemas']['GameConfigSchema'];
       /** Revoked */
+      // Generated declaration: defines the generated type of the revoked property.
       revoked: boolean;
       /**
        * Expiresat
        * Format: date-time
        */
+      // Generated declaration: defines the generated type of the expiresAt property.
       expiresAt: string;
       /** Completedcount */
+      // Generated declaration: defines the generated type of the completedCount property.
       completedCount: number;
       /**
        * Createdat
        * Format: date-time
        */
+      // Generated declaration: defines the generated type of the createdAt property.
       createdAt: string;
+      // Generated declaration: closes the generated declaration opened above.
     };
     /** PaginatedGames */
+    // Generated declaration: opens the object for the PaginatedGames property.
     PaginatedGames: {
       /** Items */
+      // Generated declaration: defines the generated type of the items property.
       items: components['schemas']['GameResponse'][];
       /** Page */
+      // Generated declaration: defines the generated type of the page property.
       page: number;
       /** Pagesize */
+      // Generated declaration: defines the generated type of the pageSize property.
       pageSize: number;
       /** Total */
+      // Generated declaration: defines the generated type of the total property.
       total: number;
+      // Generated declaration: closes the generated declaration opened above.
     };
     /** PaginatedLeaderboard */
+    // Generated declaration: opens the object for the PaginatedLeaderboard property.
     PaginatedLeaderboard: {
       /** Items */
+      // Generated declaration: defines the generated type of the items property.
       items: components['schemas']['LeaderboardItem'][];
       /** Page */
+      // Generated declaration: defines the generated type of the page property.
       page: number;
       /** Pagesize */
+      // Generated declaration: defines the generated type of the pageSize property.
       pageSize: number;
       /** Total */
+      // Generated declaration: defines the generated type of the total property.
       total: number;
       /** Currentuserrank */
+      // Generated declaration: defines the generated type of the currentUserRank property.
       currentUserRank: number | null;
+      // Generated declaration: closes the generated declaration opened above.
     };
     /** PaginatedOwnedChallenges */
+    // Generated declaration: opens the object for the PaginatedOwnedChallenges property.
     PaginatedOwnedChallenges: {
       /** Items */
+      // Generated declaration: defines the generated type of the items property.
       items: components['schemas']['OwnedChallengeItem'][];
       /** Page */
+      // Generated declaration: defines the generated type of the page property.
       page: number;
       /** Pagesize */
+      // Generated declaration: defines the generated type of the pageSize property.
       pageSize: number;
       /** Total */
+      // Generated declaration: defines the generated type of the total property.
       total: number;
+      // Generated declaration: closes the generated declaration opened above.
     };
     /** ProfileResponse */
+    // Generated declaration: opens the object for the ProfileResponse property.
     ProfileResponse: {
       /**
        * Id
        * Format: uuid
        */
+      // Generated declaration: defines the generated type of the id property.
       id: string;
       /** Displayname */
+      // Generated declaration: defines the generated type of the displayName property.
       displayName: string | null;
       /** Isanonymous */
+      // Generated declaration: defines the generated type of the isAnonymous property.
       isAnonymous: boolean;
       /** Publicleaderboards */
+      // Generated declaration: defines the generated type of the publicLeaderboards property.
       publicLeaderboards: boolean;
       /**
        * Createdat
        * Format: date-time
        */
+      // Generated declaration: defines the generated type of the createdAt property.
       createdAt: string;
+      // Generated declaration: closes the generated declaration opened above.
     };
     /** ProfileUpdateRequest */
+    // Generated declaration: opens the object for the ProfileUpdateRequest property.
     ProfileUpdateRequest: {
       /** Displayname */
+      // Generated declaration: defines the generated type of the displayName property.
       displayName?: string | null;
       /** Publicleaderboards */
+      // Generated declaration: defines the generated type of the publicLeaderboards property.
       publicLeaderboards?: boolean | null;
+      // Generated declaration: closes the generated declaration opened above.
     };
     /** RoomMemberResponse */
+    // Generated declaration: opens the object for the RoomMemberResponse property.
     RoomMemberResponse: {
       /**
        * Userid
        * Format: uuid
        */
+      // Generated declaration: defines the generated type of the userId property.
       userId: string;
       /** Displayname */
+      // Generated declaration: defines the generated type of the displayName property.
       displayName: string;
       /** Connected */
+      // Generated declaration: defines the generated type of the connected property.
       connected: boolean;
       /** Ready */
+      // Generated declaration: defines the generated type of the ready property.
       ready: boolean;
       /** Readyat */
+      // Generated declaration: defines the generated type of the readyAt property.
       readyAt: string | null;
       /** Attemptsused */
+      // Generated declaration: defines the generated type of the attemptsUsed property.
       attemptsUsed: number;
       /** Completed */
+      // Generated declaration: defines the generated type of the completed property.
       completed: boolean;
       /** Gameid */
+      // Generated declaration: defines the generated type of the gameId property.
       gameId: string | null;
+      // Generated declaration: closes the generated declaration opened above.
     };
     /** RoomResponse */
+    // Generated declaration: opens the object for the RoomResponse property.
     RoomResponse: {
       /**
        * Id
        * Format: uuid
        */
+      // Generated declaration: defines the generated type of the id property.
       id: string;
       /** Roomcode */
+      // Generated declaration: defines the generated type of the roomCode property.
       roomCode?: string | null;
       /** Status */
+      // Generated declaration: defines the generated type of the status property.
       status: string;
+      // Generated declaration: defines the generated type of the config property.
       config: components['schemas']['GameConfigSchema'];
       /** Members */
+      // Generated declaration: defines the generated type of the members property.
       members: components['schemas']['RoomMemberResponse'][];
       /** Winnerid */
+      // Generated declaration: defines the generated type of the winnerId property.
       winnerId: string | null;
       /** Istie */
+      // Generated declaration: defines the generated type of the isTie property.
       isTie: boolean;
       /**
        * Expiresat
        * Format: date-time
        */
+      // Generated declaration: defines the generated type of the expiresAt property.
       expiresAt: string;
       /** Eventsequence */
+      // Generated declaration: defines the generated type of the eventSequence property.
       eventSequence: number;
+      // Generated declaration: closes the generated declaration opened above.
     };
     /** ScoreBreakdownSchema */
+    // Generated declaration: opens the object for the ScoreBreakdownSchema property.
     ScoreBreakdownSchema: {
       /** Attempts */
+      // Generated declaration: defines the generated type of the attempts property.
       attempts: number;
       /** Difficulty */
+      // Generated declaration: defines the generated type of the difficulty property.
       difficulty: number;
       /** Time */
+      // Generated declaration: defines the generated type of the time property.
       time: number;
       /** Total */
+      // Generated declaration: defines the generated type of the total property.
       total: number;
       /** Version */
+      // Generated declaration: defines the generated type of the version property.
       version: string;
+      // Generated declaration: closes the generated declaration opened above.
     };
     /** StartGameRequest */
+    // Generated declaration: opens the object for the StartGameRequest property.
     StartGameRequest: {
       /**
        * Practice
        * @default false
        */
+      // Generated declaration: defines the generated type of the practice property.
       practice: boolean;
+      // Generated declaration: closes the generated declaration opened above.
     };
     /** StatsResponse */
+    // Generated declaration: opens the object for the StatsResponse property.
     StatsResponse: {
       /** Gamesplayed */
+      // Generated declaration: defines the generated type of the gamesPlayed property.
       gamesPlayed: number;
       /** Gameswon */
+      // Generated declaration: defines the generated type of the gamesWon property.
       gamesWon: number;
       /** Gameslost */
+      // Generated declaration: defines the generated type of the gamesLost property.
       gamesLost: number;
       /** Gamesabandoned */
+      // Generated declaration: defines the generated type of the gamesAbandoned property.
       gamesAbandoned: number;
       /** Winrate */
+      // Generated declaration: defines the generated type of the winRate property.
       winRate: number;
       /** Averageattemptsonwins */
+      // Generated declaration: defines the generated type of the averageAttemptsOnWins property.
       averageAttemptsOnWins: number | null;
       /** Bestscorebydifficulty */
+      // Generated declaration: opens the object for the bestScoreByDifficulty property.
       bestScoreByDifficulty: {
+        // Generated declaration: defines an index signature for generated OpenAPI keys and values.
         [key: string]: number;
+        // Generated declaration: closes the generated declaration opened above.
       };
       /** Dailystreak */
+      // Generated declaration: defines the generated type of the dailyStreak property.
       dailyStreak: number;
       /** Dailycompletionhistory */
+      // Generated declaration: defines the generated type of the dailyCompletionHistory property.
       dailyCompletionHistory: string[];
       /** Fastesteligiblesolve */
+      // Generated declaration: defines the generated type of the fastestEligibleSolve property.
       fastestEligibleSolve: number | null;
       /** Totalblackpegs */
+      // Generated declaration: defines the generated type of the totalBlackPegs property.
       totalBlackPegs: number;
       /** Totalwhitepegs */
+      // Generated declaration: defines the generated type of the totalWhitePegs property.
       totalWhitePegs: number;
       /** Favouritemode */
+      // Generated declaration: defines the generated type of the favouriteMode property.
       favouriteMode: string | null;
       /** Achievements */
+      // Generated declaration: defines the generated type of the achievements property.
       achievements: string[];
       /** Achievementprogress */
+      // Generated declaration: opens the object for the achievementProgress property.
       achievementProgress: {
+        // Generated declaration: defines an index signature for generated OpenAPI keys and values.
         [key: string]: components['schemas']['AchievementProgressSchema'];
+        // Generated declaration: closes the generated declaration opened above.
       };
+      // Generated declaration: closes the generated declaration opened above.
     };
     /** SupportRequestCreate */
+    // Generated declaration: opens the object for the SupportRequestCreate property.
     SupportRequestCreate: {
       /**
        * Topic
        * @enum {string}
        */
+      // Generated declaration: defines the generated type of the topic property.
       topic: 'account' | 'gameplay' | 'accessibility' | 'privacy' | 'safety' | 'other';
       /** Replyemail */
+      // Generated declaration: defines the generated type of the replyEmail property.
       replyEmail: string;
       /** Message */
+      // Generated declaration: defines the generated type of the message property.
       message: string;
+      // Generated declaration: closes the generated declaration opened above.
     };
     /** SupportRequestResponse */
+    // Generated declaration: opens the object for the SupportRequestResponse property.
     SupportRequestResponse: {
       /**
        * Id
        * Format: uuid
        */
+      // Generated declaration: defines the generated type of the id property.
       id: string;
       /** Received */
+      // Generated declaration: defines the generated type of the received property.
       received: boolean;
+      // Generated declaration: closes the generated declaration opened above.
+    };
+    /** TotpSetupResponse */
+    // Generated declaration: opens the object for the TotpSetupResponse property.
+    TotpSetupResponse: {
+      /** Secret */
+      // Generated declaration: defines the generated type of the secret property.
+      secret: string;
+      /** Uri */
+      // Generated declaration: defines the generated type of the uri property.
+      uri: string;
+      // Generated declaration: closes the generated declaration opened above.
+    };
+    /** TotpVerifyRequest */
+    // Generated declaration: opens the object for the TotpVerifyRequest property.
+    TotpVerifyRequest: {
+      /** Code */
+      // Generated declaration: defines the generated type of the code property.
+      code: string;
+      // Generated declaration: closes the generated declaration opened above.
     };
     /** ValidationError */
+    // Generated declaration: opens the object for the ValidationError property.
     ValidationError: {
       /** Location */
+      // Generated declaration: defines the generated type of the loc property.
       loc: (string | number)[];
       /** Message */
+      // Generated declaration: defines the generated type of the msg property.
       msg: string;
       /** Error Type */
+      // Generated declaration: defines the generated type of the type property.
       type: string;
       /** Input */
+      // Generated declaration: defines the generated type of the input property.
       input?: unknown;
       /** Context */
+      // Generated declaration: defines the generated type of the ctx property.
       ctx?: Record<string, never>;
+      // Generated declaration: closes the generated declaration opened above.
     };
     /** WebSocketTicketResponse */
+    // Generated declaration: opens the object for the WebSocketTicketResponse property.
     WebSocketTicketResponse: {
       /** Ticket */
+      // Generated declaration: defines the generated type of the ticket property.
       ticket: string;
       /**
        * Expiresat
        * Format: date-time
        */
+      // Generated declaration: defines the generated type of the expiresAt property.
       expiresAt: string;
+      // Generated declaration: closes the generated declaration opened above.
     };
+    // Generated declaration: closes the generated declaration opened above.
   };
+  // Generated declaration: defines the generated type of the responses property.
   responses: never;
+  // Generated declaration: defines the generated type of the parameters property.
   parameters: never;
+  // Generated declaration: defines the generated type of the requestBodies property.
   requestBodies: never;
+  // Generated declaration: defines the generated type of the headers property.
   headers: never;
+  // Generated declaration: defines the generated type of the pathItems property.
   pathItems: never;
+  // Generated declaration: closes the generated declaration opened above.
 }
+// Generated declaration: exports the $defs type alias for consumers of the OpenAPI contract.
 export type $defs = Record<string, never>;
+// Generated declaration: exports the operations interface for consumers of the OpenAPI contract.
 export interface operations {
-  create_game_route_v1_games_post: {
+  // Generated declaration: opens the object for the create_guest_session_v1_auth_guest_post property.
+  create_guest_session_v1_auth_guest_post: {
+    // Generated declaration: opens the object for the parameters property.
     parameters: {
+      // Generated declaration: defines the generated type of the query property.
       query?: never;
-      header?: {
-        authorization?: string | null;
-      };
+      // Generated declaration: defines the generated type of the header property.
+      header?: never;
+      // Generated declaration: defines the generated type of the path property.
       path?: never;
+      // Generated declaration: defines the generated type of the cookie property.
       cookie?: never;
+      // Generated declaration: closes the generated declaration opened above.
     };
-    requestBody: {
-      content: {
-        'application/json': components['schemas']['CreateGameRequest'];
-      };
-    };
+    // Generated declaration: defines the generated type of the requestBody property.
+    requestBody?: never;
+    // Generated declaration: opens the object for the responses property.
     responses: {
       /** @description Successful Response */
+      // Generated declaration: continues the generated OpenAPI type declaration.
       201: {
+        // Generated declaration: opens the object for the headers property.
         headers: {
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
           [name: string]: unknown;
+          // Generated declaration: closes the generated declaration opened above.
         };
+        // Generated declaration: opens the object for the content property.
         content: {
-          'application/json': components['schemas']['GameResponse'];
+          // Generated declaration: defines the generated type of the application/json property.
+          'application/json': components['schemas']['AuthSessionResponse'];
+          // Generated declaration: closes the generated declaration opened above.
         };
+        // Generated declaration: closes the generated declaration opened above.
       };
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': components['schemas']['HTTPValidationError'];
-        };
-      };
+      // Generated declaration: closes the generated declaration opened above.
     };
+    // Generated declaration: closes the generated declaration opened above.
   };
-  get_game_route_v1_games__game_id__get: {
+  // Generated declaration: opens the object for the refresh_session_v1_auth_refresh_post property.
+  refresh_session_v1_auth_refresh_post: {
+    // Generated declaration: opens the object for the parameters property.
     parameters: {
+      // Generated declaration: defines the generated type of the query property.
       query?: never;
-      header?: {
-        authorization?: string | null;
-      };
-      path: {
-        game_id: string;
-      };
-      cookie?: never;
-    };
-    requestBody?: never;
-    responses: {
-      /** @description Successful Response */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': components['schemas']['GameResponse'];
-        };
-      };
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': components['schemas']['HTTPValidationError'];
-        };
-      };
-    };
-  };
-  submit_attempt_route_v1_games__game_id__attempts_post: {
-    parameters: {
-      query?: never;
-      header?: {
-        authorization?: string | null;
-      };
-      path: {
-        game_id: string;
-      };
-      cookie?: never;
-    };
-    requestBody: {
-      content: {
-        'application/json': components['schemas']['AttemptRequest'];
-      };
-    };
-    responses: {
-      /** @description Successful Response */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': components['schemas']['GameResponse'];
-        };
-      };
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': components['schemas']['HTTPValidationError'];
-        };
-      };
-    };
-  };
-  abandon_game_route_v1_games__game_id__abandon_post: {
-    parameters: {
-      query?: never;
-      header?: {
-        authorization?: string | null;
-      };
-      path: {
-        game_id: string;
-      };
-      cookie?: never;
-    };
-    requestBody?: never;
-    responses: {
-      /** @description Successful Response */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': components['schemas']['GameResponse'];
-        };
-      };
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': components['schemas']['HTTPValidationError'];
-        };
-      };
-    };
-  };
-  get_daily_route_v1_daily_get: {
-    parameters: {
-      query?: never;
-      header?: {
-        authorization?: string | null;
-      };
+      // Generated declaration: defines the generated type of the header property.
+      header?: never;
+      // Generated declaration: defines the generated type of the path property.
       path?: never;
+      // Generated declaration: defines the generated type of the cookie property.
       cookie?: never;
+      // Generated declaration: closes the generated declaration opened above.
     };
+    // Generated declaration: defines the generated type of the requestBody property.
     requestBody?: never;
+    // Generated declaration: opens the object for the responses property.
     responses: {
       /** @description Successful Response */
+      // Generated declaration: continues the generated OpenAPI type declaration.
       200: {
+        // Generated declaration: opens the object for the headers property.
         headers: {
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
           [name: string]: unknown;
+          // Generated declaration: closes the generated declaration opened above.
         };
+        // Generated declaration: opens the object for the content property.
         content: {
-          'application/json': components['schemas']['DailyDefinitionResponse'];
+          // Generated declaration: defines the generated type of the application/json property.
+          'application/json': components['schemas']['AuthSessionResponse'];
+          // Generated declaration: closes the generated declaration opened above.
         };
+        // Generated declaration: closes the generated declaration opened above.
       };
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': components['schemas']['HTTPValidationError'];
-        };
-      };
+      // Generated declaration: closes the generated declaration opened above.
     };
+    // Generated declaration: closes the generated declaration opened above.
   };
-  start_daily_route_v1_daily_start_post: {
+  // Generated declaration: opens the object for the logout_v1_auth_logout_post property.
+  logout_v1_auth_logout_post: {
+    // Generated declaration: opens the object for the parameters property.
     parameters: {
+      // Generated declaration: defines the generated type of the query property.
       query?: never;
-      header?: {
-        authorization?: string | null;
-      };
+      // Generated declaration: defines the generated type of the header property.
+      header?: never;
+      // Generated declaration: defines the generated type of the path property.
       path?: never;
+      // Generated declaration: defines the generated type of the cookie property.
       cookie?: never;
+      // Generated declaration: closes the generated declaration opened above.
     };
-    requestBody?: {
-      content: {
-        'application/json': components['schemas']['StartGameRequest'] | null;
-      };
-    };
-    responses: {
-      /** @description Successful Response */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': components['schemas']['GameResponse'];
-        };
-      };
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': components['schemas']['HTTPValidationError'];
-        };
-      };
-    };
-  };
-  daily_leaderboard_route_v1_daily_leaderboard_get: {
-    parameters: {
-      query?: {
-        page?: number;
-        page_size?: number;
-      };
-      header?: {
-        authorization?: string | null;
-      };
-      path?: never;
-      cookie?: never;
-    };
+    // Generated declaration: defines the generated type of the requestBody property.
     requestBody?: never;
+    // Generated declaration: opens the object for the responses property.
     responses: {
       /** @description Successful Response */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': components['schemas']['PaginatedLeaderboard'];
-        };
-      };
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': components['schemas']['HTTPValidationError'];
-        };
-      };
-    };
-  };
-  challenge_results_route_v1_challenges__challenge_id__results_get: {
-    parameters: {
-      query?: {
-        page?: number;
-        page_size?: number;
-      };
-      header?: {
-        authorization?: string | null;
-      };
-      path: {
-        challenge_id: string;
-      };
-      cookie?: never;
-    };
-    requestBody?: never;
-    responses: {
-      /** @description Successful Response */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': components['schemas']['ChallengeResultsResponse'];
-        };
-      };
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': components['schemas']['HTTPValidationError'];
-        };
-      };
-    };
-  };
-  create_challenge_route_v1_challenges_post: {
-    parameters: {
-      query?: never;
-      header?: {
-        authorization?: string | null;
-      };
-      path?: never;
-      cookie?: never;
-    };
-    requestBody: {
-      content: {
-        'application/json': components['schemas']['CreateChallengeRequest'];
-      };
-    };
-    responses: {
-      /** @description Successful Response */
-      201: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': components['schemas']['ChallengeResponse'];
-        };
-      };
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': components['schemas']['HTTPValidationError'];
-        };
-      };
-    };
-  };
-  owned_challenges_route_v1_challenges_mine_get: {
-    parameters: {
-      query?: {
-        page?: number;
-        page_size?: number;
-      };
-      header?: {
-        authorization?: string | null;
-      };
-      path?: never;
-      cookie?: never;
-    };
-    requestBody?: never;
-    responses: {
-      /** @description Successful Response */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': components['schemas']['PaginatedOwnedChallenges'];
-        };
-      };
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': components['schemas']['HTTPValidationError'];
-        };
-      };
-    };
-  };
-  get_challenge_route_v1_challenges__share_code__get: {
-    parameters: {
-      query?: never;
-      header?: {
-        authorization?: string | null;
-      };
-      path: {
-        share_code: string;
-      };
-      cookie?: never;
-    };
-    requestBody?: never;
-    responses: {
-      /** @description Successful Response */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': components['schemas']['ChallengeResponse'];
-        };
-      };
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': components['schemas']['HTTPValidationError'];
-        };
-      };
-    };
-  };
-  start_challenge_route_v1_challenges__share_code__start_post: {
-    parameters: {
-      query?: never;
-      header?: {
-        authorization?: string | null;
-      };
-      path: {
-        share_code: string;
-      };
-      cookie?: never;
-    };
-    requestBody?: {
-      content: {
-        'application/json': components['schemas']['StartGameRequest'] | null;
-      };
-    };
-    responses: {
-      /** @description Successful Response */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': components['schemas']['GameResponse'];
-        };
-      };
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': components['schemas']['HTTPValidationError'];
-        };
-      };
-    };
-  };
-  revoke_challenge_route_v1_challenges__challenge_id__delete: {
-    parameters: {
-      query?: never;
-      header?: {
-        authorization?: string | null;
-      };
-      path: {
-        challenge_id: string;
-      };
-      cookie?: never;
-    };
-    requestBody?: never;
-    responses: {
-      /** @description Successful Response */
+      // Generated declaration: continues the generated OpenAPI type declaration.
       204: {
+        // Generated declaration: opens the object for the headers property.
         headers: {
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
           [name: string]: unknown;
+          // Generated declaration: closes the generated declaration opened above.
         };
+        // Generated declaration: defines the generated type of the content property.
         content?: never;
+        // Generated declaration: closes the generated declaration opened above.
       };
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': components['schemas']['HTTPValidationError'];
-        };
-      };
+      // Generated declaration: closes the generated declaration opened above.
     };
+    // Generated declaration: closes the generated declaration opened above.
   };
-  create_websocket_ticket_route_v1_rooms__room_id__ws_ticket_post: {
+  // Generated declaration: opens the object for the send_email_link_v1_auth_email_post property.
+  send_email_link_v1_auth_email_post: {
+    // Generated declaration: opens the object for the parameters property.
     parameters: {
+      // Generated declaration: defines the generated type of the query property.
       query?: never;
+      // Generated declaration: opens the object for the header property.
       header?: {
+        // Generated declaration: defines the generated type of the authorization property.
         authorization?: string | null;
+        // Generated declaration: closes the generated declaration opened above.
       };
-      path: {
-        room_id: string;
-      };
-      cookie?: never;
-    };
-    requestBody?: never;
-    responses: {
-      /** @description Successful Response */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': components['schemas']['WebSocketTicketResponse'];
-        };
-      };
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': components['schemas']['HTTPValidationError'];
-        };
-      };
-    };
-  };
-  create_room_route_v1_rooms_post: {
-    parameters: {
-      query?: never;
-      header?: {
-        authorization?: string | null;
-      };
+      // Generated declaration: defines the generated type of the path property.
       path?: never;
+      // Generated declaration: defines the generated type of the cookie property.
       cookie?: never;
+      // Generated declaration: closes the generated declaration opened above.
     };
+    // Generated declaration: opens the object for the requestBody property.
     requestBody: {
+      // Generated declaration: opens the object for the content property.
       content: {
-        'application/json': components['schemas']['CreateRoomRequest'];
+        // Generated declaration: defines the generated type of the application/json property.
+        'application/json': components['schemas']['EmailLinkRequest'];
+        // Generated declaration: closes the generated declaration opened above.
       };
+      // Generated declaration: closes the generated declaration opened above.
     };
+    // Generated declaration: opens the object for the responses property.
     responses: {
       /** @description Successful Response */
-      201: {
+      // Generated declaration: continues the generated OpenAPI type declaration.
+      202: {
+        // Generated declaration: opens the object for the headers property.
         headers: {
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
           [name: string]: unknown;
+          // Generated declaration: closes the generated declaration opened above.
         };
+        // Generated declaration: opens the object for the content property.
         content: {
-          'application/json': components['schemas']['RoomResponse'];
+          // Generated declaration: defines the generated type of the application/json property.
+          'application/json': components['schemas']['EmailLinkAccepted'];
+          // Generated declaration: closes the generated declaration opened above.
         };
+        // Generated declaration: closes the generated declaration opened above.
       };
       /** @description Validation Error */
+      // Generated declaration: continues the generated OpenAPI type declaration.
       422: {
+        // Generated declaration: opens the object for the headers property.
         headers: {
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
           [name: string]: unknown;
+          // Generated declaration: closes the generated declaration opened above.
         };
+        // Generated declaration: opens the object for the content property.
         content: {
+          // Generated declaration: defines the generated type of the application/json property.
           'application/json': components['schemas']['HTTPValidationError'];
+          // Generated declaration: closes the generated declaration opened above.
         };
+        // Generated declaration: closes the generated declaration opened above.
       };
+      // Generated declaration: closes the generated declaration opened above.
     };
+    // Generated declaration: closes the generated declaration opened above.
   };
-  join_room_route_v1_rooms__room_code__join_post: {
+  // Generated declaration: opens the object for the verify_email_link_v1_auth_email_verify_get property.
+  verify_email_link_v1_auth_email_verify_get: {
+    // Generated declaration: opens the object for the parameters property.
     parameters: {
-      query?: never;
-      header?: {
-        authorization?: string | null;
+      // Generated declaration: opens the object for the query property.
+      query: {
+        // Generated declaration: defines the generated type of the token property.
+        token: string;
+        // Generated declaration: defines the generated type of the next property.
+        next?: string;
+        // Generated declaration: closes the generated declaration opened above.
       };
-      path: {
-        room_code: string;
-      };
-      cookie?: never;
-    };
-    requestBody?: never;
-    responses: {
-      /** @description Successful Response */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': components['schemas']['RoomResponse'];
-        };
-      };
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': components['schemas']['HTTPValidationError'];
-        };
-      };
-    };
-  };
-  ready_room_route_v1_rooms__room_id__ready_post: {
-    parameters: {
-      query?: never;
-      header?: {
-        authorization?: string | null;
-      };
-      path: {
-        room_id: string;
-      };
-      cookie?: never;
-    };
-    requestBody?: never;
-    responses: {
-      /** @description Successful Response */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': components['schemas']['RoomResponse'];
-        };
-      };
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': components['schemas']['HTTPValidationError'];
-        };
-      };
-    };
-  };
-  get_room_route_v1_rooms__room_id__get: {
-    parameters: {
-      query?: never;
-      header?: {
-        authorization?: string | null;
-      };
-      path: {
-        room_id: string;
-      };
-      cookie?: never;
-    };
-    requestBody?: never;
-    responses: {
-      /** @description Successful Response */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': components['schemas']['RoomResponse'];
-        };
-      };
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': components['schemas']['HTTPValidationError'];
-        };
-      };
-    };
-  };
-  get_leaderboard_route_v1_leaderboards_get: {
-    parameters: {
-      query?: {
-        period?: string;
-        difficulty?: string | null;
-        page?: number;
-        page_size?: number;
-      };
-      header?: {
-        authorization?: string | null;
-      };
+      // Generated declaration: defines the generated type of the header property.
+      header?: never;
+      // Generated declaration: defines the generated type of the path property.
       path?: never;
+      // Generated declaration: defines the generated type of the cookie property.
       cookie?: never;
+      // Generated declaration: closes the generated declaration opened above.
     };
+    // Generated declaration: defines the generated type of the requestBody property.
     requestBody?: never;
+    // Generated declaration: opens the object for the responses property.
     responses: {
       /** @description Successful Response */
+      // Generated declaration: continues the generated OpenAPI type declaration.
       200: {
+        // Generated declaration: opens the object for the headers property.
         headers: {
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
           [name: string]: unknown;
+          // Generated declaration: closes the generated declaration opened above.
         };
+        // Generated declaration: opens the object for the content property.
         content: {
-          'application/json': components['schemas']['PaginatedLeaderboard'];
-        };
-      };
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': components['schemas']['HTTPValidationError'];
-        };
-      };
-    };
-  };
-  get_profile_route_v1_me_profile_get: {
-    parameters: {
-      query?: never;
-      header?: {
-        authorization?: string | null;
-      };
-      path?: never;
-      cookie?: never;
-    };
-    requestBody?: never;
-    responses: {
-      /** @description Successful Response */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': components['schemas']['ProfileResponse'];
-        };
-      };
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': components['schemas']['HTTPValidationError'];
-        };
-      };
-    };
-  };
-  update_profile_route_v1_me_profile_patch: {
-    parameters: {
-      query?: never;
-      header?: {
-        authorization?: string | null;
-      };
-      path?: never;
-      cookie?: never;
-    };
-    requestBody: {
-      content: {
-        'application/json': components['schemas']['ProfileUpdateRequest'];
-      };
-    };
-    responses: {
-      /** @description Successful Response */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': components['schemas']['ProfileResponse'];
-        };
-      };
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': components['schemas']['HTTPValidationError'];
-        };
-      };
-    };
-  };
-  get_games_route_v1_me_games_get: {
-    parameters: {
-      query?: {
-        page?: number;
-        page_size?: number;
-      };
-      header?: {
-        authorization?: string | null;
-      };
-      path?: never;
-      cookie?: never;
-    };
-    requestBody?: never;
-    responses: {
-      /** @description Successful Response */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': components['schemas']['PaginatedGames'];
-        };
-      };
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': components['schemas']['HTTPValidationError'];
-        };
-      };
-    };
-  };
-  get_stats_route_v1_me_stats_get: {
-    parameters: {
-      query?: never;
-      header?: {
-        authorization?: string | null;
-      };
-      path?: never;
-      cookie?: never;
-    };
-    requestBody?: never;
-    responses: {
-      /** @description Successful Response */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': components['schemas']['StatsResponse'];
-        };
-      };
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': components['schemas']['HTTPValidationError'];
-        };
-      };
-    };
-  };
-  export_route_v1_me_export_get: {
-    parameters: {
-      query?: never;
-      header?: {
-        authorization?: string | null;
-      };
-      path?: never;
-      cookie?: never;
-    };
-    requestBody?: never;
-    responses: {
-      /** @description Successful Response */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
+          // Generated declaration: defines the generated type of the application/json property.
           'application/json': unknown;
+          // Generated declaration: closes the generated declaration opened above.
         };
+        // Generated declaration: closes the generated declaration opened above.
       };
       /** @description Validation Error */
+      // Generated declaration: continues the generated OpenAPI type declaration.
       422: {
+        // Generated declaration: opens the object for the headers property.
         headers: {
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
           [name: string]: unknown;
+          // Generated declaration: closes the generated declaration opened above.
         };
+        // Generated declaration: opens the object for the content property.
         content: {
+          // Generated declaration: defines the generated type of the application/json property.
           'application/json': components['schemas']['HTTPValidationError'];
+          // Generated declaration: closes the generated declaration opened above.
         };
+        // Generated declaration: closes the generated declaration opened above.
       };
+      // Generated declaration: closes the generated declaration opened above.
     };
+    // Generated declaration: closes the generated declaration opened above.
   };
-  delete_account_route_v1_me_delete: {
+  // Generated declaration: opens the object for the setup_totp_v1_auth_mfa_totp_setup_post property.
+  setup_totp_v1_auth_mfa_totp_setup_post: {
+    // Generated declaration: opens the object for the parameters property.
     parameters: {
+      // Generated declaration: defines the generated type of the query property.
       query?: never;
+      // Generated declaration: opens the object for the header property.
       header?: {
+        // Generated declaration: defines the generated type of the authorization property.
         authorization?: string | null;
+        // Generated declaration: closes the generated declaration opened above.
       };
+      // Generated declaration: defines the generated type of the path property.
       path?: never;
+      // Generated declaration: defines the generated type of the cookie property.
       cookie?: never;
+      // Generated declaration: closes the generated declaration opened above.
     };
+    // Generated declaration: defines the generated type of the requestBody property.
+    requestBody?: never;
+    // Generated declaration: opens the object for the responses property.
+    responses: {
+      /** @description Successful Response */
+      // Generated declaration: continues the generated OpenAPI type declaration.
+      200: {
+        // Generated declaration: opens the object for the headers property.
+        headers: {
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
+          [name: string]: unknown;
+          // Generated declaration: closes the generated declaration opened above.
+        };
+        // Generated declaration: opens the object for the content property.
+        content: {
+          // Generated declaration: defines the generated type of the application/json property.
+          'application/json': components['schemas']['TotpSetupResponse'];
+          // Generated declaration: closes the generated declaration opened above.
+        };
+        // Generated declaration: closes the generated declaration opened above.
+      };
+      /** @description Validation Error */
+      // Generated declaration: continues the generated OpenAPI type declaration.
+      422: {
+        // Generated declaration: opens the object for the headers property.
+        headers: {
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
+          [name: string]: unknown;
+          // Generated declaration: closes the generated declaration opened above.
+        };
+        // Generated declaration: opens the object for the content property.
+        content: {
+          // Generated declaration: defines the generated type of the application/json property.
+          'application/json': components['schemas']['HTTPValidationError'];
+          // Generated declaration: closes the generated declaration opened above.
+        };
+        // Generated declaration: closes the generated declaration opened above.
+      };
+      // Generated declaration: closes the generated declaration opened above.
+    };
+    // Generated declaration: closes the generated declaration opened above.
+  };
+  // Generated declaration: opens the object for the verify_totp_v1_auth_mfa_totp_verify_post property.
+  verify_totp_v1_auth_mfa_totp_verify_post: {
+    // Generated declaration: opens the object for the parameters property.
+    parameters: {
+      // Generated declaration: defines the generated type of the query property.
+      query?: never;
+      // Generated declaration: opens the object for the header property.
+      header?: {
+        // Generated declaration: defines the generated type of the authorization property.
+        authorization?: string | null;
+        // Generated declaration: closes the generated declaration opened above.
+      };
+      // Generated declaration: defines the generated type of the path property.
+      path?: never;
+      // Generated declaration: defines the generated type of the cookie property.
+      cookie?: never;
+      // Generated declaration: closes the generated declaration opened above.
+    };
+    // Generated declaration: opens the object for the requestBody property.
     requestBody: {
+      // Generated declaration: opens the object for the content property.
       content: {
-        'application/json': components['schemas']['DeleteAccountRequest'];
+        // Generated declaration: defines the generated type of the application/json property.
+        'application/json': components['schemas']['TotpVerifyRequest'];
+        // Generated declaration: closes the generated declaration opened above.
       };
+      // Generated declaration: closes the generated declaration opened above.
     };
+    // Generated declaration: opens the object for the responses property.
     responses: {
       /** @description Successful Response */
+      // Generated declaration: continues the generated OpenAPI type declaration.
       200: {
+        // Generated declaration: opens the object for the headers property.
         headers: {
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
           [name: string]: unknown;
+          // Generated declaration: closes the generated declaration opened above.
         };
+        // Generated declaration: opens the object for the content property.
         content: {
-          'application/json': components['schemas']['DeleteAccountResponse'];
+          // Generated declaration: defines the generated type of the application/json property.
+          'application/json': components['schemas']['AccessTokenResponse'];
+          // Generated declaration: closes the generated declaration opened above.
         };
+        // Generated declaration: closes the generated declaration opened above.
       };
       /** @description Validation Error */
+      // Generated declaration: continues the generated OpenAPI type declaration.
       422: {
+        // Generated declaration: opens the object for the headers property.
         headers: {
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
           [name: string]: unknown;
+          // Generated declaration: closes the generated declaration opened above.
         };
+        // Generated declaration: opens the object for the content property.
         content: {
+          // Generated declaration: defines the generated type of the application/json property.
           'application/json': components['schemas']['HTTPValidationError'];
+          // Generated declaration: closes the generated declaration opened above.
         };
+        // Generated declaration: closes the generated declaration opened above.
       };
+      // Generated declaration: closes the generated declaration opened above.
     };
+    // Generated declaration: closes the generated declaration opened above.
   };
-  create_support_request_route_v1_support_post: {
+  // Generated declaration: opens the object for the create_game_route_v1_games_post property.
+  create_game_route_v1_games_post: {
+    // Generated declaration: opens the object for the parameters property.
     parameters: {
+      // Generated declaration: defines the generated type of the query property.
       query?: never;
+      // Generated declaration: opens the object for the header property.
       header?: {
+        // Generated declaration: defines the generated type of the authorization property.
         authorization?: string | null;
+        // Generated declaration: closes the generated declaration opened above.
       };
+      // Generated declaration: defines the generated type of the path property.
       path?: never;
+      // Generated declaration: defines the generated type of the cookie property.
       cookie?: never;
+      // Generated declaration: closes the generated declaration opened above.
     };
+    // Generated declaration: opens the object for the requestBody property.
     requestBody: {
+      // Generated declaration: opens the object for the content property.
       content: {
-        'application/json': components['schemas']['SupportRequestCreate'];
+        // Generated declaration: defines the generated type of the application/json property.
+        'application/json': components['schemas']['CreateGameRequest'];
+        // Generated declaration: closes the generated declaration opened above.
       };
+      // Generated declaration: closes the generated declaration opened above.
     };
+    // Generated declaration: opens the object for the responses property.
     responses: {
       /** @description Successful Response */
-      202: {
+      // Generated declaration: continues the generated OpenAPI type declaration.
+      201: {
+        // Generated declaration: opens the object for the headers property.
         headers: {
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
           [name: string]: unknown;
+          // Generated declaration: closes the generated declaration opened above.
         };
+        // Generated declaration: opens the object for the content property.
         content: {
-          'application/json': components['schemas']['SupportRequestResponse'];
+          // Generated declaration: defines the generated type of the application/json property.
+          'application/json': components['schemas']['GameResponse'];
+          // Generated declaration: closes the generated declaration opened above.
         };
+        // Generated declaration: closes the generated declaration opened above.
       };
       /** @description Validation Error */
+      // Generated declaration: continues the generated OpenAPI type declaration.
       422: {
+        // Generated declaration: opens the object for the headers property.
         headers: {
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
           [name: string]: unknown;
+          // Generated declaration: closes the generated declaration opened above.
         };
+        // Generated declaration: opens the object for the content property.
         content: {
+          // Generated declaration: defines the generated type of the application/json property.
           'application/json': components['schemas']['HTTPValidationError'];
+          // Generated declaration: closes the generated declaration opened above.
         };
+        // Generated declaration: closes the generated declaration opened above.
       };
+      // Generated declaration: closes the generated declaration opened above.
     };
+    // Generated declaration: closes the generated declaration opened above.
   };
-  collect_event_route_v1_analytics_events_post: {
+  // Generated declaration: opens the object for the get_game_route_v1_games__game_id__get property.
+  get_game_route_v1_games__game_id__get: {
+    // Generated declaration: opens the object for the parameters property.
     parameters: {
+      // Generated declaration: defines the generated type of the query property.
       query?: never;
+      // Generated declaration: opens the object for the header property.
       header?: {
+        // Generated declaration: defines the generated type of the authorization property.
         authorization?: string | null;
+        // Generated declaration: closes the generated declaration opened above.
       };
-      path?: never;
-      cookie?: never;
-    };
-    requestBody: {
-      content: {
-        'application/json': components['schemas']['AnalyticsEventRequest'];
-      };
-    };
-    responses: {
-      /** @description Successful Response */
-      202: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': components['schemas']['AnalyticsEventResponse'];
-        };
-      };
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': components['schemas']['HTTPValidationError'];
-        };
-      };
-    };
-  };
-  games_route_v1_admin_games_get: {
-    parameters: {
-      query?: {
-        status?: string | null;
-        page?: number;
-        page_size?: number;
-      };
-      header?: {
-        authorization?: string | null;
-      };
-      path?: never;
-      cookie?: never;
-    };
-    requestBody?: never;
-    responses: {
-      /** @description Successful Response */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': components['schemas']['AdminPage_AdminGameItem_'];
-        };
-      };
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': components['schemas']['HTTPValidationError'];
-        };
-      };
-    };
-  };
-  profiles_route_v1_admin_profiles_get: {
-    parameters: {
-      query?: {
-        moderation_only?: boolean;
-        search?: string | null;
-        page?: number;
-        page_size?: number;
-      };
-      header?: {
-        authorization?: string | null;
-      };
-      path?: never;
-      cookie?: never;
-    };
-    requestBody?: never;
-    responses: {
-      /** @description Successful Response */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': components['schemas']['AdminPage_AdminProfileItem_'];
-        };
-      };
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': components['schemas']['HTTPValidationError'];
-        };
-      };
-    };
-  };
-  rooms_route_v1_admin_rooms_get: {
-    parameters: {
-      query?: {
-        active_only?: boolean;
-        page?: number;
-        page_size?: number;
-      };
-      header?: {
-        authorization?: string | null;
-      };
-      path?: never;
-      cookie?: never;
-    };
-    requestBody?: never;
-    responses: {
-      /** @description Successful Response */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': components['schemas']['AdminPage_AdminRoomItem_'];
-        };
-      };
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': components['schemas']['HTTPValidationError'];
-        };
-      };
-    };
-  };
-  challenges_route_v1_admin_challenges_get: {
-    parameters: {
-      query?: {
-        active_only?: boolean;
-        page?: number;
-        page_size?: number;
-      };
-      header?: {
-        authorization?: string | null;
-      };
-      path?: never;
-      cookie?: never;
-    };
-    requestBody?: never;
-    responses: {
-      /** @description Successful Response */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': components['schemas']['AdminPage_AdminChallengeItem_'];
-        };
-      };
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': components['schemas']['HTTPValidationError'];
-        };
-      };
-    };
-  };
-  leaderboard_review_route_v1_admin_leaderboard_review_get: {
-    parameters: {
-      query?: {
-        status?: string | null;
-        page?: number;
-        page_size?: number;
-      };
-      header?: {
-        authorization?: string | null;
-      };
-      path?: never;
-      cookie?: never;
-    };
-    requestBody?: never;
-    responses: {
-      /** @description Successful Response */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': components['schemas']['AdminPage_AdminLeaderboardItem_'];
-        };
-      };
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': components['schemas']['HTTPValidationError'];
-        };
-      };
-    };
-  };
-  summary_route_v1_admin_summary_get: {
-    parameters: {
-      query?: never;
-      header?: {
-        authorization?: string | null;
-      };
-      path?: never;
-      cookie?: never;
-    };
-    requestBody?: never;
-    responses: {
-      /** @description Successful Response */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': components['schemas']['AdminSummary'];
-        };
-      };
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': components['schemas']['HTTPValidationError'];
-        };
-      };
-    };
-  };
-  flags_route_v1_admin_flags_get: {
-    parameters: {
-      query?: never;
-      header?: {
-        authorization?: string | null;
-      };
-      path?: never;
-      cookie?: never;
-    };
-    requestBody?: never;
-    responses: {
-      /** @description Successful Response */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': components['schemas']['FeatureFlagResponse'][];
-        };
-      };
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': components['schemas']['HTTPValidationError'];
-        };
-      };
-    };
-  };
-  update_flag_route_v1_admin_flags__key__patch: {
-    parameters: {
-      query?: never;
-      header?: {
-        authorization?: string | null;
-      };
+      // Generated declaration: opens the object for the path property.
       path: {
-        key: string;
+        // Generated declaration: defines the generated type of the game_id property.
+        game_id: string;
+        // Generated declaration: closes the generated declaration opened above.
       };
+      // Generated declaration: defines the generated type of the cookie property.
       cookie?: never;
+      // Generated declaration: closes the generated declaration opened above.
     };
-    requestBody: {
-      content: {
-        'application/json': components['schemas']['AdminActionRequest'];
-      };
-    };
+    // Generated declaration: defines the generated type of the requestBody property.
+    requestBody?: never;
+    // Generated declaration: opens the object for the responses property.
     responses: {
       /** @description Successful Response */
+      // Generated declaration: continues the generated OpenAPI type declaration.
       200: {
+        // Generated declaration: opens the object for the headers property.
         headers: {
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
           [name: string]: unknown;
+          // Generated declaration: closes the generated declaration opened above.
         };
+        // Generated declaration: opens the object for the content property.
         content: {
-          'application/json': components['schemas']['FeatureFlagResponse'];
+          // Generated declaration: defines the generated type of the application/json property.
+          'application/json': components['schemas']['GameResponse'];
+          // Generated declaration: closes the generated declaration opened above.
         };
+        // Generated declaration: closes the generated declaration opened above.
       };
       /** @description Validation Error */
+      // Generated declaration: continues the generated OpenAPI type declaration.
       422: {
+        // Generated declaration: opens the object for the headers property.
         headers: {
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
           [name: string]: unknown;
+          // Generated declaration: closes the generated declaration opened above.
         };
+        // Generated declaration: opens the object for the content property.
         content: {
+          // Generated declaration: defines the generated type of the application/json property.
           'application/json': components['schemas']['HTTPValidationError'];
+          // Generated declaration: closes the generated declaration opened above.
         };
+        // Generated declaration: closes the generated declaration opened above.
       };
+      // Generated declaration: closes the generated declaration opened above.
     };
+    // Generated declaration: closes the generated declaration opened above.
   };
-  invalidate_leaderboard_route_v1_admin_leaderboard__entry_id__invalidate_post: {
+  // Generated declaration: opens the object for the submit_attempt_route_v1_games__game_id__attempts_post property.
+  submit_attempt_route_v1_games__game_id__attempts_post: {
+    // Generated declaration: opens the object for the parameters property.
     parameters: {
+      // Generated declaration: defines the generated type of the query property.
       query?: never;
+      // Generated declaration: opens the object for the header property.
       header?: {
+        // Generated declaration: defines the generated type of the authorization property.
         authorization?: string | null;
+        // Generated declaration: closes the generated declaration opened above.
       };
+      // Generated declaration: opens the object for the path property.
       path: {
-        entry_id: string;
+        // Generated declaration: defines the generated type of the game_id property.
+        game_id: string;
+        // Generated declaration: closes the generated declaration opened above.
       };
+      // Generated declaration: defines the generated type of the cookie property.
       cookie?: never;
+      // Generated declaration: closes the generated declaration opened above.
     };
+    // Generated declaration: opens the object for the requestBody property.
     requestBody: {
+      // Generated declaration: opens the object for the content property.
       content: {
-        'application/json': components['schemas']['AdminActionRequest'];
+        // Generated declaration: defines the generated type of the application/json property.
+        'application/json': components['schemas']['AttemptRequest'];
+        // Generated declaration: closes the generated declaration opened above.
       };
+      // Generated declaration: closes the generated declaration opened above.
     };
+    // Generated declaration: opens the object for the responses property.
     responses: {
       /** @description Successful Response */
+      // Generated declaration: continues the generated OpenAPI type declaration.
       200: {
+        // Generated declaration: opens the object for the headers property.
         headers: {
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
           [name: string]: unknown;
+          // Generated declaration: closes the generated declaration opened above.
         };
+        // Generated declaration: opens the object for the content property.
         content: {
-          'application/json': {
-            [key: string]: boolean;
-          };
+          // Generated declaration: defines the generated type of the application/json property.
+          'application/json': components['schemas']['GameResponse'];
+          // Generated declaration: closes the generated declaration opened above.
         };
+        // Generated declaration: closes the generated declaration opened above.
       };
       /** @description Validation Error */
+      // Generated declaration: continues the generated OpenAPI type declaration.
       422: {
+        // Generated declaration: opens the object for the headers property.
         headers: {
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
           [name: string]: unknown;
+          // Generated declaration: closes the generated declaration opened above.
         };
+        // Generated declaration: opens the object for the content property.
         content: {
+          // Generated declaration: defines the generated type of the application/json property.
           'application/json': components['schemas']['HTTPValidationError'];
+          // Generated declaration: closes the generated declaration opened above.
         };
+        // Generated declaration: closes the generated declaration opened above.
       };
+      // Generated declaration: closes the generated declaration opened above.
     };
+    // Generated declaration: closes the generated declaration opened above.
   };
-  restore_leaderboard_route_v1_admin_leaderboard__entry_id__restore_post: {
+  // Generated declaration: opens the object for the abandon_game_route_v1_games__game_id__abandon_post property.
+  abandon_game_route_v1_games__game_id__abandon_post: {
+    // Generated declaration: opens the object for the parameters property.
     parameters: {
+      // Generated declaration: defines the generated type of the query property.
       query?: never;
+      // Generated declaration: opens the object for the header property.
       header?: {
+        // Generated declaration: defines the generated type of the authorization property.
         authorization?: string | null;
+        // Generated declaration: closes the generated declaration opened above.
       };
+      // Generated declaration: opens the object for the path property.
       path: {
-        entry_id: string;
+        // Generated declaration: defines the generated type of the game_id property.
+        game_id: string;
+        // Generated declaration: closes the generated declaration opened above.
       };
+      // Generated declaration: defines the generated type of the cookie property.
       cookie?: never;
+      // Generated declaration: closes the generated declaration opened above.
     };
-    requestBody: {
-      content: {
-        'application/json': components['schemas']['AdminActionRequest'];
-      };
-    };
+    // Generated declaration: defines the generated type of the requestBody property.
+    requestBody?: never;
+    // Generated declaration: opens the object for the responses property.
     responses: {
       /** @description Successful Response */
+      // Generated declaration: continues the generated OpenAPI type declaration.
       200: {
+        // Generated declaration: opens the object for the headers property.
         headers: {
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
           [name: string]: unknown;
+          // Generated declaration: closes the generated declaration opened above.
         };
+        // Generated declaration: opens the object for the content property.
         content: {
-          'application/json': {
-            [key: string]: boolean;
-          };
+          // Generated declaration: defines the generated type of the application/json property.
+          'application/json': components['schemas']['GameResponse'];
+          // Generated declaration: closes the generated declaration opened above.
         };
+        // Generated declaration: closes the generated declaration opened above.
       };
       /** @description Validation Error */
+      // Generated declaration: continues the generated OpenAPI type declaration.
       422: {
+        // Generated declaration: opens the object for the headers property.
         headers: {
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
           [name: string]: unknown;
+          // Generated declaration: closes the generated declaration opened above.
         };
+        // Generated declaration: opens the object for the content property.
         content: {
+          // Generated declaration: defines the generated type of the application/json property.
           'application/json': components['schemas']['HTTPValidationError'];
+          // Generated declaration: closes the generated declaration opened above.
         };
+        // Generated declaration: closes the generated declaration opened above.
       };
+      // Generated declaration: closes the generated declaration opened above.
     };
+    // Generated declaration: closes the generated declaration opened above.
   };
-  moderate_profile_route_v1_admin_profiles__user_id__moderate_post: {
+  // Generated declaration: opens the object for the get_daily_route_v1_daily_get property.
+  get_daily_route_v1_daily_get: {
+    // Generated declaration: opens the object for the parameters property.
     parameters: {
+      // Generated declaration: defines the generated type of the query property.
       query?: never;
+      // Generated declaration: opens the object for the header property.
       header?: {
+        // Generated declaration: defines the generated type of the authorization property.
         authorization?: string | null;
+        // Generated declaration: closes the generated declaration opened above.
       };
-      path: {
-        user_id: string;
-      };
+      // Generated declaration: defines the generated type of the path property.
+      path?: never;
+      // Generated declaration: defines the generated type of the cookie property.
       cookie?: never;
+      // Generated declaration: closes the generated declaration opened above.
     };
-    requestBody: {
-      content: {
-        'application/json': components['schemas']['AdminActionRequest'];
-      };
-    };
+    // Generated declaration: defines the generated type of the requestBody property.
+    requestBody?: never;
+    // Generated declaration: opens the object for the responses property.
     responses: {
       /** @description Successful Response */
+      // Generated declaration: continues the generated OpenAPI type declaration.
       200: {
+        // Generated declaration: opens the object for the headers property.
         headers: {
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
           [name: string]: unknown;
+          // Generated declaration: closes the generated declaration opened above.
         };
+        // Generated declaration: opens the object for the content property.
         content: {
-          'application/json': {
-            [key: string]: boolean;
-          };
+          // Generated declaration: defines the generated type of the application/json property.
+          'application/json': components['schemas']['DailyDefinitionResponse'];
+          // Generated declaration: closes the generated declaration opened above.
         };
+        // Generated declaration: closes the generated declaration opened above.
       };
       /** @description Validation Error */
+      // Generated declaration: continues the generated OpenAPI type declaration.
       422: {
+        // Generated declaration: opens the object for the headers property.
         headers: {
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
           [name: string]: unknown;
+          // Generated declaration: closes the generated declaration opened above.
         };
+        // Generated declaration: opens the object for the content property.
         content: {
+          // Generated declaration: defines the generated type of the application/json property.
           'application/json': components['schemas']['HTTPValidationError'];
+          // Generated declaration: closes the generated declaration opened above.
         };
+        // Generated declaration: closes the generated declaration opened above.
       };
+      // Generated declaration: closes the generated declaration opened above.
     };
+    // Generated declaration: closes the generated declaration opened above.
   };
-  admin_revoke_challenge_route_v1_admin_challenges__challenge_id__revoke_post: {
+  // Generated declaration: opens the object for the start_daily_route_v1_daily_start_post property.
+  start_daily_route_v1_daily_start_post: {
+    // Generated declaration: opens the object for the parameters property.
     parameters: {
+      // Generated declaration: defines the generated type of the query property.
       query?: never;
+      // Generated declaration: opens the object for the header property.
       header?: {
+        // Generated declaration: defines the generated type of the authorization property.
         authorization?: string | null;
+        // Generated declaration: closes the generated declaration opened above.
       };
+      // Generated declaration: defines the generated type of the path property.
+      path?: never;
+      // Generated declaration: defines the generated type of the cookie property.
+      cookie?: never;
+      // Generated declaration: closes the generated declaration opened above.
+    };
+    // Generated declaration: opens the object for the requestBody property.
+    requestBody?: {
+      // Generated declaration: opens the object for the content property.
+      content: {
+        // Generated declaration: defines the generated type of the application/json property.
+        'application/json': components['schemas']['StartGameRequest'] | null;
+        // Generated declaration: closes the generated declaration opened above.
+      };
+      // Generated declaration: closes the generated declaration opened above.
+    };
+    // Generated declaration: opens the object for the responses property.
+    responses: {
+      /** @description Successful Response */
+      // Generated declaration: continues the generated OpenAPI type declaration.
+      200: {
+        // Generated declaration: opens the object for the headers property.
+        headers: {
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
+          [name: string]: unknown;
+          // Generated declaration: closes the generated declaration opened above.
+        };
+        // Generated declaration: opens the object for the content property.
+        content: {
+          // Generated declaration: defines the generated type of the application/json property.
+          'application/json': components['schemas']['GameResponse'];
+          // Generated declaration: closes the generated declaration opened above.
+        };
+        // Generated declaration: closes the generated declaration opened above.
+      };
+      /** @description Validation Error */
+      // Generated declaration: continues the generated OpenAPI type declaration.
+      422: {
+        // Generated declaration: opens the object for the headers property.
+        headers: {
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
+          [name: string]: unknown;
+          // Generated declaration: closes the generated declaration opened above.
+        };
+        // Generated declaration: opens the object for the content property.
+        content: {
+          // Generated declaration: defines the generated type of the application/json property.
+          'application/json': components['schemas']['HTTPValidationError'];
+          // Generated declaration: closes the generated declaration opened above.
+        };
+        // Generated declaration: closes the generated declaration opened above.
+      };
+      // Generated declaration: closes the generated declaration opened above.
+    };
+    // Generated declaration: closes the generated declaration opened above.
+  };
+  // Generated declaration: opens the object for the daily_leaderboard_route_v1_daily_leaderboard_get property.
+  daily_leaderboard_route_v1_daily_leaderboard_get: {
+    // Generated declaration: opens the object for the parameters property.
+    parameters: {
+      // Generated declaration: opens the object for the query property.
+      query?: {
+        // Generated declaration: defines the generated type of the page property.
+        page?: number;
+        // Generated declaration: defines the generated type of the page_size property.
+        page_size?: number;
+        // Generated declaration: closes the generated declaration opened above.
+      };
+      // Generated declaration: opens the object for the header property.
+      header?: {
+        // Generated declaration: defines the generated type of the authorization property.
+        authorization?: string | null;
+        // Generated declaration: closes the generated declaration opened above.
+      };
+      // Generated declaration: defines the generated type of the path property.
+      path?: never;
+      // Generated declaration: defines the generated type of the cookie property.
+      cookie?: never;
+      // Generated declaration: closes the generated declaration opened above.
+    };
+    // Generated declaration: defines the generated type of the requestBody property.
+    requestBody?: never;
+    // Generated declaration: opens the object for the responses property.
+    responses: {
+      /** @description Successful Response */
+      // Generated declaration: continues the generated OpenAPI type declaration.
+      200: {
+        // Generated declaration: opens the object for the headers property.
+        headers: {
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
+          [name: string]: unknown;
+          // Generated declaration: closes the generated declaration opened above.
+        };
+        // Generated declaration: opens the object for the content property.
+        content: {
+          // Generated declaration: defines the generated type of the application/json property.
+          'application/json': components['schemas']['PaginatedLeaderboard'];
+          // Generated declaration: closes the generated declaration opened above.
+        };
+        // Generated declaration: closes the generated declaration opened above.
+      };
+      /** @description Validation Error */
+      // Generated declaration: continues the generated OpenAPI type declaration.
+      422: {
+        // Generated declaration: opens the object for the headers property.
+        headers: {
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
+          [name: string]: unknown;
+          // Generated declaration: closes the generated declaration opened above.
+        };
+        // Generated declaration: opens the object for the content property.
+        content: {
+          // Generated declaration: defines the generated type of the application/json property.
+          'application/json': components['schemas']['HTTPValidationError'];
+          // Generated declaration: closes the generated declaration opened above.
+        };
+        // Generated declaration: closes the generated declaration opened above.
+      };
+      // Generated declaration: closes the generated declaration opened above.
+    };
+    // Generated declaration: closes the generated declaration opened above.
+  };
+  // Generated declaration: opens the object for the challenge_results_route_v1_challenges__challenge_id__results_get property.
+  challenge_results_route_v1_challenges__challenge_id__results_get: {
+    // Generated declaration: opens the object for the parameters property.
+    parameters: {
+      // Generated declaration: opens the object for the query property.
+      query?: {
+        // Generated declaration: defines the generated type of the page property.
+        page?: number;
+        // Generated declaration: defines the generated type of the page_size property.
+        page_size?: number;
+        // Generated declaration: closes the generated declaration opened above.
+      };
+      // Generated declaration: opens the object for the header property.
+      header?: {
+        // Generated declaration: defines the generated type of the authorization property.
+        authorization?: string | null;
+        // Generated declaration: closes the generated declaration opened above.
+      };
+      // Generated declaration: opens the object for the path property.
       path: {
+        // Generated declaration: defines the generated type of the challenge_id property.
         challenge_id: string;
+        // Generated declaration: closes the generated declaration opened above.
       };
+      // Generated declaration: defines the generated type of the cookie property.
       cookie?: never;
+      // Generated declaration: closes the generated declaration opened above.
     };
-    requestBody: {
-      content: {
-        'application/json': components['schemas']['AdminActionRequest'];
-      };
-    };
-    responses: {
-      /** @description Successful Response */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': {
-            [key: string]: boolean;
-          };
-        };
-      };
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': components['schemas']['HTTPValidationError'];
-        };
-      };
-    };
-  };
-  terminate_room_route_v1_admin_rooms__room_id__terminate_post: {
-    parameters: {
-      query?: never;
-      header?: {
-        authorization?: string | null;
-      };
-      path: {
-        room_id: string;
-      };
-      cookie?: never;
-    };
-    requestBody: {
-      content: {
-        'application/json': components['schemas']['AdminActionRequest'];
-      };
-    };
-    responses: {
-      /** @description Successful Response */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': {
-            [key: string]: boolean;
-          };
-        };
-      };
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': components['schemas']['HTTPValidationError'];
-        };
-      };
-    };
-  };
-  audit_route_v1_admin_audit_get: {
-    parameters: {
-      query?: {
-        limit?: number;
-      };
-      header?: {
-        authorization?: string | null;
-      };
-      path?: never;
-      cookie?: never;
-    };
+    // Generated declaration: defines the generated type of the requestBody property.
     requestBody?: never;
+    // Generated declaration: opens the object for the responses property.
     responses: {
       /** @description Successful Response */
+      // Generated declaration: continues the generated OpenAPI type declaration.
       200: {
+        // Generated declaration: opens the object for the headers property.
         headers: {
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
           [name: string]: unknown;
+          // Generated declaration: closes the generated declaration opened above.
         };
+        // Generated declaration: opens the object for the content property.
         content: {
-          'application/json': components['schemas']['AuditEventResponse'][];
+          // Generated declaration: defines the generated type of the application/json property.
+          'application/json': components['schemas']['ChallengeResultsResponse'];
+          // Generated declaration: closes the generated declaration opened above.
         };
+        // Generated declaration: closes the generated declaration opened above.
       };
       /** @description Validation Error */
+      // Generated declaration: continues the generated OpenAPI type declaration.
       422: {
+        // Generated declaration: opens the object for the headers property.
         headers: {
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
           [name: string]: unknown;
+          // Generated declaration: closes the generated declaration opened above.
         };
+        // Generated declaration: opens the object for the content property.
         content: {
+          // Generated declaration: defines the generated type of the application/json property.
           'application/json': components['schemas']['HTTPValidationError'];
+          // Generated declaration: closes the generated declaration opened above.
         };
+        // Generated declaration: closes the generated declaration opened above.
       };
+      // Generated declaration: closes the generated declaration opened above.
     };
+    // Generated declaration: closes the generated declaration opened above.
   };
+  // Generated declaration: opens the object for the create_challenge_route_v1_challenges_post property.
+  create_challenge_route_v1_challenges_post: {
+    // Generated declaration: opens the object for the parameters property.
+    parameters: {
+      // Generated declaration: defines the generated type of the query property.
+      query?: never;
+      // Generated declaration: opens the object for the header property.
+      header?: {
+        // Generated declaration: defines the generated type of the authorization property.
+        authorization?: string | null;
+        // Generated declaration: closes the generated declaration opened above.
+      };
+      // Generated declaration: defines the generated type of the path property.
+      path?: never;
+      // Generated declaration: defines the generated type of the cookie property.
+      cookie?: never;
+      // Generated declaration: closes the generated declaration opened above.
+    };
+    // Generated declaration: opens the object for the requestBody property.
+    requestBody: {
+      // Generated declaration: opens the object for the content property.
+      content: {
+        // Generated declaration: defines the generated type of the application/json property.
+        'application/json': components['schemas']['CreateChallengeRequest'];
+        // Generated declaration: closes the generated declaration opened above.
+      };
+      // Generated declaration: closes the generated declaration opened above.
+    };
+    // Generated declaration: opens the object for the responses property.
+    responses: {
+      /** @description Successful Response */
+      // Generated declaration: continues the generated OpenAPI type declaration.
+      201: {
+        // Generated declaration: opens the object for the headers property.
+        headers: {
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
+          [name: string]: unknown;
+          // Generated declaration: closes the generated declaration opened above.
+        };
+        // Generated declaration: opens the object for the content property.
+        content: {
+          // Generated declaration: defines the generated type of the application/json property.
+          'application/json': components['schemas']['ChallengeResponse'];
+          // Generated declaration: closes the generated declaration opened above.
+        };
+        // Generated declaration: closes the generated declaration opened above.
+      };
+      /** @description Validation Error */
+      // Generated declaration: continues the generated OpenAPI type declaration.
+      422: {
+        // Generated declaration: opens the object for the headers property.
+        headers: {
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
+          [name: string]: unknown;
+          // Generated declaration: closes the generated declaration opened above.
+        };
+        // Generated declaration: opens the object for the content property.
+        content: {
+          // Generated declaration: defines the generated type of the application/json property.
+          'application/json': components['schemas']['HTTPValidationError'];
+          // Generated declaration: closes the generated declaration opened above.
+        };
+        // Generated declaration: closes the generated declaration opened above.
+      };
+      // Generated declaration: closes the generated declaration opened above.
+    };
+    // Generated declaration: closes the generated declaration opened above.
+  };
+  // Generated declaration: opens the object for the owned_challenges_route_v1_challenges_mine_get property.
+  owned_challenges_route_v1_challenges_mine_get: {
+    // Generated declaration: opens the object for the parameters property.
+    parameters: {
+      // Generated declaration: opens the object for the query property.
+      query?: {
+        // Generated declaration: defines the generated type of the page property.
+        page?: number;
+        // Generated declaration: defines the generated type of the page_size property.
+        page_size?: number;
+        // Generated declaration: closes the generated declaration opened above.
+      };
+      // Generated declaration: opens the object for the header property.
+      header?: {
+        // Generated declaration: defines the generated type of the authorization property.
+        authorization?: string | null;
+        // Generated declaration: closes the generated declaration opened above.
+      };
+      // Generated declaration: defines the generated type of the path property.
+      path?: never;
+      // Generated declaration: defines the generated type of the cookie property.
+      cookie?: never;
+      // Generated declaration: closes the generated declaration opened above.
+    };
+    // Generated declaration: defines the generated type of the requestBody property.
+    requestBody?: never;
+    // Generated declaration: opens the object for the responses property.
+    responses: {
+      /** @description Successful Response */
+      // Generated declaration: continues the generated OpenAPI type declaration.
+      200: {
+        // Generated declaration: opens the object for the headers property.
+        headers: {
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
+          [name: string]: unknown;
+          // Generated declaration: closes the generated declaration opened above.
+        };
+        // Generated declaration: opens the object for the content property.
+        content: {
+          // Generated declaration: defines the generated type of the application/json property.
+          'application/json': components['schemas']['PaginatedOwnedChallenges'];
+          // Generated declaration: closes the generated declaration opened above.
+        };
+        // Generated declaration: closes the generated declaration opened above.
+      };
+      /** @description Validation Error */
+      // Generated declaration: continues the generated OpenAPI type declaration.
+      422: {
+        // Generated declaration: opens the object for the headers property.
+        headers: {
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
+          [name: string]: unknown;
+          // Generated declaration: closes the generated declaration opened above.
+        };
+        // Generated declaration: opens the object for the content property.
+        content: {
+          // Generated declaration: defines the generated type of the application/json property.
+          'application/json': components['schemas']['HTTPValidationError'];
+          // Generated declaration: closes the generated declaration opened above.
+        };
+        // Generated declaration: closes the generated declaration opened above.
+      };
+      // Generated declaration: closes the generated declaration opened above.
+    };
+    // Generated declaration: closes the generated declaration opened above.
+  };
+  // Generated declaration: opens the object for the get_challenge_route_v1_challenges__share_code__get property.
+  get_challenge_route_v1_challenges__share_code__get: {
+    // Generated declaration: opens the object for the parameters property.
+    parameters: {
+      // Generated declaration: defines the generated type of the query property.
+      query?: never;
+      // Generated declaration: opens the object for the header property.
+      header?: {
+        // Generated declaration: defines the generated type of the authorization property.
+        authorization?: string | null;
+        // Generated declaration: closes the generated declaration opened above.
+      };
+      // Generated declaration: opens the object for the path property.
+      path: {
+        // Generated declaration: defines the generated type of the share_code property.
+        share_code: string;
+        // Generated declaration: closes the generated declaration opened above.
+      };
+      // Generated declaration: defines the generated type of the cookie property.
+      cookie?: never;
+      // Generated declaration: closes the generated declaration opened above.
+    };
+    // Generated declaration: defines the generated type of the requestBody property.
+    requestBody?: never;
+    // Generated declaration: opens the object for the responses property.
+    responses: {
+      /** @description Successful Response */
+      // Generated declaration: continues the generated OpenAPI type declaration.
+      200: {
+        // Generated declaration: opens the object for the headers property.
+        headers: {
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
+          [name: string]: unknown;
+          // Generated declaration: closes the generated declaration opened above.
+        };
+        // Generated declaration: opens the object for the content property.
+        content: {
+          // Generated declaration: defines the generated type of the application/json property.
+          'application/json': components['schemas']['ChallengeResponse'];
+          // Generated declaration: closes the generated declaration opened above.
+        };
+        // Generated declaration: closes the generated declaration opened above.
+      };
+      /** @description Validation Error */
+      // Generated declaration: continues the generated OpenAPI type declaration.
+      422: {
+        // Generated declaration: opens the object for the headers property.
+        headers: {
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
+          [name: string]: unknown;
+          // Generated declaration: closes the generated declaration opened above.
+        };
+        // Generated declaration: opens the object for the content property.
+        content: {
+          // Generated declaration: defines the generated type of the application/json property.
+          'application/json': components['schemas']['HTTPValidationError'];
+          // Generated declaration: closes the generated declaration opened above.
+        };
+        // Generated declaration: closes the generated declaration opened above.
+      };
+      // Generated declaration: closes the generated declaration opened above.
+    };
+    // Generated declaration: closes the generated declaration opened above.
+  };
+  // Generated declaration: opens the object for the start_challenge_route_v1_challenges__share_code__start_post property.
+  start_challenge_route_v1_challenges__share_code__start_post: {
+    // Generated declaration: opens the object for the parameters property.
+    parameters: {
+      // Generated declaration: defines the generated type of the query property.
+      query?: never;
+      // Generated declaration: opens the object for the header property.
+      header?: {
+        // Generated declaration: defines the generated type of the authorization property.
+        authorization?: string | null;
+        // Generated declaration: closes the generated declaration opened above.
+      };
+      // Generated declaration: opens the object for the path property.
+      path: {
+        // Generated declaration: defines the generated type of the share_code property.
+        share_code: string;
+        // Generated declaration: closes the generated declaration opened above.
+      };
+      // Generated declaration: defines the generated type of the cookie property.
+      cookie?: never;
+      // Generated declaration: closes the generated declaration opened above.
+    };
+    // Generated declaration: opens the object for the requestBody property.
+    requestBody?: {
+      // Generated declaration: opens the object for the content property.
+      content: {
+        // Generated declaration: defines the generated type of the application/json property.
+        'application/json': components['schemas']['StartGameRequest'] | null;
+        // Generated declaration: closes the generated declaration opened above.
+      };
+      // Generated declaration: closes the generated declaration opened above.
+    };
+    // Generated declaration: opens the object for the responses property.
+    responses: {
+      /** @description Successful Response */
+      // Generated declaration: continues the generated OpenAPI type declaration.
+      200: {
+        // Generated declaration: opens the object for the headers property.
+        headers: {
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
+          [name: string]: unknown;
+          // Generated declaration: closes the generated declaration opened above.
+        };
+        // Generated declaration: opens the object for the content property.
+        content: {
+          // Generated declaration: defines the generated type of the application/json property.
+          'application/json': components['schemas']['GameResponse'];
+          // Generated declaration: closes the generated declaration opened above.
+        };
+        // Generated declaration: closes the generated declaration opened above.
+      };
+      /** @description Validation Error */
+      // Generated declaration: continues the generated OpenAPI type declaration.
+      422: {
+        // Generated declaration: opens the object for the headers property.
+        headers: {
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
+          [name: string]: unknown;
+          // Generated declaration: closes the generated declaration opened above.
+        };
+        // Generated declaration: opens the object for the content property.
+        content: {
+          // Generated declaration: defines the generated type of the application/json property.
+          'application/json': components['schemas']['HTTPValidationError'];
+          // Generated declaration: closes the generated declaration opened above.
+        };
+        // Generated declaration: closes the generated declaration opened above.
+      };
+      // Generated declaration: closes the generated declaration opened above.
+    };
+    // Generated declaration: closes the generated declaration opened above.
+  };
+  // Generated declaration: opens the object for the revoke_challenge_route_v1_challenges__challenge_id__delete property.
+  revoke_challenge_route_v1_challenges__challenge_id__delete: {
+    // Generated declaration: opens the object for the parameters property.
+    parameters: {
+      // Generated declaration: defines the generated type of the query property.
+      query?: never;
+      // Generated declaration: opens the object for the header property.
+      header?: {
+        // Generated declaration: defines the generated type of the authorization property.
+        authorization?: string | null;
+        // Generated declaration: closes the generated declaration opened above.
+      };
+      // Generated declaration: opens the object for the path property.
+      path: {
+        // Generated declaration: defines the generated type of the challenge_id property.
+        challenge_id: string;
+        // Generated declaration: closes the generated declaration opened above.
+      };
+      // Generated declaration: defines the generated type of the cookie property.
+      cookie?: never;
+      // Generated declaration: closes the generated declaration opened above.
+    };
+    // Generated declaration: defines the generated type of the requestBody property.
+    requestBody?: never;
+    // Generated declaration: opens the object for the responses property.
+    responses: {
+      /** @description Successful Response */
+      // Generated declaration: continues the generated OpenAPI type declaration.
+      204: {
+        // Generated declaration: opens the object for the headers property.
+        headers: {
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
+          [name: string]: unknown;
+          // Generated declaration: closes the generated declaration opened above.
+        };
+        // Generated declaration: defines the generated type of the content property.
+        content?: never;
+        // Generated declaration: closes the generated declaration opened above.
+      };
+      /** @description Validation Error */
+      // Generated declaration: continues the generated OpenAPI type declaration.
+      422: {
+        // Generated declaration: opens the object for the headers property.
+        headers: {
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
+          [name: string]: unknown;
+          // Generated declaration: closes the generated declaration opened above.
+        };
+        // Generated declaration: opens the object for the content property.
+        content: {
+          // Generated declaration: defines the generated type of the application/json property.
+          'application/json': components['schemas']['HTTPValidationError'];
+          // Generated declaration: closes the generated declaration opened above.
+        };
+        // Generated declaration: closes the generated declaration opened above.
+      };
+      // Generated declaration: closes the generated declaration opened above.
+    };
+    // Generated declaration: closes the generated declaration opened above.
+  };
+  // Generated declaration: opens the object for the create_websocket_ticket_route_v1_rooms__room_id__ws_ticket_post property.
+  create_websocket_ticket_route_v1_rooms__room_id__ws_ticket_post: {
+    // Generated declaration: opens the object for the parameters property.
+    parameters: {
+      // Generated declaration: defines the generated type of the query property.
+      query?: never;
+      // Generated declaration: opens the object for the header property.
+      header?: {
+        // Generated declaration: defines the generated type of the authorization property.
+        authorization?: string | null;
+        // Generated declaration: closes the generated declaration opened above.
+      };
+      // Generated declaration: opens the object for the path property.
+      path: {
+        // Generated declaration: defines the generated type of the room_id property.
+        room_id: string;
+        // Generated declaration: closes the generated declaration opened above.
+      };
+      // Generated declaration: defines the generated type of the cookie property.
+      cookie?: never;
+      // Generated declaration: closes the generated declaration opened above.
+    };
+    // Generated declaration: defines the generated type of the requestBody property.
+    requestBody?: never;
+    // Generated declaration: opens the object for the responses property.
+    responses: {
+      /** @description Successful Response */
+      // Generated declaration: continues the generated OpenAPI type declaration.
+      200: {
+        // Generated declaration: opens the object for the headers property.
+        headers: {
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
+          [name: string]: unknown;
+          // Generated declaration: closes the generated declaration opened above.
+        };
+        // Generated declaration: opens the object for the content property.
+        content: {
+          // Generated declaration: defines the generated type of the application/json property.
+          'application/json': components['schemas']['WebSocketTicketResponse'];
+          // Generated declaration: closes the generated declaration opened above.
+        };
+        // Generated declaration: closes the generated declaration opened above.
+      };
+      /** @description Validation Error */
+      // Generated declaration: continues the generated OpenAPI type declaration.
+      422: {
+        // Generated declaration: opens the object for the headers property.
+        headers: {
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
+          [name: string]: unknown;
+          // Generated declaration: closes the generated declaration opened above.
+        };
+        // Generated declaration: opens the object for the content property.
+        content: {
+          // Generated declaration: defines the generated type of the application/json property.
+          'application/json': components['schemas']['HTTPValidationError'];
+          // Generated declaration: closes the generated declaration opened above.
+        };
+        // Generated declaration: closes the generated declaration opened above.
+      };
+      // Generated declaration: closes the generated declaration opened above.
+    };
+    // Generated declaration: closes the generated declaration opened above.
+  };
+  // Generated declaration: opens the object for the create_room_route_v1_rooms_post property.
+  create_room_route_v1_rooms_post: {
+    // Generated declaration: opens the object for the parameters property.
+    parameters: {
+      // Generated declaration: defines the generated type of the query property.
+      query?: never;
+      // Generated declaration: opens the object for the header property.
+      header?: {
+        // Generated declaration: defines the generated type of the authorization property.
+        authorization?: string | null;
+        // Generated declaration: closes the generated declaration opened above.
+      };
+      // Generated declaration: defines the generated type of the path property.
+      path?: never;
+      // Generated declaration: defines the generated type of the cookie property.
+      cookie?: never;
+      // Generated declaration: closes the generated declaration opened above.
+    };
+    // Generated declaration: opens the object for the requestBody property.
+    requestBody: {
+      // Generated declaration: opens the object for the content property.
+      content: {
+        // Generated declaration: defines the generated type of the application/json property.
+        'application/json': components['schemas']['CreateRoomRequest'];
+        // Generated declaration: closes the generated declaration opened above.
+      };
+      // Generated declaration: closes the generated declaration opened above.
+    };
+    // Generated declaration: opens the object for the responses property.
+    responses: {
+      /** @description Successful Response */
+      // Generated declaration: continues the generated OpenAPI type declaration.
+      201: {
+        // Generated declaration: opens the object for the headers property.
+        headers: {
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
+          [name: string]: unknown;
+          // Generated declaration: closes the generated declaration opened above.
+        };
+        // Generated declaration: opens the object for the content property.
+        content: {
+          // Generated declaration: defines the generated type of the application/json property.
+          'application/json': components['schemas']['RoomResponse'];
+          // Generated declaration: closes the generated declaration opened above.
+        };
+        // Generated declaration: closes the generated declaration opened above.
+      };
+      /** @description Validation Error */
+      // Generated declaration: continues the generated OpenAPI type declaration.
+      422: {
+        // Generated declaration: opens the object for the headers property.
+        headers: {
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
+          [name: string]: unknown;
+          // Generated declaration: closes the generated declaration opened above.
+        };
+        // Generated declaration: opens the object for the content property.
+        content: {
+          // Generated declaration: defines the generated type of the application/json property.
+          'application/json': components['schemas']['HTTPValidationError'];
+          // Generated declaration: closes the generated declaration opened above.
+        };
+        // Generated declaration: closes the generated declaration opened above.
+      };
+      // Generated declaration: closes the generated declaration opened above.
+    };
+    // Generated declaration: closes the generated declaration opened above.
+  };
+  // Generated declaration: opens the object for the join_room_route_v1_rooms__room_code__join_post property.
+  join_room_route_v1_rooms__room_code__join_post: {
+    // Generated declaration: opens the object for the parameters property.
+    parameters: {
+      // Generated declaration: defines the generated type of the query property.
+      query?: never;
+      // Generated declaration: opens the object for the header property.
+      header?: {
+        // Generated declaration: defines the generated type of the authorization property.
+        authorization?: string | null;
+        // Generated declaration: closes the generated declaration opened above.
+      };
+      // Generated declaration: opens the object for the path property.
+      path: {
+        // Generated declaration: defines the generated type of the room_code property.
+        room_code: string;
+        // Generated declaration: closes the generated declaration opened above.
+      };
+      // Generated declaration: defines the generated type of the cookie property.
+      cookie?: never;
+      // Generated declaration: closes the generated declaration opened above.
+    };
+    // Generated declaration: defines the generated type of the requestBody property.
+    requestBody?: never;
+    // Generated declaration: opens the object for the responses property.
+    responses: {
+      /** @description Successful Response */
+      // Generated declaration: continues the generated OpenAPI type declaration.
+      200: {
+        // Generated declaration: opens the object for the headers property.
+        headers: {
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
+          [name: string]: unknown;
+          // Generated declaration: closes the generated declaration opened above.
+        };
+        // Generated declaration: opens the object for the content property.
+        content: {
+          // Generated declaration: defines the generated type of the application/json property.
+          'application/json': components['schemas']['RoomResponse'];
+          // Generated declaration: closes the generated declaration opened above.
+        };
+        // Generated declaration: closes the generated declaration opened above.
+      };
+      /** @description Validation Error */
+      // Generated declaration: continues the generated OpenAPI type declaration.
+      422: {
+        // Generated declaration: opens the object for the headers property.
+        headers: {
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
+          [name: string]: unknown;
+          // Generated declaration: closes the generated declaration opened above.
+        };
+        // Generated declaration: opens the object for the content property.
+        content: {
+          // Generated declaration: defines the generated type of the application/json property.
+          'application/json': components['schemas']['HTTPValidationError'];
+          // Generated declaration: closes the generated declaration opened above.
+        };
+        // Generated declaration: closes the generated declaration opened above.
+      };
+      // Generated declaration: closes the generated declaration opened above.
+    };
+    // Generated declaration: closes the generated declaration opened above.
+  };
+  // Generated declaration: opens the object for the ready_room_route_v1_rooms__room_id__ready_post property.
+  ready_room_route_v1_rooms__room_id__ready_post: {
+    // Generated declaration: opens the object for the parameters property.
+    parameters: {
+      // Generated declaration: defines the generated type of the query property.
+      query?: never;
+      // Generated declaration: opens the object for the header property.
+      header?: {
+        // Generated declaration: defines the generated type of the authorization property.
+        authorization?: string | null;
+        // Generated declaration: closes the generated declaration opened above.
+      };
+      // Generated declaration: opens the object for the path property.
+      path: {
+        // Generated declaration: defines the generated type of the room_id property.
+        room_id: string;
+        // Generated declaration: closes the generated declaration opened above.
+      };
+      // Generated declaration: defines the generated type of the cookie property.
+      cookie?: never;
+      // Generated declaration: closes the generated declaration opened above.
+    };
+    // Generated declaration: defines the generated type of the requestBody property.
+    requestBody?: never;
+    // Generated declaration: opens the object for the responses property.
+    responses: {
+      /** @description Successful Response */
+      // Generated declaration: continues the generated OpenAPI type declaration.
+      200: {
+        // Generated declaration: opens the object for the headers property.
+        headers: {
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
+          [name: string]: unknown;
+          // Generated declaration: closes the generated declaration opened above.
+        };
+        // Generated declaration: opens the object for the content property.
+        content: {
+          // Generated declaration: defines the generated type of the application/json property.
+          'application/json': components['schemas']['RoomResponse'];
+          // Generated declaration: closes the generated declaration opened above.
+        };
+        // Generated declaration: closes the generated declaration opened above.
+      };
+      /** @description Validation Error */
+      // Generated declaration: continues the generated OpenAPI type declaration.
+      422: {
+        // Generated declaration: opens the object for the headers property.
+        headers: {
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
+          [name: string]: unknown;
+          // Generated declaration: closes the generated declaration opened above.
+        };
+        // Generated declaration: opens the object for the content property.
+        content: {
+          // Generated declaration: defines the generated type of the application/json property.
+          'application/json': components['schemas']['HTTPValidationError'];
+          // Generated declaration: closes the generated declaration opened above.
+        };
+        // Generated declaration: closes the generated declaration opened above.
+      };
+      // Generated declaration: closes the generated declaration opened above.
+    };
+    // Generated declaration: closes the generated declaration opened above.
+  };
+  // Generated declaration: opens the object for the get_room_route_v1_rooms__room_id__get property.
+  get_room_route_v1_rooms__room_id__get: {
+    // Generated declaration: opens the object for the parameters property.
+    parameters: {
+      // Generated declaration: defines the generated type of the query property.
+      query?: never;
+      // Generated declaration: opens the object for the header property.
+      header?: {
+        // Generated declaration: defines the generated type of the authorization property.
+        authorization?: string | null;
+        // Generated declaration: closes the generated declaration opened above.
+      };
+      // Generated declaration: opens the object for the path property.
+      path: {
+        // Generated declaration: defines the generated type of the room_id property.
+        room_id: string;
+        // Generated declaration: closes the generated declaration opened above.
+      };
+      // Generated declaration: defines the generated type of the cookie property.
+      cookie?: never;
+      // Generated declaration: closes the generated declaration opened above.
+    };
+    // Generated declaration: defines the generated type of the requestBody property.
+    requestBody?: never;
+    // Generated declaration: opens the object for the responses property.
+    responses: {
+      /** @description Successful Response */
+      // Generated declaration: continues the generated OpenAPI type declaration.
+      200: {
+        // Generated declaration: opens the object for the headers property.
+        headers: {
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
+          [name: string]: unknown;
+          // Generated declaration: closes the generated declaration opened above.
+        };
+        // Generated declaration: opens the object for the content property.
+        content: {
+          // Generated declaration: defines the generated type of the application/json property.
+          'application/json': components['schemas']['RoomResponse'];
+          // Generated declaration: closes the generated declaration opened above.
+        };
+        // Generated declaration: closes the generated declaration opened above.
+      };
+      /** @description Validation Error */
+      // Generated declaration: continues the generated OpenAPI type declaration.
+      422: {
+        // Generated declaration: opens the object for the headers property.
+        headers: {
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
+          [name: string]: unknown;
+          // Generated declaration: closes the generated declaration opened above.
+        };
+        // Generated declaration: opens the object for the content property.
+        content: {
+          // Generated declaration: defines the generated type of the application/json property.
+          'application/json': components['schemas']['HTTPValidationError'];
+          // Generated declaration: closes the generated declaration opened above.
+        };
+        // Generated declaration: closes the generated declaration opened above.
+      };
+      // Generated declaration: closes the generated declaration opened above.
+    };
+    // Generated declaration: closes the generated declaration opened above.
+  };
+  // Generated declaration: opens the object for the get_leaderboard_route_v1_leaderboards_get property.
+  get_leaderboard_route_v1_leaderboards_get: {
+    // Generated declaration: opens the object for the parameters property.
+    parameters: {
+      // Generated declaration: opens the object for the query property.
+      query?: {
+        // Generated declaration: defines the generated type of the period property.
+        period?: string;
+        // Generated declaration: defines the generated type of the difficulty property.
+        difficulty?: string | null;
+        // Generated declaration: defines the generated type of the page property.
+        page?: number;
+        // Generated declaration: defines the generated type of the page_size property.
+        page_size?: number;
+        // Generated declaration: closes the generated declaration opened above.
+      };
+      // Generated declaration: opens the object for the header property.
+      header?: {
+        // Generated declaration: defines the generated type of the authorization property.
+        authorization?: string | null;
+        // Generated declaration: closes the generated declaration opened above.
+      };
+      // Generated declaration: defines the generated type of the path property.
+      path?: never;
+      // Generated declaration: defines the generated type of the cookie property.
+      cookie?: never;
+      // Generated declaration: closes the generated declaration opened above.
+    };
+    // Generated declaration: defines the generated type of the requestBody property.
+    requestBody?: never;
+    // Generated declaration: opens the object for the responses property.
+    responses: {
+      /** @description Successful Response */
+      // Generated declaration: continues the generated OpenAPI type declaration.
+      200: {
+        // Generated declaration: opens the object for the headers property.
+        headers: {
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
+          [name: string]: unknown;
+          // Generated declaration: closes the generated declaration opened above.
+        };
+        // Generated declaration: opens the object for the content property.
+        content: {
+          // Generated declaration: defines the generated type of the application/json property.
+          'application/json': components['schemas']['PaginatedLeaderboard'];
+          // Generated declaration: closes the generated declaration opened above.
+        };
+        // Generated declaration: closes the generated declaration opened above.
+      };
+      /** @description Validation Error */
+      // Generated declaration: continues the generated OpenAPI type declaration.
+      422: {
+        // Generated declaration: opens the object for the headers property.
+        headers: {
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
+          [name: string]: unknown;
+          // Generated declaration: closes the generated declaration opened above.
+        };
+        // Generated declaration: opens the object for the content property.
+        content: {
+          // Generated declaration: defines the generated type of the application/json property.
+          'application/json': components['schemas']['HTTPValidationError'];
+          // Generated declaration: closes the generated declaration opened above.
+        };
+        // Generated declaration: closes the generated declaration opened above.
+      };
+      // Generated declaration: closes the generated declaration opened above.
+    };
+    // Generated declaration: closes the generated declaration opened above.
+  };
+  // Generated declaration: opens the object for the get_profile_route_v1_me_profile_get property.
+  get_profile_route_v1_me_profile_get: {
+    // Generated declaration: opens the object for the parameters property.
+    parameters: {
+      // Generated declaration: defines the generated type of the query property.
+      query?: never;
+      // Generated declaration: opens the object for the header property.
+      header?: {
+        // Generated declaration: defines the generated type of the authorization property.
+        authorization?: string | null;
+        // Generated declaration: closes the generated declaration opened above.
+      };
+      // Generated declaration: defines the generated type of the path property.
+      path?: never;
+      // Generated declaration: defines the generated type of the cookie property.
+      cookie?: never;
+      // Generated declaration: closes the generated declaration opened above.
+    };
+    // Generated declaration: defines the generated type of the requestBody property.
+    requestBody?: never;
+    // Generated declaration: opens the object for the responses property.
+    responses: {
+      /** @description Successful Response */
+      // Generated declaration: continues the generated OpenAPI type declaration.
+      200: {
+        // Generated declaration: opens the object for the headers property.
+        headers: {
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
+          [name: string]: unknown;
+          // Generated declaration: closes the generated declaration opened above.
+        };
+        // Generated declaration: opens the object for the content property.
+        content: {
+          // Generated declaration: defines the generated type of the application/json property.
+          'application/json': components['schemas']['ProfileResponse'];
+          // Generated declaration: closes the generated declaration opened above.
+        };
+        // Generated declaration: closes the generated declaration opened above.
+      };
+      /** @description Validation Error */
+      // Generated declaration: continues the generated OpenAPI type declaration.
+      422: {
+        // Generated declaration: opens the object for the headers property.
+        headers: {
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
+          [name: string]: unknown;
+          // Generated declaration: closes the generated declaration opened above.
+        };
+        // Generated declaration: opens the object for the content property.
+        content: {
+          // Generated declaration: defines the generated type of the application/json property.
+          'application/json': components['schemas']['HTTPValidationError'];
+          // Generated declaration: closes the generated declaration opened above.
+        };
+        // Generated declaration: closes the generated declaration opened above.
+      };
+      // Generated declaration: closes the generated declaration opened above.
+    };
+    // Generated declaration: closes the generated declaration opened above.
+  };
+  // Generated declaration: opens the object for the update_profile_route_v1_me_profile_patch property.
+  update_profile_route_v1_me_profile_patch: {
+    // Generated declaration: opens the object for the parameters property.
+    parameters: {
+      // Generated declaration: defines the generated type of the query property.
+      query?: never;
+      // Generated declaration: opens the object for the header property.
+      header?: {
+        // Generated declaration: defines the generated type of the authorization property.
+        authorization?: string | null;
+        // Generated declaration: closes the generated declaration opened above.
+      };
+      // Generated declaration: defines the generated type of the path property.
+      path?: never;
+      // Generated declaration: defines the generated type of the cookie property.
+      cookie?: never;
+      // Generated declaration: closes the generated declaration opened above.
+    };
+    // Generated declaration: opens the object for the requestBody property.
+    requestBody: {
+      // Generated declaration: opens the object for the content property.
+      content: {
+        // Generated declaration: defines the generated type of the application/json property.
+        'application/json': components['schemas']['ProfileUpdateRequest'];
+        // Generated declaration: closes the generated declaration opened above.
+      };
+      // Generated declaration: closes the generated declaration opened above.
+    };
+    // Generated declaration: opens the object for the responses property.
+    responses: {
+      /** @description Successful Response */
+      // Generated declaration: continues the generated OpenAPI type declaration.
+      200: {
+        // Generated declaration: opens the object for the headers property.
+        headers: {
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
+          [name: string]: unknown;
+          // Generated declaration: closes the generated declaration opened above.
+        };
+        // Generated declaration: opens the object for the content property.
+        content: {
+          // Generated declaration: defines the generated type of the application/json property.
+          'application/json': components['schemas']['ProfileResponse'];
+          // Generated declaration: closes the generated declaration opened above.
+        };
+        // Generated declaration: closes the generated declaration opened above.
+      };
+      /** @description Validation Error */
+      // Generated declaration: continues the generated OpenAPI type declaration.
+      422: {
+        // Generated declaration: opens the object for the headers property.
+        headers: {
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
+          [name: string]: unknown;
+          // Generated declaration: closes the generated declaration opened above.
+        };
+        // Generated declaration: opens the object for the content property.
+        content: {
+          // Generated declaration: defines the generated type of the application/json property.
+          'application/json': components['schemas']['HTTPValidationError'];
+          // Generated declaration: closes the generated declaration opened above.
+        };
+        // Generated declaration: closes the generated declaration opened above.
+      };
+      // Generated declaration: closes the generated declaration opened above.
+    };
+    // Generated declaration: closes the generated declaration opened above.
+  };
+  // Generated declaration: opens the object for the get_games_route_v1_me_games_get property.
+  get_games_route_v1_me_games_get: {
+    // Generated declaration: opens the object for the parameters property.
+    parameters: {
+      // Generated declaration: opens the object for the query property.
+      query?: {
+        // Generated declaration: defines the generated type of the page property.
+        page?: number;
+        // Generated declaration: defines the generated type of the page_size property.
+        page_size?: number;
+        // Generated declaration: closes the generated declaration opened above.
+      };
+      // Generated declaration: opens the object for the header property.
+      header?: {
+        // Generated declaration: defines the generated type of the authorization property.
+        authorization?: string | null;
+        // Generated declaration: closes the generated declaration opened above.
+      };
+      // Generated declaration: defines the generated type of the path property.
+      path?: never;
+      // Generated declaration: defines the generated type of the cookie property.
+      cookie?: never;
+      // Generated declaration: closes the generated declaration opened above.
+    };
+    // Generated declaration: defines the generated type of the requestBody property.
+    requestBody?: never;
+    // Generated declaration: opens the object for the responses property.
+    responses: {
+      /** @description Successful Response */
+      // Generated declaration: continues the generated OpenAPI type declaration.
+      200: {
+        // Generated declaration: opens the object for the headers property.
+        headers: {
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
+          [name: string]: unknown;
+          // Generated declaration: closes the generated declaration opened above.
+        };
+        // Generated declaration: opens the object for the content property.
+        content: {
+          // Generated declaration: defines the generated type of the application/json property.
+          'application/json': components['schemas']['PaginatedGames'];
+          // Generated declaration: closes the generated declaration opened above.
+        };
+        // Generated declaration: closes the generated declaration opened above.
+      };
+      /** @description Validation Error */
+      // Generated declaration: continues the generated OpenAPI type declaration.
+      422: {
+        // Generated declaration: opens the object for the headers property.
+        headers: {
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
+          [name: string]: unknown;
+          // Generated declaration: closes the generated declaration opened above.
+        };
+        // Generated declaration: opens the object for the content property.
+        content: {
+          // Generated declaration: defines the generated type of the application/json property.
+          'application/json': components['schemas']['HTTPValidationError'];
+          // Generated declaration: closes the generated declaration opened above.
+        };
+        // Generated declaration: closes the generated declaration opened above.
+      };
+      // Generated declaration: closes the generated declaration opened above.
+    };
+    // Generated declaration: closes the generated declaration opened above.
+  };
+  // Generated declaration: opens the object for the get_stats_route_v1_me_stats_get property.
+  get_stats_route_v1_me_stats_get: {
+    // Generated declaration: opens the object for the parameters property.
+    parameters: {
+      // Generated declaration: defines the generated type of the query property.
+      query?: never;
+      // Generated declaration: opens the object for the header property.
+      header?: {
+        // Generated declaration: defines the generated type of the authorization property.
+        authorization?: string | null;
+        // Generated declaration: closes the generated declaration opened above.
+      };
+      // Generated declaration: defines the generated type of the path property.
+      path?: never;
+      // Generated declaration: defines the generated type of the cookie property.
+      cookie?: never;
+      // Generated declaration: closes the generated declaration opened above.
+    };
+    // Generated declaration: defines the generated type of the requestBody property.
+    requestBody?: never;
+    // Generated declaration: opens the object for the responses property.
+    responses: {
+      /** @description Successful Response */
+      // Generated declaration: continues the generated OpenAPI type declaration.
+      200: {
+        // Generated declaration: opens the object for the headers property.
+        headers: {
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
+          [name: string]: unknown;
+          // Generated declaration: closes the generated declaration opened above.
+        };
+        // Generated declaration: opens the object for the content property.
+        content: {
+          // Generated declaration: defines the generated type of the application/json property.
+          'application/json': components['schemas']['StatsResponse'];
+          // Generated declaration: closes the generated declaration opened above.
+        };
+        // Generated declaration: closes the generated declaration opened above.
+      };
+      /** @description Validation Error */
+      // Generated declaration: continues the generated OpenAPI type declaration.
+      422: {
+        // Generated declaration: opens the object for the headers property.
+        headers: {
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
+          [name: string]: unknown;
+          // Generated declaration: closes the generated declaration opened above.
+        };
+        // Generated declaration: opens the object for the content property.
+        content: {
+          // Generated declaration: defines the generated type of the application/json property.
+          'application/json': components['schemas']['HTTPValidationError'];
+          // Generated declaration: closes the generated declaration opened above.
+        };
+        // Generated declaration: closes the generated declaration opened above.
+      };
+      // Generated declaration: closes the generated declaration opened above.
+    };
+    // Generated declaration: closes the generated declaration opened above.
+  };
+  // Generated declaration: opens the object for the export_route_v1_me_export_get property.
+  export_route_v1_me_export_get: {
+    // Generated declaration: opens the object for the parameters property.
+    parameters: {
+      // Generated declaration: defines the generated type of the query property.
+      query?: never;
+      // Generated declaration: opens the object for the header property.
+      header?: {
+        // Generated declaration: defines the generated type of the authorization property.
+        authorization?: string | null;
+        // Generated declaration: closes the generated declaration opened above.
+      };
+      // Generated declaration: defines the generated type of the path property.
+      path?: never;
+      // Generated declaration: defines the generated type of the cookie property.
+      cookie?: never;
+      // Generated declaration: closes the generated declaration opened above.
+    };
+    // Generated declaration: defines the generated type of the requestBody property.
+    requestBody?: never;
+    // Generated declaration: opens the object for the responses property.
+    responses: {
+      /** @description Successful Response */
+      // Generated declaration: continues the generated OpenAPI type declaration.
+      200: {
+        // Generated declaration: opens the object for the headers property.
+        headers: {
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
+          [name: string]: unknown;
+          // Generated declaration: closes the generated declaration opened above.
+        };
+        // Generated declaration: opens the object for the content property.
+        content: {
+          // Generated declaration: defines the generated type of the application/json property.
+          'application/json': unknown;
+          // Generated declaration: closes the generated declaration opened above.
+        };
+        // Generated declaration: closes the generated declaration opened above.
+      };
+      /** @description Validation Error */
+      // Generated declaration: continues the generated OpenAPI type declaration.
+      422: {
+        // Generated declaration: opens the object for the headers property.
+        headers: {
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
+          [name: string]: unknown;
+          // Generated declaration: closes the generated declaration opened above.
+        };
+        // Generated declaration: opens the object for the content property.
+        content: {
+          // Generated declaration: defines the generated type of the application/json property.
+          'application/json': components['schemas']['HTTPValidationError'];
+          // Generated declaration: closes the generated declaration opened above.
+        };
+        // Generated declaration: closes the generated declaration opened above.
+      };
+      // Generated declaration: closes the generated declaration opened above.
+    };
+    // Generated declaration: closes the generated declaration opened above.
+  };
+  // Generated declaration: opens the object for the delete_account_route_v1_me_delete property.
+  delete_account_route_v1_me_delete: {
+    // Generated declaration: opens the object for the parameters property.
+    parameters: {
+      // Generated declaration: defines the generated type of the query property.
+      query?: never;
+      // Generated declaration: opens the object for the header property.
+      header?: {
+        // Generated declaration: defines the generated type of the authorization property.
+        authorization?: string | null;
+        // Generated declaration: closes the generated declaration opened above.
+      };
+      // Generated declaration: defines the generated type of the path property.
+      path?: never;
+      // Generated declaration: defines the generated type of the cookie property.
+      cookie?: never;
+      // Generated declaration: closes the generated declaration opened above.
+    };
+    // Generated declaration: opens the object for the requestBody property.
+    requestBody: {
+      // Generated declaration: opens the object for the content property.
+      content: {
+        // Generated declaration: defines the generated type of the application/json property.
+        'application/json': components['schemas']['DeleteAccountRequest'];
+        // Generated declaration: closes the generated declaration opened above.
+      };
+      // Generated declaration: closes the generated declaration opened above.
+    };
+    // Generated declaration: opens the object for the responses property.
+    responses: {
+      /** @description Successful Response */
+      // Generated declaration: continues the generated OpenAPI type declaration.
+      200: {
+        // Generated declaration: opens the object for the headers property.
+        headers: {
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
+          [name: string]: unknown;
+          // Generated declaration: closes the generated declaration opened above.
+        };
+        // Generated declaration: opens the object for the content property.
+        content: {
+          // Generated declaration: defines the generated type of the application/json property.
+          'application/json': components['schemas']['DeleteAccountResponse'];
+          // Generated declaration: closes the generated declaration opened above.
+        };
+        // Generated declaration: closes the generated declaration opened above.
+      };
+      /** @description Validation Error */
+      // Generated declaration: continues the generated OpenAPI type declaration.
+      422: {
+        // Generated declaration: opens the object for the headers property.
+        headers: {
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
+          [name: string]: unknown;
+          // Generated declaration: closes the generated declaration opened above.
+        };
+        // Generated declaration: opens the object for the content property.
+        content: {
+          // Generated declaration: defines the generated type of the application/json property.
+          'application/json': components['schemas']['HTTPValidationError'];
+          // Generated declaration: closes the generated declaration opened above.
+        };
+        // Generated declaration: closes the generated declaration opened above.
+      };
+      // Generated declaration: closes the generated declaration opened above.
+    };
+    // Generated declaration: closes the generated declaration opened above.
+  };
+  // Generated declaration: opens the object for the create_support_request_route_v1_support_post property.
+  create_support_request_route_v1_support_post: {
+    // Generated declaration: opens the object for the parameters property.
+    parameters: {
+      // Generated declaration: defines the generated type of the query property.
+      query?: never;
+      // Generated declaration: opens the object for the header property.
+      header?: {
+        // Generated declaration: defines the generated type of the authorization property.
+        authorization?: string | null;
+        // Generated declaration: closes the generated declaration opened above.
+      };
+      // Generated declaration: defines the generated type of the path property.
+      path?: never;
+      // Generated declaration: defines the generated type of the cookie property.
+      cookie?: never;
+      // Generated declaration: closes the generated declaration opened above.
+    };
+    // Generated declaration: opens the object for the requestBody property.
+    requestBody: {
+      // Generated declaration: opens the object for the content property.
+      content: {
+        // Generated declaration: defines the generated type of the application/json property.
+        'application/json': components['schemas']['SupportRequestCreate'];
+        // Generated declaration: closes the generated declaration opened above.
+      };
+      // Generated declaration: closes the generated declaration opened above.
+    };
+    // Generated declaration: opens the object for the responses property.
+    responses: {
+      /** @description Successful Response */
+      // Generated declaration: continues the generated OpenAPI type declaration.
+      202: {
+        // Generated declaration: opens the object for the headers property.
+        headers: {
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
+          [name: string]: unknown;
+          // Generated declaration: closes the generated declaration opened above.
+        };
+        // Generated declaration: opens the object for the content property.
+        content: {
+          // Generated declaration: defines the generated type of the application/json property.
+          'application/json': components['schemas']['SupportRequestResponse'];
+          // Generated declaration: closes the generated declaration opened above.
+        };
+        // Generated declaration: closes the generated declaration opened above.
+      };
+      /** @description Validation Error */
+      // Generated declaration: continues the generated OpenAPI type declaration.
+      422: {
+        // Generated declaration: opens the object for the headers property.
+        headers: {
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
+          [name: string]: unknown;
+          // Generated declaration: closes the generated declaration opened above.
+        };
+        // Generated declaration: opens the object for the content property.
+        content: {
+          // Generated declaration: defines the generated type of the application/json property.
+          'application/json': components['schemas']['HTTPValidationError'];
+          // Generated declaration: closes the generated declaration opened above.
+        };
+        // Generated declaration: closes the generated declaration opened above.
+      };
+      // Generated declaration: closes the generated declaration opened above.
+    };
+    // Generated declaration: closes the generated declaration opened above.
+  };
+  // Generated declaration: opens the object for the collect_event_route_v1_analytics_events_post property.
+  collect_event_route_v1_analytics_events_post: {
+    // Generated declaration: opens the object for the parameters property.
+    parameters: {
+      // Generated declaration: defines the generated type of the query property.
+      query?: never;
+      // Generated declaration: opens the object for the header property.
+      header?: {
+        // Generated declaration: defines the generated type of the authorization property.
+        authorization?: string | null;
+        // Generated declaration: closes the generated declaration opened above.
+      };
+      // Generated declaration: defines the generated type of the path property.
+      path?: never;
+      // Generated declaration: defines the generated type of the cookie property.
+      cookie?: never;
+      // Generated declaration: closes the generated declaration opened above.
+    };
+    // Generated declaration: opens the object for the requestBody property.
+    requestBody: {
+      // Generated declaration: opens the object for the content property.
+      content: {
+        // Generated declaration: defines the generated type of the application/json property.
+        'application/json': components['schemas']['AnalyticsEventRequest'];
+        // Generated declaration: closes the generated declaration opened above.
+      };
+      // Generated declaration: closes the generated declaration opened above.
+    };
+    // Generated declaration: opens the object for the responses property.
+    responses: {
+      /** @description Successful Response */
+      // Generated declaration: continues the generated OpenAPI type declaration.
+      202: {
+        // Generated declaration: opens the object for the headers property.
+        headers: {
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
+          [name: string]: unknown;
+          // Generated declaration: closes the generated declaration opened above.
+        };
+        // Generated declaration: opens the object for the content property.
+        content: {
+          // Generated declaration: defines the generated type of the application/json property.
+          'application/json': components['schemas']['AnalyticsEventResponse'];
+          // Generated declaration: closes the generated declaration opened above.
+        };
+        // Generated declaration: closes the generated declaration opened above.
+      };
+      /** @description Validation Error */
+      // Generated declaration: continues the generated OpenAPI type declaration.
+      422: {
+        // Generated declaration: opens the object for the headers property.
+        headers: {
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
+          [name: string]: unknown;
+          // Generated declaration: closes the generated declaration opened above.
+        };
+        // Generated declaration: opens the object for the content property.
+        content: {
+          // Generated declaration: defines the generated type of the application/json property.
+          'application/json': components['schemas']['HTTPValidationError'];
+          // Generated declaration: closes the generated declaration opened above.
+        };
+        // Generated declaration: closes the generated declaration opened above.
+      };
+      // Generated declaration: closes the generated declaration opened above.
+    };
+    // Generated declaration: closes the generated declaration opened above.
+  };
+  // Generated declaration: opens the object for the games_route_v1_admin_games_get property.
+  games_route_v1_admin_games_get: {
+    // Generated declaration: opens the object for the parameters property.
+    parameters: {
+      // Generated declaration: opens the object for the query property.
+      query?: {
+        // Generated declaration: defines the generated type of the status property.
+        status?: string | null;
+        // Generated declaration: defines the generated type of the page property.
+        page?: number;
+        // Generated declaration: defines the generated type of the page_size property.
+        page_size?: number;
+        // Generated declaration: closes the generated declaration opened above.
+      };
+      // Generated declaration: opens the object for the header property.
+      header?: {
+        // Generated declaration: defines the generated type of the authorization property.
+        authorization?: string | null;
+        // Generated declaration: closes the generated declaration opened above.
+      };
+      // Generated declaration: defines the generated type of the path property.
+      path?: never;
+      // Generated declaration: defines the generated type of the cookie property.
+      cookie?: never;
+      // Generated declaration: closes the generated declaration opened above.
+    };
+    // Generated declaration: defines the generated type of the requestBody property.
+    requestBody?: never;
+    // Generated declaration: opens the object for the responses property.
+    responses: {
+      /** @description Successful Response */
+      // Generated declaration: continues the generated OpenAPI type declaration.
+      200: {
+        // Generated declaration: opens the object for the headers property.
+        headers: {
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
+          [name: string]: unknown;
+          // Generated declaration: closes the generated declaration opened above.
+        };
+        // Generated declaration: opens the object for the content property.
+        content: {
+          // Generated declaration: defines the generated type of the application/json property.
+          'application/json': components['schemas']['AdminPage_AdminGameItem_'];
+          // Generated declaration: closes the generated declaration opened above.
+        };
+        // Generated declaration: closes the generated declaration opened above.
+      };
+      /** @description Validation Error */
+      // Generated declaration: continues the generated OpenAPI type declaration.
+      422: {
+        // Generated declaration: opens the object for the headers property.
+        headers: {
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
+          [name: string]: unknown;
+          // Generated declaration: closes the generated declaration opened above.
+        };
+        // Generated declaration: opens the object for the content property.
+        content: {
+          // Generated declaration: defines the generated type of the application/json property.
+          'application/json': components['schemas']['HTTPValidationError'];
+          // Generated declaration: closes the generated declaration opened above.
+        };
+        // Generated declaration: closes the generated declaration opened above.
+      };
+      // Generated declaration: closes the generated declaration opened above.
+    };
+    // Generated declaration: closes the generated declaration opened above.
+  };
+  // Generated declaration: opens the object for the profiles_route_v1_admin_profiles_get property.
+  profiles_route_v1_admin_profiles_get: {
+    // Generated declaration: opens the object for the parameters property.
+    parameters: {
+      // Generated declaration: opens the object for the query property.
+      query?: {
+        // Generated declaration: defines the generated type of the moderation_only property.
+        moderation_only?: boolean;
+        // Generated declaration: defines the generated type of the search property.
+        search?: string | null;
+        // Generated declaration: defines the generated type of the page property.
+        page?: number;
+        // Generated declaration: defines the generated type of the page_size property.
+        page_size?: number;
+        // Generated declaration: closes the generated declaration opened above.
+      };
+      // Generated declaration: opens the object for the header property.
+      header?: {
+        // Generated declaration: defines the generated type of the authorization property.
+        authorization?: string | null;
+        // Generated declaration: closes the generated declaration opened above.
+      };
+      // Generated declaration: defines the generated type of the path property.
+      path?: never;
+      // Generated declaration: defines the generated type of the cookie property.
+      cookie?: never;
+      // Generated declaration: closes the generated declaration opened above.
+    };
+    // Generated declaration: defines the generated type of the requestBody property.
+    requestBody?: never;
+    // Generated declaration: opens the object for the responses property.
+    responses: {
+      /** @description Successful Response */
+      // Generated declaration: continues the generated OpenAPI type declaration.
+      200: {
+        // Generated declaration: opens the object for the headers property.
+        headers: {
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
+          [name: string]: unknown;
+          // Generated declaration: closes the generated declaration opened above.
+        };
+        // Generated declaration: opens the object for the content property.
+        content: {
+          // Generated declaration: defines the generated type of the application/json property.
+          'application/json': components['schemas']['AdminPage_AdminProfileItem_'];
+          // Generated declaration: closes the generated declaration opened above.
+        };
+        // Generated declaration: closes the generated declaration opened above.
+      };
+      /** @description Validation Error */
+      // Generated declaration: continues the generated OpenAPI type declaration.
+      422: {
+        // Generated declaration: opens the object for the headers property.
+        headers: {
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
+          [name: string]: unknown;
+          // Generated declaration: closes the generated declaration opened above.
+        };
+        // Generated declaration: opens the object for the content property.
+        content: {
+          // Generated declaration: defines the generated type of the application/json property.
+          'application/json': components['schemas']['HTTPValidationError'];
+          // Generated declaration: closes the generated declaration opened above.
+        };
+        // Generated declaration: closes the generated declaration opened above.
+      };
+      // Generated declaration: closes the generated declaration opened above.
+    };
+    // Generated declaration: closes the generated declaration opened above.
+  };
+  // Generated declaration: opens the object for the rooms_route_v1_admin_rooms_get property.
+  rooms_route_v1_admin_rooms_get: {
+    // Generated declaration: opens the object for the parameters property.
+    parameters: {
+      // Generated declaration: opens the object for the query property.
+      query?: {
+        // Generated declaration: defines the generated type of the active_only property.
+        active_only?: boolean;
+        // Generated declaration: defines the generated type of the page property.
+        page?: number;
+        // Generated declaration: defines the generated type of the page_size property.
+        page_size?: number;
+        // Generated declaration: closes the generated declaration opened above.
+      };
+      // Generated declaration: opens the object for the header property.
+      header?: {
+        // Generated declaration: defines the generated type of the authorization property.
+        authorization?: string | null;
+        // Generated declaration: closes the generated declaration opened above.
+      };
+      // Generated declaration: defines the generated type of the path property.
+      path?: never;
+      // Generated declaration: defines the generated type of the cookie property.
+      cookie?: never;
+      // Generated declaration: closes the generated declaration opened above.
+    };
+    // Generated declaration: defines the generated type of the requestBody property.
+    requestBody?: never;
+    // Generated declaration: opens the object for the responses property.
+    responses: {
+      /** @description Successful Response */
+      // Generated declaration: continues the generated OpenAPI type declaration.
+      200: {
+        // Generated declaration: opens the object for the headers property.
+        headers: {
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
+          [name: string]: unknown;
+          // Generated declaration: closes the generated declaration opened above.
+        };
+        // Generated declaration: opens the object for the content property.
+        content: {
+          // Generated declaration: defines the generated type of the application/json property.
+          'application/json': components['schemas']['AdminPage_AdminRoomItem_'];
+          // Generated declaration: closes the generated declaration opened above.
+        };
+        // Generated declaration: closes the generated declaration opened above.
+      };
+      /** @description Validation Error */
+      // Generated declaration: continues the generated OpenAPI type declaration.
+      422: {
+        // Generated declaration: opens the object for the headers property.
+        headers: {
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
+          [name: string]: unknown;
+          // Generated declaration: closes the generated declaration opened above.
+        };
+        // Generated declaration: opens the object for the content property.
+        content: {
+          // Generated declaration: defines the generated type of the application/json property.
+          'application/json': components['schemas']['HTTPValidationError'];
+          // Generated declaration: closes the generated declaration opened above.
+        };
+        // Generated declaration: closes the generated declaration opened above.
+      };
+      // Generated declaration: closes the generated declaration opened above.
+    };
+    // Generated declaration: closes the generated declaration opened above.
+  };
+  // Generated declaration: opens the object for the challenges_route_v1_admin_challenges_get property.
+  challenges_route_v1_admin_challenges_get: {
+    // Generated declaration: opens the object for the parameters property.
+    parameters: {
+      // Generated declaration: opens the object for the query property.
+      query?: {
+        // Generated declaration: defines the generated type of the active_only property.
+        active_only?: boolean;
+        // Generated declaration: defines the generated type of the page property.
+        page?: number;
+        // Generated declaration: defines the generated type of the page_size property.
+        page_size?: number;
+        // Generated declaration: closes the generated declaration opened above.
+      };
+      // Generated declaration: opens the object for the header property.
+      header?: {
+        // Generated declaration: defines the generated type of the authorization property.
+        authorization?: string | null;
+        // Generated declaration: closes the generated declaration opened above.
+      };
+      // Generated declaration: defines the generated type of the path property.
+      path?: never;
+      // Generated declaration: defines the generated type of the cookie property.
+      cookie?: never;
+      // Generated declaration: closes the generated declaration opened above.
+    };
+    // Generated declaration: defines the generated type of the requestBody property.
+    requestBody?: never;
+    // Generated declaration: opens the object for the responses property.
+    responses: {
+      /** @description Successful Response */
+      // Generated declaration: continues the generated OpenAPI type declaration.
+      200: {
+        // Generated declaration: opens the object for the headers property.
+        headers: {
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
+          [name: string]: unknown;
+          // Generated declaration: closes the generated declaration opened above.
+        };
+        // Generated declaration: opens the object for the content property.
+        content: {
+          // Generated declaration: defines the generated type of the application/json property.
+          'application/json': components['schemas']['AdminPage_AdminChallengeItem_'];
+          // Generated declaration: closes the generated declaration opened above.
+        };
+        // Generated declaration: closes the generated declaration opened above.
+      };
+      /** @description Validation Error */
+      // Generated declaration: continues the generated OpenAPI type declaration.
+      422: {
+        // Generated declaration: opens the object for the headers property.
+        headers: {
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
+          [name: string]: unknown;
+          // Generated declaration: closes the generated declaration opened above.
+        };
+        // Generated declaration: opens the object for the content property.
+        content: {
+          // Generated declaration: defines the generated type of the application/json property.
+          'application/json': components['schemas']['HTTPValidationError'];
+          // Generated declaration: closes the generated declaration opened above.
+        };
+        // Generated declaration: closes the generated declaration opened above.
+      };
+      // Generated declaration: closes the generated declaration opened above.
+    };
+    // Generated declaration: closes the generated declaration opened above.
+  };
+  // Generated declaration: opens the object for the leaderboard_review_route_v1_admin_leaderboard_review_get property.
+  leaderboard_review_route_v1_admin_leaderboard_review_get: {
+    // Generated declaration: opens the object for the parameters property.
+    parameters: {
+      // Generated declaration: opens the object for the query property.
+      query?: {
+        // Generated declaration: defines the generated type of the status property.
+        status?: string | null;
+        // Generated declaration: defines the generated type of the page property.
+        page?: number;
+        // Generated declaration: defines the generated type of the page_size property.
+        page_size?: number;
+        // Generated declaration: closes the generated declaration opened above.
+      };
+      // Generated declaration: opens the object for the header property.
+      header?: {
+        // Generated declaration: defines the generated type of the authorization property.
+        authorization?: string | null;
+        // Generated declaration: closes the generated declaration opened above.
+      };
+      // Generated declaration: defines the generated type of the path property.
+      path?: never;
+      // Generated declaration: defines the generated type of the cookie property.
+      cookie?: never;
+      // Generated declaration: closes the generated declaration opened above.
+    };
+    // Generated declaration: defines the generated type of the requestBody property.
+    requestBody?: never;
+    // Generated declaration: opens the object for the responses property.
+    responses: {
+      /** @description Successful Response */
+      // Generated declaration: continues the generated OpenAPI type declaration.
+      200: {
+        // Generated declaration: opens the object for the headers property.
+        headers: {
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
+          [name: string]: unknown;
+          // Generated declaration: closes the generated declaration opened above.
+        };
+        // Generated declaration: opens the object for the content property.
+        content: {
+          // Generated declaration: defines the generated type of the application/json property.
+          'application/json': components['schemas']['AdminPage_AdminLeaderboardItem_'];
+          // Generated declaration: closes the generated declaration opened above.
+        };
+        // Generated declaration: closes the generated declaration opened above.
+      };
+      /** @description Validation Error */
+      // Generated declaration: continues the generated OpenAPI type declaration.
+      422: {
+        // Generated declaration: opens the object for the headers property.
+        headers: {
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
+          [name: string]: unknown;
+          // Generated declaration: closes the generated declaration opened above.
+        };
+        // Generated declaration: opens the object for the content property.
+        content: {
+          // Generated declaration: defines the generated type of the application/json property.
+          'application/json': components['schemas']['HTTPValidationError'];
+          // Generated declaration: closes the generated declaration opened above.
+        };
+        // Generated declaration: closes the generated declaration opened above.
+      };
+      // Generated declaration: closes the generated declaration opened above.
+    };
+    // Generated declaration: closes the generated declaration opened above.
+  };
+  // Generated declaration: opens the object for the summary_route_v1_admin_summary_get property.
+  summary_route_v1_admin_summary_get: {
+    // Generated declaration: opens the object for the parameters property.
+    parameters: {
+      // Generated declaration: defines the generated type of the query property.
+      query?: never;
+      // Generated declaration: opens the object for the header property.
+      header?: {
+        // Generated declaration: defines the generated type of the authorization property.
+        authorization?: string | null;
+        // Generated declaration: closes the generated declaration opened above.
+      };
+      // Generated declaration: defines the generated type of the path property.
+      path?: never;
+      // Generated declaration: defines the generated type of the cookie property.
+      cookie?: never;
+      // Generated declaration: closes the generated declaration opened above.
+    };
+    // Generated declaration: defines the generated type of the requestBody property.
+    requestBody?: never;
+    // Generated declaration: opens the object for the responses property.
+    responses: {
+      /** @description Successful Response */
+      // Generated declaration: continues the generated OpenAPI type declaration.
+      200: {
+        // Generated declaration: opens the object for the headers property.
+        headers: {
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
+          [name: string]: unknown;
+          // Generated declaration: closes the generated declaration opened above.
+        };
+        // Generated declaration: opens the object for the content property.
+        content: {
+          // Generated declaration: defines the generated type of the application/json property.
+          'application/json': components['schemas']['AdminSummary'];
+          // Generated declaration: closes the generated declaration opened above.
+        };
+        // Generated declaration: closes the generated declaration opened above.
+      };
+      /** @description Validation Error */
+      // Generated declaration: continues the generated OpenAPI type declaration.
+      422: {
+        // Generated declaration: opens the object for the headers property.
+        headers: {
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
+          [name: string]: unknown;
+          // Generated declaration: closes the generated declaration opened above.
+        };
+        // Generated declaration: opens the object for the content property.
+        content: {
+          // Generated declaration: defines the generated type of the application/json property.
+          'application/json': components['schemas']['HTTPValidationError'];
+          // Generated declaration: closes the generated declaration opened above.
+        };
+        // Generated declaration: closes the generated declaration opened above.
+      };
+      // Generated declaration: closes the generated declaration opened above.
+    };
+    // Generated declaration: closes the generated declaration opened above.
+  };
+  // Generated declaration: opens the object for the flags_route_v1_admin_flags_get property.
+  flags_route_v1_admin_flags_get: {
+    // Generated declaration: opens the object for the parameters property.
+    parameters: {
+      // Generated declaration: defines the generated type of the query property.
+      query?: never;
+      // Generated declaration: opens the object for the header property.
+      header?: {
+        // Generated declaration: defines the generated type of the authorization property.
+        authorization?: string | null;
+        // Generated declaration: closes the generated declaration opened above.
+      };
+      // Generated declaration: defines the generated type of the path property.
+      path?: never;
+      // Generated declaration: defines the generated type of the cookie property.
+      cookie?: never;
+      // Generated declaration: closes the generated declaration opened above.
+    };
+    // Generated declaration: defines the generated type of the requestBody property.
+    requestBody?: never;
+    // Generated declaration: opens the object for the responses property.
+    responses: {
+      /** @description Successful Response */
+      // Generated declaration: continues the generated OpenAPI type declaration.
+      200: {
+        // Generated declaration: opens the object for the headers property.
+        headers: {
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
+          [name: string]: unknown;
+          // Generated declaration: closes the generated declaration opened above.
+        };
+        // Generated declaration: opens the object for the content property.
+        content: {
+          // Generated declaration: defines the generated type of the application/json property.
+          'application/json': components['schemas']['FeatureFlagResponse'][];
+          // Generated declaration: closes the generated declaration opened above.
+        };
+        // Generated declaration: closes the generated declaration opened above.
+      };
+      /** @description Validation Error */
+      // Generated declaration: continues the generated OpenAPI type declaration.
+      422: {
+        // Generated declaration: opens the object for the headers property.
+        headers: {
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
+          [name: string]: unknown;
+          // Generated declaration: closes the generated declaration opened above.
+        };
+        // Generated declaration: opens the object for the content property.
+        content: {
+          // Generated declaration: defines the generated type of the application/json property.
+          'application/json': components['schemas']['HTTPValidationError'];
+          // Generated declaration: closes the generated declaration opened above.
+        };
+        // Generated declaration: closes the generated declaration opened above.
+      };
+      // Generated declaration: closes the generated declaration opened above.
+    };
+    // Generated declaration: closes the generated declaration opened above.
+  };
+  // Generated declaration: opens the object for the update_flag_route_v1_admin_flags__key__patch property.
+  update_flag_route_v1_admin_flags__key__patch: {
+    // Generated declaration: opens the object for the parameters property.
+    parameters: {
+      // Generated declaration: defines the generated type of the query property.
+      query?: never;
+      // Generated declaration: opens the object for the header property.
+      header?: {
+        // Generated declaration: defines the generated type of the authorization property.
+        authorization?: string | null;
+        // Generated declaration: closes the generated declaration opened above.
+      };
+      // Generated declaration: opens the object for the path property.
+      path: {
+        // Generated declaration: defines the generated type of the key property.
+        key: string;
+        // Generated declaration: closes the generated declaration opened above.
+      };
+      // Generated declaration: defines the generated type of the cookie property.
+      cookie?: never;
+      // Generated declaration: closes the generated declaration opened above.
+    };
+    // Generated declaration: opens the object for the requestBody property.
+    requestBody: {
+      // Generated declaration: opens the object for the content property.
+      content: {
+        // Generated declaration: defines the generated type of the application/json property.
+        'application/json': components['schemas']['AdminActionRequest'];
+        // Generated declaration: closes the generated declaration opened above.
+      };
+      // Generated declaration: closes the generated declaration opened above.
+    };
+    // Generated declaration: opens the object for the responses property.
+    responses: {
+      /** @description Successful Response */
+      // Generated declaration: continues the generated OpenAPI type declaration.
+      200: {
+        // Generated declaration: opens the object for the headers property.
+        headers: {
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
+          [name: string]: unknown;
+          // Generated declaration: closes the generated declaration opened above.
+        };
+        // Generated declaration: opens the object for the content property.
+        content: {
+          // Generated declaration: defines the generated type of the application/json property.
+          'application/json': components['schemas']['FeatureFlagResponse'];
+          // Generated declaration: closes the generated declaration opened above.
+        };
+        // Generated declaration: closes the generated declaration opened above.
+      };
+      /** @description Validation Error */
+      // Generated declaration: continues the generated OpenAPI type declaration.
+      422: {
+        // Generated declaration: opens the object for the headers property.
+        headers: {
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
+          [name: string]: unknown;
+          // Generated declaration: closes the generated declaration opened above.
+        };
+        // Generated declaration: opens the object for the content property.
+        content: {
+          // Generated declaration: defines the generated type of the application/json property.
+          'application/json': components['schemas']['HTTPValidationError'];
+          // Generated declaration: closes the generated declaration opened above.
+        };
+        // Generated declaration: closes the generated declaration opened above.
+      };
+      // Generated declaration: closes the generated declaration opened above.
+    };
+    // Generated declaration: closes the generated declaration opened above.
+  };
+  // Generated declaration: opens the object for the invalidate_leaderboard_route_v1_admin_leaderboard__entry_id__invalidate_post property.
+  invalidate_leaderboard_route_v1_admin_leaderboard__entry_id__invalidate_post: {
+    // Generated declaration: opens the object for the parameters property.
+    parameters: {
+      // Generated declaration: defines the generated type of the query property.
+      query?: never;
+      // Generated declaration: opens the object for the header property.
+      header?: {
+        // Generated declaration: defines the generated type of the authorization property.
+        authorization?: string | null;
+        // Generated declaration: closes the generated declaration opened above.
+      };
+      // Generated declaration: opens the object for the path property.
+      path: {
+        // Generated declaration: defines the generated type of the entry_id property.
+        entry_id: string;
+        // Generated declaration: closes the generated declaration opened above.
+      };
+      // Generated declaration: defines the generated type of the cookie property.
+      cookie?: never;
+      // Generated declaration: closes the generated declaration opened above.
+    };
+    // Generated declaration: opens the object for the requestBody property.
+    requestBody: {
+      // Generated declaration: opens the object for the content property.
+      content: {
+        // Generated declaration: defines the generated type of the application/json property.
+        'application/json': components['schemas']['AdminActionRequest'];
+        // Generated declaration: closes the generated declaration opened above.
+      };
+      // Generated declaration: closes the generated declaration opened above.
+    };
+    // Generated declaration: opens the object for the responses property.
+    responses: {
+      /** @description Successful Response */
+      // Generated declaration: continues the generated OpenAPI type declaration.
+      200: {
+        // Generated declaration: opens the object for the headers property.
+        headers: {
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
+          [name: string]: unknown;
+          // Generated declaration: closes the generated declaration opened above.
+        };
+        // Generated declaration: opens the object for the content property.
+        content: {
+          // Generated declaration: opens the object for the application/json property.
+          'application/json': {
+            // Generated declaration: defines an index signature for generated OpenAPI keys and values.
+            [key: string]: boolean;
+            // Generated declaration: closes the generated declaration opened above.
+          };
+          // Generated declaration: closes the generated declaration opened above.
+        };
+        // Generated declaration: closes the generated declaration opened above.
+      };
+      /** @description Validation Error */
+      // Generated declaration: continues the generated OpenAPI type declaration.
+      422: {
+        // Generated declaration: opens the object for the headers property.
+        headers: {
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
+          [name: string]: unknown;
+          // Generated declaration: closes the generated declaration opened above.
+        };
+        // Generated declaration: opens the object for the content property.
+        content: {
+          // Generated declaration: defines the generated type of the application/json property.
+          'application/json': components['schemas']['HTTPValidationError'];
+          // Generated declaration: closes the generated declaration opened above.
+        };
+        // Generated declaration: closes the generated declaration opened above.
+      };
+      // Generated declaration: closes the generated declaration opened above.
+    };
+    // Generated declaration: closes the generated declaration opened above.
+  };
+  // Generated declaration: opens the object for the restore_leaderboard_route_v1_admin_leaderboard__entry_id__restore_post property.
+  restore_leaderboard_route_v1_admin_leaderboard__entry_id__restore_post: {
+    // Generated declaration: opens the object for the parameters property.
+    parameters: {
+      // Generated declaration: defines the generated type of the query property.
+      query?: never;
+      // Generated declaration: opens the object for the header property.
+      header?: {
+        // Generated declaration: defines the generated type of the authorization property.
+        authorization?: string | null;
+        // Generated declaration: closes the generated declaration opened above.
+      };
+      // Generated declaration: opens the object for the path property.
+      path: {
+        // Generated declaration: defines the generated type of the entry_id property.
+        entry_id: string;
+        // Generated declaration: closes the generated declaration opened above.
+      };
+      // Generated declaration: defines the generated type of the cookie property.
+      cookie?: never;
+      // Generated declaration: closes the generated declaration opened above.
+    };
+    // Generated declaration: opens the object for the requestBody property.
+    requestBody: {
+      // Generated declaration: opens the object for the content property.
+      content: {
+        // Generated declaration: defines the generated type of the application/json property.
+        'application/json': components['schemas']['AdminActionRequest'];
+        // Generated declaration: closes the generated declaration opened above.
+      };
+      // Generated declaration: closes the generated declaration opened above.
+    };
+    // Generated declaration: opens the object for the responses property.
+    responses: {
+      /** @description Successful Response */
+      // Generated declaration: continues the generated OpenAPI type declaration.
+      200: {
+        // Generated declaration: opens the object for the headers property.
+        headers: {
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
+          [name: string]: unknown;
+          // Generated declaration: closes the generated declaration opened above.
+        };
+        // Generated declaration: opens the object for the content property.
+        content: {
+          // Generated declaration: opens the object for the application/json property.
+          'application/json': {
+            // Generated declaration: defines an index signature for generated OpenAPI keys and values.
+            [key: string]: boolean;
+            // Generated declaration: closes the generated declaration opened above.
+          };
+          // Generated declaration: closes the generated declaration opened above.
+        };
+        // Generated declaration: closes the generated declaration opened above.
+      };
+      /** @description Validation Error */
+      // Generated declaration: continues the generated OpenAPI type declaration.
+      422: {
+        // Generated declaration: opens the object for the headers property.
+        headers: {
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
+          [name: string]: unknown;
+          // Generated declaration: closes the generated declaration opened above.
+        };
+        // Generated declaration: opens the object for the content property.
+        content: {
+          // Generated declaration: defines the generated type of the application/json property.
+          'application/json': components['schemas']['HTTPValidationError'];
+          // Generated declaration: closes the generated declaration opened above.
+        };
+        // Generated declaration: closes the generated declaration opened above.
+      };
+      // Generated declaration: closes the generated declaration opened above.
+    };
+    // Generated declaration: closes the generated declaration opened above.
+  };
+  // Generated declaration: opens the object for the moderate_profile_route_v1_admin_profiles__user_id__moderate_post property.
+  moderate_profile_route_v1_admin_profiles__user_id__moderate_post: {
+    // Generated declaration: opens the object for the parameters property.
+    parameters: {
+      // Generated declaration: defines the generated type of the query property.
+      query?: never;
+      // Generated declaration: opens the object for the header property.
+      header?: {
+        // Generated declaration: defines the generated type of the authorization property.
+        authorization?: string | null;
+        // Generated declaration: closes the generated declaration opened above.
+      };
+      // Generated declaration: opens the object for the path property.
+      path: {
+        // Generated declaration: defines the generated type of the user_id property.
+        user_id: string;
+        // Generated declaration: closes the generated declaration opened above.
+      };
+      // Generated declaration: defines the generated type of the cookie property.
+      cookie?: never;
+      // Generated declaration: closes the generated declaration opened above.
+    };
+    // Generated declaration: opens the object for the requestBody property.
+    requestBody: {
+      // Generated declaration: opens the object for the content property.
+      content: {
+        // Generated declaration: defines the generated type of the application/json property.
+        'application/json': components['schemas']['AdminActionRequest'];
+        // Generated declaration: closes the generated declaration opened above.
+      };
+      // Generated declaration: closes the generated declaration opened above.
+    };
+    // Generated declaration: opens the object for the responses property.
+    responses: {
+      /** @description Successful Response */
+      // Generated declaration: continues the generated OpenAPI type declaration.
+      200: {
+        // Generated declaration: opens the object for the headers property.
+        headers: {
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
+          [name: string]: unknown;
+          // Generated declaration: closes the generated declaration opened above.
+        };
+        // Generated declaration: opens the object for the content property.
+        content: {
+          // Generated declaration: opens the object for the application/json property.
+          'application/json': {
+            // Generated declaration: defines an index signature for generated OpenAPI keys and values.
+            [key: string]: boolean;
+            // Generated declaration: closes the generated declaration opened above.
+          };
+          // Generated declaration: closes the generated declaration opened above.
+        };
+        // Generated declaration: closes the generated declaration opened above.
+      };
+      /** @description Validation Error */
+      // Generated declaration: continues the generated OpenAPI type declaration.
+      422: {
+        // Generated declaration: opens the object for the headers property.
+        headers: {
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
+          [name: string]: unknown;
+          // Generated declaration: closes the generated declaration opened above.
+        };
+        // Generated declaration: opens the object for the content property.
+        content: {
+          // Generated declaration: defines the generated type of the application/json property.
+          'application/json': components['schemas']['HTTPValidationError'];
+          // Generated declaration: closes the generated declaration opened above.
+        };
+        // Generated declaration: closes the generated declaration opened above.
+      };
+      // Generated declaration: closes the generated declaration opened above.
+    };
+    // Generated declaration: closes the generated declaration opened above.
+  };
+  // Generated declaration: opens the object for the admin_revoke_challenge_route_v1_admin_challenges__challenge_id__revoke_post property.
+  admin_revoke_challenge_route_v1_admin_challenges__challenge_id__revoke_post: {
+    // Generated declaration: opens the object for the parameters property.
+    parameters: {
+      // Generated declaration: defines the generated type of the query property.
+      query?: never;
+      // Generated declaration: opens the object for the header property.
+      header?: {
+        // Generated declaration: defines the generated type of the authorization property.
+        authorization?: string | null;
+        // Generated declaration: closes the generated declaration opened above.
+      };
+      // Generated declaration: opens the object for the path property.
+      path: {
+        // Generated declaration: defines the generated type of the challenge_id property.
+        challenge_id: string;
+        // Generated declaration: closes the generated declaration opened above.
+      };
+      // Generated declaration: defines the generated type of the cookie property.
+      cookie?: never;
+      // Generated declaration: closes the generated declaration opened above.
+    };
+    // Generated declaration: opens the object for the requestBody property.
+    requestBody: {
+      // Generated declaration: opens the object for the content property.
+      content: {
+        // Generated declaration: defines the generated type of the application/json property.
+        'application/json': components['schemas']['AdminActionRequest'];
+        // Generated declaration: closes the generated declaration opened above.
+      };
+      // Generated declaration: closes the generated declaration opened above.
+    };
+    // Generated declaration: opens the object for the responses property.
+    responses: {
+      /** @description Successful Response */
+      // Generated declaration: continues the generated OpenAPI type declaration.
+      200: {
+        // Generated declaration: opens the object for the headers property.
+        headers: {
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
+          [name: string]: unknown;
+          // Generated declaration: closes the generated declaration opened above.
+        };
+        // Generated declaration: opens the object for the content property.
+        content: {
+          // Generated declaration: opens the object for the application/json property.
+          'application/json': {
+            // Generated declaration: defines an index signature for generated OpenAPI keys and values.
+            [key: string]: boolean;
+            // Generated declaration: closes the generated declaration opened above.
+          };
+          // Generated declaration: closes the generated declaration opened above.
+        };
+        // Generated declaration: closes the generated declaration opened above.
+      };
+      /** @description Validation Error */
+      // Generated declaration: continues the generated OpenAPI type declaration.
+      422: {
+        // Generated declaration: opens the object for the headers property.
+        headers: {
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
+          [name: string]: unknown;
+          // Generated declaration: closes the generated declaration opened above.
+        };
+        // Generated declaration: opens the object for the content property.
+        content: {
+          // Generated declaration: defines the generated type of the application/json property.
+          'application/json': components['schemas']['HTTPValidationError'];
+          // Generated declaration: closes the generated declaration opened above.
+        };
+        // Generated declaration: closes the generated declaration opened above.
+      };
+      // Generated declaration: closes the generated declaration opened above.
+    };
+    // Generated declaration: closes the generated declaration opened above.
+  };
+  // Generated declaration: opens the object for the terminate_room_route_v1_admin_rooms__room_id__terminate_post property.
+  terminate_room_route_v1_admin_rooms__room_id__terminate_post: {
+    // Generated declaration: opens the object for the parameters property.
+    parameters: {
+      // Generated declaration: defines the generated type of the query property.
+      query?: never;
+      // Generated declaration: opens the object for the header property.
+      header?: {
+        // Generated declaration: defines the generated type of the authorization property.
+        authorization?: string | null;
+        // Generated declaration: closes the generated declaration opened above.
+      };
+      // Generated declaration: opens the object for the path property.
+      path: {
+        // Generated declaration: defines the generated type of the room_id property.
+        room_id: string;
+        // Generated declaration: closes the generated declaration opened above.
+      };
+      // Generated declaration: defines the generated type of the cookie property.
+      cookie?: never;
+      // Generated declaration: closes the generated declaration opened above.
+    };
+    // Generated declaration: opens the object for the requestBody property.
+    requestBody: {
+      // Generated declaration: opens the object for the content property.
+      content: {
+        // Generated declaration: defines the generated type of the application/json property.
+        'application/json': components['schemas']['AdminActionRequest'];
+        // Generated declaration: closes the generated declaration opened above.
+      };
+      // Generated declaration: closes the generated declaration opened above.
+    };
+    // Generated declaration: opens the object for the responses property.
+    responses: {
+      /** @description Successful Response */
+      // Generated declaration: continues the generated OpenAPI type declaration.
+      200: {
+        // Generated declaration: opens the object for the headers property.
+        headers: {
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
+          [name: string]: unknown;
+          // Generated declaration: closes the generated declaration opened above.
+        };
+        // Generated declaration: opens the object for the content property.
+        content: {
+          // Generated declaration: opens the object for the application/json property.
+          'application/json': {
+            // Generated declaration: defines an index signature for generated OpenAPI keys and values.
+            [key: string]: boolean;
+            // Generated declaration: closes the generated declaration opened above.
+          };
+          // Generated declaration: closes the generated declaration opened above.
+        };
+        // Generated declaration: closes the generated declaration opened above.
+      };
+      /** @description Validation Error */
+      // Generated declaration: continues the generated OpenAPI type declaration.
+      422: {
+        // Generated declaration: opens the object for the headers property.
+        headers: {
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
+          [name: string]: unknown;
+          // Generated declaration: closes the generated declaration opened above.
+        };
+        // Generated declaration: opens the object for the content property.
+        content: {
+          // Generated declaration: defines the generated type of the application/json property.
+          'application/json': components['schemas']['HTTPValidationError'];
+          // Generated declaration: closes the generated declaration opened above.
+        };
+        // Generated declaration: closes the generated declaration opened above.
+      };
+      // Generated declaration: closes the generated declaration opened above.
+    };
+    // Generated declaration: closes the generated declaration opened above.
+  };
+  // Generated declaration: opens the object for the audit_route_v1_admin_audit_get property.
+  audit_route_v1_admin_audit_get: {
+    // Generated declaration: opens the object for the parameters property.
+    parameters: {
+      // Generated declaration: opens the object for the query property.
+      query?: {
+        // Generated declaration: defines the generated type of the limit property.
+        limit?: number;
+        // Generated declaration: closes the generated declaration opened above.
+      };
+      // Generated declaration: opens the object for the header property.
+      header?: {
+        // Generated declaration: defines the generated type of the authorization property.
+        authorization?: string | null;
+        // Generated declaration: closes the generated declaration opened above.
+      };
+      // Generated declaration: defines the generated type of the path property.
+      path?: never;
+      // Generated declaration: defines the generated type of the cookie property.
+      cookie?: never;
+      // Generated declaration: closes the generated declaration opened above.
+    };
+    // Generated declaration: defines the generated type of the requestBody property.
+    requestBody?: never;
+    // Generated declaration: opens the object for the responses property.
+    responses: {
+      /** @description Successful Response */
+      // Generated declaration: continues the generated OpenAPI type declaration.
+      200: {
+        // Generated declaration: opens the object for the headers property.
+        headers: {
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
+          [name: string]: unknown;
+          // Generated declaration: closes the generated declaration opened above.
+        };
+        // Generated declaration: opens the object for the content property.
+        content: {
+          // Generated declaration: defines the generated type of the application/json property.
+          'application/json': components['schemas']['AuditEventResponse'][];
+          // Generated declaration: closes the generated declaration opened above.
+        };
+        // Generated declaration: closes the generated declaration opened above.
+      };
+      /** @description Validation Error */
+      // Generated declaration: continues the generated OpenAPI type declaration.
+      422: {
+        // Generated declaration: opens the object for the headers property.
+        headers: {
+          // Generated declaration: defines an index signature for generated OpenAPI keys and values.
+          [name: string]: unknown;
+          // Generated declaration: closes the generated declaration opened above.
+        };
+        // Generated declaration: opens the object for the content property.
+        content: {
+          // Generated declaration: defines the generated type of the application/json property.
+          'application/json': components['schemas']['HTTPValidationError'];
+          // Generated declaration: closes the generated declaration opened above.
+        };
+        // Generated declaration: closes the generated declaration opened above.
+      };
+      // Generated declaration: closes the generated declaration opened above.
+    };
+    // Generated declaration: closes the generated declaration opened above.
+  };
+  // Generated declaration: closes the generated declaration opened above.
 }

@@ -1,7 +1,6 @@
 $ErrorActionPreference = 'Stop'
 Set-StrictMode -Version Latest
 
-$SupabaseVersion = '2.101.0'
 $ScriptDirectory = Split-Path -Parent $MyInvocation.MyCommand.Path
 $PayloadDirectory = Join-Path $ScriptDirectory 'payload'
 if (Test-Path $PayloadDirectory) {
@@ -15,7 +14,7 @@ function Write-Step([string]$Message) {
 }
 
 Write-Host 'Cipherboard installer for Windows' -ForegroundColor Green
-Write-Host 'This installs the GUI, CLI, local database, Redis cache, and local authentication.'
+Write-Host 'This installs the GUI, CLI, MongoDB database, Redis cache, email preview, and first-party authentication.'
 Write-Host 'Docker Desktop is the only system-level dependency.'
 if ($Env:PROCESSOR_ARCHITECTURE -ne 'AMD64') {
     throw "This installer currently supports 64-bit Intel/AMD Windows. Detected: $Env:PROCESSOR_ARCHITECTURE"
@@ -112,46 +111,6 @@ $robocopyArguments = @($SourceDirectory, $AppDirectory, '/MIR', '/R:2', '/W:1', 
 if ($LASTEXITCODE -gt 7) { throw "Unable to copy the application (robocopy exit code $LASTEXITCODE)." }
 Set-Content -Encoding UTF8 -Path $marker -Value 'Cipherboard desktop installation'
 
-$toolsDirectory = Join-Path $InstallDirectory 'tools'
-$supabaseArchive = "supabase_${SupabaseVersion}_windows_amd64.zip"
-$supabaseZip = Join-Path ([System.IO.Path]::GetTempPath()) $supabaseArchive
-Write-Step "Installing the pinned Supabase CLI ($SupabaseVersion)..."
-Invoke-WebRequest -UseBasicParsing -Uri "https://github.com/supabase/cli/releases/download/v${SupabaseVersion}/${supabaseArchive}" -OutFile $supabaseZip
-$expectedChecksum = 'be5ba26e4a2ee1d01e0bbf1d260e638d6d81c45ab374baa3b18bb557f9d08c61'
-$actualChecksum = (Get-FileHash -Algorithm SHA256 $supabaseZip).Hash.ToLowerInvariant()
-if ($actualChecksum -ne $expectedChecksum) {
-    Remove-Item -Force $supabaseZip
-    throw 'The Supabase CLI checksum did not match.'
-}
-$supabaseExtract = Join-Path ([System.IO.Path]::GetTempPath()) "cipherboard-supabase-$PID"
-Remove-Item -Recurse -Force $supabaseExtract -ErrorAction SilentlyContinue
-Expand-Archive -Path $supabaseZip -DestinationPath $supabaseExtract
-Copy-Item -Force (Join-Path $supabaseExtract 'supabase.exe') (Join-Path $toolsDirectory 'supabase.exe')
-Remove-Item -Recurse -Force $supabaseExtract
-Remove-Item -Force $supabaseZip
-$Supabase = Join-Path $toolsDirectory 'supabase.exe'
-
-Write-Step 'Starting local authentication for first-time configuration...'
-& $Supabase --workdir $AppDirectory start | Out-Null
-if ($LASTEXITCODE -ne 0) { throw 'Local authentication failed to start.' }
-$statusLines = & $Supabase --workdir $AppDirectory status -o env
-if ($LASTEXITCODE -ne 0) { throw 'Unable to read local authentication configuration.' }
-$supabaseValues = @{}
-foreach ($line in $statusLines) {
-    if ($line -match '^([A-Z_]+)=(.*)$') {
-        $value = $Matches[2].Trim()
-        if ($value.Length -ge 2 -and $value[0] -eq '"' -and $value[$value.Length - 1] -eq '"') {
-            $value = $value.Substring(1, $value.Length - 2)
-        }
-        $supabaseValues[$Matches[1]] = $value
-    }
-}
-$publishableKey = if ($supabaseValues.ContainsKey('PUBLISHABLE_KEY')) { $supabaseValues['PUBLISHABLE_KEY'] } else { $supabaseValues['ANON_KEY'] }
-$serviceRoleKey = if ($supabaseValues.ContainsKey('SERVICE_ROLE_KEY')) { $supabaseValues['SERVICE_ROLE_KEY'] } else { $supabaseValues['SECRET_KEY'] }
-if ([string]::IsNullOrWhiteSpace($publishableKey) -or [string]::IsNullOrWhiteSpace($serviceRoleKey)) {
-    throw 'Supabase did not provide local API keys.'
-}
-
 function New-RandomHex([int]$Length) {
     $bytes = New-Object byte[] $Length
     $generator = [System.Security.Cryptography.RandomNumberGenerator]::Create()
@@ -168,20 +127,25 @@ function New-RandomBase64([int]$Length) {
 
 $environmentFile = Join-Path $AppDirectory '.installer.env'
 if (-not (Test-Path $environmentFile)) {
-    $postgresPassword = New-RandomHex 24
+    $authSigningKey = New-RandomHex 32
     $encryptionKey = New-RandomBase64 32
     $dailyKey = New-RandomHex 32
     $identifierKey = New-RandomHex 32
     $environment = @(
-        "POSTGRES_PASSWORD=$postgresPassword",
-        "SUPABASE_PUBLISHABLE_KEY=$publishableKey",
-        "SUPABASE_SERVICE_ROLE_KEY=$serviceRoleKey",
+        "MASTERMIND_AUTH_SIGNING_KEY=$authSigningKey",
         "MASTERMIND_SECRET_ENCRYPTION_KEYS={`"v1`":`"$encryptionKey`"}",
         "MASTERMIND_DAILY_HMAC_KEY=$dailyKey",
         "MASTERMIND_PUBLIC_IDENTIFIER_HMAC_KEY=$identifierKey",
         'MASTERMIND_RELEASE=desktop-1.0.0'
     )
     [System.IO.File]::WriteAllLines($environmentFile, $environment, (New-Object System.Text.UTF8Encoding($false)))
+}
+if (-not (Select-String -Quiet -Path $environmentFile -Pattern '^MASTERMIND_AUTH_SIGNING_KEY=')) {
+    [System.IO.File]::AppendAllLines(
+        $environmentFile,
+        @("MASTERMIND_AUTH_SIGNING_KEY=$(New-RandomHex 32)"),
+        (New-Object System.Text.UTF8Encoding($false))
+    )
 }
 $currentUser = [System.Security.Principal.WindowsIdentity]::GetCurrent().User
 $fileSecurity = New-Object System.Security.AccessControl.FileSecurity
@@ -245,9 +209,10 @@ Installed components:
   - Cipherboard GUI at http://127.0.0.1:3000/en
   - Cipherboard interactive CLI
   - FastAPI game service
-  - PostgreSQL game database
+  - MongoDB replica-set game database
   - Redis real-time cache
-  - Local Supabase authentication
+  - First-party guest, email-link, session, and TOTP authentication
+  - Mailpit email preview at http://127.0.0.1:8025
   - Docker-managed, pinned application dependencies
 
 Open the GUI:
@@ -267,7 +232,7 @@ Data locations:
 [System.IO.File]::WriteAllText($guide, $guideContent, (New-Object System.Text.UTF8Encoding($false)))
 
 Write-Host "`nInstallation complete." -ForegroundColor Green
-Write-Host 'Installed: GUI, CLI, API, PostgreSQL, Redis, Supabase Auth, and all application dependencies.'
+Write-Host 'Installed: GUI, CLI, API, MongoDB, Redis, Mailpit, first-party authentication, and all application dependencies.'
 Write-Host "Installation report: $guide"
 Write-Host "CLI: $binDirectory\cipherboard.cmd"
 Write-Host 'GUI: Desktop and Start Menu shortcuts'

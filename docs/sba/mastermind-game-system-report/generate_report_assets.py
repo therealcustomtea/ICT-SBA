@@ -60,8 +60,15 @@ def save(image: Image.Image, name: str) -> None:
     image.save(ASSETS / name, dpi=(220, 220), optimize=True)
 
 
-def centered(draw: ImageDraw.ImageDraw, box: tuple[int, int, int, int], text: str, size: int,
-             *, fill: str = INK, bold: bool = False) -> None:
+def centered(
+    draw: ImageDraw.ImageDraw,
+    box: tuple[int, int, int, int],
+    text: str,
+    size: int,
+    *,
+    fill: str = INK,
+    bold: bool = False,
+) -> None:
     x1, y1, x2, y2 = box
     f = font(size, bold=bold)
     wrapped = textwrap.wrap(text, width=max(10, int((x2 - x1) / (size * 0.62))))
@@ -74,8 +81,15 @@ def centered(draw: ImageDraw.ImageDraw, box: tuple[int, int, int, int], text: st
         y += line_h
 
 
-def card(draw: ImageDraw.ImageDraw, box: tuple[int, int, int, int], title: str, body: str,
-         *, accent: str = BLUE, fill: str = PAPER) -> None:
+def card(
+    draw: ImageDraw.ImageDraw,
+    box: tuple[int, int, int, int],
+    title: str,
+    body: str,
+    *,
+    accent: str = BLUE,
+    fill: str = PAPER,
+) -> None:
     draw.rounded_rectangle(box, radius=24, fill=fill, outline=accent, width=4)
     x1, y1, x2, _ = box
     draw.rounded_rectangle((x1, y1, x2, y1 + 62), radius=22, fill=accent)
@@ -84,8 +98,14 @@ def card(draw: ImageDraw.ImageDraw, box: tuple[int, int, int, int], title: str, 
     centered(draw, (x1 + 28, y1 + 76, x2 - 28, box[3] - 18), body, 22, fill=INK)
 
 
-def arrow(draw: ImageDraw.ImageDraw, start: tuple[int, int], end: tuple[int, int],
-          *, colour: str = BROWN, width: int = 6) -> None:
+def arrow(
+    draw: ImageDraw.ImageDraw,
+    start: tuple[int, int],
+    end: tuple[int, int],
+    *,
+    colour: str = BROWN,
+    width: int = 6,
+) -> None:
     draw.line((*start, *end), fill=colour, width=width)
     angle = math.atan2(end[1] - start[1], end[0] - start[0])
     length = 20
@@ -98,12 +118,48 @@ def arrow(draw: ImageDraw.ImageDraw, start: tuple[int, int], end: tuple[int, int
 
 
 def architecture() -> None:
-    image, draw = canvas("CLI-centred system architecture", "One canonical rules engine, two delivery interfaces")
-    card(draw, (95, 260, 445, 500), "Player", "keyboard input\nterminal feedback", accent=CORAL, fill=PALE_CORAL)
-    card(draw, (545, 230, 975, 530), "mastermind_cli", "menu + game loop\nvalidation prompts\nboard history", accent=BROWN)
-    card(draw, (1090, 230, 1705, 530), "mastermind_core", "models | presets | validation\nfeedback | engine | scoring", accent=BLUE, fill=PALE_BLUE)
-    card(draw, (545, 675, 975, 930), "CSVScoreStore", "UTF-8 scores\nsafe append + sorted read\natomic export", accent=GREEN, fill=PALE_GREEN)
-    card(draw, (1090, 675, 1705, 930), "FastAPI product", "imports the same core\nadds auth, database, realtime", accent=YELLOW, fill=PALE_YELLOW)
+    image, draw = canvas(
+        "CLI-centred system architecture", "One canonical rules engine, two delivery interfaces"
+    )
+    card(
+        draw,
+        (95, 260, 445, 500),
+        "Player",
+        "keyboard input\nterminal feedback",
+        accent=CORAL,
+        fill=PALE_CORAL,
+    )
+    card(
+        draw,
+        (545, 230, 975, 530),
+        "mastermind_cli",
+        "menu + game loop\nvalidation prompts\nboard history",
+        accent=BROWN,
+    )
+    card(
+        draw,
+        (1090, 230, 1705, 530),
+        "mastermind_core",
+        "models | presets | validation\nfeedback | engine | scoring",
+        accent=BLUE,
+        fill=PALE_BLUE,
+    )
+    card(
+        draw,
+        (545, 675, 975, 930),
+        "CSVScoreStore",
+        "UTF-8 scores\nsafe append + sorted read\natomic export",
+        accent=GREEN,
+        fill=PALE_GREEN,
+    )
+    card(
+        draw,
+        (1090, 675, 1705, 930),
+        "FastAPI product",
+        "imports the same core\nadds auth, database, realtime",
+        accent=YELLOW,
+        fill=PALE_YELLOW,
+    )
     arrow(draw, (445, 380), (545, 380))
     arrow(draw, (975, 380), (1090, 380))
     arrow(draw, (755, 530), (755, 675))
@@ -112,7 +168,10 @@ def architecture() -> None:
 
 
 def cli_flow() -> None:
-    image, draw = canvas("Program control flow", "The menu remains responsive after valid, invalid, and failed operations")
+    image, draw = canvas(
+        "Program control flow",
+        "The menu remains responsive after valid, invalid, and failed operations",
+    )
     nodes = [
         ((690, 215, 1110, 315), "Start CLI", BLUE),
         ((690, 365, 1110, 465), "Display five-option menu", BROWN),
@@ -137,11 +196,32 @@ def cli_flow() -> None:
 
 
 def ipo_cycle() -> None:
-    image, draw = canvas("Input-Process-Output cycle", "Every accepted attempt follows the same deterministic pipeline")
+    image, draw = canvas(
+        "Input-Process-Output cycle",
+        "Every accepted attempt follows the same deterministic pipeline",
+    )
     items = [
-        ((90, 300, 530, 820), "INPUT", "Player name\nDifficulty/custom settings\nSecret (hidden if human)\nGuess or quit", CORAL, PALE_CORAL),
-        ((680, 300, 1120, 820), "PROCESS", "Normalize tokens\nValidate invariants\nCalculate duplicate-safe feedback\nTransition state\nCalculate terminal score", BLUE, PALE_BLUE),
-        ((1270, 300, 1710, 820), "OUTPUT", "Attempt history\nBlack/white pegs\nAttempts remaining\nResult + score\nCSV record/export", GREEN, PALE_GREEN),
+        (
+            (90, 300, 530, 820),
+            "INPUT",
+            "Player name\nDifficulty/custom settings\nSecret (hidden if human)\nGuess or quit",
+            CORAL,
+            PALE_CORAL,
+        ),
+        (
+            (680, 300, 1120, 820),
+            "PROCESS",
+            "Normalize tokens\nValidate invariants\nCalculate duplicate-safe feedback\nTransition state\nCalculate terminal score",
+            BLUE,
+            PALE_BLUE,
+        ),
+        (
+            (1270, 300, 1710, 820),
+            "OUTPUT",
+            "Attempt history\nBlack/white pegs\nAttempts remaining\nResult + score\nCSV record/export",
+            GREEN,
+            PALE_GREEN,
+        ),
     ]
     for box, title, body, accent, fill in items:
         card(draw, box, title, body, accent=accent, fill=fill)
@@ -151,7 +231,9 @@ def ipo_cycle() -> None:
 
 
 def state_machine() -> None:
-    image, draw = canvas("Game state transition model", "Terminal states cannot accept another guess")
+    image, draw = canvas(
+        "Game state transition model", "Terminal states cannot accept another guess"
+    )
     states = {
         "created": (170, 500, BLUE),
         "active": (650, 500, CORAL),
@@ -176,7 +258,9 @@ def state_machine() -> None:
 
 
 def feedback_walkthrough() -> None:
-    image, draw = canvas("Duplicate-safe feedback worked example", "Secret R B R G and guess R R B Y")
+    image, draw = canvas(
+        "Duplicate-safe feedback worked example", "Secret R B R G and guess R R B Y"
+    )
     colours = {"R": CORAL, "B": BLUE, "G": GREEN, "Y": YELLOW}
     labels = [("SECRET", ["R", "B", "R", "G"], 280), ("GUESS", ["R", "R", "B", "Y"], 440)]
     for label, pegs, y in labels:
@@ -186,20 +270,47 @@ def feedback_walkthrough() -> None:
             draw.ellipse((x, y, x + 110, y + 110), fill=colours[peg], outline=BROWN, width=4)
             centered(draw, (x, y, x + 110, y + 110), peg, 34, fill=PAPER, bold=True)
     draw.rounded_rectangle((190, 640, 780, 910), radius=26, fill=PALE_GREEN, outline=GREEN, width=4)
-    centered(draw, (220, 655, 750, 895), "1. Remove exact position 1\nBLACK = 1\nUnmatched secret: B R G\nUnmatched guess: R B Y", 27)
+    centered(
+        draw,
+        (220, 655, 750, 895),
+        "1. Remove exact position 1\nBLACK = 1\nUnmatched secret: B R G\nUnmatched guess: R B Y",
+        27,
+    )
     draw.rounded_rectangle((1010, 640, 1610, 910), radius=26, fill=PALE_BLUE, outline=BLUE, width=4)
-    centered(draw, (1040, 655, 1580, 895), "2. Intersect remaining counts\nR = 1, B = 1\nWHITE = 2\nFinal feedback: 1 black, 2 white", 27)
+    centered(
+        draw,
+        (1040, 655, 1580, 895),
+        "2. Intersect remaining counts\nR = 1, B = 1\nWHITE = 2\nFinal feedback: 1 black, 2 white",
+        27,
+    )
     arrow(draw, (790, 775), (1000, 775), colour=BROWN)
     save(image, "feedback_walkthrough.png")
 
 
 def data_model() -> None:
-    image, draw = canvas("CLI data model", "Frozen game values separate domain state from file records")
+    image, draw = canvas(
+        "CLI data model", "Frozen game values separate domain state from file records"
+    )
     boxes = [
-        ((80, 240, 500, 475), "GameConfig", "colours\ncode_length\nmax_attempts\nduplicates_allowed", BLUE),
-        ((690, 220, 1110, 500), "GameState", "mode | status\nattempts tuple\nstarted/completed\nscore", CORAL),
+        (
+            (80, 240, 500, 475),
+            "GameConfig",
+            "colours\ncode_length\nmax_attempts\nduplicates_allowed",
+            BLUE,
+        ),
+        (
+            (690, 220, 1110, 500),
+            "GameState",
+            "mode | status\nattempts tuple\nstarted/completed\nscore",
+            CORAL,
+        ),
         ((1300, 240, 1720, 475), "AttemptRecord", "number | guess\nFeedback\nsubmitted_at", GREEN),
-        ((690, 690, 1110, 945), "ScoreRecord", "player + settings\nattempts + score\nversion + result", YELLOW),
+        (
+            (690, 690, 1110, 945),
+            "ScoreRecord",
+            "player + settings\nattempts + score\nversion + result",
+            YELLOW,
+        ),
         ((1300, 690, 1720, 945), "CSV row", "13 stable fields\nUTF-8\nno secret code", BROWN),
     ]
     for box, title, body, accent in boxes:
@@ -212,7 +323,10 @@ def data_model() -> None:
 
 
 def validation_flow() -> None:
-    image, draw = canvas("Guess validation decision flow", "Rejected input returns a precise error and consumes no attempt")
+    image, draw = canvas(
+        "Guess validation decision flow",
+        "Rejected input returns a precise error and consumes no attempt",
+    )
     steps = [
         ("Raw input", 105, BLUE),
         ("Empty / quit?", 360, YELLOW),
@@ -230,19 +344,42 @@ def validation_flow() -> None:
     for (_, x1, _), (_, x2, _) in pairwise(steps):
         arrow(draw, (x1 + 95, y), (x2 - 95, y), colour=MUTED, width=4)
     draw.rounded_rectangle((525, 700, 1275, 890), radius=24, fill=PALE_CORAL, outline=RED, width=4)
-    centered(draw, (560, 720, 1240, 870), "Any failed check -> DomainError with stable code + safe message\nCLI displays the message, keeps the state active, and asks again", 27)
+    centered(
+        draw,
+        (560, 720, 1240, 870),
+        "Any failed check -> DomainError with stable code + safe message\nCLI displays the message, keeps the state active, and asks again",
+        27,
+    )
     for x in (360, 615, 870, 1125, 1380):
         arrow(draw, (x, 510), (900, 700), colour=RED, width=3)
     save(image, "validation_flow.png")
 
 
 def csv_pipeline() -> None:
-    image, draw = canvas("CSV persistence and export pipeline", "Safety checks protect availability, data integrity, and spreadsheet users")
+    image, draw = canvas(
+        "CSV persistence and export pipeline",
+        "Safety checks protect availability, data integrity, and spreadsheet users",
+    )
     items = [
-        ((80, 300, 385, 760), "Terminal result", "ScoreRecord.now\n13 explicit fields\nsecret excluded", CORAL),
-        ((460, 300, 765, 760), "Sanitize", "csv_safe prefixes\nformula-like values\nUTF-8 + newline=''", YELLOW),
+        (
+            (80, 300, 385, 760),
+            "Terminal result",
+            "ScoreRecord.now\n13 explicit fields\nsecret excluded",
+            CORAL,
+        ),
+        (
+            (460, 300, 765, 760),
+            "Sanitize",
+            "csv_safe prefixes\nformula-like values\nUTF-8 + newline=''",
+            YELLOW,
+        ),
         ((840, 300, 1145, 760), "Persist", "create directory\nheader once\nflush + fsync", GREEN),
-        ((1220, 300, 1525, 760), "Read/sort", "skip malformed rows\nscore desc\nattempts asc", BLUE),
+        (
+            (1220, 300, 1525, 760),
+            "Read/sort",
+            "skip malformed rows\nscore desc\nattempts asc",
+            BLUE,
+        ),
         ((1560, 300, 1740, 760), "Export", "temporary file\nos.replace\natomic result", BROWN),
     ]
     for box, title, body, colour in items:
@@ -252,8 +389,14 @@ def csv_pipeline() -> None:
     save(image, "csv_pipeline.png")
 
 
-def horizontal_bars(name: str, title: str, subtitle: str, rows: list[tuple[str, float, str]], maximum: float,
-                    suffix: str = "") -> None:
+def horizontal_bars(
+    name: str,
+    title: str,
+    subtitle: str,
+    rows: list[tuple[str, float, str]],
+    maximum: float,
+    suffix: str = "",
+) -> None:
     image, draw = canvas(title, subtitle)
     left, right = 420, 1640
     y = 250
@@ -272,20 +415,30 @@ def charts() -> None:
         "presets_chart.png",
         "Official difficulty presets",
         "Code length and palette size rise while attempts become more constrained",
-        [("Easy - attempts", 12, GREEN), ("Normal - attempts", 10, BLUE),
-         ("Hard - attempts", 8, CORAL), ("Expert - attempts", 8, BROWN)],
+        [
+            ("Easy - attempts", 12, GREEN),
+            ("Normal - attempts", 10, BLUE),
+            ("Hard - attempts", 8, CORAL),
+            ("Expert - attempts", 8, BROWN),
+        ],
         12,
     )
     horizontal_bars(
         "coverage_chart.png",
         "Measured branch-aware coverage",
         "53 focused core/CLI tests; overall selected-package coverage is 92%",
-        [("mastermind_core", 100, GREEN), ("CLI storage", 97, BLUE),
-         ("CLI entry point", 83, YELLOW), ("CLI application", 75, CORAL)],
+        [
+            ("mastermind_core", 100, GREEN),
+            ("CLI storage", 97, BLUE),
+            ("CLI entry point", 83, YELLOW),
+            ("CLI application", 75, CORAL),
+        ],
         100,
         "%",
     )
-    image, draw = canvas("Verification evidence", "Results measured on 1 September 2026 using Python 3.13.14")
+    image, draw = canvas(
+        "Verification evidence", "Results measured on 1 September 2026 using Python 3.13.14"
+    )
     metrics = [
         ("Full suite", "136 passed", GREEN),
         ("Environment cases", "8 skipped", YELLOW),
@@ -303,7 +456,12 @@ def charts() -> None:
         centered(draw, (x1 + 20, y1 + 145, x1 + 460, y1 + 230), label, 27, fill=INK)
     save(image, "test_results.png")
     image, draw = canvas("score_v1 composition", "Example: Normal difficulty won in four attempts")
-    parts = [("Attempts", 700, CORAL), ("Code length", 200, BLUE), ("Palette", 120, GREEN), ("Duplicates", 100, YELLOW)]
+    parts = [
+        ("Attempts", 700, CORAL),
+        ("Code length", 200, BLUE),
+        ("Palette", 120, GREEN),
+        ("Duplicates", 100, YELLOW),
+    ]
     total = sum(value for _, value, _ in parts)
     x = 160
     for label, value, colour in parts:
@@ -312,12 +470,20 @@ def charts() -> None:
         centered(draw, (x + 8, 375, x + width - 8, 505), str(value), 34, fill=PAPER, bold=True)
         centered(draw, (x + 8, 505, x + width - 8, 580), label, 20, fill=PAPER, bold=True)
         x += width
-    centered(draw, (300, 690, 1500, 900), "(10 - 4 + 1) x 100 + 4 x 50 + 6 x 20 + 100 = 1,120 points", 34, bold=True)
+    centered(
+        draw,
+        (300, 690, 1500, 900),
+        "(10 - 4 + 1) x 100 + 4 x 50 + 6 x 20 + 100 = 1,120 points",
+        34,
+        bold=True,
+    )
     save(image, "scoring_chart.png")
 
 
 def gantt() -> None:
-    image, draw = canvas("Project Gantt chart", "Twelve-week iterative development and evidence cycle")
+    image, draw = canvas(
+        "Project Gantt chart", "Twelve-week iterative development and evidence cycle"
+    )
     tasks = [
         ("Problem definition", 1, 2, CORAL),
         ("Analysis + constraints", 2, 3, YELLOW),
@@ -338,12 +504,19 @@ def gantt() -> None:
     for row, (label, start, end, colour) in enumerate(tasks):
         y = top + row * 82
         draw.text((90, y + 18), label, font=font(23, bold=True), fill=INK)
-        draw.rounded_rectangle((left + (start - 1) * cell + 5, y + 8, left + end * cell - 5, y + 60), radius=18, fill=colour)
+        draw.rounded_rectangle(
+            (left + (start - 1) * cell + 5, y + 8, left + end * cell - 5, y + 60),
+            radius=18,
+            fill=colour,
+        )
     save(image, "gantt_chart.png")
 
 
 def module_graph() -> None:
-    image, draw = canvas("Module relationship graph", "The CLI depends inward on pure rules; persistence remains at the edge")
+    image, draw = canvas(
+        "Module relationship graph",
+        "The CLI depends inward on pure rules; persistence remains at the edge",
+    )
     nodes = {
         "app.py": (280, 500, CORAL),
         "storage.py": (650, 760, GREEN),
@@ -354,9 +527,17 @@ def module_graph() -> None:
         "scoring.py": (850, 850, GREEN),
         "presets.py": (580, 280, BLUE),
     }
-    edges = [("app.py", "storage.py"), ("app.py", "presets.py"), ("app.py", "engine.py"),
-             ("app.py", "models.py"), ("engine.py", "models.py"), ("engine.py", "validation.py"),
-             ("engine.py", "feedback.py"), ("engine.py", "scoring.py"), ("presets.py", "models.py")]
+    edges = [
+        ("app.py", "storage.py"),
+        ("app.py", "presets.py"),
+        ("app.py", "engine.py"),
+        ("app.py", "models.py"),
+        ("engine.py", "models.py"),
+        ("engine.py", "validation.py"),
+        ("engine.py", "feedback.py"),
+        ("engine.py", "scoring.py"),
+        ("presets.py", "models.py"),
+    ]
     for source, target in edges:
         sx, sy, _ = nodes[source]
         tx, ty, _ = nodes[target]
@@ -368,15 +549,19 @@ def module_graph() -> None:
 
 
 def code_image(source: Path, start: int, end: int, name: str, title: str) -> None:
-    lines = source.read_text(encoding="utf-8").splitlines()[start - 1:end]
+    lines = source.read_text(encoding="utf-8").splitlines()[start - 1 : end]
     image = Image.new("RGB", (1900, 1150), "#17212B")
     draw = ImageDraw.Draw(image)
-    draw.rounded_rectangle((24, 24, 1876, 1126), radius=26, fill="#1F2B37", outline="#3A4B5A", width=3)
+    draw.rounded_rectangle(
+        (24, 24, 1876, 1126), radius=26, fill="#1F2B37", outline="#3A4B5A", width=3
+    )
     draw.ellipse((58, 52, 78, 72), fill=CORAL)
     draw.ellipse((90, 52, 110, 72), fill=YELLOW)
     draw.ellipse((122, 52, 142, 72), fill=GREEN)
     draw.text((175, 44), title, font=font(28, bold=True), fill="#E8EEF2")
-    draw.text((1510, 48), f"{source.relative_to(ROOT)}:{start}", font=font(20, mono=True), fill="#90A4AE")
+    draw.text(
+        (1510, 48), f"{source.relative_to(ROOT)}:{start}", font=font(20, mono=True), fill="#90A4AE"
+    )
     mono = font(22, mono=True)
     y = 105
     keywords = set(keyword.kwlist) | {"True", "False", "None"}
@@ -386,7 +571,7 @@ def code_image(source: Path, start: int, end: int, name: str, title: str) -> Non
         x = 135
         cursor = 0
         for match in token_re.finditer(line):
-            plain = line[cursor:match.start()]
+            plain = line[cursor : match.start()]
             draw.text((x, y), plain, font=mono, fill="#D8DEE9")
             x += draw.textlength(plain, font=mono)
             token = match.group(0)
@@ -414,7 +599,9 @@ def terminal_image(name: str, title: str, transcript: str) -> None:
     height = max(720, 150 + len(lines) * 36)
     image = Image.new("RGB", (1900, height), "#11181F")
     draw = ImageDraw.Draw(image)
-    draw.rounded_rectangle((24, 24, 1876, height - 24), radius=26, fill="#18232D", outline="#364955", width=3)
+    draw.rounded_rectangle(
+        (24, 24, 1876, height - 24), radius=26, fill="#18232D", outline="#364955", width=3
+    )
     draw.ellipse((58, 52, 78, 72), fill=CORAL)
     draw.ellipse((90, 52, 110, 72), fill=YELLOW)
     draw.ellipse((122, 52, 142, 72), fill=GREEN)
@@ -435,16 +622,41 @@ def terminal_image(name: str, title: str, transcript: str) -> None:
 
 
 def code_and_terminal_assets() -> None:
-    code_image(ROOT / "packages/mastermind_core/mastermind_core/feedback.py", 8, 25,
-               "code_feedback.png", "Duplicate-safe feedback function")
-    code_image(ROOT / "apps/cli/mastermind_cli/app.py", 40, 73,
-               "code_cli_menu.png", "Five-option menu and dispatch loop")
-    code_image(ROOT / "packages/mastermind_core/mastermind_core/validation.py", 9, 50,
-               "code_validation.png", "Input normalization and rule validation")
-    code_image(ROOT / "packages/mastermind_core/mastermind_core/engine.py", 29, 81,
-               "code_submit_guess.png", "Immutable attempt transition")
-    code_image(ROOT / "apps/cli/mastermind_cli/storage.py", 89, 137,
-               "code_storage.png", "Defensive CSV read and atomic export")
+    code_image(
+        ROOT / "packages/mastermind_core/mastermind_core/feedback.py",
+        8,
+        25,
+        "code_feedback.png",
+        "Duplicate-safe feedback function",
+    )
+    code_image(
+        ROOT / "apps/cli/mastermind_cli/app.py",
+        40,
+        73,
+        "code_cli_menu.png",
+        "Five-option menu and dispatch loop",
+    )
+    code_image(
+        ROOT / "packages/mastermind_core/mastermind_core/validation.py",
+        9,
+        50,
+        "code_validation.png",
+        "Input normalization and rule validation",
+    )
+    code_image(
+        ROOT / "packages/mastermind_core/mastermind_core/engine.py",
+        29,
+        81,
+        "code_submit_guess.png",
+        "Immutable attempt transition",
+    )
+    code_image(
+        ROOT / "apps/cli/mastermind_cli/storage.py",
+        89,
+        137,
+        "code_storage.png",
+        "Defensive CSV read and atomic export",
+    )
     terminal_image(
         "terminal_menu.png",
         "Cipherboard CLI - menu validation",

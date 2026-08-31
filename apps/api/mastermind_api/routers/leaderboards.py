@@ -1,138 +1,210 @@
+# Defers type-annotation evaluation to support modern hints safely.
 from __future__ import annotations
 
+# Imports `hashlib` so the module can use that dependency.
 import hashlib
+
+# Imports `time` so the module can use that dependency.
 import time
+
+# Imports selected names from `contextlib` for use in this module.
 from contextlib import suppress
+
+# Imports selected names from `datetime` for use in this module.
 from datetime import datetime, timedelta
 
+# Imports selected names from `fastapi` for use in this module.
 from fastapi import APIRouter, Depends, Query, Request
-from redis.exceptions import RedisError
-from sqlalchemy import func, select
-from sqlalchemy.ext.asyncio import AsyncSession
 
+# Imports selected names from `redis.exceptions` for use in this module.
+from redis.exceptions import RedisError
+
+# Imports selected names from `..auth` for use in this module.
 from ..auth import AuthPrincipal, get_current_user
+
+# Imports selected names from `..cache` for use in this module.
 from ..cache import leaderboard_cache_version
+
+# Imports selected names from `..config` for use in this module.
 from ..config import Settings, get_settings
-from ..database import get_session
+
+# Imports selected names from `..database` for use in this module.
+from ..database import MongoSession, get_session
+
+# Imports selected names from `..errors` for use in this module.
 from ..errors import APIError
+
+# Imports selected names from `..features` for use in this module.
 from ..features import feature_enabled
+
+# Imports the required names from `..leaderboard_queries` for this module.
+from ..leaderboard_queries import ranked_leaderboard_page
+
+# Imports selected names from `..metrics` for use in this module.
 from ..metrics import LEADERBOARD_LATENCY
-from ..models import LeaderboardEntry, Profile
+
+# Imports selected names from `..models` for use in this module.
+# Imports selected names from `..schemas` for use in this module.
 from ..schemas import LeaderboardItem, PaginatedLeaderboard
+
+# Imports selected names from `..services` for use in this module.
 from ..services import utcnow
 
+# Computes and stores `router` for subsequent operations.
 router = APIRouter(prefix="/v1/leaderboards", tags=["leaderboards"])
+# Computes and stores `LEADERBOARD_CACHE_SECONDS` for subsequent operations.
 LEADERBOARD_CACHE_SECONDS = 15
 
 
+# Defines the `weekly_period_start` callable and its typed interface.
 def weekly_period_start(now: datetime) -> datetime:
+    # Documents the purpose or contract of this module, class, or function.
     """Return Monday 00:00 in the timezone of the supplied server timestamp."""
 
+    # Returns this result to the caller and ends the current function.
     return (now - timedelta(days=now.weekday())).replace(hour=0, minute=0, second=0, microsecond=0)
 
 
+# Applies `@router.get("", response_model=PaginatedLeaderboard)` to configure the declaration
+# immediately below.
 @router.get("", response_model=PaginatedLeaderboard)
+# Defines the `get_leaderboard_route` callable and its typed interface.
 async def get_leaderboard_route(
+    # Declares the typed `request` data field.
     request: Request,
+    # Provides the `period` parameter or keyword argument.
     period: str = Query(default="all-time", pattern="^(weekly|all-time)$"),
+    # Provides the `difficulty` parameter or keyword argument.
     difficulty: str | None = Query(default=None, pattern="^(easy|normal|hard|expert)$"),
+    # Provides the `page` parameter or keyword argument.
     page: int = Query(default=1, ge=1),
+    # Provides the `page_size` parameter or keyword argument.
     page_size: int = Query(default=25, ge=1, le=100),
+    # Provides the `principal` parameter or keyword argument.
     principal: AuthPrincipal = Depends(get_current_user),
-    session: AsyncSession = Depends(get_session),
+    # Provides the `session` parameter or keyword argument.
+    session: MongoSession = Depends(get_session),
+    # Provides the `settings` parameter or keyword argument.
     settings: Settings = Depends(get_settings),
+    # Completes the signature and declares the callable return type.
 ) -> PaginatedLeaderboard:
+    # Computes and stores `started` for subsequent operations.
     started = time.perf_counter()
+    # Checks this condition before executing the nested branch.
     if not await feature_enabled(session, settings, "leaderboards"):
+        # Raises this exception to report an invalid or failed operation.
         raise APIError(503, "FEATURE_DISABLED", "Public leaderboards are temporarily unavailable.")
-    conditions = [
-        LeaderboardEntry.review_status == "approved",
-        LeaderboardEntry.invalidated_at.is_(None),
-        Profile.deleted_at.is_(None),
-        Profile.is_banned.is_(False),
-        Profile.public_leaderboards.is_(True),
-    ]
+    # Computes and stores `conditions` for subsequent operations.
+    match: dict[str, object] = {"review_status": "approved", "invalidated_at": None}
+    # Checks this condition before executing the nested branch.
     if difficulty:
-        conditions.append(LeaderboardEntry.category == difficulty)
+        # Calls `conditions.append` with the supplied values.
+        match["category"] = difficulty
+    # Handles the remaining case not matched by earlier branches.
     else:
-        conditions.append(LeaderboardEntry.category.in_(["easy", "normal", "hard", "expert"]))
+        # Calls `conditions.append` with the supplied values.
+        match["category"] = {"$in": ["easy", "normal", "hard", "expert"]}
+    # Checks this condition before executing the nested branch.
     if period == "weekly":
-        conditions.append(LeaderboardEntry.completed_at >= weekly_period_start(utcnow()))
-    rank_order = (
-        LeaderboardEntry.score.desc(),
-        LeaderboardEntry.attempts_used,
-        LeaderboardEntry.elapsed_seconds,
-        LeaderboardEntry.completed_at,
-        LeaderboardEntry.id,
-    )
-    ranking = func.row_number().over(order_by=rank_order).label("rank")
-    ranked = (
-        select(
-            LeaderboardEntry.user_id,
-            LeaderboardEntry.score,
-            LeaderboardEntry.attempts_used,
-            LeaderboardEntry.elapsed_seconds,
-            LeaderboardEntry.completed_at,
-            LeaderboardEntry.id,
-            Profile.display_name,
-            ranking,
-        )
-        .join(Profile, Profile.id == LeaderboardEntry.user_id)
-        .where(*conditions)
-        .subquery()
-    )
+        # Calls `conditions.append` with the supplied values.
+        match["completed_at"] = {"$gte": weekly_period_start(utcnow())}
+    # Computes and stores `redis` for subsequent operations.
     redis = request.app.state.redis
+    # Computes and stores `principal_cache_key` for subsequent operations.
     principal_cache_key = hashlib.sha256(str(principal.user_id).encode()).hexdigest()
+    # Computes and stores `cache_version` for subsequent operations.
     cache_version = await leaderboard_cache_version(redis) if redis is not None else 0
+    # Computes and stores `cache_key` for subsequent operations.
     cache_key = (
+        # Executes this statement as the next step in the surrounding logic.
         "mastermind:leaderboard:v1:"
+        # Executes this statement as the next step in the surrounding logic.
         f"{cache_version}:{period}:{difficulty or 'all'}:{page}:{page_size}:"
+        # Executes this statement as the next step in the surrounding logic.
         f"{principal_cache_key}"
+        # Closes the multiline call, declaration, or collection started above.
     )
+    # Checks this condition before executing the nested branch.
     if redis is not None and request.app.state.redis_ready:
+        # Starts a protected operation whose expected failures are handled below.
         try:
+            # Computes and stores `cached` for subsequent operations.
             cached = await redis.get(cache_key)
+            # Checks this condition before executing the nested branch.
             if cached:
+                # Calls `LEADERBOARD_LATENCY.labels` with the supplied values.
                 LEADERBOARD_LATENCY.labels("public").observe(time.perf_counter() - started)
+                # Returns this result to the caller and ends the current function.
                 return PaginatedLeaderboard.model_validate_json(cached)
+        # Handles the listed exception so failure remains controlled.
         except (RedisError, ValueError):
+            # Provides the intentionally empty statement required by Python syntax.
             pass
-    rows = (
-        await session.execute(
-            select(ranked)
-            .order_by(ranked.c.rank, ranked.c.id)
-            .offset((page - 1) * page_size)
-            .limit(page_size)
-        )
-    ).all()
-    total = await session.scalar(select(func.count()).select_from(ranked)) or 0
-    current_rank = await session.scalar(
-        select(func.min(ranked.c.rank)).where(ranked.c.user_id == principal.user_id)
-    )
-    response = PaginatedLeaderboard(
-        items=[
-            LeaderboardItem(
-                rank=row.rank,
-                display_name=row.display_name or "Anonymous breaker",
-                score=row.score,
-                attempts_used=row.attempts_used,
-                elapsed_seconds=row.elapsed_seconds,
-                completed_at=row.completed_at,
-                is_current_user=row.user_id == principal.user_id,
-            )
-            for row in rows
-        ],
+    # Computes and stores `rows` for subsequent operations.
+    rows, total, current_rank = await ranked_leaderboard_page(
+        # Supplies this required nested value.
+        session,
+        # Stores `match` because later steps depend on this value.
+        match=match,
+        # Stores `user_id` because later steps depend on this value.
+        user_id=principal.user_id,
+        # Stores `page` because later steps depend on this value.
         page=page,
+        # Stores `page_size` because later steps depend on this value.
         page_size=page_size,
-        total=total,
-        current_user_rank=current_rank,
+        # Closes the multiline declaration, call, or collection opened above.
     )
-    if redis is not None and request.app.state.redis_ready:
-        with suppress(RedisError):
-            await redis.setex(
-                cache_key,
-                LEADERBOARD_CACHE_SECONDS,
-                response.model_dump_json(by_alias=True),
+    # Computes and stores `response` for subsequent operations.
+    response = PaginatedLeaderboard(
+        # Computes and stores `items` for subsequent operations.
+        items=[
+            # Calls `LeaderboardItem` with the supplied values.
+            LeaderboardItem(
+                # Provides the `rank` parameter or keyword argument.
+                rank=row["rank"],
+                # Provides the `display_name` parameter or keyword argument.
+                display_name=row.get("display_name") or "Anonymous breaker",
+                # Provides the `score` parameter or keyword argument.
+                score=row["score"],
+                # Provides the `attempts_used` parameter or keyword argument.
+                attempts_used=row["attempts_used"],
+                # Provides the `elapsed_seconds` parameter or keyword argument.
+                elapsed_seconds=row["elapsed_seconds"],
+                # Provides the `completed_at` parameter or keyword argument.
+                completed_at=row["completed_at"],
+                # Provides the `is_current_user` parameter or keyword argument.
+                is_current_user=row["user_id"] == principal.user_id,
+                # Closes the multiline call, declaration, or collection started above.
             )
+            # Iterates through the supplied values for the nested operation.
+            for row in rows
+            # Closes the multiline call, declaration, or collection started above.
+        ],
+        # Provides the `page` parameter or keyword argument.
+        page=page,
+        # Provides the `page_size` parameter or keyword argument.
+        page_size=page_size,
+        # Provides the `total` parameter or keyword argument.
+        total=total,
+        # Provides the `current_user_rank` parameter or keyword argument.
+        current_user_rank=current_rank,
+        # Closes the multiline call, declaration, or collection started above.
+    )
+    # Checks this condition before executing the nested branch.
+    if redis is not None and request.app.state.redis_ready:
+        # Acquires this managed resource and guarantees cleanup afterward.
+        with suppress(RedisError):
+            # Waits for this asynchronous operation to complete.
+            await redis.setex(
+                # Supplies this item to the surrounding call or collection.
+                cache_key,
+                # Supplies this item to the surrounding call or collection.
+                LEADERBOARD_CACHE_SECONDS,
+                # Uses the current HTTP request or response in this operation.
+                response.model_dump_json(by_alias=True),
+                # Closes the multiline call, declaration, or collection started above.
+            )
+    # Calls `LEADERBOARD_LATENCY.labels` with the supplied values.
     LEADERBOARD_LATENCY.labels("public").observe(time.perf_counter() - started)
+    # Returns this result to the caller and ends the current function.
     return response

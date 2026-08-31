@@ -48,8 +48,6 @@ jobs:
         env:
           NEXT_PUBLIC_API_ORIGIN: ${{ vars.NEXT_PUBLIC_API_ORIGIN }}
           NEXT_PUBLIC_PRODUCT_ORIGIN: ${{ vars.NEXT_PUBLIC_PRODUCT_ORIGIN }}
-          NEXT_PUBLIC_SUPABASE_URL: ${{ vars.NEXT_PUBLIC_SUPABASE_URL }}
-          NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: ${{ vars.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY }}
           NEXT_PUBLIC_PRODUCT_NAME: ${{ vars.NEXT_PUBLIC_PRODUCT_NAME }}
           NEXT_PUBLIC_SUPPORT_EMAIL: ${{ vars.NEXT_PUBLIC_SUPPORT_EMAIL }}
           NEXT_PUBLIC_LEGAL_ENTITY: ${{ vars.NEXT_PUBLIC_LEGAL_ENTITY }}
@@ -68,8 +66,6 @@ jobs:
           required = (
               "NEXT_PUBLIC_API_ORIGIN",
               "NEXT_PUBLIC_PRODUCT_ORIGIN",
-              "NEXT_PUBLIC_SUPABASE_URL",
-              "NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY",
               "NEXT_PUBLIC_PRODUCT_NAME",
               "NEXT_PUBLIC_SUPPORT_EMAIL",
               "NEXT_PUBLIC_LEGAL_ENTITY",
@@ -83,7 +79,6 @@ jobs:
           for name in (
               "NEXT_PUBLIC_API_ORIGIN",
               "NEXT_PUBLIC_PRODUCT_ORIGIN",
-              "NEXT_PUBLIC_SUPABASE_URL",
           ):
               parsed = urlsplit(os.environ[name])
               if (
@@ -118,22 +113,6 @@ jobs:
           if not re.fullmatch(r"\d{4}-\d{2}-\d{2}", policy_date) or str(parsed_policy_date) != policy_date:
               raise SystemExit("NEXT_PUBLIC_POLICY_DATE must be an ISO date")
 
-          publishable_key = os.environ["NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY"]
-          key_is_public = False
-          if publishable_key.startswith("sb_publishable_"):
-              key_is_public = len(publishable_key) >= 24 and not any(
-                  character.isspace() for character in publishable_key
-              )
-          elif publishable_key.count(".") == 2:
-              try:
-                  payload = publishable_key.split(".")[1]
-                  payload += "=" * (-len(payload) % 4)
-                  role = json.loads(base64.urlsafe_b64decode(payload))["role"]
-              except (binascii.Error, KeyError, UnicodeDecodeError, ValueError, json.JSONDecodeError):
-                  role = None
-              key_is_public = role in {"anon", "authenticated"}
-          if not key_is_public:
-              raise SystemExit("NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY must be a public browser key")
           PY
       - uses: docker/setup-buildx-action@8d2750c68a42422c14e847fe6c8ac0403b4cbd6f # v3
       - uses: docker/login-action@c94ce9fb468520275223c153574b00df6fe4bcc9 # v3
@@ -172,8 +151,6 @@ jobs:
           build-args: |
             NEXT_PUBLIC_API_ORIGIN=${{ vars.NEXT_PUBLIC_API_ORIGIN }}
             NEXT_PUBLIC_PRODUCT_ORIGIN=${{ vars.NEXT_PUBLIC_PRODUCT_ORIGIN }}
-            NEXT_PUBLIC_SUPABASE_URL=${{ vars.NEXT_PUBLIC_SUPABASE_URL }}
-            NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=${{ vars.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY }}
             NEXT_PUBLIC_PRODUCT_NAME=${{ vars.NEXT_PUBLIC_PRODUCT_NAME }}
             NEXT_PUBLIC_SUPPORT_EMAIL=${{ vars.NEXT_PUBLIC_SUPPORT_EMAIL }}
             NEXT_PUBLIC_LEGAL_ENTITY=${{ vars.NEXT_PUBLIC_LEGAL_ENTITY }}
@@ -230,8 +207,6 @@ jobs:
           DEPLOY_USER: ${{ secrets.DEPLOY_USER }}
           DEPLOY_PATH: ${{ vars.DEPLOY_PATH }}
           RUNTIME_ENV_FILE: ${{ vars.RUNTIME_ENV_FILE }}
-          MIGRATOR_ENV_FILE: ${{ vars.MIGRATOR_ENV_FILE }}
-          POSTGRES_CA_FILE: ${{ vars.POSTGRES_CA_FILE }}
           RELEASE_SHA: ${{ steps.source.outputs.sha }}
           API_IMAGE: ${{ steps.release_images.outputs.api }}
           WEB_IMAGE: ${{ steps.release_images.outputs.web }}
@@ -248,7 +223,7 @@ jobs:
             echo 'RELEASE_SHA must be the full checked-out commit SHA.' >&2
             exit 1
           fi
-          for path_name in DEPLOY_PATH RUNTIME_ENV_FILE MIGRATOR_ENV_FILE POSTGRES_CA_FILE; do
+          for path_name in DEPLOY_PATH RUNTIME_ENV_FILE; do
             path_value="${!path_name}"
             if [[ ! "$path_value" =~ ^/[A-Za-z0-9._/-]+$ ]]; then
               echo "${path_name} must be an absolute path without shell metacharacters." >&2
@@ -259,23 +234,15 @@ jobs:
           scp infra/docker/compose.production.yml \
             "${DEPLOY_USER}@${DEPLOY_HOST}:${compose_candidate}"
           ssh "${DEPLOY_USER}@${DEPLOY_HOST}" bash -s -- \
-            "$DEPLOY_PATH" "$RUNTIME_ENV_FILE" "$MIGRATOR_ENV_FILE" "$POSTGRES_CA_FILE" "$RELEASE_SHA" "$API_IMAGE" "$WEB_IMAGE" <<'REMOTE'
+            "$DEPLOY_PATH" "$RUNTIME_ENV_FILE" "$RELEASE_SHA" "$API_IMAGE" "$WEB_IMAGE" <<'REMOTE'
           set -euo pipefail
           deploy_path="$1"
           runtime_env_file="$2"
-          migrator_env_file="$3"
-          postgres_ca_file="$4"
-          release_sha="$5"
-          api_image="$6"
-          web_image="$7"
-          if [[ ! -f "$postgres_ca_file" || ! -r "$postgres_ca_file" || ! -s "$postgres_ca_file" ]]; then
-            echo 'POSTGRES_CA_FILE must be a readable, non-empty provider CA file.' >&2
-            exit 1
-          fi
+          release_sha="$3"
+          api_image="$4"
+          web_image="$5"
           compose_candidate="${deploy_path}/infra/docker/compose.production.yml.${release_sha}.pending"
           export RUNTIME_ENV_FILE="$runtime_env_file"
-          export MIGRATOR_ENV_FILE="$migrator_env_file"
-          export POSTGRES_CA_FILE="$postgres_ca_file"
           export MASTERMIND_RELEASE="$release_sha"
           export API_IMAGE="$api_image"
           export WEB_IMAGE="$web_image"

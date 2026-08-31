@@ -1,0 +1,122 @@
+================================================================================
+                    PYTHON PROGRAM USER MANUAL DRAFT
+================================================================================
+
+1. GENERAL INFORMATION
+   - Project Title: Mastermind Logic Lab
+   - Author / Code Owner: CHAN YU SHING, Class 5B, Class No. 4
+   - Programming Language: Python 3.12 or newer
+   - Date of Draft: 2026-08-24
+
+2. PROGRAM PURPOSE & SUMMARY
+   Mastermind Logic Lab is a terminal-based code-breaking game. A computer or
+   human Code Maker selects a hidden sequence of colour codes. The Code Breaker
+   uses black/white feedback to solve it within a limited number of attempts.
+   The program supports four presets, custom settings, score calculation, a
+   local CSV leaderboard, and score export.
+
+3. CONTENTS OF THE SUBMISSION
+   - 5B_04_Chan_Yu_Shing_main.py
+       Student-named entry point used to launch the existing program.
+   - apps/cli/mastermind_cli/
+       Terminal menus, game loop, display, and CSV score storage.
+   - packages/mastermind_core/mastermind_core/
+       Game configuration, validation, feedback, engine, presets, and scoring.
+   - SOURCE_FILE_MANIFEST.txt
+       Complete file list and command summary.
+
+4. SYSTEM REQUIREMENTS
+   - Operating System: Windows 10/11, macOS, or Linux
+   - Python Version: Python 3.12, 3.13, or 3.14
+   - Libraries for this CLI: Python standard library only
+   - The supplied folder structure must be kept unchanged after extracting the
+     source archive.
+
+5. INSTALLATION & RUN INSTRUCTIONS
+   Step 1: Extract 5B_04_Chan_Yu_Shing_Source.zip.
+   Step 2: Open Terminal, Command Prompt, or PowerShell in the extracted folder.
+   Step 3: Run the command for your operating system.
+
+     Windows Command Prompt:
+       set PYTHONPATH=apps/cli;packages/mastermind_core
+       py 5B_04_Chan_Yu_Shing_main.py
+
+     Windows PowerShell:
+       $env:PYTHONPATH='apps/cli;packages/mastermind_core'
+       py 5B_04_Chan_Yu_Shing_main.py
+
+     macOS / Linux:
+       PYTHONPATH=apps/cli:packages/mastermind_core \
+         python3 5B_04_Chan_Yu_Shing_main.py
+
+   Repository alternative (when uv and the complete repository are available):
+       uv run python -m mastermind_cli
+
+6. MAIN MENU
+   1. Start game
+      Enter the player name, select Easy/Normal/Hard/Expert/Custom, and play.
+   2. View local high scores
+      Shows up to 20 saved results, sorted by score and attempts used.
+   3. View rules
+      Explains the code-breaking rules and black/white feedback.
+   4. Export scores
+      Exports the score records to a CSV path chosen by the user.
+   5. Exit
+      Closes the program normally.
+
+7. PLAYING THE GAME
+   - Enter colour identifiers separated by spaces, commas, or hyphens.
+   - Examples of equivalent input: R B G Y, R,B,G,Y, and R-B-G-Y.
+   - Black peg: correct colour in the correct position.
+   - White peg: correct colour in a different position.
+   - Each secret peg contributes at most one feedback peg.
+   - Type quit during a game to abandon it safely.
+
+   Invalid guesses show a specific error and do not use an attempt. After each
+   valid guess, the complete attempt history and attempts remaining are shown.
+
+8. GAME SETTINGS
+   - Presets: Easy, Normal, Hard, and Expert.
+   - Custom settings allow:
+       * 5-10 enabled colours;
+       * code length 3-6;
+       * 1-20 maximum attempts;
+       * duplicate colours on or off; and
+       * computer or human Code Maker.
+   - Human Code Maker input is hidden where the terminal supports it.
+
+9. SCORING & SAVED DATA
+   - A lost or abandoned game scores 0.
+   - A win receives points for attempts remaining, code length, enabled colour
+     count, and duplicate-enabled difficulty.
+   - Under identical settings, solving in fewer attempts scores more points.
+   - Results are appended to data/high_scores.csv in UTF-8 format.
+   - Malformed old rows are skipped instead of crashing the leaderboard.
+   - Spreadsheet formula characters in player names are neutralised before
+     CSV storage.
+
+10. SAFE EXIT & ERROR HANDLING
+   - Invalid menu choices and custom values are requested again or rejected
+     clearly.
+   - Type quit inside a game to abandon it without receiving a score.
+   - Ctrl+C and end-of-input close the full CLI session safely.
+   - Score file read/write errors display a warning without crashing the game.
+
+11. KNOWN LIMITATIONS & TARGETS FOR PEER REVIEW
+   - The interface is text-based and has no graphical board.
+   - Scores are stored only on the current computer.
+   - Human-secret privacy depends on hidden input support in the terminal.
+   - Suggested peer-review areas:
+       1. duplicate-colour feedback edge cases;
+       2. clarity of validation messages;
+       3. readability of history and leaderboard output; and
+       4. modularity of the CLI, engine, validation, scoring, and storage code.
+
+12. QUICK TEST INPUTS
+   - Valid: R B G Y
+   - Equivalent: R,B,G,Y or R-B-G-Y
+   - Invalid length: R B G
+   - Invalid colour: R B G Z
+   - Safe in-game exit: quit
+
+================================================================================

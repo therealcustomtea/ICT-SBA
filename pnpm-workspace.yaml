@@ -1,4 +1,8 @@
+# Configures `packages` because the surrounding service or tool depends on it.
 packages:
+  # Adds this required item to the surrounding configuration list.
   - 'apps/web'
+  # Adds this required item to the surrounding configuration list.
   - 'packages/api_client'
+  # Adds this required item to the surrounding configuration list.
   - 'packages/shared_config'

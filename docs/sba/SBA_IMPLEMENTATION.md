@@ -79,7 +79,7 @@ Dictionaries represent versioned serialized settings and score breakdowns. For e
 
 ### Database structures
 
-The web API persists the same concepts in PostgreSQL. `game_sessions` stores one authoritative game and encrypted secret. `game_attempts` stores immutable valid guesses and feedback. A foreign key connects attempts to their game. Unique constraints on `(game_id, attempt_number)` and `(game_id, idempotency_key)` stop double submissions. The CLI does not need a database; it stores final local score rows in CSV.
+The web API persists the same concepts in MongoDB. `game_sessions` stores one authoritative game, its encrypted secret, and ordered embedded attempts. Unique indexes and transactional idempotency checks stop duplicate creation and submissions. The CLI does not need a database; it stores final local score rows in CSV.
 
 ## 5. Configuration validation
 
@@ -297,7 +297,7 @@ The SBA CLI is not thrown away when the web product is built:
 
 - both CLI and API import `mastermind_core`;
 - the CLI demonstrates selection, iteration, functions, validation, dataclasses, file handling, and testing in an understandable form;
-- the API adds managed authentication, PostgreSQL transactions, AES-GCM secret storage, daily HMAC derivation, real-time rooms, rate limits, and administration;
+- the API adds managed authentication, MongoDB transactions, AES-GCM secret storage, daily HMAC derivation, real-time rooms, rate limits, and administration;
 - the web adds touch/keyboard controls, localization, accessibility, PWA resilience, profiles, statistics, and social modes;
 - the same `rules_v1` and `score_v1` identifiers connect all results.
 

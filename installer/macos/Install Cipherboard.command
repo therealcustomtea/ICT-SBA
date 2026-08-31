@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-SUPABASE_VERSION='2.101.0'
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 if [[ -d "$SCRIPT_DIR/payload" ]]; then
   SOURCE_DIR="$SCRIPT_DIR/payload"
@@ -14,7 +13,7 @@ fail() { printf '\nInstallation failed: %s\n' "$*" >&2; exit 1; }
 
 say 'Cipherboard installer for macOS'
 printf '%s\n' \
-  'This installs the GUI, CLI, local database, Redis cache, and local authentication.' \
+  'This installs the GUI, CLI, MongoDB database, Redis cache, email preview, and first-party authentication.' \
   'Docker Desktop is the only system-level dependency.'
 
 default_location="$HOME/Applications/Cipherboard"
@@ -99,58 +98,27 @@ rsync -a --delete \
   "$SOURCE_DIR/" "$install_dir/app/"
 printf 'Cipherboard desktop installation\n' > "$marker"
 
-architecture="$(uname -m)"
-case "$architecture" in
-  arm64)
-    supabase_target='darwin_arm64'
-    supabase_checksum='87cfbc6d8647d7eb7d204351d46aaf4a734d7449c6ca5c5c628a5f5d0be60f74'
-    ;;
-  x86_64)
-    supabase_target='darwin_amd64'
-    supabase_checksum='a2ad6f801c14d325a9e58829e4e6d00ed944befea85607cdc6a5c1ba88517d68'
-    ;;
-  *) fail "Unsupported Mac architecture: $architecture" ;;
-esac
-supabase_archive="supabase_${SUPABASE_VERSION}_${supabase_target}.tar.gz"
 temporary_dir="$(mktemp -d)"
 trap 'rm -rf "$temporary_dir"' EXIT
-say "Installing the pinned Supabase CLI ($SUPABASE_VERSION)..."
-curl --fail --location --progress-bar \
-  "https://github.com/supabase/cli/releases/download/v${SUPABASE_VERSION}/${supabase_archive}" \
-  -o "$temporary_dir/$supabase_archive"
-actual_checksum="$(shasum -a 256 "$temporary_dir/$supabase_archive" | awk '{print $1}')"
-[[ "$actual_checksum" == "$supabase_checksum" ]] || fail 'The Supabase CLI checksum did not match.'
-tar -xzf "$temporary_dir/$supabase_archive" -C "$temporary_dir"
-install -m 0755 "$temporary_dir/supabase" "$install_dir/tools/supabase"
-
-say 'Starting local authentication for first-time configuration...'
-"$install_dir/tools/supabase" --workdir "$install_dir/app" start >/dev/null
-status_file="$temporary_dir/supabase.env"
-"$install_dir/tools/supabase" --workdir "$install_dir/app" status -o env > "$status_file"
-set +u
-# Supabase emits shell-escaped assignments; only the pinned, checksum-verified local CLI writes this file.
-source "$status_file"
-set -u
-publishable_key="${PUBLISHABLE_KEY:-${ANON_KEY:-}}"
-service_role_key="${SERVICE_ROLE_KEY:-${SECRET_KEY:-}}"
-[[ -n "$publishable_key" && -n "$service_role_key" ]] || fail 'Supabase did not provide local API keys.'
 
 environment_file="$install_dir/app/.installer.env"
 if [[ ! -f "$environment_file" ]]; then
   umask 077
-  postgres_password="$(openssl rand -hex 24)"
+  auth_signing_key="$(openssl rand -hex 32)"
   encryption_key="$(openssl rand -base64 32 | tr -d '\n')"
   daily_key="$(openssl rand -hex 32)"
   identifier_key="$(openssl rand -hex 32)"
   {
-    printf 'POSTGRES_PASSWORD=%s\n' "$postgres_password"
-    printf 'SUPABASE_PUBLISHABLE_KEY=%s\n' "$publishable_key"
-    printf 'SUPABASE_SERVICE_ROLE_KEY=%s\n' "$service_role_key"
+    printf 'MASTERMIND_AUTH_SIGNING_KEY=%s\n' "$auth_signing_key"
     printf 'MASTERMIND_SECRET_ENCRYPTION_KEYS={"v1":"%s"}\n' "$encryption_key"
     printf 'MASTERMIND_DAILY_HMAC_KEY=%s\n' "$daily_key"
     printf 'MASTERMIND_PUBLIC_IDENTIFIER_HMAC_KEY=%s\n' "$identifier_key"
     printf 'MASTERMIND_RELEASE=desktop-1.0.0\n'
   } > "$environment_file"
+fi
+if ! grep -q '^MASTERMIND_AUTH_SIGNING_KEY=' "$environment_file"; then
+  umask 077
+  printf 'MASTERMIND_AUTH_SIGNING_KEY=%s\n' "$(openssl rand -hex 32)" >> "$environment_file"
 fi
 chmod 600 "$environment_file"
 
@@ -230,9 +198,10 @@ guide="$install_dir/INSTALLATION.txt"
   printf '  - Cipherboard GUI at http://127.0.0.1:3000/en\n'
   printf '  - Cipherboard interactive CLI\n'
   printf '  - FastAPI game service\n'
-  printf '  - PostgreSQL game database\n'
+  printf '  - MongoDB replica-set game database\n'
   printf '  - Redis real-time cache\n'
-  printf '  - Local Supabase authentication\n'
+  printf '  - First-party guest, email-link, session, and TOTP authentication\n'
+  printf '  - Mailpit email preview at http://127.0.0.1:8025\n'
   printf '  - Docker-managed, pinned application dependencies\n\n'
   printf 'Open the GUI:\n  Double-click Cipherboard.app, or run: cipherboard-services open\n\n'
   printf 'Use the CLI:\n  Open a new Terminal window and run: cipherboard\n'
@@ -245,7 +214,7 @@ guide="$install_dir/INSTALLATION.txt"
 } > "$guide"
 
 say 'Installation complete.'
-printf 'Installed: GUI, CLI, API, PostgreSQL, Redis, Supabase Auth, and all application dependencies.\n'
+printf 'Installed: GUI, CLI, API, MongoDB, Redis, Mailpit, first-party authentication, and all application dependencies.\n'
 printf 'Installation report: %s\n' "$guide"
 printf 'CLI: %s/bin/cipherboard\n' "$install_dir"
 printf 'GUI: %s/Cipherboard.app\n' "$install_dir"

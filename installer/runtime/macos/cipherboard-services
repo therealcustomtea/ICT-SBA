@@ -11,7 +11,6 @@ home_dir="$(cd -P "$(dirname "$source_path")/.." && pwd)"
 app_dir="$home_dir/app"
 compose_file="$app_dir/installer/docker-compose.yml"
 env_file="$app_dir/.installer.env"
-supabase_bin="$home_dir/tools/supabase"
 
 if [[ -x /Applications/Docker.app/Contents/Resources/bin/docker ]]; then
   export PATH="/Applications/Docker.app/Contents/Resources/bin:$PATH"
@@ -56,9 +55,7 @@ wait_for_url() {
 
 start_stack() {
   ensure_docker
-  echo 'Starting local authentication...'
-  "$supabase_bin" --workdir "$app_dir" start >/dev/null
-  echo 'Starting the database, API, and GUI...'
+  echo 'Starting MongoDB, Redis, Mailpit, the API, and the GUI...'
   compose up -d
   wait_for_url 'Cipherboard API' 'http://127.0.0.1:8000/health/ready'
   wait_for_url 'Cipherboard GUI' 'http://127.0.0.1:3000/en'
@@ -76,7 +73,6 @@ case "${1:-help}" in
   stop)
     ensure_docker
     compose down
-    "$supabase_bin" --workdir "$app_dir" stop
     echo 'Cipherboard services stopped. Saved games and CLI scores were preserved.'
     ;;
   restart)
@@ -86,15 +82,10 @@ case "${1:-help}" in
   status)
     ensure_docker
     compose ps
-    if "$supabase_bin" --workdir "$app_dir" status >/dev/null 2>&1; then
-      echo 'Local authentication: running'
-    else
-      echo 'Local authentication: stopped'
-    fi
     ;;
   logs)
     ensure_docker
-    compose logs --tail=150 -f api web postgres redis
+    compose logs --tail=150 -f api web mongo redis mailpit
     ;;
   cli)
     ensure_docker

@@ -48,7 +48,9 @@ def set_cell_shading(cell, fill: str) -> None:
     shd.set(qn("w:fill"), fill)
 
 
-def set_cell_margins(cell, top: int = 80, start: int = 100, bottom: int = 80, end: int = 100) -> None:
+def set_cell_margins(
+    cell, top: int = 80, start: int = 100, bottom: int = 80, end: int = 100
+) -> None:
     tc = cell._tc
     tc_pr = tc.get_or_add_tcPr()
     tc_mar = tc_pr.first_child_found_in("w:tcMar")
@@ -517,9 +519,7 @@ def add_front_matter(document: Document) -> None:
 
     heading = document.add_paragraph("Executive Summary", style="Heading 2")
     heading.paragraph_format.space_before = Pt(18)
-    summary = (
-        "This SBA presents a command-line Mastermind system built in Python 3.13 around a shared canonical rule engine. Players can choose four presets or Custom mode, play against a secure computer Code Maker or a human in pass-and-play, receive duplicate-safe feedback, review local scores, and export validated CSV data. The implementation separates interaction, deterministic rules, and persistence through typed immutable models and dependency injection."
-    )
+    summary = "This SBA presents a command-line Mastermind system built in Python 3.13 around a shared canonical rule engine. Players can choose four presets or Custom mode, play against a secure computer Code Maker or a human in pass-and-play, receive duplicate-safe feedback, review local scores, and export validated CSV data. The implementation separates interaction, deterministic rules, and persistence through typed immutable models and dependency injection."
     p = document.add_paragraph()
     add_inline(p, summary)
     p = document.add_paragraph(style="Quote")
@@ -545,10 +545,14 @@ def collect_metadata(lines: list[str]) -> tuple[list[tuple[int, str, str]], list
     return headings, figures
 
 
-def add_toc(document: Document, headings: list[tuple[int, str, str]], page_map: dict[str, int]) -> None:
+def add_toc(
+    document: Document, headings: list[tuple[int, str, str]], page_map: dict[str, int]
+) -> None:
     title = document.add_paragraph("Table of Contents", style="Heading 1")
     title.paragraph_format.page_break_before = False
-    intro = document.add_paragraph("The entries below are linked to their sections. Page numbers are refreshed from the rendered report during the build process.")
+    intro = document.add_paragraph(
+        "The entries below are linked to their sections. Page numbers are refreshed from the rendered report during the build process."
+    )
     intro.style = "Quote"
     for level, text, anchor in headings:
         p = document.add_paragraph()
@@ -715,7 +719,11 @@ def add_body(document: Document, lines: list[str]) -> None:
             bookmark_id += 1
             index += 1
             continue
-        if line.strip().startswith("|") and index + 1 < len(lines) and TABLE_SEPARATOR_RE.match(lines[index + 1].strip()):
+        if (
+            line.strip().startswith("|")
+            and index + 1 < len(lines)
+            and TABLE_SEPARATOR_RE.match(lines[index + 1].strip())
+        ):
             ordered_num_id = None
             rows, index = parse_table(lines, index)
             add_table(document, rows)

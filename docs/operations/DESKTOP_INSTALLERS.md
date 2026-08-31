@@ -6,12 +6,12 @@ Cipherboard ships guided installers for macOS and Windows. Each installer asks f
 
 - the Cipherboard GUI and its FastAPI service;
 - the `cipherboard` interactive CLI and shared game engine;
-- pinned PostgreSQL and Redis containers;
-- pinned local Supabase Auth tooling and services;
-- the database migrations and all pinned Python/Node application dependencies inside container images;
+- version-pinned MongoDB replica-set, Redis, and Mailpit containers;
+- first-party guest, email-link, refresh-token, session-revocation, and TOTP authentication;
+- database index initialization and all pinned Python/Node application dependencies inside container images;
 - GUI, service-management, and CLI launchers.
 
-Docker Desktop is the only system-level dependency. If it is absent, the installer offers to download the official signed installer, verifies its platform signature, and starts it. Docker Desktop has its own license and [macOS](https://docs.docker.com/desktop/setup/install/mac-install/) or [Windows](https://docs.docker.com/desktop/setup/install/windows-install/) system requirements; the user must review and accept those terms. The application binds only to loopback addresses. Supabase documents its [local CLI stack](https://supabase.com/docs/guides/local-development/cli/getting-started) as a development environment, so this installer is for private workstation use rather than public hosting.
+Docker Desktop is the only system-level dependency. If it is absent, the installer offers to download the official signed installer, verifies its platform signature, and starts it. Docker Desktop has its own license and [macOS](https://docs.docker.com/desktop/setup/install/mac-install/) or [Windows](https://docs.docker.com/desktop/setup/install/windows-install/) system requirements; the user must review and accept those terms. The application binds the GUI, API, and Mailpit inbox only to loopback addresses, so this installer is intended for private workstation use rather than public hosting.
 
 ## Install on macOS
 
@@ -52,7 +52,7 @@ cipherboard-services status
 cipherboard-services logs
 ```
 
-Stopping services preserves PostgreSQL data, Supabase data, and CLI scores. CLI scores are stored in `<install folder>/data/high_scores.csv`; GUI data uses Docker volumes prefixed `cipherboard-desktop_`.
+Email sign-in links sent by the local installation appear in Mailpit at `http://127.0.0.1:8025`. Stopping services preserves MongoDB data and CLI scores. CLI scores are stored in `<install folder>/data/high_scores.csv`; GUI data uses Docker volumes prefixed `cipherboard-desktop_`.
 
 ## Build release archives
 

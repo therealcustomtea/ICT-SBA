@@ -1,523 +1,668 @@
+# Defers annotation evaluation so modern type hints remain safe at runtime.
 from __future__ import annotations
 
+# Imports `uuid` because this module uses that dependency.
 import uuid
-from datetime import date, datetime
-from typing import Any
 
-from sqlalchemy import (
-    JSON,
-    Boolean,
-    CheckConstraint,
-    Date,
-    DateTime,
-    ForeignKey,
-    Index,
-    Integer,
-    LargeBinary,
-    String,
-    Text,
-    UniqueConstraint,
-    Uuid,
-    func,
+# Imports the required names from `dataclasses` for this module.
+from dataclasses import dataclass, field
+
+# Imports the required names from `datetime` for this module.
+from datetime import UTC, date, datetime
+
+# Imports the required names from `typing` for this module.
+from typing import Any, ClassVar
+
+
+# Defines this callable to implement the operation described by its name.
+def utcnow() -> datetime:
+    # Returns the computed result and ends the current callable.
+    return datetime.now(UTC)
+
+
+# Applies this decorator to configure the declaration immediately below.
+@dataclass(kw_only=True, slots=True)
+# Groups the state and behavior owned by `Document`.
+class Document:
+    # Declares this typed field so the surrounding contract is explicit.
+    collection: ClassVar[str]
+    # Stores `primary_key` because later steps depend on this value.
+    primary_key: ClassVar[str] = "id"
+
+
+# Applies this decorator to configure the declaration immediately below.
+@dataclass(kw_only=True, slots=True)
+# Groups the state and behavior owned by `TimestampedDocument`.
+class TimestampedDocument(Document):
+    # Stores `created_at` because later steps depend on this value.
+    created_at: datetime = field(default_factory=utcnow)
+    # Stores `updated_at` because later steps depend on this value.
+    updated_at: datetime = field(default_factory=utcnow)
+
+
+# Applies this decorator to configure the declaration immediately below.
+@dataclass(kw_only=True, slots=True)
+# Groups the state and behavior owned by `Profile`.
+class Profile(TimestampedDocument):
+    # Stores `collection` because later steps depend on this value.
+    collection: ClassVar[str] = "profiles"
+    # Declares this typed field so the surrounding contract is explicit.
+    id: uuid.UUID
+    # Stores `display_name` because later steps depend on this value.
+    display_name: str | None = None
+    # Stores `normalized_display_name` because later steps depend on this value.
+    normalized_display_name: str | None = None
+    # Stores `is_anonymous` because later steps depend on this value.
+    is_anonymous: bool = True
+    # Stores `public_leaderboards` because later steps depend on this value.
+    public_leaderboards: bool = False
+    # Stores `is_banned` because later steps depend on this value.
+    is_banned: bool = False
+    # Stores `deleted_at` because later steps depend on this value.
+    deleted_at: datetime | None = None
+
+
+# Applies this decorator to configure the declaration immediately below.
+@dataclass(kw_only=True, slots=True)
+# Groups the state and behavior owned by `AuthUser`.
+class AuthUser(TimestampedDocument):
+    # Stores `collection` because later steps depend on this value.
+    collection: ClassVar[str] = "auth_users"
+    # Stores `id` because later steps depend on this value.
+    id: uuid.UUID = field(default_factory=uuid.uuid4)
+    # Stores `email` because later steps depend on this value.
+    email: str | None = None
+    # Stores `normalized_email` because later steps depend on this value.
+    normalized_email: str | None = None
+    # Stores `is_anonymous` because later steps depend on this value.
+    is_anonymous: bool = True
+    # Stores `email_verified_at` because later steps depend on this value.
+    email_verified_at: datetime | None = None
+    # Stores `deleted_at` because later steps depend on this value.
+    deleted_at: datetime | None = None
+    # Stores `totp_secret_ciphertext` because later steps depend on this value.
+    totp_secret_ciphertext: bytes | None = None
+    # Stores `totp_secret_nonce` because later steps depend on this value.
+    totp_secret_nonce: bytes | None = None
+    # Stores `totp_secret_key_version` because later steps depend on this value.
+    totp_secret_key_version: str | None = None
+    # Stores `totp_enabled_at` because later steps depend on this value.
+    totp_enabled_at: datetime | None = None
+
+
+# Applies this decorator to configure the declaration immediately below.
+@dataclass(kw_only=True, slots=True)
+# Groups the state and behavior owned by `AuthSession`.
+class AuthSession(Document):
+    # Stores `collection` because later steps depend on this value.
+    collection: ClassVar[str] = "auth_sessions"
+    # Stores `id` because later steps depend on this value.
+    id: uuid.UUID = field(default_factory=uuid.uuid4)
+    # Declares this typed field so the surrounding contract is explicit.
+    user_id: uuid.UUID
+    # Declares this typed field so the surrounding contract is explicit.
+    refresh_token_hash: str
+    # Declares this typed field so the surrounding contract is explicit.
+    expires_at: datetime
+    # Stores `previous_refresh_token_hash` because later steps depend on this value.
+    previous_refresh_token_hash: str | None = None
+    # Stores `created_at` because later steps depend on this value.
+    created_at: datetime = field(default_factory=utcnow)
+    # Stores `updated_at` because later steps depend on this value.
+    updated_at: datetime = field(default_factory=utcnow)
+    # Stores `authenticated_at` because later steps depend on this value.
+    authenticated_at: datetime = field(default_factory=utcnow)
+    # Stores `revoked_at` because later steps depend on this value.
+    revoked_at: datetime | None = None
+    # Stores `assurance_level` because later steps depend on this value.
+    assurance_level: str = "aal1"
+    # Stores `last_ip_hash` because later steps depend on this value.
+    last_ip_hash: str | None = None
+    # Stores `user_agent_hash` because later steps depend on this value.
+    user_agent_hash: str | None = None
+
+
+# Applies this decorator to configure the declaration immediately below.
+@dataclass(kw_only=True, slots=True)
+# Groups the state and behavior owned by `AuthEmailToken`.
+class AuthEmailToken(Document):
+    # Stores `collection` because later steps depend on this value.
+    collection: ClassVar[str] = "auth_email_tokens"
+    # Stores `id` because later steps depend on this value.
+    id: uuid.UUID = field(default_factory=uuid.uuid4)
+    # Declares this typed field so the surrounding contract is explicit.
+    user_id: uuid.UUID
+    # Declares this typed field so the surrounding contract is explicit.
+    normalized_email: str
+    # Declares this typed field so the surrounding contract is explicit.
+    token_hash: str
+    # Declares this typed field so the surrounding contract is explicit.
+    purpose: str
+    # Declares this typed field so the surrounding contract is explicit.
+    expires_at: datetime
+    # Stores `created_at` because later steps depend on this value.
+    created_at: datetime = field(default_factory=utcnow)
+    # Stores `consumed_at` because later steps depend on this value.
+    consumed_at: datetime | None = None
+
+
+# Applies this decorator to configure the declaration immediately below.
+@dataclass(kw_only=True, slots=True)
+# Groups the state and behavior owned by `DailyChallenge`.
+class DailyChallenge(TimestampedDocument):
+    # Stores `collection` because later steps depend on this value.
+    collection: ClassVar[str] = "daily_challenges"
+    # Stores `id` because later steps depend on this value.
+    id: uuid.UUID = field(default_factory=uuid.uuid4)
+    # Declares this typed field so the surrounding contract is explicit.
+    challenge_date: date
+    # Declares this typed field so the surrounding contract is explicit.
+    public_id: str
+    # Declares this typed field so the surrounding contract is explicit.
+    config: dict[str, Any]
+    # Declares this typed field so the surrounding contract is explicit.
+    derivation_version: str
+    # Declares this typed field so the surrounding contract is explicit.
+    derivation_key_version: str
+    # Declares this typed field so the surrounding contract is explicit.
+    rule_set_version: str
+
+
+# Applies this decorator to configure the declaration immediately below.
+@dataclass(kw_only=True, slots=True)
+# Groups the state and behavior owned by `FriendChallenge`.
+class FriendChallenge(TimestampedDocument):
+    # Stores `collection` because later steps depend on this value.
+    collection: ClassVar[str] = "friend_challenges"
+    # Stores `id` because later steps depend on this value.
+    id: uuid.UUID = field(default_factory=uuid.uuid4)
+    # Declares this typed field so the surrounding contract is explicit.
+    share_code_hash: str
+    # Declares this typed field so the surrounding contract is explicit.
+    creator_id: uuid.UUID
+    # Declares this typed field so the surrounding contract is explicit.
+    config: dict[str, Any]
+    # Declares this typed field so the surrounding contract is explicit.
+    encrypted_secret: bytes
+    # Declares this typed field so the surrounding contract is explicit.
+    secret_nonce: bytes
+    # Declares this typed field so the surrounding contract is explicit.
+    secret_key_version: str
+    # Declares this typed field so the surrounding contract is explicit.
+    expires_at: datetime
+    # Stores `creation_idempotency_key` because later steps depend on this value.
+    creation_idempotency_key: str | None = None
+    # Stores `creation_request_fingerprint` because later steps depend on this value.
+    creation_request_fingerprint: str | None = None
+    # Stores `title` because later steps depend on this value.
+    title: str | None = None
+    # Stores `show_creator_name` because later steps depend on this value.
+    show_creator_name: bool = True
+    # Stores `revoked_at` because later steps depend on this value.
+    revoked_at: datetime | None = None
+
+
+# Applies this decorator to configure the declaration immediately below.
+@dataclass(kw_only=True, slots=True)
+# Groups the state and behavior owned by `MultiplayerRoom`.
+class MultiplayerRoom(TimestampedDocument):
+    # Stores `collection` because later steps depend on this value.
+    collection: ClassVar[str] = "multiplayer_rooms"
+    # Stores `id` because later steps depend on this value.
+    id: uuid.UUID = field(default_factory=uuid.uuid4)
+    # Declares this typed field so the surrounding contract is explicit.
+    room_code_hash: str
+    # Declares this typed field so the surrounding contract is explicit.
+    owner_id: uuid.UUID
+    # Declares this typed field so the surrounding contract is explicit.
+    config: dict[str, Any]
+    # Declares this typed field so the surrounding contract is explicit.
+    encrypted_secret: bytes
+    # Declares this typed field so the surrounding contract is explicit.
+    secret_nonce: bytes
+    # Declares this typed field so the surrounding contract is explicit.
+    secret_key_version: str
+    # Declares this typed field so the surrounding contract is explicit.
+    expires_at: datetime
+    # Stores `creation_idempotency_key` because later steps depend on this value.
+    creation_idempotency_key: str | None = None
+    # Stores `creation_request_fingerprint` because later steps depend on this value.
+    creation_request_fingerprint: str | None = None
+    # Stores `status` because later steps depend on this value.
+    status: str = "waiting"
+    # Stores `winner_id` because later steps depend on this value.
+    winner_id: uuid.UUID | None = None
+    # Stores `winner_at` because later steps depend on this value.
+    winner_at: datetime | None = None
+    # Stores `tie_deadline` because later steps depend on this value.
+    tie_deadline: datetime | None = None
+    # Stores `is_tie` because later steps depend on this value.
+    is_tie: bool = False
+    # Stores `event_sequence` because later steps depend on this value.
+    event_sequence: int = 0
+
+
+# Applies this decorator to configure the declaration immediately below.
+@dataclass(kw_only=True, slots=True)
+# Groups the state and behavior owned by `GameAttempt`.
+class GameAttempt:
+    # Stores `id` because later steps depend on this value.
+    id: uuid.UUID = field(default_factory=uuid.uuid4)
+    # Declares this typed field so the surrounding contract is explicit.
+    game_id: uuid.UUID
+    # Declares this typed field so the surrounding contract is explicit.
+    attempt_number: int
+    # Declares this typed field so the surrounding contract is explicit.
+    guess: list[str]
+    # Declares this typed field so the surrounding contract is explicit.
+    black_pegs: int
+    # Declares this typed field so the surrounding contract is explicit.
+    white_pegs: int
+    # Declares this typed field so the surrounding contract is explicit.
+    idempotency_key: str
+    # Declares this typed field so the surrounding contract is explicit.
+    request_id: str
+    # Stores `submitted_at` because later steps depend on this value.
+    submitted_at: datetime = field(default_factory=utcnow)
+
+
+# Applies this decorator to configure the declaration immediately below.
+@dataclass(kw_only=True, slots=True)
+# Groups the state and behavior owned by `GameSession`.
+class GameSession(TimestampedDocument):
+    # Stores `collection` because later steps depend on this value.
+    collection: ClassVar[str] = "game_sessions"
+    # Stores `id` because later steps depend on this value.
+    id: uuid.UUID = field(default_factory=uuid.uuid4)
+    # Declares this typed field so the surrounding contract is explicit.
+    public_id: str
+    # Declares this typed field so the surrounding contract is explicit.
+    owner_id: uuid.UUID
+    # Declares this typed field so the surrounding contract is explicit.
+    mode: str
+    # Declares this typed field so the surrounding contract is explicit.
+    config: dict[str, Any]
+    # Declares this typed field so the surrounding contract is explicit.
+    status: str
+    # Declares this typed field so the surrounding contract is explicit.
+    rule_set_version: str
+    # Declares this typed field so the surrounding contract is explicit.
+    scoring_version: str
+    # Declares this typed field so the surrounding contract is explicit.
+    encrypted_secret: bytes
+    # Declares this typed field so the surrounding contract is explicit.
+    secret_nonce: bytes
+    # Declares this typed field so the surrounding contract is explicit.
+    secret_key_version: str
+    # Declares this typed field so the surrounding contract is explicit.
+    maximum_attempts: int
+    # Declares this typed field so the surrounding contract is explicit.
+    started_at: datetime
+    # Declares this typed field so the surrounding contract is explicit.
+    expires_at: datetime
+    # Declares this typed field so the surrounding contract is explicit.
+    ranked_eligibility: str
+    # Stores `creation_idempotency_key` because later steps depend on this value.
+    creation_idempotency_key: str | None = None
+    # Stores `creation_request_fingerprint` because later steps depend on this value.
+    creation_request_fingerprint: str | None = None
+    # Stores `difficulty` because later steps depend on this value.
+    difficulty: str | None = None
+    # Stores `attempts_used` because later steps depend on this value.
+    attempts_used: int = 0
+    # Stores `completed_at` because later steps depend on this value.
+    completed_at: datetime | None = None
+    # Stores `elapsed_seconds` because later steps depend on this value.
+    elapsed_seconds: int | None = None
+    # Stores `final_score` because later steps depend on this value.
+    final_score: int | None = None
+    # Stores `score_breakdown` because later steps depend on this value.
+    score_breakdown: dict[str, Any] | None = None
+    # Stores `invalidation_reason` because later steps depend on this value.
+    invalidation_reason: str | None = None
+    # Stores `invalid_submission_count` because later steps depend on this value.
+    invalid_submission_count: int = 0
+    # Stores `daily_challenge_id` because later steps depend on this value.
+    daily_challenge_id: uuid.UUID | None = None
+    # Stores `friend_challenge_id` because later steps depend on this value.
+    friend_challenge_id: uuid.UUID | None = None
+    # Stores `room_id` because later steps depend on this value.
+    room_id: uuid.UUID | None = None
+    # Stores `attempts` because later steps depend on this value.
+    attempts: list[GameAttempt] = field(default_factory=list)
+
+
+# Applies this decorator to configure the declaration immediately below.
+@dataclass(kw_only=True, slots=True)
+# Groups the state and behavior owned by `MultiplayerMember`.
+class MultiplayerMember(Document):
+    # Stores `collection` because later steps depend on this value.
+    collection: ClassVar[str] = "multiplayer_members"
+    # Stores `id` because later steps depend on this value.
+    id: uuid.UUID = field(default_factory=uuid.uuid4)
+    # Declares this typed field so the surrounding contract is explicit.
+    room_id: uuid.UUID
+    # Declares this typed field so the surrounding contract is explicit.
+    user_id: uuid.UUID
+    # Stores `joined_at` because later steps depend on this value.
+    joined_at: datetime = field(default_factory=utcnow)
+    # Stores `last_seen_at` because later steps depend on this value.
+    last_seen_at: datetime = field(default_factory=utcnow)
+    # Stores `connected` because later steps depend on this value.
+    connected: bool = False
+    # Stores `ready` because later steps depend on this value.
+    ready: bool = False
+    # Stores `ready_at` because later steps depend on this value.
+    ready_at: datetime | None = None
+
+
+# Applies this decorator to configure the declaration immediately below.
+@dataclass(kw_only=True, slots=True)
+# Groups the state and behavior owned by `MultiplayerEvent`.
+class MultiplayerEvent(Document):
+    # Stores `collection` because later steps depend on this value.
+    collection: ClassVar[str] = "multiplayer_events"
+    # Stores `id` because later steps depend on this value.
+    id: uuid.UUID = field(default_factory=uuid.uuid4)
+    # Declares this typed field so the surrounding contract is explicit.
+    room_id: uuid.UUID
+    # Declares this typed field so the surrounding contract is explicit.
+    sequence: int
+    # Declares this typed field so the surrounding contract is explicit.
+    event_type: str
+    # Declares this typed field so the surrounding contract is explicit.
+    payload: dict[str, Any]
+    # Stores `created_at` because later steps depend on this value.
+    created_at: datetime = field(default_factory=utcnow)
+
+
+# Applies this decorator to configure the declaration immediately below.
+@dataclass(kw_only=True, slots=True)
+# Groups the state and behavior owned by `LeaderboardEntry`.
+class LeaderboardEntry(TimestampedDocument):
+    # Stores `collection` because later steps depend on this value.
+    collection: ClassVar[str] = "leaderboard_entries"
+    # Stores `id` because later steps depend on this value.
+    id: uuid.UUID = field(default_factory=uuid.uuid4)
+    # Declares this typed field so the surrounding contract is explicit.
+    game_id: uuid.UUID
+    # Declares this typed field so the surrounding contract is explicit.
+    user_id: uuid.UUID
+    # Declares this typed field so the surrounding contract is explicit.
+    category: str
+    # Declares this typed field so the surrounding contract is explicit.
+    score: int
+    # Declares this typed field so the surrounding contract is explicit.
+    attempts_used: int
+    # Declares this typed field so the surrounding contract is explicit.
+    elapsed_seconds: int
+    # Declares this typed field so the surrounding contract is explicit.
+    completed_at: datetime
+    # Stores `review_status` because later steps depend on this value.
+    review_status: str = "approved"
+    # Stores `invalidated_at` because later steps depend on this value.
+    invalidated_at: datetime | None = None
+
+
+# Applies this decorator to configure the declaration immediately below.
+@dataclass(kw_only=True, slots=True)
+# Groups the state and behavior owned by `Achievement`.
+class Achievement(Document):
+    # Stores `collection` because later steps depend on this value.
+    collection: ClassVar[str] = "achievements"
+    # Stores `primary_key` because later steps depend on this value.
+    primary_key: ClassVar[str] = "key"
+    # Declares this typed field so the surrounding contract is explicit.
+    key: str
+    # Declares this typed field so the surrounding contract is explicit.
+    name: str
+    # Declares this typed field so the surrounding contract is explicit.
+    description: str
+    # Stores `version` because later steps depend on this value.
+    version: int = 1
+
+
+# Applies this decorator to configure the declaration immediately below.
+@dataclass(kw_only=True, slots=True)
+# Groups the state and behavior owned by `UserAchievement`.
+class UserAchievement(Document):
+    # Stores `collection` because later steps depend on this value.
+    collection: ClassVar[str] = "user_achievements"
+    # Stores `id` because later steps depend on this value.
+    id: uuid.UUID = field(default_factory=uuid.uuid4)
+    # Declares this typed field so the surrounding contract is explicit.
+    user_id: uuid.UUID
+    # Declares this typed field so the surrounding contract is explicit.
+    achievement_key: str
+    # Stores `awarded_at` because later steps depend on this value.
+    awarded_at: datetime = field(default_factory=utcnow)
+    # Stores `game_id` because later steps depend on this value.
+    game_id: uuid.UUID | None = None
+
+
+# Applies this decorator to configure the declaration immediately below.
+@dataclass(kw_only=True, slots=True)
+# Groups the state and behavior owned by `FeatureFlag`.
+class FeatureFlag(TimestampedDocument):
+    # Stores `collection` because later steps depend on this value.
+    collection: ClassVar[str] = "feature_flags"
+    # Stores `primary_key` because later steps depend on this value.
+    primary_key: ClassVar[str] = "key"
+    # Declares this typed field so the surrounding contract is explicit.
+    key: str
+    # Declares this typed field so the surrounding contract is explicit.
+    enabled: bool
+    # Stores `description` because later steps depend on this value.
+    description: str | None = None
+
+
+# Applies this decorator to configure the declaration immediately below.
+@dataclass(kw_only=True, slots=True)
+# Groups the state and behavior owned by `ModerationAction`.
+class ModerationAction(Document):
+    # Stores `collection` because later steps depend on this value.
+    collection: ClassVar[str] = "moderation_actions"
+    # Stores `id` because later steps depend on this value.
+    id: uuid.UUID = field(default_factory=uuid.uuid4)
+    # Declares this typed field so the surrounding contract is explicit.
+    actor_id: uuid.UUID | None
+    # Declares this typed field so the surrounding contract is explicit.
+    target_user_id: uuid.UUID | None
+    # Declares this typed field so the surrounding contract is explicit.
+    action: str
+    # Declares this typed field so the surrounding contract is explicit.
+    reason: str
+    # Stores `created_at` because later steps depend on this value.
+    created_at: datetime = field(default_factory=utcnow)
+
+
+# Applies this decorator to configure the declaration immediately below.
+@dataclass(kw_only=True, slots=True)
+# Groups the state and behavior owned by `AuditEvent`.
+class AuditEvent(Document):
+    # Stores `collection` because later steps depend on this value.
+    collection: ClassVar[str] = "audit_events"
+    # Stores `id` because later steps depend on this value.
+    id: uuid.UUID = field(default_factory=uuid.uuid4)
+    # Declares this typed field so the surrounding contract is explicit.
+    actor_id: uuid.UUID | None
+    # Declares this typed field so the surrounding contract is explicit.
+    action: str
+    # Declares this typed field so the surrounding contract is explicit.
+    target_type: str
+    # Declares this typed field so the surrounding contract is explicit.
+    target_id: str
+    # Stores `reason` because later steps depend on this value.
+    reason: str | None = None
+    # Stores `event_data` because later steps depend on this value.
+    event_data: dict[str, Any] = field(default_factory=dict)
+    # Stores `created_at` because later steps depend on this value.
+    created_at: datetime = field(default_factory=utcnow)
+
+
+# Applies this decorator to configure the declaration immediately below.
+@dataclass(kw_only=True, slots=True)
+# Groups the state and behavior owned by `AdminGrant`.
+class AdminGrant(Document):
+    # Stores `collection` because later steps depend on this value.
+    collection: ClassVar[str] = "admin_grants"
+    # Stores `primary_key` because later steps depend on this value.
+    primary_key: ClassVar[str] = "user_id"
+    # Declares this typed field so the surrounding contract is explicit.
+    user_id: uuid.UUID
+    # Stores `granted_by` because later steps depend on this value.
+    granted_by: uuid.UUID | None = None
+    # Stores `granted_at` because later steps depend on this value.
+    granted_at: datetime = field(default_factory=utcnow)
+    # Stores `revoked_at` because later steps depend on this value.
+    revoked_at: datetime | None = None
+
+
+# Applies this decorator to configure the declaration immediately below.
+@dataclass(kw_only=True, slots=True)
+# Groups the state and behavior owned by `SupportRequest`.
+class SupportRequest(Document):
+    # Stores `collection` because later steps depend on this value.
+    collection: ClassVar[str] = "support_requests"
+    # Stores `id` because later steps depend on this value.
+    id: uuid.UUID = field(default_factory=uuid.uuid4)
+    # Declares this typed field so the surrounding contract is explicit.
+    user_id: uuid.UUID
+    # Declares this typed field so the surrounding contract is explicit.
+    topic: str
+    # Declares this typed field so the surrounding contract is explicit.
+    reply_email: str
+    # Declares this typed field so the surrounding contract is explicit.
+    message: str
+    # Stores `status` because later steps depend on this value.
+    status: str = "received"
+    # Stores `created_at` because later steps depend on this value.
+    created_at: datetime = field(default_factory=utcnow)
+
+
+# Applies this decorator to configure the declaration immediately below.
+@dataclass(kw_only=True, slots=True)
+# Groups the state and behavior owned by `AccountDeletionRequest`.
+class AccountDeletionRequest(Document):
+    # Stores `collection` because later steps depend on this value.
+    collection: ClassVar[str] = "account_deletion_requests"
+    # Stores `id` because later steps depend on this value.
+    id: uuid.UUID = field(default_factory=uuid.uuid4)
+    # Declares this typed field so the surrounding contract is explicit.
+    user_id: uuid.UUID
+    # Stores `status` because later steps depend on this value.
+    status: str = "pending"
+    # Stores `provider_attempts` because later steps depend on this value.
+    provider_attempts: int = 0
+    # Stores `last_error_code` because later steps depend on this value.
+    last_error_code: str | None = None
+    # Stores `requested_at` because later steps depend on this value.
+    requested_at: datetime = field(default_factory=utcnow)
+    # Stores `last_attempt_at` because later steps depend on this value.
+    last_attempt_at: datetime | None = None
+    # Stores `completed_at` because later steps depend on this value.
+    completed_at: datetime | None = None
+
+
+# Applies this decorator to configure the declaration immediately below.
+@dataclass(kw_only=True, slots=True)
+# Groups the state and behavior owned by `ProductEvent`.
+class ProductEvent(Document):
+    # Stores `collection` because later steps depend on this value.
+    collection: ClassVar[str] = "product_events"
+    # Stores `id` because later steps depend on this value.
+    id: uuid.UUID = field(default_factory=uuid.uuid4)
+    # Declares this typed field so the surrounding contract is explicit.
+    client_event_id: uuid.UUID
+    # Declares this typed field so the surrounding contract is explicit.
+    event_name: str
+    # Declares this typed field so the surrounding contract is explicit.
+    anonymous: bool
+    # Declares this typed field so the surrounding contract is explicit.
+    consent_version: str
+    # Declares this typed field so the surrounding contract is explicit.
+    release: str
+    # Declares this typed field so the surrounding contract is explicit.
+    expires_at: datetime
+    # Stores `locale` because later steps depend on this value.
+    locale: str | None = None
+    # Stores `mode` because later steps depend on this value.
+    mode: str | None = None
+    # Stores `difficulty` because later steps depend on this value.
+    difficulty: str | None = None
+    # Stores `result` because later steps depend on this value.
+    result: str | None = None
+    # Stores `attempts_used` because later steps depend on this value.
+    attempts_used: int | None = None
+    # Stores `ranked` because later steps depend on this value.
+    ranked: bool | None = None
+    # Stores `score_band` because later steps depend on this value.
+    score_band: str | None = None
+    # Stores `daily_challenge_id` because later steps depend on this value.
+    daily_challenge_id: str | None = None
+    # Stores `official` because later steps depend on this value.
+    official: bool | None = None
+    # Stores `expiry_band` because later steps depend on this value.
+    expiry_band: str | None = None
+    # Stores `room_state` because later steps depend on this value.
+    room_state: str | None = None
+    # Stores `reconnect` because later steps depend on this value.
+    reconnect: bool | None = None
+    # Stores `tie` because later steps depend on this value.
+    tie: bool | None = None
+    # Stores `validation_category` because later steps depend on this value.
+    validation_category: str | None = None
+    # Stores `surface` because later steps depend on this value.
+    surface: str | None = None
+    # Stores `recovered` because later steps depend on this value.
+    recovered: bool | None = None
+    # Stores `previous_anonymous` because later steps depend on this value.
+    previous_anonymous: bool | None = None
+    # Stores `occurred_at` because later steps depend on this value.
+    occurred_at: datetime = field(default_factory=utcnow)
+
+
+# Stores `DOCUMENT_TYPES` because later steps depend on this value.
+DOCUMENT_TYPES = (
+    # Supplies this required nested value.
+    Profile,
+    # Supplies this required nested value.
+    AuthUser,
+    # Supplies this required nested value.
+    AuthSession,
+    # Supplies this required nested value.
+    AuthEmailToken,
+    # Supplies this required nested value.
+    DailyChallenge,
+    # Supplies this required nested value.
+    FriendChallenge,
+    # Supplies this required nested value.
+    MultiplayerRoom,
+    # Supplies this required nested value.
+    GameSession,
+    # Supplies this required nested value.
+    MultiplayerMember,
+    # Supplies this required nested value.
+    MultiplayerEvent,
+    # Supplies this required nested value.
+    LeaderboardEntry,
+    # Supplies this required nested value.
+    Achievement,
+    # Supplies this required nested value.
+    UserAchievement,
+    # Supplies this required nested value.
+    FeatureFlag,
+    # Supplies this required nested value.
+    ModerationAction,
+    # Supplies this required nested value.
+    AuditEvent,
+    # Supplies this required nested value.
+    AdminGrant,
+    # Supplies this required nested value.
+    SupportRequest,
+    # Supplies this required nested value.
+    AccountDeletionRequest,
+    # Supplies this required nested value.
+    ProductEvent,
+    # Closes the multiline declaration, call, or collection opened above.
 )
-from sqlalchemy.orm import Mapped, mapped_column, relationship
-
-from .database import Base
-
-
-class TimestampMixin:
-    created_at: Mapped[datetime] = mapped_column(
-        DateTime(timezone=True), server_default=func.now(), nullable=False
-    )
-    updated_at: Mapped[datetime] = mapped_column(
-        DateTime(timezone=True), server_default=func.now(), onupdate=func.now(), nullable=False
-    )
-
-
-class Profile(TimestampMixin, Base):
-    __tablename__ = "profiles"
-
-    id: Mapped[uuid.UUID] = mapped_column(Uuid, primary_key=True)
-    display_name: Mapped[str | None] = mapped_column(String(32))
-    normalized_display_name: Mapped[str | None] = mapped_column(String(32), unique=True)
-    is_anonymous: Mapped[bool] = mapped_column(Boolean, default=True, nullable=False)
-    public_leaderboards: Mapped[bool] = mapped_column(Boolean, default=False, nullable=False)
-    is_banned: Mapped[bool] = mapped_column(Boolean, default=False, nullable=False)
-    deleted_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
-
-
-class DailyChallenge(TimestampMixin, Base):
-    __tablename__ = "daily_challenges"
-    __table_args__ = (UniqueConstraint("challenge_date", "rule_set_version"),)
-
-    id: Mapped[uuid.UUID] = mapped_column(Uuid, primary_key=True, default=uuid.uuid4)
-    challenge_date: Mapped[date] = mapped_column(Date, nullable=False)
-    public_id: Mapped[str] = mapped_column(String(40), unique=True, nullable=False)
-    config: Mapped[dict[str, Any]] = mapped_column(JSON, nullable=False)
-    derivation_version: Mapped[str] = mapped_column(String(32), nullable=False)
-    derivation_key_version: Mapped[str] = mapped_column(String(32), nullable=False)
-    rule_set_version: Mapped[str] = mapped_column(String(32), nullable=False)
-
-
-class FriendChallenge(TimestampMixin, Base):
-    __tablename__ = "friend_challenges"
-    __table_args__ = (
-        Index("ix_friend_challenges_creator_created", "creator_id", "created_at"),
-        Index("ix_friend_challenges_expires", "expires_at"),
-        UniqueConstraint(
-            "creator_id",
-            "creation_idempotency_key",
-            name="uq_friend_challenge_creation_idempotency",
-        ),
-    )
-
-    id: Mapped[uuid.UUID] = mapped_column(Uuid, primary_key=True, default=uuid.uuid4)
-    share_code_hash: Mapped[str] = mapped_column(String(64), unique=True, nullable=False)
-    creation_idempotency_key: Mapped[str | None] = mapped_column(String(80))
-    creation_request_fingerprint: Mapped[str | None] = mapped_column(String(64))
-    creator_id: Mapped[uuid.UUID] = mapped_column(
-        ForeignKey("profiles.id", ondelete="CASCADE"), nullable=False
-    )
-    title: Mapped[str | None] = mapped_column(String(80))
-    show_creator_name: Mapped[bool] = mapped_column(Boolean, default=True, nullable=False)
-    config: Mapped[dict[str, Any]] = mapped_column(JSON, nullable=False)
-    encrypted_secret: Mapped[bytes] = mapped_column(LargeBinary, nullable=False)
-    secret_nonce: Mapped[bytes] = mapped_column(LargeBinary, nullable=False)
-    secret_key_version: Mapped[str] = mapped_column(String(32), nullable=False)
-    revoked_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
-    expires_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False)
-
-
-class MultiplayerRoom(TimestampMixin, Base):
-    __tablename__ = "multiplayer_rooms"
-    __table_args__ = (
-        CheckConstraint(
-            "status IN ('waiting', 'active', 'completed', 'expired', 'terminated')",
-            name="status_allowed",
-        ),
-        CheckConstraint("event_sequence >= 0", name="event_sequence_nonnegative"),
-        Index("ix_multiplayer_rooms_status_expires", "status", "expires_at"),
-        Index("ix_multiplayer_rooms_status_updated", "status", "updated_at"),
-        UniqueConstraint(
-            "owner_id", "creation_idempotency_key", name="uq_room_creation_idempotency"
-        ),
-    )
-
-    id: Mapped[uuid.UUID] = mapped_column(Uuid, primary_key=True, default=uuid.uuid4)
-    room_code_hash: Mapped[str] = mapped_column(String(64), unique=True, nullable=False)
-    creation_idempotency_key: Mapped[str | None] = mapped_column(String(80))
-    creation_request_fingerprint: Mapped[str | None] = mapped_column(String(64))
-    owner_id: Mapped[uuid.UUID] = mapped_column(
-        ForeignKey("profiles.id", ondelete="CASCADE"), nullable=False
-    )
-    config: Mapped[dict[str, Any]] = mapped_column(JSON, nullable=False)
-    encrypted_secret: Mapped[bytes] = mapped_column(LargeBinary, nullable=False)
-    secret_nonce: Mapped[bytes] = mapped_column(LargeBinary, nullable=False)
-    secret_key_version: Mapped[str] = mapped_column(String(32), nullable=False)
-    status: Mapped[str] = mapped_column(String(24), default="waiting", nullable=False)
-    winner_id: Mapped[uuid.UUID | None] = mapped_column(
-        ForeignKey("profiles.id", ondelete="SET NULL")
-    )
-    winner_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
-    tie_deadline: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
-    is_tie: Mapped[bool] = mapped_column(Boolean, default=False, nullable=False)
-    event_sequence: Mapped[int] = mapped_column(Integer, default=0, nullable=False)
-    expires_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False)
-
-
-class GameSession(TimestampMixin, Base):
-    __tablename__ = "game_sessions"
-    __table_args__ = (
-        CheckConstraint("attempts_used >= 0", name="attempts_nonnegative"),
-        CheckConstraint("attempts_used <= maximum_attempts", name="attempts_within_limit"),
-        CheckConstraint("maximum_attempts >= 1 AND maximum_attempts <= 20", name="attempt_limit"),
-        CheckConstraint("invalid_submission_count >= 0", name="invalid_submissions_nonnegative"),
-        CheckConstraint(
-            "mode IN ('solo', 'daily', 'practice', 'pass_and_play', 'friend_challenge', 'duel')",
-            name="mode_allowed",
-        ),
-        CheckConstraint(
-            "status IN ('created', 'active', 'won', 'lost', 'abandoned', 'expired')",
-            name="status_allowed",
-        ),
-        CheckConstraint(
-            "difficulty IS NULL OR difficulty IN ('easy', 'normal', 'hard', 'expert')",
-            name="difficulty_allowed",
-        ),
-        CheckConstraint(
-            "ranked_eligibility IN ('eligible', 'unranked', 'invalidated')",
-            name="ranked_eligibility_allowed",
-        ),
-        CheckConstraint(
-            "elapsed_seconds IS NULL OR elapsed_seconds >= 0", name="elapsed_nonnegative"
-        ),
-        CheckConstraint("final_score IS NULL OR final_score >= 0", name="score_nonnegative"),
-        CheckConstraint("expires_at > started_at", name="expiry_after_start"),
-        Index("ix_game_sessions_owner_created", "owner_id", "created_at"),
-        Index("ix_game_sessions_status_mode", "status", "mode"),
-        Index("ix_game_sessions_status_expires", "status", "expires_at"),
-        Index("ix_game_sessions_completed", "completed_at"),
-        Index(
-            "ix_game_sessions_friend_completed",
-            "friend_challenge_id",
-            "completed_at",
-        ),
-        Index("ix_game_sessions_room", "room_id"),
-        UniqueConstraint(
-            "owner_id", "creation_idempotency_key", name="uq_game_creation_idempotency"
-        ),
-        UniqueConstraint("owner_id", "daily_challenge_id", name="uq_daily_official_run"),
-        UniqueConstraint("owner_id", "friend_challenge_id", name="uq_friend_official_run"),
-        UniqueConstraint("owner_id", "room_id", name="uq_room_member_game"),
-    )
-
-    id: Mapped[uuid.UUID] = mapped_column(Uuid, primary_key=True, default=uuid.uuid4)
-    public_id: Mapped[str] = mapped_column(String(32), unique=True, nullable=False)
-    creation_idempotency_key: Mapped[str | None] = mapped_column(String(80))
-    creation_request_fingerprint: Mapped[str | None] = mapped_column(String(64))
-    owner_id: Mapped[uuid.UUID] = mapped_column(
-        ForeignKey("profiles.id", ondelete="CASCADE"), nullable=False
-    )
-    mode: Mapped[str] = mapped_column(String(32), nullable=False)
-    difficulty: Mapped[str | None] = mapped_column(String(16))
-    config: Mapped[dict[str, Any]] = mapped_column(JSON, nullable=False)
-    status: Mapped[str] = mapped_column(String(24), nullable=False)
-    rule_set_version: Mapped[str] = mapped_column(String(32), nullable=False)
-    scoring_version: Mapped[str] = mapped_column(String(32), nullable=False)
-    encrypted_secret: Mapped[bytes] = mapped_column(LargeBinary, nullable=False)
-    secret_nonce: Mapped[bytes] = mapped_column(LargeBinary, nullable=False)
-    secret_key_version: Mapped[str] = mapped_column(String(32), nullable=False)
-    attempts_used: Mapped[int] = mapped_column(Integer, default=0, nullable=False)
-    maximum_attempts: Mapped[int] = mapped_column(Integer, nullable=False)
-    started_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False)
-    expires_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False)
-    completed_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
-    elapsed_seconds: Mapped[int | None] = mapped_column(Integer)
-    final_score: Mapped[int | None] = mapped_column(Integer)
-    score_breakdown: Mapped[dict[str, Any] | None] = mapped_column(JSON)
-    ranked_eligibility: Mapped[str] = mapped_column(String(24), nullable=False)
-    invalidation_reason: Mapped[str | None] = mapped_column(String(200))
-    invalid_submission_count: Mapped[int] = mapped_column(Integer, default=0, nullable=False)
-    daily_challenge_id: Mapped[uuid.UUID | None] = mapped_column(
-        ForeignKey("daily_challenges.id", ondelete="RESTRICT")
-    )
-    friend_challenge_id: Mapped[uuid.UUID | None] = mapped_column(
-        ForeignKey("friend_challenges.id", ondelete="SET NULL")
-    )
-    room_id: Mapped[uuid.UUID | None] = mapped_column(
-        ForeignKey("multiplayer_rooms.id", ondelete="SET NULL")
-    )
-    attempts: Mapped[list[GameAttempt]] = relationship(
-        back_populates="game", cascade="all, delete-orphan", order_by="GameAttempt.attempt_number"
-    )
-
-
-class GameAttempt(Base):
-    __tablename__ = "game_attempts"
-    __table_args__ = (
-        UniqueConstraint("game_id", "attempt_number", name="uq_game_attempt_number"),
-        UniqueConstraint("game_id", "idempotency_key", name="uq_game_attempt_idempotency"),
-        CheckConstraint("attempt_number >= 1", name="attempt_number_positive"),
-        CheckConstraint("black_pegs >= 0 AND white_pegs >= 0", name="feedback_nonnegative"),
-        CheckConstraint(
-            "black_pegs + white_pegs <= json_array_length(guess)",
-            name="feedback_within_code_length",
-        ),
-    )
-
-    id: Mapped[uuid.UUID] = mapped_column(Uuid, primary_key=True, default=uuid.uuid4)
-    game_id: Mapped[uuid.UUID] = mapped_column(
-        ForeignKey("game_sessions.id", ondelete="CASCADE"), nullable=False
-    )
-    attempt_number: Mapped[int] = mapped_column(Integer, nullable=False)
-    guess: Mapped[list[str]] = mapped_column(JSON, nullable=False)
-    black_pegs: Mapped[int] = mapped_column(Integer, nullable=False)
-    white_pegs: Mapped[int] = mapped_column(Integer, nullable=False)
-    submitted_at: Mapped[datetime] = mapped_column(
-        DateTime(timezone=True), server_default=func.now(), nullable=False
-    )
-    idempotency_key: Mapped[str] = mapped_column(String(80), nullable=False)
-    request_id: Mapped[str] = mapped_column(String(64), nullable=False)
-    game: Mapped[GameSession] = relationship(back_populates="attempts")
-
-
-class MultiplayerMember(Base):
-    __tablename__ = "multiplayer_members"
-    __table_args__ = (UniqueConstraint("room_id", "user_id"),)
-
-    id: Mapped[uuid.UUID] = mapped_column(Uuid, primary_key=True, default=uuid.uuid4)
-    room_id: Mapped[uuid.UUID] = mapped_column(
-        ForeignKey("multiplayer_rooms.id", ondelete="CASCADE"), nullable=False
-    )
-    user_id: Mapped[uuid.UUID] = mapped_column(
-        ForeignKey("profiles.id", ondelete="CASCADE"), nullable=False
-    )
-    joined_at: Mapped[datetime] = mapped_column(
-        DateTime(timezone=True), server_default=func.now(), nullable=False
-    )
-    last_seen_at: Mapped[datetime] = mapped_column(
-        DateTime(timezone=True), server_default=func.now(), nullable=False
-    )
-    connected: Mapped[bool] = mapped_column(Boolean, default=False, nullable=False)
-    ready: Mapped[bool] = mapped_column(Boolean, default=False, nullable=False)
-    ready_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
-
-
-class MultiplayerEvent(Base):
-    __tablename__ = "multiplayer_events"
-    __table_args__ = (UniqueConstraint("room_id", "sequence"),)
-
-    id: Mapped[uuid.UUID] = mapped_column(Uuid, primary_key=True, default=uuid.uuid4)
-    room_id: Mapped[uuid.UUID] = mapped_column(
-        ForeignKey("multiplayer_rooms.id", ondelete="CASCADE"), nullable=False
-    )
-    sequence: Mapped[int] = mapped_column(Integer, nullable=False)
-    event_type: Mapped[str] = mapped_column(String(40), nullable=False)
-    payload: Mapped[dict[str, Any]] = mapped_column(JSON, nullable=False)
-    created_at: Mapped[datetime] = mapped_column(
-        DateTime(timezone=True), server_default=func.now(), nullable=False
-    )
-
-
-class LeaderboardEntry(TimestampMixin, Base):
-    __tablename__ = "leaderboard_entries"
-    __table_args__ = (
-        UniqueConstraint("game_id"),
-        CheckConstraint("score >= 0", name="score_nonnegative"),
-        CheckConstraint("attempts_used >= 1 AND attempts_used <= 20", name="attempts_allowed"),
-        CheckConstraint("elapsed_seconds >= 0", name="elapsed_nonnegative"),
-        CheckConstraint(
-            "review_status IN ('approved', 'pending', 'invalidated', 'deleted_account')",
-            name="review_status_allowed",
-        ),
-        Index("ix_leaderboard_rank", "category", "score", "attempts_used", "elapsed_seconds"),
-    )
-
-    id: Mapped[uuid.UUID] = mapped_column(Uuid, primary_key=True, default=uuid.uuid4)
-    game_id: Mapped[uuid.UUID] = mapped_column(
-        ForeignKey("game_sessions.id", ondelete="CASCADE"), nullable=False
-    )
-    user_id: Mapped[uuid.UUID] = mapped_column(
-        ForeignKey("profiles.id", ondelete="CASCADE"), nullable=False
-    )
-    category: Mapped[str] = mapped_column(String(48), nullable=False)
-    score: Mapped[int] = mapped_column(Integer, nullable=False)
-    attempts_used: Mapped[int] = mapped_column(Integer, nullable=False)
-    elapsed_seconds: Mapped[int] = mapped_column(Integer, nullable=False)
-    completed_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False)
-    review_status: Mapped[str] = mapped_column(String(24), default="approved", nullable=False)
-    invalidated_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
-
-
-class Achievement(Base):
-    __tablename__ = "achievements"
-
-    key: Mapped[str] = mapped_column(String(40), primary_key=True)
-    version: Mapped[int] = mapped_column(Integer, default=1, nullable=False)
-    name: Mapped[str] = mapped_column(String(80), nullable=False)
-    description: Mapped[str] = mapped_column(String(200), nullable=False)
-
-
-class UserAchievement(Base):
-    __tablename__ = "user_achievements"
-    __table_args__ = (
-        Index("ix_user_achievements_game", "game_id"),
-        UniqueConstraint("user_id", "achievement_key"),
-    )
-
-    id: Mapped[uuid.UUID] = mapped_column(Uuid, primary_key=True, default=uuid.uuid4)
-    user_id: Mapped[uuid.UUID] = mapped_column(
-        ForeignKey("profiles.id", ondelete="CASCADE"), nullable=False
-    )
-    achievement_key: Mapped[str] = mapped_column(
-        ForeignKey("achievements.key", ondelete="CASCADE"), nullable=False
-    )
-    awarded_at: Mapped[datetime] = mapped_column(
-        DateTime(timezone=True), server_default=func.now(), nullable=False
-    )
-    game_id: Mapped[uuid.UUID | None] = mapped_column(
-        ForeignKey("game_sessions.id", ondelete="SET NULL")
-    )
-
-
-class FeatureFlag(TimestampMixin, Base):
-    __tablename__ = "feature_flags"
-
-    key: Mapped[str] = mapped_column(String(64), primary_key=True)
-    enabled: Mapped[bool] = mapped_column(Boolean, nullable=False)
-    description: Mapped[str | None] = mapped_column(String(200))
-
-
-class ModerationAction(Base):
-    __tablename__ = "moderation_actions"
-
-    id: Mapped[uuid.UUID] = mapped_column(Uuid, primary_key=True, default=uuid.uuid4)
-    actor_id: Mapped[uuid.UUID | None] = mapped_column(
-        ForeignKey("profiles.id", ondelete="SET NULL")
-    )
-    target_user_id: Mapped[uuid.UUID | None] = mapped_column(
-        ForeignKey("profiles.id", ondelete="SET NULL")
-    )
-    action: Mapped[str] = mapped_column(String(32), nullable=False)
-    reason: Mapped[str] = mapped_column(String(300), nullable=False)
-    created_at: Mapped[datetime] = mapped_column(
-        DateTime(timezone=True), server_default=func.now(), nullable=False
-    )
-
-
-class AuditEvent(Base):
-    __tablename__ = "audit_events"
-    __table_args__ = (Index("ix_audit_events_created", "created_at"),)
-
-    id: Mapped[uuid.UUID] = mapped_column(Uuid, primary_key=True, default=uuid.uuid4)
-    actor_id: Mapped[uuid.UUID | None] = mapped_column(
-        ForeignKey("profiles.id", ondelete="SET NULL")
-    )
-    action: Mapped[str] = mapped_column(String(80), nullable=False)
-    target_type: Mapped[str] = mapped_column(String(40), nullable=False)
-    target_id: Mapped[str] = mapped_column(String(80), nullable=False)
-    reason: Mapped[str | None] = mapped_column(String(300))
-    event_data: Mapped[dict[str, Any]] = mapped_column(JSON, default=dict, nullable=False)
-    created_at: Mapped[datetime] = mapped_column(
-        DateTime(timezone=True), server_default=func.now(), nullable=False
-    )
-
-
-class AdminGrant(Base):
-    __tablename__ = "admin_grants"
-
-    user_id: Mapped[uuid.UUID] = mapped_column(
-        ForeignKey("profiles.id", ondelete="CASCADE"), primary_key=True
-    )
-    granted_by: Mapped[uuid.UUID | None] = mapped_column(
-        ForeignKey("profiles.id", ondelete="SET NULL")
-    )
-    granted_at: Mapped[datetime] = mapped_column(
-        DateTime(timezone=True), server_default=func.now(), nullable=False
-    )
-    revoked_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
-
-
-class SupportRequest(Base):
-    __tablename__ = "support_requests"
-    __table_args__ = (Index("ix_support_requests_status_created", "status", "created_at"),)
-
-    id: Mapped[uuid.UUID] = mapped_column(Uuid, primary_key=True, default=uuid.uuid4)
-    user_id: Mapped[uuid.UUID] = mapped_column(
-        ForeignKey("profiles.id", ondelete="CASCADE"), nullable=False
-    )
-    topic: Mapped[str] = mapped_column(String(40), nullable=False)
-    reply_email: Mapped[str] = mapped_column(String(254), nullable=False)
-    message: Mapped[str] = mapped_column(Text, nullable=False)
-    status: Mapped[str] = mapped_column(String(20), default="received", nullable=False)
-    created_at: Mapped[datetime] = mapped_column(
-        DateTime(timezone=True), server_default=func.now(), nullable=False
-    )
-
-
-class AccountDeletionRequest(Base):
-    __tablename__ = "account_deletion_requests"
-    __table_args__ = (
-        CheckConstraint(
-            "status IN ('pending', 'provider_failed', 'completed')",
-            name="status_allowed",
-        ),
-        CheckConstraint("provider_attempts >= 0", name="provider_attempts_nonnegative"),
-    )
-
-    id: Mapped[uuid.UUID] = mapped_column(Uuid, primary_key=True, default=uuid.uuid4)
-    user_id: Mapped[uuid.UUID] = mapped_column(Uuid, unique=True, nullable=False)
-    status: Mapped[str] = mapped_column(String(24), server_default="pending", nullable=False)
-    provider_attempts: Mapped[int] = mapped_column(Integer, server_default="0", nullable=False)
-    last_error_code: Mapped[str | None] = mapped_column(String(40))
-    requested_at: Mapped[datetime] = mapped_column(
-        DateTime(timezone=True), server_default=func.now(), nullable=False
-    )
-    last_attempt_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
-    completed_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
-
-
-class ProductEvent(Base):
-    """Privacy-bounded first-party analytics event with no user identifier or free text."""
-
-    __tablename__ = "product_events"
-    __table_args__ = (
-        CheckConstraint(
-            "event_name IN ('game_started', 'game_completed', 'game_abandoned', "
-            "'difficulty_selected', 'daily_completed', 'friend_challenge_created', "
-            "'room_joined', 'duel_completed', 'validation_error', 'reconnect', "
-            "'account_upgraded')",
-            name="event_name_allowed",
-        ),
-        CheckConstraint("locale IS NULL OR locale IN ('en', 'zh-Hant')", name="locale_allowed"),
-        CheckConstraint(
-            "mode IS NULL OR mode IN ('solo', 'daily', 'practice', 'pass_and_play', "
-            "'friend_challenge', 'duel')",
-            name="mode_allowed",
-        ),
-        CheckConstraint(
-            "difficulty IS NULL OR difficulty IN ('easy', 'normal', 'hard', 'expert', 'custom')",
-            name="difficulty_allowed",
-        ),
-        CheckConstraint(
-            "result IS NULL OR result IN ('won', 'lost', 'abandoned', 'expired', 'tie')",
-            name="result_allowed",
-        ),
-        CheckConstraint(
-            "attempts_used IS NULL OR attempts_used BETWEEN 0 AND 20",
-            name="attempts_allowed",
-        ),
-        CheckConstraint(
-            "score_band IS NULL OR score_band IN ('zero', '1-999', '1000-1499', '1500+')",
-            name="score_band_allowed",
-        ),
-        CheckConstraint(
-            "expiry_band IS NULL OR expiry_band = '30_days'",
-            name="expiry_band_allowed",
-        ),
-        CheckConstraint(
-            "room_state IS NULL OR room_state IN "
-            "('waiting', 'active', 'completed', 'expired', 'terminated')",
-            name="room_state_allowed",
-        ),
-        CheckConstraint(
-            "validation_category IS NULL OR validation_category IN "
-            "('game_config', 'guess', 'challenge', 'room', 'profile', 'auth')",
-            name="validation_category_allowed",
-        ),
-        CheckConstraint(
-            "surface IS NULL OR surface IN ('game', 'room', 'daily', 'challenge', 'account')",
-            name="surface_allowed",
-        ),
-        CheckConstraint("expires_at > occurred_at", name="expiry_after_occurrence"),
-        Index("ix_product_events_event_occurred", "event_name", "occurred_at"),
-        Index("ix_product_events_expires", "expires_at"),
-    )
-
-    id: Mapped[uuid.UUID] = mapped_column(Uuid, primary_key=True, default=uuid.uuid4)
-    client_event_id: Mapped[uuid.UUID] = mapped_column(Uuid, unique=True, nullable=False)
-    event_name: Mapped[str] = mapped_column(String(40), nullable=False)
-    anonymous: Mapped[bool] = mapped_column(Boolean, nullable=False)
-    consent_version: Mapped[str] = mapped_column(String(32), nullable=False)
-    release: Mapped[str] = mapped_column(String(64), nullable=False)
-    locale: Mapped[str | None] = mapped_column(String(10))
-    mode: Mapped[str | None] = mapped_column(String(24))
-    difficulty: Mapped[str | None] = mapped_column(String(16))
-    result: Mapped[str | None] = mapped_column(String(16))
-    attempts_used: Mapped[int | None] = mapped_column(Integer)
-    ranked: Mapped[bool | None] = mapped_column(Boolean)
-    score_band: Mapped[str | None] = mapped_column(String(16))
-    daily_challenge_id: Mapped[str | None] = mapped_column(String(64))
-    official: Mapped[bool | None] = mapped_column(Boolean)
-    expiry_band: Mapped[str | None] = mapped_column(String(16))
-    room_state: Mapped[str | None] = mapped_column(String(16))
-    reconnect: Mapped[bool | None] = mapped_column(Boolean)
-    tie: Mapped[bool | None] = mapped_column(Boolean)
-    validation_category: Mapped[str | None] = mapped_column(String(24))
-    surface: Mapped[str | None] = mapped_column(String(16))
-    recovered: Mapped[bool | None] = mapped_column(Boolean)
-    previous_anonymous: Mapped[bool | None] = mapped_column(Boolean)
-    occurred_at: Mapped[datetime] = mapped_column(
-        DateTime(timezone=True), server_default=func.now(), nullable=False
-    )
-    expires_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False)

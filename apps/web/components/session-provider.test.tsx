@@ -1,176 +1,248 @@
-import type { Session } from '@supabase/supabase-js';
-import { act, cleanup, render, screen, waitFor } from '@testing-library/react';
+// Imports the dependency required by the module implementation below.
+import { cleanup, render, screen, waitFor } from '@testing-library/react';
+// Imports the dependency required by the module implementation below.
 import userEvent from '@testing-library/user-event';
+// Imports the dependency required by the module implementation below.
 import { useEffect, useState } from 'react';
+// Imports the dependency required by the module implementation below.
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+// Imports the dependency required by the module implementation below.
 import { SessionProvider, useSession } from './session-provider';
 
-const auth = vi.hoisted(() => ({
-  getSession: vi.fn(),
-  onAuthStateChange: vi.fn(),
-  signInAnonymously: vi.fn(),
-  signInWithOtp: vi.fn(),
-  signOut: vi.fn(),
-  updateUser: vi.fn(),
-}));
+const apiOrigin = process.env.NEXT_PUBLIC_API_ORIGIN ?? 'http://localhost:8000';
 
-vi.mock('@/lib/supabase', () => ({
-  createSupabaseBrowserClient: () => ({ auth }),
-  isSupabaseConfigured: true,
-}));
+// Stores `guestPayload` because subsequent operations depend on this value.
+const guestPayload = {
+  // Defines this field so the surrounding object or type has an explicit contract.
+  accessToken: 'guest-access-token',
+  // Defines this field so the surrounding object or type has an explicit contract.
+  expiresIn: 900,
+  // Defines this field so the surrounding object or type has an explicit contract.
+  user: { id: 'user-1', email: null, is_anonymous: true, mfa_enabled: false },
+  // Closes the expression, call, or declaration opened above.
+};
 
-const session = (anonymous: boolean) =>
-  ({
-    access_token: 'access-token',
-    user: { id: 'user-1', is_anonymous: anonymous },
-  }) as unknown as Session;
-
-function MagicLinkProbe() {
-  const { sendMagicLink, status } = useSession();
-  return (
-    <button
-      type="button"
-      disabled={status !== 'ready'}
-      onClick={() => void sendMagicLink('player@example.com')}
-    >
-      Send
-    </button>
-  );
+// Defines `response` as the callable responsible for this operation.
+function response(status: number, body?: object): Response {
+  // Returns the computed result and ends the current callable.
+  return new Response(body ? JSON.stringify(body) : null, {
+    // Continues the surrounding operation with this required value or expression.
+    status,
+    // Defines this field so the surrounding object or type has an explicit contract.
+    headers: { 'Content-Type': 'application/json' },
+    // Closes the expression, call, or declaration opened above.
+  });
+  // Closes the expression, call, or declaration opened above.
 }
 
-function TokenProbe() {
-  const { getAccessToken } = useSession();
+// Defines `Probe` as the callable responsible for this operation.
+function Probe() {
+  // Continues the surrounding operation with this required value or expression.
+  const { getAccessToken, isGuest, sendMagicLink, session, signOut, status } = useSession();
+  // Continues the surrounding operation with this required value or expression.
   const [token, setToken] = useState('pending');
+  // Continues the surrounding operation with this required value or expression.
   useEffect(() => {
+    // Runs this required asynchronous effect without leaving it implicit.
     void getAccessToken().then((value) => setToken(value ?? 'missing'));
+    // Closes the expression, call, or declaration opened above.
   }, [getAccessToken]);
+  // Returns the computed result and ends the current callable.
   return (
+    // Groups these sibling interface elements without adding a wrapper node.
     <>
-      <output>{token}</output>
-      <button
-        type="button"
-        onClick={() => void getAccessToken().then((value) => setToken(value ?? 'missing'))}
-      >
-        Refresh token
+      {/* Renders the `output` element or component for this interface state. */}
+      <output aria-label="session-state">
+        {/* Continues the surrounding operation with this required value or expression. */}
+        {`${status}:${isGuest ? 'guest' : 'registered'}:${session?.access_token ?? 'missing'}`}
+        {/* Closes the interface element opened above. */}
+      </output>
+      {/* Renders the `output` element or component for this interface state. */}
+      <output aria-label="eager-access-token">{token}</output>
+      {/* Renders the `button` element or component for this interface state. */}
+      <button type="button" onClick={() => void sendMagicLink('player@example.com')}>
+        {/* Continues the surrounding operation with this required value or expression. */}
+        Send magic link
+        {/* Closes the interface element opened above. */}
       </button>
+      {/* Renders the `button` element or component for this interface state. */}
+      <button type="button" onClick={() => void signOut()}>
+        {/* Continues the surrounding operation with this required value or expression. */}
+        Sign out
+        {/* Closes the interface element opened above. */}
+      </button>
+      {/* Closes the interface element opened above. */}
     </>
+    // Closes the expression, call, or declaration opened above.
   );
+  // Closes the expression, call, or declaration opened above.
 }
 
-describe('SessionProvider magic links', () => {
+// Continues the surrounding operation with this required value or expression.
+describe('SessionProvider', () => {
+  // Stores `fetchMock` because subsequent operations depend on this value.
+  const fetchMock = vi.fn<typeof fetch>();
+
+  // Continues the surrounding operation with this required value or expression.
   beforeEach(() => {
-    auth.getSession.mockReset();
-    auth.onAuthStateChange.mockReset();
-    auth.signInAnonymously.mockReset();
-    auth.signInWithOtp.mockReset();
-    auth.signOut.mockReset();
-    auth.updateUser.mockReset();
-    auth.onAuthStateChange.mockReturnValue({ data: { subscription: { unsubscribe: vi.fn() } } });
-    auth.signInWithOtp.mockResolvedValue({ error: null });
-    auth.updateUser.mockResolvedValue({ error: null });
+    // Continues the surrounding operation with this required value or expression.
+    vi.stubGlobal('fetch', fetchMock);
+    // Continues the surrounding operation with this required value or expression.
+    fetchMock.mockReset();
+    // Continues the surrounding operation with this required value or expression.
     sessionStorage.clear();
-    window.history.replaceState(null, '', '/en/auth');
+    // Continues the surrounding operation with this required value or expression.
+    window.history.replaceState(null, '', '/en/profile');
+    // Closes the expression, call, or declaration opened above.
   });
 
-  afterEach(cleanup);
-
-  it('upgrades a guest in place when the email is new', async () => {
-    auth.getSession.mockResolvedValue({ data: { session: session(true) }, error: null });
-    render(
-      <SessionProvider>
-        <MagicLinkProbe />
-      </SessionProvider>,
-    );
-    const user = userEvent.setup();
-
-    await user.click(await screen.findByRole('button', { name: 'Send' }));
-
-    await waitFor(() =>
-      expect(auth.updateUser).toHaveBeenCalledWith(
-        { email: 'player@example.com' },
-        { emailRedirectTo: `${window.location.origin}/auth/callback?next=/en/profile` },
-      ),
-    );
-    expect(auth.signInWithOtp).not.toHaveBeenCalled();
+  // Continues the surrounding operation with this required value or expression.
+  afterEach(() => {
+    // Continues the surrounding operation with this required value or expression.
+    cleanup();
+    // Continues the surrounding operation with this required value or expression.
+    vi.unstubAllGlobals();
+    // Closes the expression, call, or declaration opened above.
   });
 
-  it('falls back to an existing-account OTP when a guest email is already registered', async () => {
-    auth.getSession.mockResolvedValue({ data: { session: session(true) }, error: null });
-    auth.updateUser.mockResolvedValue({ error: { code: 'email_exists', status: 422 } });
+  // Continues the surrounding operation with this required value or expression.
+  it('falls back from refresh to a new guest session', async () => {
+    // Continues the surrounding operation with this required value or expression.
+    fetchMock
+      // Continues the surrounding operation with this required value or expression.
+      .mockResolvedValueOnce(response(401))
+      // Continues the surrounding operation with this required value or expression.
+      .mockResolvedValueOnce(response(201, guestPayload));
+    // Continues the surrounding operation with this required value or expression.
     render(
+      // Renders the `SessionProvider` element or component for this interface state.
       <SessionProvider>
-        <MagicLinkProbe />
+        {/* Renders the `Probe` element or component for this interface state. */}
+        <Probe />
+        {/* Closes the interface element opened above. */}
       </SessionProvider>,
+      // Closes the expression, call, or declaration opened above.
     );
+
+    // Continues the surrounding operation with this required value or expression.
+    expect(await screen.findByText('ready:guest:guest-access-token')).toBeInTheDocument();
+    // Continues the surrounding operation with this required value or expression.
+    expect(await screen.findByText('guest-access-token')).toBeInTheDocument();
+    // Continues the surrounding operation with this required value or expression.
+    expect(fetchMock).toHaveBeenNthCalledWith(
+      // Continues the surrounding operation with this required value or expression.
+      1,
+      // Supplies this literal value to the surrounding declaration or call.
+      `${apiOrigin}/v1/auth/refresh`,
+      // Continues the surrounding operation with this required value or expression.
+      expect.objectContaining({ method: 'POST', credentials: 'include' }),
+      // Closes the expression, call, or declaration opened above.
+    );
+    // Continues the surrounding operation with this required value or expression.
+    expect(fetchMock).toHaveBeenNthCalledWith(
+      // Continues the surrounding operation with this required value or expression.
+      2,
+      // Supplies this literal value to the surrounding declaration or call.
+      `${apiOrigin}/v1/auth/guest`,
+      // Continues the surrounding operation with this required value or expression.
+      expect.objectContaining({ method: 'POST', credentials: 'include' }),
+      // Closes the expression, call, or declaration opened above.
+    );
+    // Closes the expression, call, or declaration opened above.
+  });
+
+  // Continues the surrounding operation with this required value or expression.
+  it('sends an authenticated magic-link request through the API', async () => {
+    // Continues the surrounding operation with this required value or expression.
+    fetchMock
+      // Continues the surrounding operation with this required value or expression.
+      .mockResolvedValueOnce(response(200, guestPayload))
+      // Continues the surrounding operation with this required value or expression.
+      .mockResolvedValueOnce(response(202));
+    // Stores `user` because subsequent operations depend on this value.
     const user = userEvent.setup();
+    // Continues the surrounding operation with this required value or expression.
+    render(
+      // Renders the `SessionProvider` element or component for this interface state.
+      <SessionProvider>
+        {/* Renders the `Probe` element or component for this interface state. */}
+        <Probe />
+        {/* Closes the interface element opened above. */}
+      </SessionProvider>,
+      // Closes the expression, call, or declaration opened above.
+    );
+    // Runs this required asynchronous effect without leaving it implicit.
+    await screen.findByText('ready:guest:guest-access-token');
 
-    await user.click(await screen.findByRole('button', { name: 'Send' }));
+    // Runs this required asynchronous effect without leaving it implicit.
+    await user.click(screen.getByRole('button', { name: 'Send magic link' }));
 
-    await waitFor(() =>
-      expect(auth.signInWithOtp).toHaveBeenCalledWith({
-        email: 'player@example.com',
-        options: {
-          emailRedirectTo: `${window.location.origin}/auth/callback?next=/en/profile`,
-          shouldCreateUser: false,
-        },
+    // Runs this required asynchronous effect without leaving it implicit.
+    await waitFor(() => expect(fetchMock).toHaveBeenCalledTimes(2));
+    // Continues the surrounding operation with this required value or expression.
+    expect(fetchMock).toHaveBeenLastCalledWith(
+      // Supplies this literal value to the surrounding declaration or call.
+      `${apiOrigin}/v1/auth/email`,
+      // Continues the surrounding operation with this required value or expression.
+      expect.objectContaining({
+        // Defines this field so the surrounding object or type has an explicit contract.
+        method: 'POST',
+        // Defines this field so the surrounding object or type has an explicit contract.
+        credentials: 'include',
+        // Defines this field so the surrounding object or type has an explicit contract.
+        headers: expect.objectContaining({ Authorization: 'Bearer guest-access-token' }),
+        // Defines this field so the surrounding object or type has an explicit contract.
+        body: JSON.stringify({ email: 'player@example.com', next: '/en/profile' }),
+        // Closes the expression, call, or declaration opened above.
       }),
+      // Closes the expression, call, or declaration opened above.
     );
+    // Continues the surrounding operation with this required value or expression.
+    expect(sessionStorage.getItem('cipherboard:pending-account-upgrade')).toBe('true');
+    // Closes the expression, call, or declaration opened above.
   });
 
-  it('uses OTP directly for a registered session', async () => {
-    auth.getSession.mockResolvedValue({ data: { session: session(false) }, error: null });
-    render(
-      <SessionProvider>
-        <MagicLinkProbe />
-      </SessionProvider>,
-    );
+  // Continues the surrounding operation with this required value or expression.
+  it('revokes the session and establishes a replacement guest session', async () => {
+    // Continues the surrounding operation with this required value or expression.
+    fetchMock
+      // Continues the surrounding operation with this required value or expression.
+      .mockResolvedValueOnce(response(200, guestPayload))
+      // Continues the surrounding operation with this required value or expression.
+      .mockResolvedValueOnce(response(204))
+      // Continues the surrounding operation with this required value or expression.
+      .mockResolvedValueOnce(response(201, { ...guestPayload, accessToken: 'replacement-token' }));
+    // Stores `user` because subsequent operations depend on this value.
     const user = userEvent.setup();
-
-    await user.click(await screen.findByRole('button', { name: 'Send' }));
-
-    expect(auth.updateUser).not.toHaveBeenCalled();
-    await waitFor(() => expect(auth.signInWithOtp).toHaveBeenCalledOnce());
-  });
-
-  it('waits for anonymous initialization before an eager child requests a token', async () => {
-    let resolveGuest!: (value: { data: { session: Session }; error: null }) => void;
-    auth.getSession.mockResolvedValue({ data: { session: null }, error: null });
-    auth.signInAnonymously.mockReturnValue(
-      new Promise((resolve) => {
-        resolveGuest = resolve;
-      }),
-    );
+    // Continues the surrounding operation with this required value or expression.
     render(
+      // Renders the `SessionProvider` element or component for this interface state.
       <SessionProvider>
-        <TokenProbe />
+        {/* Renders the `Probe` element or component for this interface state. */}
+        <Probe />
+        {/* Closes the interface element opened above. */}
       </SessionProvider>,
+      // Closes the expression, call, or declaration opened above.
     );
+    // Runs this required asynchronous effect without leaving it implicit.
+    await screen.findByText('ready:guest:guest-access-token');
 
-    expect(screen.getByText('pending')).toBeInTheDocument();
-    resolveGuest({ data: { session: session(true) }, error: null });
+    // Runs this required asynchronous effect without leaving it implicit.
+    await user.click(screen.getByRole('button', { name: 'Sign out' }));
 
-    expect(await screen.findByText('access-token')).toBeInTheDocument();
-    expect(auth.getSession).toHaveBeenCalledOnce();
-  });
-
-  it('does not return the initialized token after a later signed-out event', async () => {
-    auth.getSession.mockResolvedValue({ data: { session: session(false) }, error: null });
-    render(
-      <SessionProvider>
-        <TokenProbe />
-      </SessionProvider>,
+    // Continues the surrounding operation with this required value or expression.
+    expect(await screen.findByText('ready:guest:replacement-token')).toBeInTheDocument();
+    // Continues the surrounding operation with this required value or expression.
+    expect(fetchMock).toHaveBeenNthCalledWith(
+      // Continues the surrounding operation with this required value or expression.
+      2,
+      // Supplies this literal value to the surrounding declaration or call.
+      `${apiOrigin}/v1/auth/logout`,
+      // Continues the surrounding operation with this required value or expression.
+      expect.objectContaining({ method: 'POST', credentials: 'include' }),
+      // Closes the expression, call, or declaration opened above.
     );
-    const user = userEvent.setup();
-    expect(await screen.findByText('access-token')).toBeInTheDocument();
-    const onAuthChange = auth.onAuthStateChange.mock.calls[0]![0] as (
-      event: string,
-      nextSession: Session | null,
-    ) => void;
-    auth.getSession.mockResolvedValue({ data: { session: null }, error: null });
-    act(() => onAuthChange('SIGNED_OUT', null));
-
-    await user.click(screen.getByRole('button', { name: 'Refresh token' }));
-
-    expect(await screen.findByText('missing')).toBeInTheDocument();
+    // Closes the expression, call, or declaration opened above.
   });
+  // Closes the expression, call, or declaration opened above.
 });

@@ -14,4 +14,4 @@ The current production release on the authoritative integration branch is suppor
 
 ## Security boundaries
 
-The API is authoritative for secrets, attempts, feedback, score, achievements, rankings, and duel outcomes. Supabase service credentials, database owner credentials, Redis credentials, AES/HMAC keys, and error-reporting credentials are server-only. Review `docs/security/THREAT_MODEL.md` and `docs/security/SECURITY_CONTROLS.md` before changing these boundaries.
+The API is authoritative for secrets, attempts, feedback, score, achievements, rankings, and duel outcomes. first-party authentication service credentials, database owner credentials, Redis credentials, AES/HMAC keys, and error-reporting credentials are server-only. Review `docs/security/THREAT_MODEL.md` and `docs/security/SECURITY_CONTROLS.md` before changing these boundaries.
