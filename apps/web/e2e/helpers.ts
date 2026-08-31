@@ -120,22 +120,23 @@ export async function captureSession(
   path = '/en/profile',
   // Begins the nested block or object completed below.
 ): Promise<{ token: string; profile: ProfileResponse }> {
-  // Computes and stores profileResponse for subsequent operations.
-  const profileResponse = page.waitForResponse(
-    // Executes this line as the next step in the surrounding logic.
-    (response) =>
-      // Calls response.url with the supplied values.
-      response.url() === `${apiOrigin}/v1/me/profile` && response.request().method() === 'GET',
+  // Captures the authenticated browser request without retaining its navigation-bound response body.
+  const profileRequest = page.waitForRequest(
+    (request) => request.url() === `${apiOrigin}/v1/me/profile` && request.method() === 'GET',
     // Closes the expression, call, or declaration started above.
   );
   // Waits for this asynchronous operation to complete.
   await page.goto(path);
-  // Computes and stores response for subsequent operations.
-  const response = await profileResponse;
+  // Computes and stores request for subsequent operations.
+  const request = await profileRequest;
   // Computes and stores authorization for subsequent operations.
-  const authorization = await response.request().headerValue('authorization');
+  const authorization = await request.headerValue('authorization');
   // Calls expect with the supplied values.
   expect(authorization).toMatch(/^Bearer \S+$/);
+  // Fetches a stable APIResponse so Chromium navigation cannot release the intercepted body first.
+  const response = await page.request.get(`${apiOrigin}/v1/me/profile`, {
+    headers: { Authorization: authorization! },
+  });
   // Checks this condition before running the nested branch.
   if (!response.ok()) {
     // Computes and stores token for subsequent operations.
