@@ -46,7 +46,7 @@ package-dir = { mastermind_core = "packages/mastermind_core/mastermind_core", ma
 addopts = "--strict-config --strict-markers"
 asyncio_mode = "auto"
 testpaths = ["tests"]
-pythonpath = ["packages/mastermind_core", "apps/api", "apps/cli"]
+pythonpath = [".", "packages/mastermind_core", "apps/api", "apps/cli"]
 markers = ["postgres: requires a PostgreSQL integration database"]
 
 [tool.ruff]
