@@ -637,7 +637,7 @@ export function GameBoard({
                       }}
                       key={index}
                       type="button"
-                      className={`peg slot ${color ? `peg-${color}` : ''} ${selectedSlot === index ? 'selected' : ''}`}
+                      className={`peg slot ${color ? `filled peg-${color}` : 'empty'} ${selectedSlot === index ? 'selected' : ''}`}
                       onClick={() => setSelectedSlot(index)}
                       aria-label={t('slot', {
                         number: index + 1,

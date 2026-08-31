@@ -148,6 +148,11 @@ describe('GameBoard accessibility', () => {
     await user.click(fourthSlot);
     await user.keyboard('1');
 
+    expect(screen.getByRole('button', { name: 'Position 4: Red circle' })).toHaveClass(
+      'filled',
+      'peg-R',
+    );
+    expect(screen.getByRole('button', { name: 'Position 4: Red circle' })).not.toHaveClass('empty');
     expect(screen.getByRole('button', { name: 'Submit guess' })).toBeDisabled();
   });
 

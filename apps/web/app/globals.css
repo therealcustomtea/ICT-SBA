@@ -108,7 +108,7 @@ main { flex: 1; }
 .attempt-number { color: color-mix(in oklch, var(--surface), transparent 35%); font-variant-numeric: tabular-nums; }
 .guess-pegs { display: flex; flex-wrap: wrap; gap: clamp(0.35rem, 1.2vw, 0.65rem); }
 .peg { width: 48px; height: 48px; flex: 0 0 48px; display: inline-grid; place-items: center; border: 2px solid color-mix(in oklch, var(--ink), transparent 40%); border-radius: 50%; color: oklch(0.19 0.02 165); font-weight: 900; font-size: 1.1rem; box-shadow: inset 0 -3px 0 oklch(0 0 0 / .18); }
-button.peg { cursor: pointer; }.peg.slot{background:transparent;color:var(--surface);border-color:color-mix(in oklch,var(--surface),transparent 45%)}.peg.slot.selected{outline:3px solid var(--focus);outline-offset:2px}
+button.peg { cursor: pointer; }.peg.slot.empty{background:transparent;color:var(--surface);border-color:color-mix(in oklch,var(--surface),transparent 45%);box-shadow:none}.peg.slot.selected{outline:3px solid var(--focus);outline-offset:2px}
 .peg-R{background:oklch(.61 .21 30)}.peg-B{background:oklch(.58 .15 245)}.peg-G{background:oklch(.67 .14 150)}.peg-Y{background:oklch(.84 .16 88)}.peg-W{background:oklch(.97 .01 150)}.peg-K{background:oklch(.28 .02 165);color:white}.peg-O{background:oklch(.7 .19 52)}.peg-P{background:oklch(.57 .16 312);color:white}.peg-C{background:oklch(.76 .12 205)}.peg-M{background:oklch(.61 .22 350);color:white}
 :root[data-peg-style='patterns'] .peg-R{background-image:radial-gradient(circle at 30% 30%,oklch(1 0 0/.48) 0 12%,transparent 13%)}
 :root[data-peg-style='patterns'] .peg-B{background-image:linear-gradient(135deg,transparent 40%,oklch(1 0 0/.32) 41% 58%,transparent 59%)}
