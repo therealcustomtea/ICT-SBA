@@ -2,6 +2,8 @@
 
 This document explains the school-facing Python work and how it grows into the Cipherboard market product. It is written so a Form 5 student can adapt it into an SBA report while still pointing to the real source code.
 
+The complete illustrated submission is available as a [37-page PDF](mastermind-game-system-report/Mastermind_Game_System_SBA_Report.pdf) and an [editable Word document](mastermind-game-system-report/Mastermind_Game_System_SBA_Report.docx). Its reproducible source and figure generator are kept in the same directory.
+
 ## 1. Problem definition
 
 Mastermind is a code-breaking game. A Code Maker chooses a hidden sequence of colour identifiers. The Code Breaker submits guesses. After every valid guess the program reports:
