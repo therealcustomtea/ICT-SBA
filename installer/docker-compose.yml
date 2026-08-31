@@ -1,0 +1,133 @@
+name: cipherboard-desktop
+
+x-api-build: &api-build
+  context: ..
+  dockerfile: infra/docker/api.Dockerfile
+
+services:
+  mongo:
+    image: mongo:8.0.14-noble
+    command: ['mongod', '--replSet', 'rs0', '--bind_ip_all']
+    volumes:
+      - mongo-data:/data/db
+    healthcheck:
+      test:
+        [
+          'CMD-SHELL',
+          "mongosh --quiet --eval 'try { rs.status().ok } catch (_) { rs.initiate({_id:\"rs0\",members:[{_id:0,host:\"mongo:27017\"}]}).ok }' | grep 1",
+        ]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+
+  redis:
+    image: redis:7.4.5-alpine@sha256:bb186d083732f669da90be8b0f975a37812b15e913465bb14d845db72a4e3e08
+    command: ['redis-server', '--appendonly', 'yes', '--save', '60', '1000']
+    volumes:
+      - redis-data:/data
+    healthcheck:
+      test: ['CMD', 'redis-cli', 'ping']
+      interval: 5s
+      timeout: 3s
+      retries: 30
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+
+  mailpit:
+    image: axllent/mailpit:v1.27.8
+    ports:
+      - '127.0.0.1:8025:8025'
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+
+  api:
+    build: *api-build
+    environment:
+      MASTERMIND_ENVIRONMENT: development
+      MASTERMIND_RELEASE: ${MASTERMIND_RELEASE:-desktop-1.0.0}
+      MASTERMIND_MONGODB_URL: mongodb://mongo:27017/?replicaSet=rs0
+      MASTERMIND_MONGODB_DATABASE: mastermind
+      MASTERMIND_REDIS_URL: redis://redis:6379/0
+      MASTERMIND_ALLOWED_ORIGINS: '["http://127.0.0.1:3000","http://localhost:3000"]'
+      MASTERMIND_PRODUCT_ORIGIN: http://127.0.0.1:3000
+      MASTERMIND_AUTH_ISSUER: http://127.0.0.1:8000
+      MASTERMIND_AUTH_AUDIENCE: cipherboard-web
+      MASTERMIND_AUTH_SIGNING_KEY: ${MASTERMIND_AUTH_SIGNING_KEY:?Installer configuration is missing}
+      MASTERMIND_AUTH_COOKIE_NAME: cipherboard_refresh
+      MASTERMIND_AUTH_COOKIE_SECURE: 'false'
+      MASTERMIND_AUTH_COOKIE_SAMESITE: lax
+      MASTERMIND_AUTH_EMAIL_SENDER: Cipherboard <noreply@localhost.invalid>
+      MASTERMIND_SMTP_HOST: mailpit
+      MASTERMIND_SMTP_PORT: '1025'
+      MASTERMIND_SMTP_STARTTLS: 'false'
+      MASTERMIND_SECRET_ENCRYPTION_KEYS: ${MASTERMIND_SECRET_ENCRYPTION_KEYS:?Installer configuration is missing}
+      MASTERMIND_SECRET_ACTIVE_KEY_VERSION: v1
+      MASTERMIND_DAILY_HMAC_KEY: ${MASTERMIND_DAILY_HMAC_KEY:?Installer configuration is missing}
+      MASTERMIND_PUBLIC_IDENTIFIER_HMAC_KEY: ${MASTERMIND_PUBLIC_IDENTIFIER_HMAC_KEY:?Installer configuration is missing}
+      MASTERMIND_FEATURE_ANALYTICS: 'false'
+    ports:
+      - '127.0.0.1:8000:8000'
+    depends_on:
+      mongo:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      mailpit:
+        condition: service_started
+    init: true
+    restart: unless-stopped
+    read_only: true
+    tmpfs:
+      - /tmp:size=64m,mode=1777
+    cap_drop: ['ALL']
+    security_opt:
+      - no-new-privileges:true
+
+  web:
+    build:
+      context: ..
+      dockerfile: infra/docker/web.Dockerfile
+      args:
+        NEXT_PUBLIC_API_ORIGIN: http://127.0.0.1:8000
+        NEXT_PUBLIC_PRODUCT_ORIGIN: http://127.0.0.1:3000
+        NEXT_PUBLIC_PRODUCT_NAME: Cipherboard
+        NEXT_PUBLIC_SUPPORT_EMAIL: support@localhost.invalid
+        NEXT_PUBLIC_LEGAL_ENTITY: Local Installation
+        NEXT_PUBLIC_JURISDICTION: Local Installation
+        NEXT_PUBLIC_POLICY_DATE: '2026-07-15'
+    environment:
+      NODE_ENV: production
+      VALIDATE_LAUNCH_CONFIGURATION: 'false'
+    ports:
+      - '127.0.0.1:3000:3000'
+    depends_on:
+      api:
+        condition: service_healthy
+    init: true
+    restart: unless-stopped
+    read_only: true
+    tmpfs:
+      - /tmp:size=64m,mode=1777
+    cap_drop: ['ALL']
+    security_opt:
+      - no-new-privileges:true
+
+  cli:
+    build: *api-build
+    command: ['mastermind']
+    profiles: ['cli']
+    stdin_open: true
+    tty: true
+    volumes:
+      - ../../data:/app/data
+    security_opt:
+      - no-new-privileges:true
+
+volumes:
+  mongo-data:
+  redis-data:

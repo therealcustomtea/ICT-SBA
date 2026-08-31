@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+home_dir="$(cd "$(dirname "$0")/../../.." && pwd)"
+exec "$home_dir/bin/cipherboard-services" open

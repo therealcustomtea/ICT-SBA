@@ -1,0 +1,112 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+source_path="${BASH_SOURCE[0]}"
+while [[ -L "$source_path" ]]; do
+  source_dir="$(cd -P "$(dirname "$source_path")" && pwd)"
+  source_path="$(readlink "$source_path")"
+  [[ "$source_path" != /* ]] && source_path="$source_dir/$source_path"
+done
+home_dir="$(cd -P "$(dirname "$source_path")/.." && pwd)"
+app_dir="$home_dir/app"
+compose_file="$app_dir/installer/docker-compose.yml"
+env_file="$app_dir/.installer.env"
+
+if [[ -x /Applications/Docker.app/Contents/Resources/bin/docker ]]; then
+  export PATH="/Applications/Docker.app/Contents/Resources/bin:$PATH"
+fi
+
+ensure_docker() {
+  if ! command -v docker >/dev/null 2>&1; then
+    echo 'Docker Desktop is not installed. Run the Cipherboard installer again.' >&2
+    exit 1
+  fi
+  if docker info >/dev/null 2>&1; then
+    return
+  fi
+  echo 'Starting Docker Desktop...'
+  if docker desktop start >/dev/null 2>&1; then
+    :
+  elif [[ -d /Applications/Docker.app ]]; then
+    open -a Docker
+  fi
+  for _ in {1..120}; do
+    docker info >/dev/null 2>&1 && return
+    sleep 2
+  done
+  echo 'Docker Desktop did not become ready. Open Docker Desktop, finish its setup, and retry.' >&2
+  exit 1
+}
+
+compose() {
+  docker compose --env-file "$env_file" -f "$compose_file" "$@"
+}
+
+wait_for_url() {
+  local name="$1"
+  local url="$2"
+  for _ in {1..90}; do
+    curl --fail --silent --max-time 2 "$url" >/dev/null 2>&1 && return
+    sleep 2
+  done
+  echo "$name did not become ready. Run 'cipherboard-services logs' for details." >&2
+  exit 1
+}
+
+start_stack() {
+  ensure_docker
+  echo 'Starting MongoDB, Redis, Mailpit, the API, and the GUI...'
+  compose up -d
+  wait_for_url 'Cipherboard API' 'http://127.0.0.1:8000/health/ready'
+  wait_for_url 'Cipherboard GUI' 'http://127.0.0.1:3000/en'
+  echo 'Cipherboard is ready at http://127.0.0.1:3000/en'
+}
+
+case "${1:-help}" in
+  start)
+    start_stack
+    ;;
+  open)
+    start_stack
+    open 'http://127.0.0.1:3000/en'
+    ;;
+  stop)
+    ensure_docker
+    compose down
+    echo 'Cipherboard services stopped. Saved games and CLI scores were preserved.'
+    ;;
+  restart)
+    "$0" stop
+    "$0" start
+    ;;
+  status)
+    ensure_docker
+    compose ps
+    ;;
+  logs)
+    ensure_docker
+    compose logs --tail=150 -f api web mongo redis mailpit
+    ;;
+  cli)
+    ensure_docker
+    compose run --rm --build cli
+    ;;
+  help|-h|--help)
+    cat <<'EOF'
+Cipherboard service manager
+
+  cipherboard-services start    Start every GUI dependency
+  cipherboard-services open     Start Cipherboard and open the GUI
+  cipherboard-services stop     Stop services without deleting data
+  cipherboard-services restart  Restart the complete local stack
+  cipherboard-services status   Show service health
+  cipherboard-services logs     Follow GUI and API logs
+  cipherboard                   Start the interactive command-line game
+EOF
+    ;;
+  *)
+    echo "Unknown command: $1" >&2
+    "$0" help >&2
+    exit 2
+    ;;
+esac

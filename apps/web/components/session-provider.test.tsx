@@ -9,6 +9,8 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 // Imports the dependency required by the module implementation below.
 import { SessionProvider, useSession } from './session-provider';
 
+const apiOrigin = process.env.NEXT_PUBLIC_API_ORIGIN ?? 'http://localhost:8000';
+
 // Stores `guestPayload` because subsequent operations depend on this value.
 const guestPayload = {
   // Defines this field so the surrounding object or type has an explicit contract.
@@ -131,7 +133,7 @@ describe('SessionProvider', () => {
       // Continues the surrounding operation with this required value or expression.
       1,
       // Supplies this literal value to the surrounding declaration or call.
-      'http://localhost:8000/v1/auth/refresh',
+      `${apiOrigin}/v1/auth/refresh`,
       // Continues the surrounding operation with this required value or expression.
       expect.objectContaining({ method: 'POST', credentials: 'include' }),
       // Closes the expression, call, or declaration opened above.
@@ -141,7 +143,7 @@ describe('SessionProvider', () => {
       // Continues the surrounding operation with this required value or expression.
       2,
       // Supplies this literal value to the surrounding declaration or call.
-      'http://localhost:8000/v1/auth/guest',
+      `${apiOrigin}/v1/auth/guest`,
       // Continues the surrounding operation with this required value or expression.
       expect.objectContaining({ method: 'POST', credentials: 'include' }),
       // Closes the expression, call, or declaration opened above.
@@ -180,7 +182,7 @@ describe('SessionProvider', () => {
     // Continues the surrounding operation with this required value or expression.
     expect(fetchMock).toHaveBeenLastCalledWith(
       // Supplies this literal value to the surrounding declaration or call.
-      'http://localhost:8000/v1/auth/email',
+      `${apiOrigin}/v1/auth/email`,
       // Continues the surrounding operation with this required value or expression.
       expect.objectContaining({
         // Defines this field so the surrounding object or type has an explicit contract.
@@ -235,7 +237,7 @@ describe('SessionProvider', () => {
       // Continues the surrounding operation with this required value or expression.
       2,
       // Supplies this literal value to the surrounding declaration or call.
-      'http://localhost:8000/v1/auth/logout',
+      `${apiOrigin}/v1/auth/logout`,
       // Continues the surrounding operation with this required value or expression.
       expect.objectContaining({ method: 'POST', credentials: 'include' }),
       // Closes the expression, call, or declaration opened above.

@@ -34,6 +34,12 @@ docs/                     Architecture, security, privacy, and operations
 - Docker with Compose for local MongoDB, Redis, and Mailpit
 - For hosted use: MongoDB Atlas (or another TLS MongoDB deployment), TLS Redis, an SMTP service, and managed secrets
 
+### Guided desktop installers
+
+The release archives provide guided macOS and Windows installers for the GUI and CLI. They ask for the installation folder, generate local authentication and encryption keys, build and start MongoDB, Redis, Mailpit, the API, and the web application, create launchers, verify readiness, and write a report describing what was installed and how to use it.
+
+See [desktop installers](docs/operations/DESKTOP_INSTALLERS.md) for installation, CLI/GUI usage, service management, data locations, and release packaging.
+
 ## Local setup
 
 ```bash
@@ -59,6 +65,16 @@ uv run mastermind-initialize
 ```
 
 This operation is idempotent. It creates missing collections, indexes, and seed documents; it does not delete application data.
+
+## CLI
+
+```bash
+uv run python -m mastermind_cli
+```
+
+The CLI stores UTF-8 scores in `data/high_scores.csv`. It supports all presets, Custom, computer/human Code Maker, safe input normalization, complete history, score sorting, export, `quit`, EOF, and interrupt handling. See the [SBA implementation](docs/sba/SBA_IMPLEMENTATION.md).
+
+The complete illustrated SBA submission is available as a [PDF report](docs/sba/mastermind-game-system-report/Mastermind_Game_System_SBA_Report.pdf) and an [editable Word report](docs/sba/mastermind-game-system-report/Mastermind_Game_System_SBA_Report.docx). Its source, figures, and reproducible build tools are in the [report directory](docs/sba/mastermind-game-system-report/).
 
 ## Development checks
 
