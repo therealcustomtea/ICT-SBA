@@ -426,12 +426,12 @@ def charts() -> None:
     horizontal_bars(
         "coverage_chart.png",
         "Measured branch-aware coverage",
-        "56 focused core/CLI tests; overall selected-package coverage is 92%",
+        "59 focused core/CLI tests; overall selected-package coverage is 92%",
         [
             ("mastermind_core", 99, GREEN),
             ("CLI storage", 97, BLUE),
             ("CLI entry point", 83, YELLOW),
-            ("CLI application", 75, CORAL),
+            ("CLI application", 76, CORAL),
         ],
         100,
         "%",
@@ -440,10 +440,10 @@ def charts() -> None:
         "Verification evidence", "Results measured on 1 September 2026 using Python 3.13.14"
     )
     metrics = [
-        ("Python suite", "117 passed", GREEN),
+        ("Python suite", "120 passed", GREEN),
         ("Browser E2E", "36 passed", BLUE),
         ("Browser cases", "8 skipped", YELLOW),
-        ("Core + CLI", "56 passed", BLUE),
+        ("Core + CLI", "59 passed", BLUE),
         ("Focused coverage", "92%", CORAL),
         ("Ruff + mypy", "passed", GREEN),
     ]
@@ -519,6 +519,7 @@ def module_graph() -> None:
     )
     nodes = {
         "app.py": (280, 500, CORAL),
+        "terminal.py": (310, 760, YELLOW),
         "storage.py": (650, 760, GREEN),
         "models.py": (940, 300, BLUE),
         "validation.py": (1310, 250, YELLOW),
@@ -529,6 +530,7 @@ def module_graph() -> None:
     }
     edges = [
         ("app.py", "storage.py"),
+        ("app.py", "terminal.py"),
         ("app.py", "presets.py"),
         ("app.py", "engine.py"),
         ("app.py", "models.py"),
@@ -594,7 +596,9 @@ def code_image(source: Path, start: int, end: int, name: str, title: str) -> Non
     save(image, name)
 
 
-def terminal_image(name: str, title: str, transcript: str) -> None:
+def terminal_image(
+    name: str, title: str, transcript: str, *, colour_identifiers: bool = False
+) -> None:
     lines = transcript.strip("\n").splitlines()
     height = max(720, 150 + len(lines) * 36)
     image = Image.new("RGB", (1900, height), "#11181F")
@@ -616,7 +620,32 @@ def terminal_image(name: str, title: str, transcript: str) -> None:
             colour = "#F2C56B"
         elif "Code broken" in line or "passed" in line or "exported" in line:
             colour = "#8FD5B0"
-        draw.text((60, y), line, font=mono, fill=colour)
+        if not colour_identifiers:
+            draw.text((60, y), line, font=mono, fill=colour)
+        else:
+            x = 60
+            peg_colours = {
+                "R": "#FF6B6B",
+                "B": "#64A8FF",
+                "G": "#6ADB91",
+                "Y": "#F4D35E",
+                "W": "#FFFFFF",
+                "K": "#111111",
+                "O": "#F59E0B",
+                "P": "#C084FC",
+                "C": "#4ADEDE",
+                "M": "#F472B6",
+            }
+            for part in re.split(r"(\b[RBGYWKOPCM]\b)", line):
+                width = draw.textlength(part, font=mono)
+                if part in peg_colours:
+                    background = "#FFFFFF" if part == "W" else "#05090C" if part == "K" else None
+                    if background:
+                        draw.rounded_rectangle((x - 2, y - 1, x + width + 2, y + 29), radius=4, fill=background)
+                    draw.text((x, y), part, font=mono, fill=peg_colours[part])
+                else:
+                    draw.text((x, y), part, font=mono, fill=colour)
+                x += width
         y += 36
     image.save(ASSETS / name, dpi=(220, 220), optimize=True)
 
@@ -630,11 +659,11 @@ def code_and_terminal_assets() -> None:
         "Duplicate-safe feedback function",
     )
     code_image(
-        ROOT / "apps/cli/mastermind_cli/app.py",
-        40,
-        73,
+        ROOT / "apps/cli/mastermind_cli/terminal.py",
+        10,
+        62,
         "code_cli_menu.png",
-        "Five-option menu and dispatch loop",
+        "Accessible ANSI peg rendering",
     )
     code_image(
         ROOT / "packages/mastermind_core/mastermind_core/validation.py",
@@ -666,11 +695,12 @@ def code_and_terminal_assets() -> None:
         "terminal_game.png",
         "Deterministic example game",
         "Player name: Ada\nChoose difficulty: 2\nAvailable colours: R B G Y W K | Code length: 4 | Attempts: 10\nGuess (10 remaining): R R R R\nAttempt  Guess               Black  White\n      1  R R R R                 1      0\n9 attempts remaining.\nGuess (9 remaining): R B G Y\nAttempt  Guess               Black  White\n      1  R R R R                 1      0\n      2  R B G Y                 4      0\n8 attempts remaining.\nCode broken in 2 attempt(s)!\nScore: 1320",
+        colour_identifiers=True,
     )
     terminal_image(
         "terminal_tests.png",
         "Verification run - 1 September 2026",
-        "$ CI: uv run pytest --cov=mastermind_core --cov-branch\n117 passed in 19.92s | core coverage 99.72%\n\n$ pnpm test:e2e\n36 passed, 8 skipped\n\n$ uv run pytest tests/core tests/cli --cov=mastermind_core --cov=mastermind_cli\n56 passed in 0.53s\nTOTAL  522 statements  34 missed  118 branches  92%\n\n$ uv run ruff check apps/cli packages/mastermind_core tests/cli tests/core\nAll checks passed!\n\n$ uv run mypy apps/cli packages/mastermind_core\nSuccess: no issues found in 13 source files",
+        "$ CI: uv run pytest --cov=mastermind_core --cov-branch\n120 passed | core coverage 99.72%\n\n$ pnpm test:e2e\n36 passed, 8 skipped\n\n$ uv run pytest tests/core tests/cli --cov=mastermind_core --cov=mastermind_cli\n59 passed in 0.57s\nTOTAL  551 statements  36 missed  124 branches  92%\n\n$ uv run ruff check apps/cli packages/mastermind_core tests/cli tests/core\nAll checks passed!\n\n$ uv run mypy apps/cli packages/mastermind_core\nSuccess: no issues found in 14 source files",
     )
 
 

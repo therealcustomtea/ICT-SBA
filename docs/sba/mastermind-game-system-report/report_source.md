@@ -8,7 +8,7 @@ The project delivers this solution primarily through a Python command-line inter
 
 ## 1.1: Background
 
-The physical Mastermind board uses coloured pegs and small feedback pegs. Converting it into a CLI requires a stable text representation. The program uses the identifiers `R`, `B`, `G`, `Y`, `W`, `K`, `O`, `P`, `C`, and `M`. A user may enter a compact code such as `RBGY` or a separated form such as `R B G Y`, `R,B,G,Y`, or `R-B-G-Y`; all valid forms become the same immutable tuple.
+The physical Mastermind board uses coloured pegs and small feedback pegs. Converting it into a CLI requires a stable text representation. The program uses the identifiers `R`, `B`, `G`, `Y`, `W`, `K`, `O`, `P`, `C`, and `M`. Interactive terminals style each letter in its matching colour, while the letter remains the authoritative value. A user may enter a compact code such as `RBGY` or a separated form such as `R B G Y`, `R,B,G,Y`, or `R-B-G-Y`; all valid forms become the same immutable tuple.
 
 The first implementation boundary is between interaction and rules. `mastermind_cli.app` owns prompts, menus, and display. `mastermind_core` owns configuration invariants, code validation, feedback, state transitions, secret generation, and scoring. `mastermind_cli.storage` owns local CSV persistence. This separation reduces coupling: a change in terminal wording does not change the scoring formula, while a correction to feedback automatically benefits both the CLI and API.
 
@@ -23,7 +23,7 @@ The primary objective is to create a reliable, testable Mastermind system that c
 - support both computer and human Code Makers, hiding human secret input;
 - normalize readable input formats and reject invalid guesses without consuming an attempt;
 - calculate duplicate-safe black and white feedback;
-- display the complete attempt history and attempts remaining after every accepted guess;
+- display a colour-assisted, letter-labelled attempt history and attempts remaining after every accepted guess;
 - handle win, loss, abandonment, end-of-input, and keyboard interruption safely;
 - calculate a reproducible, versioned score;
 - create, append, validate, sort, and export UTF-8 CSV records; and
@@ -42,7 +42,7 @@ The minimum viable system is a menu-driven Python program that generates a legal
 | Feedback | Black and white counts | Linear duplicate-safe `Counter` algorithm |
 | Persistence | Save a score | UTF-8 append, sorted read, safe atomic export |
 | Reliability | Normal exit | `quit`, EOF, interrupt, disk and malformed-file handling |
-| Quality | Manual checks | 117 Python and 36 browser tests passing; focused 92% coverage |
+| Quality | Automated checks | 120 Python and 36 browser tests passing; focused 92% coverage |
 
 ## 1.4: System Development Cycle
 
@@ -72,7 +72,7 @@ The language choice also supports safe standard-library components. `secrets.Sys
 
 The user interface is a conversational terminal menu. This matches the CLI focus and permits complete keyboard operation. The opening menu contains exactly five numbered choices. Prompts state valid ranges, and recovery messages explain the correction needed. During a game, a fixed-width attempt table exposes number, guess, black feedback, white feedback, and attempts remaining.
 
-The terminal interface avoids relying on colour itself. Pegs are represented by stable letters, so the game remains usable in monochrome terminals and by users who cannot distinguish some colours. Human secret input uses `getpass`, and forty blank lines separate the Code Maker hand-off from the Code Breaker view. Although this is not as strong as a separate device, it is appropriate for local pass-and-play.
+The terminal interface does not rely on colour alone. Pegs retain stable letters, while ANSI styling lets many players scan the palette and history more quickly. White and black identifiers use contrasting backgrounds. Redirected output, `TERM=dumb`, and `NO_COLOR` remain plain text, and `FORCE_COLOR` provides an explicit override. Human secret input uses `getpass`, and forty blank lines separate the Code Maker hand-off from the Code Breaker view. Although this is not as strong as a separate device, it is appropriate for local pass-and-play.
 
 [[FIGURE:terminal_menu.png|Figure 2. Menu, invalid-choice recovery, and rules output.]]
 
@@ -145,7 +145,9 @@ Input functions are injected into `MastermindCLI`, which is significant for test
 
 ## 3.6.2: Terminal Outputs
 
-Output is also injected. Production uses `print`; tests append each message to a list. The CLI uses safe user-facing `DomainError.message` values rather than tracebacks or internal object representations. Tabular rows use explicit widths so values remain aligned for normal player names and settings.
+Output is also injected. Production uses `print`; tests append each message to a list. The CLI uses safe user-facing `DomainError.message` values rather than tracebacks or internal object representations. Tabular rows calculate padding from the unstyled guess, so invisible ANSI control sequences cannot shift the Black and White columns.
+
+`terminal.py` maps all ten identifiers to readable ANSI styles and resets formatting after every letter. Capability detection enables styling only for an interactive stream, unless `FORCE_COLOR` is set. `NO_COLOR` and `TERM=dumb` take priority. This keeps saved logs, pipes, automated tests, and assistive text workflows free of control sequences.
 
 Output follows progressive disclosure: the main menu is short, rules are shown on request, game parameters appear once a session begins, history appears after accepted attempts, and a warning appears only when persistence fails. This keeps routine play readable while retaining diagnostic information.
 
@@ -317,7 +319,9 @@ Runtime game configuration is represented by `GameConfig`, not an editable exter
 
 ## 5.2: Classes
 
-`MastermindCLI` is the application controller. Its constructor accepts four dependencies: normal input, hidden input, output, and score store. Its methods correspond to user tasks rather than low-level rules: run the menu, play a game, build Custom configuration, show scores, and export scores. Helper methods handle repeated numeric and yes/no prompting.
+`MastermindCLI` is the application controller. Its constructor accepts normal input, hidden input, output, a score store, and an optional colour-output override. Its methods correspond to user tasks rather than low-level rules: run the menu, play a game, build Custom configuration, show scores, and export scores. Helper methods handle repeated numeric and yes/no prompting.
+
+[[FIGURE:code_cli_menu.png|Figure 13. Source screenshot: accessible ANSI capability detection and peg formatting.]]
 
 `CSVScoreStore` is a repository adapter. It has `append`, `read`, and `export` operations and owns every CSV-specific detail. `ScoreRecord` is its typed transfer object. Neither class knows how feedback is calculated.
 
@@ -350,8 +354,6 @@ Functions are grouped by lifecycle: pre-generation functions collect or validate
 `normalize_code` accepts a string or sequence. For strings, it trims whitespace, recognizes comma, hyphen, or whitespace separators, and otherwise treats each character as one colour identifier. It uppercases every token and returns a tuple. This means `rbgy`, `R B G Y`, and `r,b,g,y` converge on one representation.
 
 `validate_code` calls normalization and then checks length, palette membership, and the duplicate rule. It raises a `DomainError` containing a stable code and a safe message. `_number` and `_yes_no` implement similar retry boundaries for Custom settings. `get_preset` looks up authoritative validated configurations instead of rebuilding them inside the CLI.
-
-[[FIGURE:code_cli_menu.png|Figure 13. Source screenshot: menu dispatch and difficulty selection.]]
 
 The pre-generation contract is simple: no `GameState` is created until all configuration and secret requirements pass. As a result, later functions can operate on a valid configuration and a legal secret.
 
@@ -406,7 +408,7 @@ main
 
 # 6: Testing & Evaluation
 
-Testing was performed in three phases: environment and boundary readiness, rule and integration correctness, and end-user output acceptance. Automated evidence was refreshed from repository baseline `67b4cc9be06961483661bf3219626a4ea2e6014e` on 1 September 2026. The successful GitHub Actions run executed 117 Python tests in 19.92 seconds with 99.72% branch-aware coverage of the canonical core, plus 36 browser end-to-end tests with 8 intentional browser/project skips. Ruff and mypy also passed across the complete Python source set. MongoDB and Redis are started by CI for service-level tests; the CLI-focused tests remain independent of those services.
+Testing was performed in three phases: environment and boundary readiness, rule and integration correctness, and end-user output acceptance. Automated evidence was refreshed from repository baseline `b3b37d360396ac66893333baf6f933578d9884b0` on 1 September 2026. The successful GitHub Actions run executed 120 Python tests with 99.72% branch-aware coverage of the canonical core, plus 36 browser end-to-end tests with 8 intentional browser/project skips. Ruff and mypy also passed across the complete Python source set. MongoDB and Redis are started by CI for service-level tests; the CLI-focused tests remain independent of those services.
 
 [[FIGURE:test_results.png|Figure 19. Measured verification result across the repository test suite.]]
 
@@ -431,14 +433,14 @@ Phase 1 verifies that the program can start in a controlled environment and that
 
 ## 6.2.1: Library Import Test
 
-The project environment was synchronized from the lockfile and the CLI/core modules were imported through pytest discovery. The complete suite collected and executed successfully. Ruff also resolved the same package structure, and mypy checked 13 focused source files without import errors.
+The project environment was synchronized from the lockfile and the CLI/core modules were imported through pytest discovery. The complete suite collected and executed successfully. Ruff also resolved the same package structure, and mypy checked 14 focused source files without import errors.
 
 | Case | Action | Expected | Observed |
 |---|---|---|---|
 | P1-01 | Import `mastermind_core` | Public models and functions available | Pass |
 | P1-02 | Import `mastermind_cli` | CLI and storage exports available | Pass |
 | P1-03 | Invoke module entry point | Menu begins without traceback | Pass through CLI tests |
-| P1-04 | Run typed analysis | Package imports and annotations resolve | 13 files passed |
+| P1-04 | Run typed analysis | Package imports and annotations resolve | 14 files passed |
 
 ## 6.2.2: Configuration File Test
 
@@ -474,7 +476,7 @@ The most important combined case selects no duplicates with a human Code Maker. 
 
 ## 6.3: Testing Phase 2
 
-Phase 2 verifies the computational core and integration between core, CLI, and local storage. The refreshed focused command covering core and CLI tests reported 56 passed in 0.53 seconds and 92% measured coverage for the selected source set. The canonical core reached 99% branch-aware coverage because one defensive branch remained partial; CLI storage reached 97%, the process entry point 83%, and the interactive application 75%.
+Phase 2 verifies the computational core and integration between core, CLI, and local storage. The refreshed focused command covering core and CLI tests reported 59 passed in 0.57 seconds and 92% measured coverage for the selected source set. The canonical core reached 99% branch-aware coverage because one defensive branch remained partial; CLI storage reached 97%, the terminal formatter reached 93%, the process entry point 83%, and the interactive application 76%.
 
 [[FIGURE:coverage_chart.png|Figure 20. Measured statement coverage for the focused CLI and core verification.]]
 
@@ -493,7 +495,7 @@ Examples of strong unit oracles include:
 
 ## 6.3.2: Integration Tests
 
-Integration tests instantiate `MastermindCLI` with scripted input, captured output, and a `CSVScoreStore` in `tmp_path`. They exercise the real controller rather than mocking the core. One scenario plays to a win and verifies the printed attempt table and saved result. Others test invalid setup, pass-and-play, score display, export, and storage warnings.
+Integration tests instantiate `MastermindCLI` with scripted input, captured output, and a `CSVScoreStore` in `tmp_path`. They exercise the real controller rather than mocking the core. One scenario plays to a win and verifies the printed attempt table and saved result. Others test invalid setup, pass-and-play, score display, export, and storage warnings. Colour-specific cases verify all ten ANSI mappings, automatic terminal detection, `NO_COLOR`, `TERM=dumb`, `FORCE_COLOR`, plain fallback, and aligned history output.
 
 [[FIGURE:terminal_tests.png|Figure 21. Terminal verification commands and observed pass counts.]]
 
@@ -511,7 +513,7 @@ Phase 3 evaluates complete outputs and user tasks. Its focus is not internal bra
 
 ## 6.4.1: Prints & Exports Tests
 
-Print tests assert the five menu choices, rules text, configuration summary, attempt-table labels, pluralization, terminal status message, score, and export confirmation. Export tests read the actual target with `csv.DictReader`, confirming a 13-column header and values that round-trip correctly.
+Print tests assert the five menu choices, rules text, coloured and plain configuration summaries, attempt-table labels and alignment, pluralization, terminal status message, score, and export confirmation. Export tests read the actual target with `csv.DictReader`, confirming a 13-column header and values that round-trip correctly.
 
 The default export works with an empty store and still creates a usable header-only CSV. An explicit nested destination creates parent directories. A simulated failure leaves the previous destination intact and removes the temporary file. These behaviours make the output suitable for spreadsheet analysis without risking silent data loss.
 
@@ -542,7 +544,7 @@ Acceptance criteria were evaluated as an end-to-end checklist.
 | Data user | Can export standards-compliant CSV | Accepted |
 | Interrupted user | Exits without an unhandled traceback | Accepted |
 
-The main usability limitation is the text-only representation of colours. Letter identifiers are unambiguous and accessible in monochrome, but new players must learn the legend. The GUI offers a more visual alternative while sharing the same rules.
+The colour-assisted letter representation reduces the main CLI usability gap. Players can scan familiar colours without losing the unambiguous identifiers needed in monochrome terminals, copied logs, and accessible text workflows. The GUI remains the more visual alternative and shares the same rules.
 
 # 7: Debugging & Improvements
 
@@ -593,7 +595,7 @@ The implemented program is reliable, but evaluation identified improvements in m
 | 1 | Keep domain models typed and immutable | Prevent state drift; easier testing and GUI reuse | More explicit transition code |
 | 2 | Harden local persistence and add migration metadata | Safer long-term score history | Additional schema/version handling |
 | 3 | Expand dependency injection and interaction coverage | Reproduce prompts and failures precisely | More test fixtures |
-| 4 | Add accessible coloured terminal symbols optionally | Faster visual scanning | Terminal capability detection |
+| 4 | Maintain accessible terminal colour styling | Faster visual scanning | Preserve plain fallback and alignment |
 | 5 | Offer JSON export beside CSV | Richer nested history analysis | Another documented format |
 | 6 | Separate-device pass-and-play | Stronger secret confidentiality | Requires networking/authentication |
 
@@ -610,6 +612,8 @@ Improvement 3 is realized through injectable normal input, secret input, output,
 The strongest additional feature is architectural reuse. The CLI is not an isolated school script: it uses the same canonical engine as the API and GUI-facing system. Improvements to feedback, validation, scoring, and configuration therefore remain consistent across interfaces.
 
 Other additions include pass-and-play with hidden secret input, four official presets plus Custom, a local high-score table, versioned score records, CSV formula protection, atomic export, malformed-data recovery, and cross-platform installers that include both CLI and GUI entry points. The maintained v1.0.0 archives are rebuilt from the repaired source and contain `RELEASE.txt` with the exact source commit, allowing the installed payload to be audited. These features extend the minimum expectation without obscuring the game loop.
+
+The v1 CLI also adds accessible terminal colour rendering without a third-party dependency. The palette, accepted guesses, and lost-game reveal use the same formatter. Letter identifiers remain visible, black and white use contrast backgrounds, and automatic plain-text fallback keeps redirected output stable. Three new regression tests cover the formatter, capability policy, and a complete coloured game output path.
 
 ## 7.4: Documentation
 
@@ -650,8 +654,9 @@ uv run mypy packages/mastermind_core apps/cli
 3. Select Easy, Normal, Hard, Expert, or Custom.
 4. In Custom mode, answer every bounded prompt. For human Code Maker, type the hidden secret and hand over the device.
 5. Enter guesses using enabled letters. `RBGY`, `R B G Y`, `R,B,G,Y`, and `R-B-G-Y` are equivalent when those colours are enabled.
-6. Read black as correct colour and position; read white as correct colour but different position.
-7. Continue until the code is broken or attempts reach zero. Enter `quit` to abandon with zero score.
+6. In an interactive terminal, the letters appear in their matching colours. Set `NO_COLOR=1` before `cipherboard` when plain output is preferred.
+7. Read black as correct colour and position; read white as correct colour but different position.
+8. Continue until the code is broken or attempts reach zero. Enter `quit` to abandon with zero score.
 
 ### Scores and exports
 
@@ -662,6 +667,7 @@ Menu option `2` prints up to 20 local results. Menu option `4` exports all reada
 - If `cipherboard` is not found, reopen the terminal after installation and confirm the selected installation directory is on `PATH`.
 - If hidden input seems blank, this is expected: type the secret and press Enter.
 - If a guess is rejected, confirm its length, enabled letters, and duplicate policy; the attempt has not been consumed.
+- If colour is unavailable or unsuitable, the letters still identify every peg. Use `NO_COLOR=1 cipherboard` on macOS/Linux or `$env:NO_COLOR=1; cipherboard` in PowerShell for plain output.
 - If a save/export warning appears, check directory permissions and free space. The game result is still displayed.
 - If a damaged CSV is detected, preserve a copy before editing; valid rows may still load while malformed rows are skipped.
 
@@ -683,17 +689,17 @@ I also learned to separate evidence from appearance. A polished terminal table i
 
 The program's principal strengths are correctness, modularity, and failure handling. Duplicate-safe feedback is linear in code length; game objects are immutable; scoring is auditable and versioned; storage uses canonical fields and atomic export; and the CLI has no network requirement. The shared core also prevents rule divergence between CLI and GUI.
 
-Limitations remain. Local CSV is not designed for concurrent multi-process writing. Pass-and-play privacy depends on one terminal hand-off. The CLI uses letters rather than optional ANSI colour, and only summary data—not full attempt history—is exported. The interactive controller's 75% focused coverage is lower than the core's 99% branch-aware coverage. None prevents the stated use case, but each defines a credible next iteration.
+Limitations remain. Local CSV is not designed for concurrent multi-process writing. Pass-and-play privacy depends on one terminal hand-off. Some terminals cannot display ANSI styling, so the CLI must retain letter identifiers and plain fallback. Only summary data, not full attempt history, is exported. The interactive controller's 76% focused coverage is lower than the core's 99% branch-aware coverage. None prevents the stated use case, but each defines a credible next iteration.
 
 ## 8.3: Future Improvements
 
-Future work should prioritize an explicit storage schema version with migration and locking, broader controller-path tests, optional accessible ANSI styling, JSON attempt-history export, and separate-device Code Maker/Code Breaker sessions. Packaging should add automated signing and notarization verification on macOS and signed installer validation on Windows.
+Future work should prioritize an explicit storage schema version with migration and locking, broader controller-path tests, JSON attempt-history export, and separate-device Code Maker/Code Breaker sessions. Terminal work could add user-configurable themes while keeping the current contrast and plain-output guarantees. Packaging should add automated signing and notarization verification on macOS and signed installer validation on Windows.
 
 The scoring model could also be evaluated with real player data. Because `score_v1` excludes speed, it rewards reasoning and difficulty but may need recalibration across presets. Any change should create `score_v2`, preserve old records, and avoid retroactively comparing incompatible totals.
 
 ## 8.4: Summary
 
-This project demonstrates the complete development cycle: a precise problem, parameter and constraint analysis, modular design, typed implementation, layered testing, debugging, user documentation, and critical evaluation. The refreshed baseline—117 passing Python tests, 36 passing browser tests with 8 intentional browser skips, focused 92% CLI/core coverage, clean Ruff checks, and clean mypy checks—supports the conclusion that the CLI is fit for its documented local use and that the combined v1 GUI/CLI package includes the repaired service path.
+This project demonstrates the complete development cycle: a precise problem, parameter and constraint analysis, modular design, typed implementation, layered testing, debugging, user documentation, and critical evaluation. The refreshed baseline, with 120 passing Python tests, 36 passing browser tests, 8 intentional browser skips, focused 92% CLI/core coverage, clean Ruff checks, and clean mypy checks, supports the conclusion that the CLI is fit for its documented local use and that the combined v1 GUI/CLI package includes the repaired service path and accessible terminal colours.
 
 # 9: Appendix
 
