@@ -62,4 +62,4 @@ From the repository root:
 python3 infra/installers/build_release_archives.py
 ```
 
-The command creates `dist/installers/Cipherboard-macOS.zip`, `Cipherboard-Windows.zip`, and `SHA256SUMS.txt`. The dedicated GitHub Actions workflow validates platform script syntax, builds the same archives, uploads them as workflow artifacts, and attaches them to tagged GitHub releases.
+The command creates `dist/installers/Cipherboard-macOS.zip`, `Cipherboard-Windows.zip`, and `SHA256SUMS.txt`. Each archive also contains `RELEASE.txt`, which identifies the v1 release and exact source commit so a downloaded installer can be matched to the repaired code. The dedicated GitHub Actions workflow validates platform script syntax, builds the same archives, uploads them as workflow artifacts, and attaches them to tagged GitHub releases. Changes anywhere under `apps/api`, including real-time duel fixes, trigger installer validation.

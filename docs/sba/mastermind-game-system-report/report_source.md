@@ -42,7 +42,7 @@ The minimum viable system is a menu-driven Python program that generates a legal
 | Feedback | Black and white counts | Linear duplicate-safe `Counter` algorithm |
 | Persistence | Save a score | UTF-8 append, sorted read, safe atomic export |
 | Reliability | Normal exit | `quit`, EOF, interrupt, disk and malformed-file handling |
-| Quality | Manual checks | 136 passing tests overall; focused 92% measured coverage |
+| Quality | Manual checks | 117 Python and 36 browser tests passing; focused 92% coverage |
 
 ## 1.4: System Development Cycle
 
@@ -406,7 +406,7 @@ main
 
 # 6: Testing & Evaluation
 
-Testing was performed in three phases: environment and boundary readiness, rule and integration correctness, and end-user output acceptance. Automated evidence was generated from repository baseline `31509d956b0bb8614b646887065ee40549238446` on 1 September 2026. The complete suite reported 136 passed and 8 skipped in 8.01 seconds. Skips belong to optional infrastructure paths and are not hidden failures.
+Testing was performed in three phases: environment and boundary readiness, rule and integration correctness, and end-user output acceptance. Automated evidence was refreshed from repository baseline `67b4cc9be06961483661bf3219626a4ea2e6014e` on 1 September 2026. The successful GitHub Actions run executed 117 Python tests in 19.92 seconds with 99.72% branch-aware coverage of the canonical core, plus 36 browser end-to-end tests with 8 intentional browser/project skips. Ruff and mypy also passed across the complete Python source set. MongoDB and Redis are started by CI for service-level tests; the CLI-focused tests remain independent of those services.
 
 [[FIGURE:test_results.png|Figure 19. Measured verification result across the repository test suite.]]
 
@@ -474,7 +474,7 @@ The most important combined case selects no duplicates with a human Code Maker. 
 
 ## 6.3: Testing Phase 2
 
-Phase 2 verifies the computational core and integration between core, CLI, and local storage. The focused command covering core and CLI tests reported 53 passed in 0.54 seconds and 92% measured coverage for the selected source set. Core rule modules reached 100%; CLI storage reached 97%, the process entry point 83%, and the interactive application 75%.
+Phase 2 verifies the computational core and integration between core, CLI, and local storage. The refreshed focused command covering core and CLI tests reported 56 passed in 0.53 seconds and 92% measured coverage for the selected source set. The canonical core reached 99% branch-aware coverage because one defensive branch remained partial; CLI storage reached 97%, the process entry point 83%, and the interactive application 75%.
 
 [[FIGURE:coverage_chart.png|Figure 20. Measured statement coverage for the focused CLI and core verification.]]
 
@@ -546,7 +546,7 @@ The main usability limitation is the text-only representation of colours. Letter
 
 # 7: Debugging & Improvements
 
-This section records six concrete defect classes and the implementation safeguards that resolve them. Because the current repository is the verified baseline, the entries are a reconstruction from code boundaries and regression tests rather than a claim that each defect corresponds to a separately preserved historical commit.
+This section records seven concrete defect classes and the implementation safeguards that resolve them. Because the current repository is the verified baseline, the entries are a reconstruction from code boundaries and regression tests rather than a claim that each defect corresponds to a separately preserved historical commit.
 
 ## 7.1: Error List
 
@@ -558,6 +558,7 @@ This section records six concrete defect classes and the implementation safeguar
 | 4 | CSV opens as an active formula | Untrusted cells begin with formula marker | Prefix dangerous leading characters with apostrophe |
 | 5 | One damaged row breaks score screen | Entire file parsed as all-or-nothing | Validate header; warn and skip malformed rows |
 | 6 | Failed export leaves partial target | Destination written directly | Write, flush, sync, then atomically replace |
+| 7 | Simultaneous duel guesses conflict or overwrite state | Two API workers mutate one room document concurrently | Serialize room attempts with a Redis lock and regression-test concurrent submissions |
 
 ## 7.1.1: Error 1, 2 Debugging
 
@@ -576,6 +577,12 @@ Error 4 affected exported data. Spreadsheet programs may interpret cells beginni
 Error 5 concerned damaged persistence. A missing header or one non-integer field should not crash menu option 2. The final reader checks required columns once, converts each row in its own guarded block, emits warnings, and returns the remaining valid records. File, encoding, and CSV errors return an empty list safely.
 
 Error 6 concerned interruption during export. Directly opening the requested path in write mode can erase an existing report before new writing succeeds. The corrected sequence uses `mkstemp` in the target directory, writes and synchronizes the complete dataset, and calls `os.replace`, whose same-filesystem replacement is atomic. An exception handler removes the temporary file.
+
+## 7.1.4: Error 7 Debugging
+
+Error 7 was found in the wider GUI/API path that shares the Mastermind engine. Two players could submit duel guesses at almost the same moment, allowing independent MongoDB transactions to contend for the same room and game state. The repair at commit `13fa42f0d9703f945881610a9a2d89ac7d31446f` wraps the authoritative room-to-game mutation in a Redis lock named for the room. The five-second lease and blocking timeout bound failure, while the inner transaction preserves idempotency, attempt order, tie-window logic, and completion events.
+
+Dedicated regression cases submit concurrent guesses, verify that both accepted attempts are retained exactly once, and confirm that retries remain idempotent. This repair does not change the standalone CLI's local game loop, but it matters to the installed GUI and therefore to the combined v1 package described in the user manual.
 
 ## 7.2: Improvement List
 
@@ -602,7 +609,7 @@ Improvement 3 is realized through injectable normal input, secret input, output,
 
 The strongest additional feature is architectural reuse. The CLI is not an isolated school script: it uses the same canonical engine as the API and GUI-facing system. Improvements to feedback, validation, scoring, and configuration therefore remain consistent across interfaces.
 
-Other additions include pass-and-play with hidden secret input, four official presets plus Custom, a local high-score table, versioned score records, CSV formula protection, atomic export, malformed-data recovery, and cross-platform installers that include both CLI and GUI entry points. These features extend the minimum expectation without obscuring the game loop.
+Other additions include pass-and-play with hidden secret input, four official presets plus Custom, a local high-score table, versioned score records, CSV formula protection, atomic export, malformed-data recovery, and cross-platform installers that include both CLI and GUI entry points. The maintained v1.0.0 archives are rebuilt from the repaired source and contain `RELEASE.txt` with the exact source commit, allowing the installed payload to be audited. These features extend the minimum expectation without obscuring the game loop.
 
 ## 7.4: Documentation
 
@@ -614,9 +621,10 @@ Documentation exists at three levels. Terminal rules explain play at the moment 
 
 1. Run the signed or locally built installer for macOS or Windows.
 2. Choose the installation destination when prompted. The installer reports the GUI, CLI, service helper, bundled runtime, and supporting files it installs.
-3. Start the GUI from the Applications folder or Start menu for a graphical game.
-4. Open Terminal, PowerShell, or Command Prompt and enter `cipherboard` for the CLI.
-5. If background services are required by the installed build, use `cipherboard-services start`, confirm with `cipherboard-services status`, inspect with `cipherboard-services logs`, and stop with `cipherboard-services stop`.
+3. Open `RELEASE.txt` in the extracted archive when build provenance is required; the refreshed package identifies v1.0.0 and its full source commit.
+4. Start the GUI from the Applications folder or Start menu for a graphical game.
+5. Open Terminal, PowerShell, or Command Prompt and enter `cipherboard` for the CLI.
+6. If background services are required by the installed build, use `cipherboard-services start`, confirm with `cipherboard-services status`, inspect with `cipherboard-services logs`, and stop with `cipherboard-services stop`.
 
 ### Development environment
 
@@ -675,7 +683,7 @@ I also learned to separate evidence from appearance. A polished terminal table i
 
 The program's principal strengths are correctness, modularity, and failure handling. Duplicate-safe feedback is linear in code length; game objects are immutable; scoring is auditable and versioned; storage uses canonical fields and atomic export; and the CLI has no network requirement. The shared core also prevents rule divergence between CLI and GUI.
 
-Limitations remain. Local CSV is not designed for concurrent multi-process writing. Pass-and-play privacy depends on one terminal hand-off. The CLI uses letters rather than optional ANSI colour, and only summary data—not full attempt history—is exported. The interactive controller's 75% focused coverage is lower than the 100% core coverage. None prevents the stated use case, but each defines a credible next iteration.
+Limitations remain. Local CSV is not designed for concurrent multi-process writing. Pass-and-play privacy depends on one terminal hand-off. The CLI uses letters rather than optional ANSI colour, and only summary data—not full attempt history—is exported. The interactive controller's 75% focused coverage is lower than the core's 99% branch-aware coverage. None prevents the stated use case, but each defines a credible next iteration.
 
 ## 8.3: Future Improvements
 
@@ -685,7 +693,7 @@ The scoring model could also be evaluated with real player data. Because `score_
 
 ## 8.4: Summary
 
-This project demonstrates the complete development cycle: a precise problem, parameter and constraint analysis, modular design, typed implementation, layered testing, debugging, user documentation, and critical evaluation. The measured baseline—136 passed tests, 8 intentional skips, focused 92% coverage, clean Ruff checks, and clean mypy checks—supports the conclusion that the CLI is fit for its documented local use.
+This project demonstrates the complete development cycle: a precise problem, parameter and constraint analysis, modular design, typed implementation, layered testing, debugging, user documentation, and critical evaluation. The refreshed baseline—117 passing Python tests, 36 passing browser tests with 8 intentional browser skips, focused 92% CLI/core coverage, clean Ruff checks, and clean mypy checks—supports the conclusion that the CLI is fit for its documented local use and that the combined v1 GUI/CLI package includes the repaired service path.
 
 # 9: Appendix
 
@@ -725,5 +733,5 @@ The following chart expresses the iterative development schedule. Analysis and d
 | Design | State, flow, generation, persistence | Section 4 |
 | Implementation | Core, CLI, storage, packaging | Section 5 and source figures |
 | Testing | Unit, integration, system and acceptance evidence | Section 6 |
-| Debugging | Six resolved defect classes and improvements | Section 7 |
+| Debugging | Seven resolved defect classes and improvements | Section 7 |
 | Documentation | README, user manual, final SBA report | Sections 7.4–9 |

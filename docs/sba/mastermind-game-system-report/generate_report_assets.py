@@ -426,9 +426,9 @@ def charts() -> None:
     horizontal_bars(
         "coverage_chart.png",
         "Measured branch-aware coverage",
-        "53 focused core/CLI tests; overall selected-package coverage is 92%",
+        "56 focused core/CLI tests; overall selected-package coverage is 92%",
         [
-            ("mastermind_core", 100, GREEN),
+            ("mastermind_core", 99, GREEN),
             ("CLI storage", 97, BLUE),
             ("CLI entry point", 83, YELLOW),
             ("CLI application", 75, CORAL),
@@ -440,12 +440,12 @@ def charts() -> None:
         "Verification evidence", "Results measured on 1 September 2026 using Python 3.13.14"
     )
     metrics = [
-        ("Full suite", "136 passed", GREEN),
-        ("Environment cases", "8 skipped", YELLOW),
-        ("Core + CLI", "53 passed", BLUE),
+        ("Python suite", "117 passed", GREEN),
+        ("Browser E2E", "36 passed", BLUE),
+        ("Browser cases", "8 skipped", YELLOW),
+        ("Core + CLI", "56 passed", BLUE),
         ("Focused coverage", "92%", CORAL),
-        ("Ruff", "passed", BROWN),
-        ("mypy", "passed", GREEN),
+        ("Ruff + mypy", "passed", GREEN),
     ]
     for index, (label, value, colour) in enumerate(metrics):
         col, row = index % 3, index // 3
@@ -670,7 +670,7 @@ def code_and_terminal_assets() -> None:
     terminal_image(
         "terminal_tests.png",
         "Verification run - 1 September 2026",
-        "$ uv run pytest -q\n136 passed, 8 skipped in 8.01s\n\n$ uv run pytest tests/core tests/cli --cov=mastermind_core --cov=mastermind_cli --cov-branch\n53 passed in 0.54s\nTOTAL  512 statements  34 missed  110 branches  92%\n\n$ uv run ruff check apps/cli packages/mastermind_core tests/cli tests/core\nAll checks passed!\n\n$ uv run mypy apps/cli packages/mastermind_core\nSuccess: no issues found in 13 source files",
+        "$ CI: uv run pytest --cov=mastermind_core --cov-branch\n117 passed in 19.92s | core coverage 99.72%\n\n$ pnpm test:e2e\n36 passed, 8 skipped\n\n$ uv run pytest tests/core tests/cli --cov=mastermind_core --cov=mastermind_cli\n56 passed in 0.53s\nTOTAL  522 statements  34 missed  118 branches  92%\n\n$ uv run ruff check apps/cli packages/mastermind_core tests/cli tests/core\nAll checks passed!\n\n$ uv run mypy apps/cli packages/mastermind_core\nSuccess: no issues found in 13 source files",
     )
 
 

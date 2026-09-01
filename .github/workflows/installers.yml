@@ -4,10 +4,7 @@ on:
   pull_request:
     paths:
       - '.github/workflows/installers.yml'
-      - 'apps/api/mastermind_api/account.py'
-      - 'apps/api/mastermind_api/auth.py'
-      - 'apps/api/mastermind_api/config.py'
-      - 'apps/api/mastermind_api/main.py'
+      - 'apps/api/**'
       - 'apps/cli/**'
       - 'apps/web/**'
       - 'infra/docker/**'

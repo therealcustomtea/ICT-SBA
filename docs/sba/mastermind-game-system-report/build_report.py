@@ -377,7 +377,7 @@ def configure_headers(document: Document) -> None:
             run.font.color.rgb = RGBColor.from_string(TEAL)
     footer = section.footer
     paragraph = footer.paragraphs[0]
-    paragraph.text = "CLI-centred technical report  •  Baseline 31509d9"
+    paragraph.text = "CLI-centred technical report  •  Baseline 67b4cc9"
     paragraph.alignment = WD_ALIGN_PARAGRAPH.LEFT
     for run in paragraph.runs:
         set_run_fonts(run)
@@ -492,7 +492,7 @@ def add_front_matter(document: Document) -> None:
     add_bookmark(title, "front_declaration", 9000)
     for text in (
         f"This report documents the Mastermind Game System implemented by {CANDIDATE_NAME} ({CANDIDATE_NUMBER}) of {SCHOOL_NAME} in the accompanying repository. The student should confirm authorship, cite all assistance required by school policy, and retain the tested repository baseline.",
-        "Technical statements are grounded in source code at commit 31509d956b0bb8614b646887065ee40549238446 and verification executed on 1 September 2026. The report does not claim that every reconstructed debugging scenario corresponds to an individually preserved historical commit; Section 7 identifies the final safeguards and their regression evidence.",
+        "Technical statements are grounded in source code at commit 67b4cc9be06961483661bf3219626a4ea2e6014e and verification executed on 1 September 2026. This baseline includes the serialized concurrent-duel repair at commit 13fa42f0d9703f945881610a9a2d89ac7d31446f. The report does not claim that every reconstructed debugging scenario corresponds to an individually preserved historical commit; Section 7 identifies the final safeguards and their regression evidence.",
     ):
         p = document.add_paragraph()
         add_inline(p, text)
@@ -529,7 +529,7 @@ def add_front_matter(document: Document) -> None:
     p = document.add_paragraph(style="Quote")
     add_inline(
         p,
-        "Verification result: **136 tests passed**, 8 optional-path tests skipped; focused CLI/core tests achieved **92% measured coverage**, with clean Ruff and mypy checks.",
+        "Verification result: **117 Python tests passed** and **36 browser tests passed** with 8 intentional browser skips; focused CLI/core tests achieved **92% measured coverage**, with clean Ruff and mypy checks.",
     )
     document.add_page_break()
 

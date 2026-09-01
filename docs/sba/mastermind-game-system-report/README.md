@@ -2,7 +2,7 @@
 
 This directory contains the submission-ready, CLI-centred HKDSE ICT School-based Assessment report:
 
-- [PDF report](Mastermind_Game_System_SBA_Report.pdf) — fixed-layout 37-page A4 submission copy.
+- [PDF report](Mastermind_Game_System_SBA_Report.pdf) — fixed-layout 38-page A4 submission copy.
 - [Word report](Mastermind_Game_System_SBA_Report.docx) — editable copy with linked contents entries.
 - [Report source](report_source.md) — inspectable 9,000-word manuscript.
 - [Generated figures](assets) — 22 architecture, flow, code, test, and evaluation visuals.

@@ -5,13 +5,21 @@ from __future__ import annotations
 
 import argparse
 import hashlib
+import json
+import os
+import re
 import shutil
 import stat
+import subprocess
 import tempfile
 import zipfile
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
+DEFAULT_RELEASE_VERSION = (
+    f"v{json.loads((ROOT / 'package.json').read_text(encoding='utf-8'))['version']}"
+)
+FULL_GIT_SHA = re.compile(r"^[0-9a-f]{40}$")
 PAYLOAD_PATHS = (
     "package.json",
     "pnpm-workspace.yaml",
@@ -97,7 +105,47 @@ def digest(path: Path) -> str:
     return checksum.hexdigest()
 
 
-def build(output_directory: Path) -> list[Path]:
+def resolve_source_commit(explicit: str | None = None) -> str:
+    candidate = explicit or os.environ.get("GITHUB_SHA")
+    if candidate is None:
+        git_executable = shutil.which("git")
+        if git_executable is None:
+            raise RuntimeError("Git is required to record installer source provenance.")
+        candidate = subprocess.run(  # noqa: S603 - fixed Git command; no user-controlled arguments
+            [git_executable, "rev-parse", "HEAD"],
+            cwd=ROOT,
+            check=True,
+            capture_output=True,
+            text=True,
+        ).stdout.strip()
+    candidate = candidate.lower()
+    if not FULL_GIT_SHA.fullmatch(candidate):
+        raise ValueError("Installer source commit must be a full 40-character Git SHA.")
+    return candidate
+
+
+def write_release_note(destination: Path, release_version: str, source_commit: str) -> None:
+    (destination / "RELEASE.txt").write_text(
+        "\n".join(
+            (
+                f"Cipherboard {release_version}",
+                f"Source commit: {source_commit}",
+                "Includes: GUI, CLI, API, MongoDB, Redis, Mailpit, and service launchers.",
+                "Install by running the platform installer and choosing the destination folder.",
+                "",
+            )
+        ),
+        encoding="utf-8",
+    )
+
+
+def build(
+    output_directory: Path,
+    *,
+    release_version: str = DEFAULT_RELEASE_VERSION,
+    source_commit: str | None = None,
+) -> list[Path]:
+    resolved_commit = resolve_source_commit(source_commit)
     output_directory.mkdir(parents=True, exist_ok=True)
     with tempfile.TemporaryDirectory(prefix="cipherboard-installers-") as temporary_name:
         temporary = Path(temporary_name)
@@ -108,12 +156,14 @@ def build(output_directory: Path) -> list[Path]:
         mac_stage.mkdir()
         shutil.copy2(ROOT / "installer/macos/Install Cipherboard.command", mac_stage)
         shutil.copytree(payload, mac_stage / "payload")
+        write_release_note(mac_stage, release_version, resolved_commit)
 
         windows_stage = temporary / "Windows"
         windows_stage.mkdir()
         shutil.copy2(ROOT / "installer/windows/Install Cipherboard.cmd", windows_stage)
         shutil.copy2(ROOT / "installer/windows/Install-Cipherboard.ps1", windows_stage)
         shutil.copytree(payload, windows_stage / "payload")
+        write_release_note(windows_stage, release_version, resolved_commit)
 
         archives = [
             output_directory / "Cipherboard-macOS.zip",
@@ -137,8 +187,21 @@ def main() -> int:
         default=ROOT / "dist/installers",
         help="Directory for the two ZIP archives and checksum file",
     )
+    parser.add_argument(
+        "--release-version",
+        default=DEFAULT_RELEASE_VERSION,
+        help=f"Release label written into each archive (default: {DEFAULT_RELEASE_VERSION})",
+    )
+    parser.add_argument(
+        "--source-commit",
+        help="Full Git commit SHA written into each archive (defaults to GITHUB_SHA or HEAD)",
+    )
     arguments = parser.parse_args()
-    for artifact in build(arguments.output.resolve()):
+    for artifact in build(
+        arguments.output.resolve(),
+        release_version=arguments.release_version,
+        source_commit=arguments.source_commit,
+    ):
         print(artifact)
     return 0
 
