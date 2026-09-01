@@ -72,7 +72,7 @@ This operation is idempotent. It creates missing collections, indexes, and seed 
 uv run python -m mastermind_cli
 ```
 
-The CLI stores UTF-8 scores in `data/high_scores.csv`. It supports all presets, Custom, computer/human Code Maker, safe input normalization, complete history, score sorting, export, `quit`, EOF, and interrupt handling. See the [SBA implementation](docs/sba/SBA_IMPLEMENTATION.md).
+The CLI stores UTF-8 scores in `data/high_scores.csv`. Interactive terminals display each peg identifier in its matching colour while preserving the letters for accessibility. Redirected output remains plain text; set `NO_COLOR=1` to disable ANSI styling or `FORCE_COLOR=1` to enable it explicitly. The CLI supports all presets, Custom, computer/human Code Maker, safe input normalization, complete history, score sorting, export, `quit`, EOF, and interrupt handling. See the [SBA implementation](docs/sba/SBA_IMPLEMENTATION.md).
 
 The complete illustrated SBA submission is available as a [PDF report](docs/sba/mastermind-game-system-report/Mastermind_Game_System_SBA_Report.pdf) and an [editable Word report](docs/sba/mastermind-game-system-report/Mastermind_Game_System_SBA_Report.docx). Its source, figures, and reproducible build tools are in the [report directory](docs/sba/mastermind-game-system-report/).
 

@@ -2,7 +2,7 @@
 
 This document explains the school-facing Python work and how it grows into the Cipherboard market product. It is written so a Form 5 student can adapt it into an SBA report while still pointing to the real source code.
 
-The complete illustrated submission is available as a [37-page PDF](mastermind-game-system-report/Mastermind_Game_System_SBA_Report.pdf) and an [editable Word document](mastermind-game-system-report/Mastermind_Game_System_SBA_Report.docx). Its reproducible source and figure generator are kept in the same directory.
+The complete illustrated submission is available as a [38-page PDF](mastermind-game-system-report/Mastermind_Game_System_SBA_Report.pdf) and an [editable Word document](mastermind-game-system-report/Mastermind_Game_System_SBA_Report.docx). Its reproducible source and figure generator are kept in the same directory.
 
 ## 1. Problem definition
 
@@ -43,6 +43,7 @@ mastermind_core
 mastermind_cli
 ├── __main__.py     python -m entry point
 ├── app.py          menu, game loop, and terminal output
+├── terminal.py     accessible ANSI peg colours and plain-text fallback
 └── storage.py      CSV file handling
 ```
 
@@ -53,6 +54,8 @@ The CLI contains input/output code. The core contains rules. This separation let
 ### Stable colour identifiers
 
 The program stores `R`, `B`, `G`, `Y`, `W`, `K`, `O`, `P`, `C`, and `M`, not translated display names. A tuple stores the enabled palette because it has a fixed order and should not change during a game.
+
+Interactive terminals style each identifier with its matching ANSI colour. The letter always remains visible, and black and white use contrasting backgrounds. Non-interactive output, `TERM=dumb`, and `NO_COLOR` use the same unstyled identifiers, so logs, assistive workflows, and automated tests remain readable.
 
 ### Lists and tuples
 

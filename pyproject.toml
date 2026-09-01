@@ -10,7 +10,7 @@ build-backend = "setuptools.build_meta"
 # Configures `name` because the surrounding service or tool depends on it.
 name = "mastermind-logic-lab"
 # Configures `version` because the surrounding service or tool depends on it.
-version = "0.1.0"
+version = "1.0.0"
 # Configures `description` because the surrounding service or tool depends on it.
 description = "Canonical Mastermind engine, development API, and SBA command-line application"
 # Configures `requires-python` because the surrounding service or tool depends on it.

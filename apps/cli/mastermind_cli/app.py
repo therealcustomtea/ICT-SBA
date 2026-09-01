@@ -46,6 +46,7 @@ from mastermind_core import (
 
 # Imports selected names from `.storage` for use in this module.
 from .storage import CSVScoreStore, ScoreRecord
+from .terminal import format_code, supports_colour
 
 # Computes `Callable[[str], str]` and stores the result in `Input` for later use.
 Input = Callable[[str], str]
@@ -76,6 +77,8 @@ class MastermindCLI:
         secret_input_fn: Input = getpass,
         # Provides `print` as the `output_fn` parameter or argument.
         output_fn: Output = print,
+        # Overrides automatic terminal detection when a caller needs a deterministic mode.
+        colour_output: bool | None = None,
         # Provides `None` as the `store` parameter or argument.
         store: CSVScoreStore | None = None,
         # Completes the function signature and declares the type returned to callers.
@@ -87,6 +90,12 @@ class MastermindCLI:
         self.secret_input = secret_input_fn
         # Stores `output_fn` on this instance as `self.output` for later method calls.
         self.output = output_fn
+        # Captured or redirected output stays plain unless colour is explicitly requested.
+        self.colour_output = (
+            supports_colour()
+            if colour_output is None and output_fn is print
+            else bool(colour_output)
+        )
         # Stores `store or CSVScoreStore()` on this instance as `self.store` for later method
         # calls.
         self.store = store or CSVScoreStore()
@@ -192,7 +201,7 @@ class MastermindCLI:
         # Sends this user-facing message through the configured output function.
         self.output(
             # Adds this formatted text segment to the message being constructed.
-            f"Available colours: {' '.join(config.colours)} | "
+            f"Available colours: {format_code(config.colours, enabled=self.colour_output)} | "
             # Adds this formatted text segment to the message being constructed.
             f"Code length: {config.code_length} | Attempts: {config.max_attempts}"
             # Closes the multiline call or collection started on an earlier line.
@@ -230,7 +239,10 @@ class MastermindCLI:
         # Tests the next condition when earlier branches did not run.
         elif state.status is GameStatus.LOST:
             # Sends this user-facing message through the configured output function.
-            self.output(f"No attempts remain. The code was {' '.join(secret)}.")
+            self.output(
+                f"No attempts remain. The code was "
+                f"{format_code(secret, enabled=self.colour_output)}."
+            )
         # Handles the remaining case when the preceding conditions were false.
         else:
             # Sends this user-facing message through the configured output function.
@@ -291,10 +303,13 @@ class MastermindCLI:
         self.output("Attempt  Guess               Black  White")
         # Iterates through `attempt in state.attempts` for the nested operation.
         for attempt in state.attempts:
+            plain_guess = " ".join(attempt.guess)
+            coloured_guess = format_code(attempt.guess, enabled=self.colour_output)
+            guess_padding = " " * max(0, 18 - len(plain_guess))
             # Sends this user-facing message through the configured output function.
             self.output(
                 # Adds this formatted text segment to the message being constructed.
-                f"{attempt.number:>7}  {' '.join(attempt.guess):<18}  "
+                f"{attempt.number:>7}  {coloured_guess}{guess_padding}  "
                 # Adds this formatted text segment to the message being constructed.
                 f"{attempt.feedback.black:>5}  {attempt.feedback.white:>5}"
                 # Closes the multiline call or collection started on an earlier line.

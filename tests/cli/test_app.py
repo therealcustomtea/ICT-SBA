@@ -12,6 +12,15 @@ from mastermind_cli import CSVScoreStore, MastermindCLI
 
 # Imports selected names from `mastermind_cli` for use in this module.
 from mastermind_cli import __main__ as cli_main
+from mastermind_cli.terminal import RESET, format_code, supports_colour
+
+
+class FakeTerminal:
+    def __init__(self, interactive: bool) -> None:
+        self.interactive = interactive
+
+    def isatty(self) -> bool:
+        return self.interactive
 
 
 # Defines the `ScriptedIO` class and its related behavior.
@@ -32,6 +41,46 @@ class ScriptedIO:
     def print(self, value: str) -> None:
         # Calls `self.output.append` with the supplied values.
         self.output.append(value)
+
+
+def test_terminal_colour_capability_respects_accessibility_and_stream_state() -> None:
+    assert supports_colour(FakeTerminal(True), {}) is True
+    assert supports_colour(FakeTerminal(False), {}) is False
+    assert supports_colour(FakeTerminal(True), {"NO_COLOR": "1"}) is False
+    assert supports_colour(FakeTerminal(True), {"TERM": "dumb"}) is False
+    assert supports_colour(FakeTerminal(False), {"FORCE_COLOR": "1"}) is True
+
+
+def test_colour_formatter_styles_each_identifier_without_changing_plain_fallback() -> None:
+    identifiers = ("R", "B", "G", "Y", "W", "K", "O", "P", "C", "M")
+    styled = format_code(identifiers, enabled=True)
+
+    assert format_code(identifiers, enabled=False) == "R B G Y W K O P C M"
+    assert styled.count(RESET) == len(identifiers)
+    assert "\x1b[91mR\x1b[0m" in styled
+    assert "\x1b[30;47mW\x1b[0m" in styled
+
+
+def test_coloured_game_output_styles_palette_and_history_but_preserves_alignment(
+    tmp_path: Path,
+) -> None:
+    io = ScriptedIO(["Ada", "5", "5", "3", "1", "y", "y", "RBG"])
+    app = MastermindCLI(
+        input_fn=io.input,
+        secret_input_fn=lambda _prompt: "RBG",
+        output_fn=io.print,
+        colour_output=True,
+        store=CSVScoreStore(tmp_path / "scores.csv"),
+    )
+
+    app.play_game()
+
+    palette = next(line for line in io.output if line.startswith("Available colours:"))
+    history = next(line for line in io.output if line.lstrip().startswith("1  \x1b"))
+    assert "\x1b[91mR\x1b[0m" in palette
+    assert "\x1b[94mB\x1b[0m" in palette
+    assert "\x1b[92mG\x1b[0m" in history
+    assert history.endswith("      3      0")
 
 
 # Defines the `test_menu_handles_invalid_and_exit` callable and its typed interface.
