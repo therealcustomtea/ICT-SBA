@@ -641,7 +641,9 @@ def terminal_image(
                 if part in peg_colours:
                     background = "#FFFFFF" if part == "W" else "#05090C" if part == "K" else None
                     if background:
-                        draw.rounded_rectangle((x - 2, y - 1, x + width + 2, y + 29), radius=4, fill=background)
+                        draw.rounded_rectangle(
+                            (x - 2, y - 1, x + width + 2, y + 29), radius=4, fill=background
+                        )
                     draw.text((x, y), part, font=mono, fill=peg_colours[part])
                 else:
                     draw.text((x, y), part, font=mono, fill=colour)
