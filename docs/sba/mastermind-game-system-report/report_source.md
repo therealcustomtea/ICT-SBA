@@ -2,7 +2,7 @@
 
 Mastermind is a deductive code-breaking game. A Code Maker selects a hidden ordered sequence of colour identifiers and a Code Breaker submits guesses. After each valid guess, the system returns black feedback pegs for correct colours in correct positions and white feedback pegs for correct colours in wrong positions. The computational challenge is not simply comparing two lists: duplicate colours must be counted once, invalid data must never alter the game, terminal states must stop accepting guesses, and the final result must be saved reliably.
 
-The project delivers this solution primarily through a Python command-line interface (CLI). The terminal application is intentionally understandable as an SBA program, but it is not a disposable prototype. It imports the same `mastermind_core` package as the production web API. This makes the CLI a compact demonstration of decomposition, selection, iteration, validation, structured data, file handling, testing, and defensive programming.
+Release 1.1.0 delivers this solution through a Python command-line interface (CLI) with offline play and the account-backed workflows available in the graphical product. The terminal application is intentionally understandable as an SBA program, but it is not a disposable prototype. It imports the same `mastermind_core` package as the production web API. This makes the CLI a compact demonstration of decomposition, selection, iteration, validation, structured data, file handling, testing, and defensive programming.
 
 [[FIGURE:architecture.png|Figure 1. CLI-centred system architecture and shared canonical engine.]]
 
@@ -18,7 +18,7 @@ The project is also designed for realistic failure. A user can mistype a menu op
 
 The primary objective is to create a reliable, testable Mastermind system that can be operated entirely from a terminal. The completed CLI must:
 
-- present a five-option menu for starting a game, viewing scores, reading rules, exporting scores, and exiting;
+- preserve the five original choices for local play, scores, rules, export, and exit, with option 6 opening online features;
 - support Easy, Normal, Hard, Expert, and Custom configurations;
 - support both computer and human Code Makers, hiding human secret input;
 - normalize readable input formats and reject invalid guesses without consuming an attempt;
@@ -27,7 +27,9 @@ The primary objective is to create a reliable, testable Mastermind system that c
 - handle win, loss, abandonment, end-of-input, and keyboard interruption safely;
 - calculate a reproducible, versioned score;
 - create, append, validate, sort, and export UTF-8 CSV records; and
-- reuse the canonical rule engine shared by the wider Cipherboard product.
+- reuse the canonical rule engine shared by the wider Cipherboard product;
+- support account-backed games and history, daily puzzles, friend challenges, live duels, profiles, rankings, support, and authorized administration through the same API as the GUI; and
+- protect sessions, preserve pending guesses across uncertain network responses, and expose language and accessibility preferences in the terminal.
 
 Success is judged by observable behaviour and repeatable verification, not by the amount of code written. Each objective is traced to implementation and tests later in this report.
 
@@ -42,17 +44,16 @@ The minimum viable system is a menu-driven Python program that generates a legal
 | Feedback | Black and white counts | Linear duplicate-safe `Counter` algorithm |
 | Persistence | Save a score | UTF-8 append, sorted read, safe atomic export |
 | Reliability | Normal exit | `quit`, EOF, interrupt, disk and malformed-file handling |
-| Quality | Automated checks | 120 Python and 36 browser tests passing; focused 92% coverage |
+| Online workflows | Account and multiplayer access | Shared API sessions, daily/friend challenges, duels, profile, support and admin menus |
+| Quality | Automated checks | 142 Python tests passed; core coverage 99.72%; combined core/CLI coverage 75.87% |
 
 ## 1.4: System Development Cycle
 
-I followed an iterative system development cycle rather than attempting to write the entire program in one pass. Problem definition established the rules and user needs. Analysis converted the rules into parameters, constraints, inputs, processes, and outputs. Design separated the canonical engine, CLI controller, and storage adapter. Implementation used typed Python modules and frozen dataclasses. Testing progressed from pure functions to CLI integration and file-system behaviour. Evaluation then identified strengths, limitations, and future work.
-
-The cycle was repeated whenever a boundary case appeared. For example, duplicate feedback led to a two-stage matching design; CSV exports led to formula protection and atomic replacement; pass-and-play led to hidden input and a hand-off screen. The Gantt chart in Appendix 9.2 summarises the planned sequence, while Section 7 records concrete debugging cases.
+Development followed an iterative cycle: define requirements, analyse constraints, design boundaries, implement, test, and evaluate. Rule and network failures prompted corrections. Section 7 records the safeguards; Appendix 9.2 shows the planned sequence.
 
 # 2: System Analysis
 
-System analysis identifies the technologies, interaction model, operating assumptions, and boundaries that shape the solution. The CLI is deliberately lightweight: it does not require a terminal UI framework, database server, or network connection. That keeps the school-facing program inspectable while still applying production-quality design principles.
+System analysis identifies the technologies, interaction model, operating assumptions, and boundaries that shape the solution. The offline CLI requires no network or database. Online mode requires the existing FastAPI service, MongoDB replica set, and Redis; published privacy and terms text also requires the web service. The terminal is a second client of those services, so account records and server permissions remain consistent with the GUI. Browser installation, touch gestures, and page animation are presentation features; terminal interaction uses keyboard menus and static text.
 
 ## 2.1: Programming Language
 
@@ -70,7 +71,7 @@ The language choice also supports safe standard-library components. `secrets.Sys
 
 ## 2.2: User Interface
 
-The user interface is a conversational terminal menu. This matches the CLI focus and permits complete keyboard operation. The opening menu contains exactly five numbered choices. Prompts state valid ranges, and recovery messages explain the correction needed. During a game, a fixed-width attempt table exposes number, guess, black feedback, white feedback, and attempts remaining.
+The user interface is a conversational terminal menu. This matches the CLI focus and permits complete keyboard operation. The opening menu preserves choices 1–5 and adds option 6 for online features. The online menu provides 13 workflows, including a return to local play; option 0 goes back or exits. Prompts state valid ranges, and recovery messages explain the correction needed. During a game, a fixed-width attempt table exposes number, guess, black feedback, white feedback, and attempts remaining.
 
 The terminal interface does not rely on colour alone. Pegs retain stable letters, while ANSI styling lets many players scan the palette and history more quickly. White and black identifiers use contrasting backgrounds. Redirected output, `TERM=dumb`, and `NO_COLOR` remain plain text, and `FORCE_COLOR` provides an explicit override. Human secret input uses `getpass`, and forty blank lines separate the Code Maker hand-off from the Code Breaker view. Although this is not as strong as a separate device, it is appropriate for local pass-and-play.
 
@@ -94,7 +95,7 @@ The CLI reconstructs the visible board from `GameState.attempts` after every acc
 
 ## 3.2: General Parameters
 
-General parameters define the legal game space. The palette contains 5–10 unique identifiers; code length is 3–6; maximum attempts is 1–20; duplicates may be allowed or forbidden; and the Code Maker may be a computer or human. `ranked` and `visibility` exist in the shared model, although the local CLI records ordinary preset games and custom games without a server leaderboard.
+General parameters define the legal game space. The palette contains 5–10 unique identifiers; code length is 3–6; maximum attempts is 1–20; duplicates may be allowed or forbidden; and the Code Maker may be a computer or human. Offline scores stay in CSV and do not enter the server leaderboard. Online mode submits difficulty, visibility, and configuration to the API, which decides ranking eligibility; the terminal cannot award itself a ranked result.
 
 | Parameter | Type | Valid values | CLI source |
 |---|---|---|---|
@@ -109,7 +110,7 @@ General parameters define the legal game space. The palette contains 5–10 uniq
 
 “Teacher parameters” are mapped to role and authority parameters. The Code Maker owns the secret; the Code Breaker owns guesses. When the computer is Code Maker, the engine generates the secret through `SystemRandom`. When a human is Code Maker, the same `validate_code` function checks the hidden entry before the device is handed over.
 
-The separation prevents authority leakage. The Code Breaker never receives the secret through normal output while the game is active. The CSV record intentionally excludes the secret. Only a lost game reveals the code, because no further competitive attempt can occur. A won game does not need to reveal it because the successful final guess already shows the sequence.
+The separation prevents authority leakage. The Code Breaker never receives the secret through normal output while the game is active. Online authority additionally belongs to the API: access tokens identify the player, ownership checks isolate games and challenges, and administrator grants and MFA protect moderation. Duel snapshots expose only the permitted opponent progress. The CSV record intentionally excludes the secret. Only a lost game reveals the code, because no further competitive attempt can occur. A won game does not need to reveal it because the successful final guess already shows the sequence.
 
 ## 3.4: Timetable Illustration
 
@@ -163,13 +164,13 @@ The export always writes the canonical 13-column header even when there are no r
 
 The principal operational report is the local high-score view. Records are sorted by score descending, attempts ascending, then timestamp ascending. The first twenty are printed with rank, player, difficulty, score, and attempt usage. CSV export provides the detailed machine-readable report with configuration and scoring version.
 
-This SBA document is a second report output: it connects requirements, design, source evidence, tests, and evaluation. All screenshots and charts are generated from repository code or measured verification results, so figures can be reproduced rather than manually edited.
+This SBA document is a second report output: it connects requirements, design, source evidence, tests, and evaluation. Terminal examples, source excerpts, and charts are generated from repository code or measured verification results. Source figures retain line numbers and omit full-line comments for readability; terminal examples illustrate deterministic test scenarios. The figures can be reproduced from the accompanying generator.
 
 ## 3.7: Modularization
 
 The solution is modularized around dependency direction. `mastermind_cli.app` depends on the public exports of `mastermind_core` and on `CSVScoreStore`. The core never imports the CLI or file system. Within the core, `engine.py` coordinates models, validation, feedback, and scoring; it does not duplicate their logic.
 
-Graph analysis of the repository found 1,392 code nodes and 4,574 structural edges across 183 code files. For the CLI-focused subgraph, `engine.py` is the main bridge between immutable models and rule functions. This supports the design decision to keep interaction at the edge and deterministic rules at the centre.
+Online interaction is separated into `online.py` and `online_client.py`. The first owns terminal workflows; the second owns HTTP sessions, private state, exports, and WebSocket connections. `localization.py` supplies Traditional Chinese prompts for the offline controller. Both local and online workflows use `terminal.py` for readable pegs. The online controller sends actions to the API rather than duplicating server scoring, database access, or permission decisions.
 
 [[FIGURE:module_graph.png|Figure 7. CLI and canonical-core module relationship graph.]]
 
@@ -202,7 +203,7 @@ Validation is designed as a retryable boundary, not a reason for the program to 
 
 Guess validation is deliberately completed before feedback or attempt construction. This guarantees that malformed separators, wrong length, unknown colours, or prohibited duplicates cannot consume an attempt. Stable error codes make the same rule usable through API boundaries, while the CLI displays concise messages.
 
-[[FIGURE:code_validation.png|Figure 10. Source screenshot: normalization and validation functions.]]
+[[FIGURE:code_validation.png|Figure 10. Source excerpt: normalization and validation functions.]]
 
 ## 4.2: Generation Design
 
@@ -272,7 +273,7 @@ This structure produces maintainability and confidence. Pure rule functions are 
 
 Implementation converted the design into three cooperating Python areas: `mastermind_core` for rules and immutable state, `mastermind_cli.app` for the interaction loop, and `mastermind_cli.storage` for local records. The implementation favours explicit values over hidden side effects. A game transition returns a new state; a rejected guess raises a stable domain error; and storage is called only after the result is known.
 
-The source is packaged rather than run as a loose script. The CLI entry point calls `MastermindCLI().run()`, while the project metadata supplies the installed `cipherboard` command. This permits the same code to run in development, automated tests, and packaged desktop installations without changing imports.
+The source is packaged rather than run as a loose script. The entry point parses arguments and launches `MastermindCLI` or, with `--online`, `OnlineCLI`; project metadata supplies both `mastermind` and `cipherboard` commands. This permits the same code to run in development, automated tests, and packaged desktop installations without changing imports.
 
 ## 5.1: Initialization
 
@@ -305,7 +306,7 @@ The constants serve as single sources of truth. `COLOUR_IDS` controls palette me
 
 ## 5.1.3: Configuration File
 
-Project configuration is declared in `pyproject.toml`. It defines Python 3.13 compatibility, workspace packages, CLI and GUI executables, linting, type checking, tests, and optional dependencies. `.python-version` selects the development interpreter, while `uv.lock` fixes transitive versions for reproducible installation.
+Project configuration is declared in `pyproject.toml`. It defines release 1.1.0, Python 3.13 compatibility, workspace packages, CLI and GUI executables, linting, type checking, tests, and optional dependencies. Online transport uses the pinned `httpx` and `websockets` packages. `.python-version` selects the development interpreter, while `uv.lock` fixes transitive versions for reproducible installation.
 
 Runtime game configuration is represented by `GameConfig`, not an editable external file. This is intentional: its `__post_init__` method normalizes colours and rejects invalid colour counts, duplicate palette choices, unknown identifiers, illegal lengths, attempt limits, insufficient unique colours, and invalid time-bonus bounds. Presets are therefore executable, validated configuration rather than unverified text.
 
@@ -321,7 +322,7 @@ Runtime game configuration is represented by `GameConfig`, not an editable exter
 
 `MastermindCLI` is the application controller. Its constructor accepts normal input, hidden input, output, a score store, and an optional colour-output override. Its methods correspond to user tasks rather than low-level rules: run the menu, play a game, build Custom configuration, show scores, and export scores. Helper methods handle repeated numeric and yes/no prompting.
 
-[[FIGURE:code_cli_menu.png|Figure 13. Source screenshot: accessible ANSI capability detection and peg formatting.]]
+[[FIGURE:code_cli_menu.png|Figure 13. Source excerpt: accessible ANSI capability detection and peg formatting.]]
 
 `CSVScoreStore` is a repository adapter. It has `append`, `read`, and `export` operations and owns every CSV-specific detail. `ScoreRecord` is its typed transfer object. Neither class knows how feedback is calculated.
 
@@ -329,7 +330,7 @@ Domain dataclasses are intentionally behaviour-light. `GameConfig` enforces cons
 
 ## 5.3: Libraries
 
-The runtime relies mainly on the Python standard library, reducing installation size and supply-chain exposure.
+Offline gameplay and CSV handling rely on the Python standard library. Online mode adds the project's pinned HTTP and WebSocket dependencies so it can reuse the existing service contracts.
 
 | Library/module | Use | Reason for selection |
 |---|---|---|
@@ -341,6 +342,8 @@ The runtime relies mainly on the Python standard library, reducing installation 
 | `tempfile` and `os` | Safe export and durable flush | Temporary creation, `fsync`, atomic replacement |
 | `getpass` | Hide human Code Maker input | Prevent secret echo in normal terminals |
 | `pathlib` | Cross-platform paths | Avoid manual path-separator logic |
+| `httpx` | HTTP sessions, cookies and protected downloads | Bounded requests without following redirects |
+| `websockets` | Live duel client | Synchronous transport with bounded reconnect |
 | `pytest` | Automated verification | Fixtures, parameterization, temporary directories, clear failures |
 
 Ruff and mypy are development tools rather than runtime dependencies. Ruff checks style and likely defects; mypy checks the typed contracts. `uv` resolves and runs the environment consistently across macOS, Windows, local development, and CI.
@@ -363,7 +366,7 @@ The pre-generation contract is simple: no `GameState` is created until all confi
 
 `calculate_feedback` first marks exact position matches. It then counts only the unmatched secret and guess colours and sums the minimum occurrence count for each colour. Removing black matches before `Counter` intersection is the key to avoiding double counting.
 
-[[FIGURE:code_feedback.png|Figure 14. Source screenshot: duplicate-safe black and white feedback.]]
+[[FIGURE:code_feedback.png|Figure 14. Source excerpt: duplicate-safe black and white feedback.]]
 
 [[FIGURE:feedback_walkthrough.png|Figure 15. Worked feedback example showing exact-match removal before colour counting.]]
 
@@ -371,7 +374,7 @@ If the secret is `R R B G` and the guess is `R B R Y`, position 1 is black. The 
 
 `submit_guess` is the transactional rule boundary. It rejects non-active state, validates the guess, calculates feedback, appends a numbered and timestamped record, determines whether the result is won or lost, and attaches a score only for terminal state. Because the original dataclass is frozen, the function uses `replace` to return a new state.
 
-[[FIGURE:code_submit_guess.png|Figure 16. Source screenshot: accepted-guess transaction and terminal-state selection.]]
+[[FIGURE:code_submit_guess.png|Figure 16. Source excerpt: accepted-guess transaction and terminal-state selection.]]
 
 Scoring is versioned as `score_v1`. A non-win is zero. A win receives an attempts component of `(maximum attempts - attempts used + 1) × 100`, plus a difficulty component of `code length × 50 + colour count × 20 + 100 when duplicates are allowed`. Time is stored for compatibility but awards no points, which avoids favouring faster typists over careful reasoning.
 
@@ -381,13 +384,13 @@ Scoring is versioned as `score_v1`. A non-win is zero. A win receives an attempt
 
 At terminal state, the CLI prints a status-specific message and score. It constructs `ScoreRecord.now(...)` with UTC timestamp, mode, difficulty, Code Maker, configuration summary, attempts, score version, and result. `CSVScoreStore.append` creates the parent directory, writes a header when needed, sanitizes spreadsheet-formula prefixes, flushes, and calls `fsync`.
 
-[[FIGURE:code_storage.png|Figure 18. Source screenshot: CSV sanitization, defensive reading, and atomic export.]]
+[[FIGURE:code_storage.png|Figure 18. Source excerpt: CSV sanitization, defensive reading, and atomic export.]]
 
 `read` verifies the header before parsing. Each malformed row is skipped with a runtime warning rather than preventing all valid rows from loading. Records are sorted deterministically. `export` writes the canonical header and validated records to a temporary sibling file, synchronizes it, and calls `os.replace`. If any exception occurs, it removes the temporary file and preserves the former destination.
 
 ## 5.4.4: Main function
 
-The installed entry point delegates to `MastermindCLI().run()`. The main loop prints the menu, trims the user's choice, dispatches choices 1–5, and repeats until Exit returns status code 0. A game returns to the same menu after success, loss, abandonment, or a recoverable save warning.
+The installed entry point parses `--online`, `--api-url`, `--product-origin`, `--state-dir`, `--allow-http`, and `--locale`. It constructs the offline controller with a callback for option 6, or starts the online controller directly. The local loop preserves choices 1–5 and Exit returns status code 0. A game returns to the same menu after success, loss, abandonment, or a recoverable save warning.
 
 The executable wrapper catches end-of-input and keyboard interruption at the process boundary. This is the correct layer because these signals may arrive at any prompt. Normal menu and rule methods remain focused on application behaviour rather than duplicating process-level exception handling.
 
@@ -403,12 +406,42 @@ main
         if Rules: print rules
         if Export: validate records, write atomic CSV
         if Exit: return success
+        if Online: open the authenticated online menu
         otherwise: explain valid range
 ```
 
+## 5.5: Online CLI Implementation
+
+`OnlineCLI` organizes server-backed actions into numbered submenus. `OnlineClient` performs HTTP requests and refresh-token rotation; `ClientState` stores per-server state; `DuelConnection` handles real-time transport. The GUI and CLI use the same endpoints, accounts, ranking rules, and administrative checks. Browser layout and installation are outside terminal feature parity.
+
+| GUI workflow | CLI equivalent | Authority and persistence |
+|---|---|---|
+| Solo, practice, Custom and pass-and-play | Play menu; hidden human-secret entry | API creates and validates games |
+| History and resume | Paginated history; open by game ID | Owner-only server history |
+| Daily puzzle | Official run, resume, practice and daily board | API enforces one official run per UTC day |
+| Friend challenge | Create, share code, play, creator results, revoke | Server checks challenge ownership |
+| Duel room | Create/join, ready, guess, back, retry, abandon | Server room state and durable events |
+| Profile and rankings | Rename, opt in, stats, achievements, filters | API controls public data and personal rank |
+| Account | Guest, email upgrade/login, MFA, ZIP export, delete, logout | Existing authentication and recent-login rules |
+| Settings and support | Languages, theme, patterns, sound, consent, support | Private preferences and confirmed API actions |
+| Administration | Lists, summaries, flags, moderation, audit | Existing administrator grant and MFA required |
+| Rules and policies | Rules menu and readable published pages | Web origin supplies current policy text |
+
+**Session handling.** The CLI keeps access tokens in memory and writes the refresh cookie, preferences, pending guesses, and room sequence cursors to a private per-server JSON file. POSIX permissions are 0600 for the file and 0700 for its directory. A cross-process lock avoids simultaneous refresh rotation; a second player uses a different `--state-dir`. Writes use a temporary file and atomic replacement. Server-generated secrets and MFA setup keys are not saved there.
+
+**Network boundaries.** Remote origins require HTTPS unless the user explicitly enables a trusted development-network exception. Redirects are not followed. Email links may use either the configured API origin or the public issuer advertised by that API; the token is submitted only to the configured API. Issuer metadata is used to recognize the callback URL, not to grant authentication. Error text is stripped of terminal control characters before display.
+
+**Reliable mutations.** Before sending a guess, the client saves its idempotency key and body. A lost response leaves that record pending; `retry` sends the same key. A definite rejection clears the pending record so the player can correct the guess. Creation retries also retain their original key. `back` preserves a resumable game; confirmed `abandon` ends it. Local CSV scores and server rankings remain separate records.
+
+**Real-time rooms.** A short-lived one-use ticket authorizes the WebSocket. A receiver thread processes events while the main thread waits for input, and an independent heartbeat keeps presence alive. On reconnect, a fresh ticket and last durable sequence request replay. Opponent guesses remain private until the server permits disclosure. Consecutive reconnect failures are bounded, and leaving a room closes its threads and socket.
+
+**Accessibility.** English and Traditional Chinese are selectable. Light, dark, and plain themes, pattern numbers, high contrast, and optional terminal sound adapt output without hiding letter identifiers. Motion is static. Analytics are disabled by default and only send allowlisted, consented event properties without guesses or secrets.
+
 # 6: Testing & Evaluation
 
-Testing was performed in three phases: environment and boundary readiness, rule and integration correctness, and end-user output acceptance. Automated evidence was refreshed from repository baseline `b3b37d360396ac66893333baf6f933578d9884b0` on 1 September 2026. The successful GitHub Actions run executed 120 Python tests with 99.72% branch-aware coverage of the canonical core, plus 36 browser end-to-end tests with 8 intentional browser/project skips. Ruff and mypy also passed across the complete Python source set. MongoDB and Redis are started by CI for service-level tests; the CLI-focused tests remain independent of those services.
+Testing covers environment and boundary readiness, rule and integration correctness, and complete terminal workflows. On 25 November 2026, the release working tree based on `3924d86` passed all 142 Python tests in 27.736 seconds: 61 API, 45 core, 35 CLI, and one installer test. There were no failures, errors, or skipped Python cases. Branch-aware coverage was 99.72% for `mastermind_core` and 75.87% for the combined core and expanded CLI. Five deprecation warnings came from the existing Uvicorn WebSocket adapter. Ruff and mypy passed, with mypy checking 83 source files.
+
+The suite used an isolated MongoDB replica set and Redis, with unique temporary test databases. Offline/controller and mocked-transport checks can run without services; real API and duel checks require them. `verification.json` records the command, package scope, counts, and measured module coverage used by the figures. `pnpm validate` also passed formatting, lint, type checks, 44 JavaScript unit tests (37 web and seven shared-package tests), and the production web build. These are current local results; browser end-to-end results from an earlier release are not counted as evidence for this release.
 
 [[FIGURE:test_results.png|Figure 19. Measured verification result across the repository test suite.]]
 
@@ -433,14 +466,14 @@ Phase 1 verifies that the program can start in a controlled environment and that
 
 ## 6.2.1: Library Import Test
 
-The project environment was synchronized from the lockfile and the CLI/core modules were imported through pytest discovery. The complete suite collected and executed successfully. Ruff also resolved the same package structure, and mypy checked 14 focused source files without import errors.
+The project environment was synchronized from the lockfile and the CLI/core modules were imported through pytest discovery. The complete suite collected and executed successfully. Ruff also resolved the same package structure, and mypy checked all 83 Python source files without errors.
 
 | Case | Action | Expected | Observed |
 |---|---|---|---|
 | P1-01 | Import `mastermind_core` | Public models and functions available | Pass |
 | P1-02 | Import `mastermind_cli` | CLI and storage exports available | Pass |
 | P1-03 | Invoke module entry point | Menu begins without traceback | Pass through CLI tests |
-| P1-04 | Run typed analysis | Package imports and annotations resolve | 14 files passed |
+| P1-04 | Run typed analysis | Package imports and annotations resolve | 83 files passed |
 
 ## 6.2.2: Configuration File Test
 
@@ -476,9 +509,9 @@ The most important combined case selects no duplicates with a human Code Maker. 
 
 ## 6.3: Testing Phase 2
 
-Phase 2 verifies the computational core and integration between core, CLI, and local storage. The refreshed focused command covering core and CLI tests reported 59 passed in 0.57 seconds and 92% measured coverage for the selected source set. The canonical core reached 99% branch-aware coverage because one defensive branch remained partial; CLI storage reached 97%, the terminal formatter reached 93%, the process entry point 83%, and the interactive application 76%.
+Phase 2 verifies pure rules, local persistence, authenticated handlers, and online transport. The 142-test run measured branch-aware coverage across both core and CLI: core 99.72%, CSV storage 96.70%, terminal formatting 88.89%, offline controller 73.87%, online transport 78.86%, and online menus 59.33%. The combined value is 75.87%; adding substantial interactive code changes the denominator, so the earlier offline-only coverage percentage is not a comparable current result. The subprocess entry point is exercised, but its child-process execution is not included in the parent coverage file.
 
-[[FIGURE:coverage_chart.png|Figure 20. Measured statement coverage for the focused CLI and core verification.]]
+[[FIGURE:coverage_chart.png|Figure 20. Branch-aware coverage measured for the expanded core and CLI packages.]]
 
 ## 6.3.1: Unit Tests
 
@@ -513,7 +546,7 @@ Phase 3 evaluates complete outputs and user tasks. Its focus is not internal bra
 
 ## 6.4.1: Prints & Exports Tests
 
-Print tests assert the five menu choices, rules text, coloured and plain configuration summaries, attempt-table labels and alignment, pluralization, terminal status message, score, and export confirmation. Export tests read the actual target with `csv.DictReader`, confirming a 13-column header and values that round-trip correctly.
+Print tests assert the preserved five choices and new online entry, rules text, coloured and plain configuration summaries, attempt-table labels and alignment, pluralization, terminal status message, score, and export confirmation. Export tests read the actual target with `csv.DictReader`, confirming a 13-column header and values that round-trip correctly.
 
 The default export works with an empty store and still creates a usable header-only CSV. An explicit nested destination creates parent directories. A simulated failure leaves the previous destination intact and removes the temporary file. These behaviours make the output suitable for spreadsheet analysis without risking silent data loss.
 
@@ -545,6 +578,23 @@ Acceptance criteria were evaluated as an end-to-end checklist.
 | Interrupted user | Exits without an unhandled traceback | Accepted |
 
 The colour-assisted letter representation reduces the main CLI usability gap. Players can scan familiar colours without losing the unambiguous identifiers needed in monochrome terminals, copied logs, and accessible text workflows. The GUI remains the more visual alternative and shares the same rules.
+
+## 6.5: Online Workflow Verification
+
+Real-handler tests use the same HTTP endpoints as the GUI with actual guest and email authentication. They cover pass-and-play completion and statistics, cross-user access denial, daily official restoration and practice, friend challenge creation/results/revocation, support, public rankings, account ZIP export, permanent deletion, MFA, and granted versus denied administrator access. Email delivery is intercepted by the test fixture, so no external message is sent.
+
+A separate test starts a real Uvicorn listener and connects two synchronous CLI clients through Redis-backed rooms. It checks readiness, private concurrent guesses, duplicate-key retry, sequence replay, cross-owner denial, and connection cleanup. The same test runs `python -m mastermind_cli --online` as a subprocess and confirms a clean exit without printing tokens. A room-controller regression enters an invalid guess, receives its rejection, clears the pending submission, and returns safely.
+
+| Regression | Expected result | Evidence |
+|---|---|---|
+| Email link uses public issuer rather than internal Docker host | Sign-in succeeds through configured API; unrelated origins rejected | Mocked transport and real-handler tests |
+| Creation response is lost | Retry uses the same idempotency key | Transport/controller regression |
+| Two guests submit duel guesses concurrently | Each accepted attempt occurs once; private fields stay private | Real WebSocket test |
+| Refresh cookie rotates | New cookie saved atomically; second process denied same session lock | Client-state test |
+| Guest exports account or ordinary user opens admin | Existing registered-account/grant checks reject request | Real-handler tests |
+| Compound leaderboard ties and pagination | Stable global ranks and private-profile exclusion | MongoDB query regression |
+
+These results establish important integration paths, not exhaustive proof of every menu sequence or every supported terminal. Broader scripted interaction coverage remains a priority in Section 8.3.
 
 # 7: Debugging & Improvements
 
@@ -584,7 +634,7 @@ Error 6 concerned interruption during export. Directly opening the requested pat
 
 Error 7 was found in the wider GUI/API path that shares the Mastermind engine. Two players could submit duel guesses at almost the same moment, allowing independent MongoDB transactions to contend for the same room and game state. The repair at commit `13fa42f0d9703f945881610a9a2d89ac7d31446f` wraps the authoritative room-to-game mutation in a Redis lock named for the room. The five-second lease and blocking timeout bound failure, while the inner transaction preserves idempotency, attempt order, tie-window logic, and completion events.
 
-Dedicated regression cases submit concurrent guesses, verify that both accepted attempts are retained exactly once, and confirm that retries remain idempotent. This repair does not change the standalone CLI's local game loop, but it matters to the installed GUI and therefore to the combined v1 package described in the user manual.
+Dedicated regression cases submit concurrent guesses, verify that both accepted attempts are retained exactly once, and confirm that retries remain idempotent. The local loop does not require that lock. Online CLI duels now use the same repaired service path; a real two-client WebSocket test checks concurrent guesses, replay, and cleanup.
 
 ## 7.2: Improvement List
 
@@ -611,7 +661,7 @@ Improvement 3 is realized through injectable normal input, secret input, output,
 
 The strongest additional feature is architectural reuse. The CLI is not an isolated school script: it uses the same canonical engine as the API and GUI-facing system. Improvements to feedback, validation, scoring, and configuration therefore remain consistent across interfaces.
 
-Other additions include pass-and-play with hidden secret input, four official presets plus Custom, a local high-score table, versioned score records, CSV formula protection, atomic export, malformed-data recovery, and cross-platform installers that include both CLI and GUI entry points. The maintained v1.0.0 archives are rebuilt from the repaired source and contain `RELEASE.txt` with the exact source commit, allowing the installed payload to be audited. These features extend the minimum expectation without obscuring the game loop.
+Other additions include pass-and-play with hidden secret input, four official presets plus Custom, a local high-score table, versioned score records, CSV formula protection, atomic export, malformed-data recovery, and cross-platform installers that include both CLI and GUI entry points. The v1.1.0 packaging records the exact source commit in `RELEASE.txt`, allowing the installed payload to be audited. The desktop CLI points to the internal API service and persists its private session in the mounted data directory. These features extend the minimum expectation without obscuring the game loop.
 
 The v1 CLI also adds accessible terminal colour rendering without a third-party dependency. The palette, accepted guesses, and lost-game reveal use the same formatter. Letter identifiers remain visible, black and white use contrast backgrounds, and automatic plain-text fallback keeps redirected output stable. Three new regression tests cover the formatter, capability policy, and a complete coloured game output path.
 
@@ -623,12 +673,12 @@ Documentation exists at three levels. Terminal rules explain play at the moment 
 
 ### Installed application
 
-1. Run the signed or locally built installer for macOS or Windows.
+1. Extract the macOS or Windows release archive and run its installer. Signing and notarization remain separate packaging work; this report does not certify an unsigned download as signed.
 2. Choose the installation destination when prompted. The installer reports the GUI, CLI, service helper, bundled runtime, and supporting files it installs.
-3. Open `RELEASE.txt` in the extracted archive when build provenance is required; the refreshed package identifies v1.0.0 and its full source commit.
+3. Open `RELEASE.txt` in the extracted archive when build provenance is required; the release package identifies v1.1.0 and its full source commit.
 4. Start the GUI from the Applications folder or Start menu for a graphical game.
 5. Open Terminal, PowerShell, or Command Prompt and enter `cipherboard` for the CLI.
-6. If background services are required by the installed build, use `cipherboard-services start`, confirm with `cipherboard-services status`, inspect with `cipherboard-services logs`, and stop with `cipherboard-services stop`.
+6. For online features, start the services with `cipherboard-services start`, confirm with `cipherboard-services status`, inspect with `cipherboard-services logs`, and stop with `cipherboard-services stop`.
 
 ### Development environment
 
@@ -671,9 +721,19 @@ Menu option `2` prints up to 20 local results. Menu option `4` exports all reada
 - If a save/export warning appears, check directory permissions and free space. The game result is still displayed.
 - If a damaged CSV is detected, preserve a copy before editing; valid rows may still load while malformed rows are skipped.
 
+### Online operation
+
+Start the installed services before opening option 6, or use `cipherboard --online` directly. In development, start `docker compose up -d mongo redis mailpit api` and run `uv run python -m mastermind_cli --online`. Hosted deployments need `--api-url https://api.example.com --product-origin https://play.example.com`; use the actual service origins, not the example names.
+
+The online menu provides Play, History, Daily, Friends, Rooms, Profile, Leaderboards, Account, Settings, Support, Admin, Rules/privacy, and Local play. Each submenu uses 0 to go back. To join a friend game or duel, enter its share code or room ID. In a game, `refresh` fetches authoritative state, `retry` resends an uncertain guess, `back` preserves it for resumption, and `abandon` requires confirmation.
+
+In Account, request an email link and paste the unopened link into Verify email link. For the desktop development stack, Mailpit shows the email at `http://127.0.0.1:8025`. Configure an authenticator through MFA setup before using protected admin actions. Account ZIP export requires a registered, recently authenticated account; deletion requires the exact confirmation `DELETE`. Export replacement is separately confirmed. Never share the private session directory or an MFA setup key.
+
+Settings controls language, terminal theme, patterns, high contrast, sound, and optional analytics. Published privacy and terms need the web service as well as the API. If services are unavailable, return to local play. A second online player must use a distinct `--state-dir` to avoid sharing credentials or racing refresh rotation.
+
 ## 7.4.2: README File
 
-The repository `README.md` is the developer and operator landing page. It describes Cipherboard, the shared-engine architecture, quick-start commands, applications, quality checks, data services, and packaging. The installer documentation adds platform-specific build and signing instructions. This report complements rather than duplicates the README: it explains why the CLI was designed this way and presents assessment evidence.
+The repository `README.md` is the developer and operator landing page. It describes Cipherboard, the shared-engine architecture, quick-start commands, applications, quality checks, data services, and packaging. The installer documentation adds platform-specific build and signing instructions. The dedicated `docs/operations/CLI.md` guide covers online menus, session storage, connection options, account recovery, and permission limits. This report complements the README: it explains why the CLI was designed this way and presents assessment evidence.
 
 # 8: Conclusion
 
@@ -687,19 +747,29 @@ I also learned to separate evidence from appearance. A polished terminal table i
 
 ## 8.2: Program Evaluation
 
-The program's principal strengths are correctness, modularity, and failure handling. Duplicate-safe feedback is linear in code length; game objects are immutable; scoring is auditable and versioned; storage uses canonical fields and atomic export; and the CLI has no network requirement. The shared core also prevents rule divergence between CLI and GUI.
+The program's principal strengths are correctness, modularity, and failure handling. Duplicate-safe feedback is linear in code length; game objects are immutable; scoring is auditable and versioned; storage uses canonical fields and atomic export; and offline play has no network requirement. Online play reuses server authentication, authorization, persistence, and scoring instead of implementing a second set of rules. The shared core also prevents rule divergence between CLI and GUI.
 
-Limitations remain. Local CSV is not designed for concurrent multi-process writing. Pass-and-play privacy depends on one terminal hand-off. Some terminals cannot display ANSI styling, so the CLI must retain letter identifiers and plain fallback. Only summary data, not full attempt history, is exported. The interactive controller's 76% focused coverage is lower than the core's 99% branch-aware coverage. None prevents the stated use case, but each defines a credible next iteration.
+**Efficiency evaluation.** The implementation reduces unnecessary comparison and file-writing work while preserving validation and saved-result integrity. Let `n` represent code length, `a` the number of accepted attempts, and `m` the number of stored scores. The following comparisons describe algorithmic work in the current source; they do not imply a measured percentage improvement in running time.
+
+**Linear feedback processing.** The feedback function scans corresponding pegs once, removes exact matches, and builds colour counters for the unmatched pegs. Counter intersection limits each colour to the number available in both sequences. This takes expected `O(n)` time and `O(n)` temporary space, avoiding the quadratic worst-case work of repeatedly searching a remaining list for each misplaced peg. With only three to six positions, the immediate benefit is a clear, duplicate-safe algorithm; the linear structure also scales more predictably if longer codes are introduced.
+
+**Incremental score saving.** A completed game appends one summary row rather than reading, sorting, and rewriting the entire score history. For a fixed-size record, the amount of application-level data processed by this save path does not grow with `m`. Loading and sorting are deferred until scores are viewed or exported. The explicit flush and `fsync` remain necessary durability costs, so a shorter code path is not treated as proof of lower disk latency.
+
+**Controlled history costs.** Adding an immutable attempt copies the existing tuple of references, an `O(a)` operation. Rendering the complete board takes `O(a * n)` work per accepted guess. Both remain small under the current limit of 20 attempts. Reprinting only a new row could reduce repeated terminal output, but retaining the full history improves readability in terminals without cursor controls. This is a deliberate usability trade-off rather than a reason to remove immutable state or validation.
+
+**Next efficiency improvement.** The main growth-dependent cost is the score reader: it materializes all valid records and sorts them in `O(m log m)` time with `O(m)` storage, even though the menu displays only 20 results. A separate streaming top-20 query could retain the best records in a bounded heap, reducing selection to `O(m log 20)` time and `O(20)` retained records. It would still scan the entire CSV and preserve malformed-row warnings, ranking tie-breaks, and formula protection. Full sorted export would retain its separate all-record path. This is proposed work; the current reader still loads and sorts the full history.
+
+Limitations remain. Local CSV is not designed for concurrent multi-process writing. Pass-and-play privacy depends on one terminal hand-off. Some terminals cannot display ANSI styling, so the CLI must retain letter identifiers and plain fallback. Offline CSV exports contain summary data; the account ZIP provides the server's permitted account history. Combined core/CLI coverage is 75.87%, and the online menu controller is 59.33%, below the core's 99.72%. Not every menu branch has a complete end-to-end terminal script. Online mode depends on service availability; reconnect stops after four consecutive failures and requires a user-driven resume afterward. None prevents the stated use case, but each defines a credible next iteration.
 
 ## 8.3: Future Improvements
 
-Future work should prioritize an explicit storage schema version with migration and locking, broader controller-path tests, JSON attempt-history export, and separate-device Code Maker/Code Breaker sessions. Terminal work could add user-configurable themes while keeping the current contrast and plain-output guarantees. Packaging should add automated signing and notarization verification on macOS and signed installer validation on Windows.
+Future work should prioritize explicit CSV schema migration and locking, broader online menu scripts, offline JSON attempt-history export, and separate-device human Code Maker/Code Breaker sessions. Online duels are already separate-device contests; they do not replace that human-secret hand-off workflow. Themes, patterns, language selection, account export, and reconnect are implemented in this release. Further work should improve progress feedback during slow requests and test more terminal/accessibility combinations. Packaging should add automated signing and notarization verification on macOS and signed installer validation on Windows.
 
 The scoring model could also be evaluated with real player data. Because `score_v1` excludes speed, it rewards reasoning and difficulty but may need recalibration across presets. Any change should create `score_v2`, preserve old records, and avoid retroactively comparing incompatible totals.
 
 ## 8.4: Summary
 
-This project demonstrates the complete development cycle: a precise problem, parameter and constraint analysis, modular design, typed implementation, layered testing, debugging, user documentation, and critical evaluation. The refreshed baseline, with 120 passing Python tests, 36 passing browser tests, 8 intentional browser skips, focused 92% CLI/core coverage, clean Ruff checks, and clean mypy checks, supports the conclusion that the CLI is fit for its documented local use and that the combined v1 GUI/CLI package includes the repaired service path and accessible terminal colours.
+This project demonstrates the complete development cycle: a precise problem, parameter and constraint analysis, modular design, typed implementation, layered testing, debugging, user documentation, and critical evaluation. The release working tree passed 142 Python tests, with 99.72% branch-aware core coverage, 75.87% combined core/CLI coverage, and clean Ruff and mypy checks. The CLI now exposes the GUI's service-backed workflows while retaining offline play and CSV output. Real API and WebSocket checks support the account and multiplayer design; unvisited menu branches and unsigned installer validation remain clear areas for further verification.
 
 # 9: Appendix
 
@@ -707,7 +777,7 @@ The appendix records the reference basis and development schedule. Source-code f
 
 ## 9.1: References
 
-References were selected for software-development fundamentals, Python standard-library behaviour, test methodology, environment management, and the official assessment context. Websites were accessed on 1 September 2026.
+References were selected for software-development fundamentals, Python standard-library behaviour, test methodology, environment management, and the official assessment context. The original reference list was compiled on 1 September 2026. The 25 November CLI update was checked against repository contracts and tests; it does not imply that these external pages were rechecked on that date.
 
 ## 9.1.1: Books
 
@@ -725,6 +795,10 @@ References were selected for software-development fundamentals, Python standard-
 6. Python Software Foundation. “`collections` — Container Datatypes.” https://docs.python.org/3/library/collections.html
 7. pytest development team. “pytest Documentation.” https://docs.pytest.org/en/stable/
 8. Astral. “Running Commands in Projects.” https://docs.astral.sh/uv/concepts/projects/run/
+
+## 9.1.3: AI Tools and Assistance
+
+OpenAI Codex assisted with implementation review, regression tests, documentation, and report preparation for the CLI update. Generated changes were checked against repository source, real API/WebSocket behavior, and measured test output. The candidate should review the final work and complete any assistance declaration required by the school. No runtime improvement percentage or unperformed user study is asserted.
 
 ## 9.2: Gantt Chart
 

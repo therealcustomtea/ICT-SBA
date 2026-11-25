@@ -85,7 +85,12 @@ async def ranked_leaderboard_page(
                     # Closes the multiline declaration, call, or collection opened above.
                 },
                 # Supplies this literal value to the surrounding declaration or call.
-                "output": {"rank": {"$documentNumber": {}}},
+                "output": {
+                    "rank": {
+                        "$sum": 1,
+                        "window": {"documents": ["unbounded", "current"]},
+                    }
+                },
                 # Closes the multiline declaration, call, or collection opened above.
             }
             # Closes the multiline declaration, call, or collection opened above.

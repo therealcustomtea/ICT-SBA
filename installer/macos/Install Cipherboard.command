@@ -113,7 +113,7 @@ if [[ ! -f "$environment_file" ]]; then
     printf 'MASTERMIND_SECRET_ENCRYPTION_KEYS={"v1":"%s"}\n' "$encryption_key"
     printf 'MASTERMIND_DAILY_HMAC_KEY=%s\n' "$daily_key"
     printf 'MASTERMIND_PUBLIC_IDENTIFIER_HMAC_KEY=%s\n' "$identifier_key"
-    printf 'MASTERMIND_RELEASE=desktop-1.0.0\n'
+    printf 'MASTERMIND_RELEASE=desktop-1.1.0\n'
   } > "$environment_file"
 fi
 if ! grep -q '^MASTERMIND_AUTH_SIGNING_KEY=' "$environment_file"; then

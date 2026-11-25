@@ -17,7 +17,7 @@ The difficult programming requirement is duplicate handling. One secret peg may 
 
 The SBA program must:
 
-1. present a clear five-option menu;
+1. preserve the five original local options and add option 6 for online workflows;
 2. support Easy, Normal, Hard, Expert, and Custom settings;
 3. support computer and human Code Makers;
 4. accept several readable input separators and a `quit` command;
@@ -295,6 +295,8 @@ same inputs always produce the same feedback
 The pure core has a 95% branch-coverage gate. CLI tests cover normalization, menu input, obscured human-secret input, complete board rendering, EOF/interrupt handling, CSV creation, malformed-row warnings, save/export failures, sorting, and formula protection. API integration tests add authentication, encryption, idempotency, authorization, and transaction races around the same core.
 
 ## 14. Relationship to the complete product
+
+The CLI now also contains `online.py` for terminal workflows, `online_client.py` for HTTP/session/WebSocket transport, and `localization.py` for Traditional Chinese offline copy. The online menu uses the same APIs as the GUI for daily and friend challenges, live duels, account history, statistics, achievements, rankings, account controls, support, and authorized administration. Local play remains available without a server. See [the CLI guide](../operations/CLI.md) for commands and security boundaries.
 
 The SBA CLI is not thrown away when the web product is built:
 

@@ -100,7 +100,7 @@ def test_menu_handles_invalid_and_exit(tmp_path: Path) -> None:
     # Asserts this invariant so an unexpected test state fails immediately.
     assert app.run() == 0
     # Asserts this invariant so an unexpected test state fails immediately.
-    assert "Enter a number from 1 to 5." in io.output
+    assert "Enter a number from 1 to 6." in io.output
 
 
 # Defines the `test_abandoned_game_is_saved_with_zero_score` callable and its typed interface.
@@ -254,6 +254,6 @@ def test_main_handles_interrupted_input_safely(
     monkeypatch.setattr(MastermindCLI, "run", interrupt)
 
     # Asserts this invariant so an unexpected test state fails immediately.
-    assert cli_main.main() == 0
+    assert cli_main.main([]) == 0
     # Asserts this invariant so an unexpected test state fails immediately.
     assert "Session ended safely." in capsys.readouterr().out

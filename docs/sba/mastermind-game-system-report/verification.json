@@ -1,0 +1,49 @@
+{
+  "release": "1.1.0",
+  "date": "25 November 2026",
+  "base_commit": "3924d86",
+  "scope": "Release working tree based on 3924d86; final source SHA is recorded by the release tag and installer RELEASE.txt.",
+  "command": "uv run pytest --cov=mastermind_core --cov=mastermind_cli --cov-branch",
+  "tests": 142,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "duration_seconds": 27.736,
+  "tests_by_area": {
+    "api": 61,
+    "cli": 35,
+    "core": 45,
+    "installer": 1
+  },
+  "coverage_scope": "mastermind_core and mastermind_cli, including branches",
+  "combined_coverage_percent": 75.87,
+  "core_coverage_percent": 99.72,
+  "module_coverage_percent": {
+    "apps/cli/mastermind_cli/__init__.py": 100.0,
+    "apps/cli/mastermind_cli/__main__.py": 58.14,
+    "apps/cli/mastermind_cli/app.py": 73.87,
+    "apps/cli/mastermind_cli/localization.py": 28.57,
+    "apps/cli/mastermind_cli/online.py": 59.33,
+    "apps/cli/mastermind_cli/online_client.py": 78.86,
+    "apps/cli/mastermind_cli/storage.py": 96.7,
+    "apps/cli/mastermind_cli/terminal.py": 88.89,
+    "packages/mastermind_core/mastermind_core/__init__.py": 100.0,
+    "packages/mastermind_core/mastermind_core/daily.py": 100.0,
+    "packages/mastermind_core/mastermind_core/engine.py": 100.0,
+    "packages/mastermind_core/mastermind_core/errors.py": 100.0,
+    "packages/mastermind_core/mastermind_core/feedback.py": 100.0,
+    "packages/mastermind_core/mastermind_core/models.py": 99.35,
+    "packages/mastermind_core/mastermind_core/presets.py": 100.0,
+    "packages/mastermind_core/mastermind_core/scoring.py": 100.0,
+    "packages/mastermind_core/mastermind_core/validation.py": 100.0
+  },
+  "services": "Isolated MongoDB replica set and Redis; API fixture uses unique temporary databases.",
+  "typecheck_source_files": 83,
+  "web_validation": {
+    "command": "pnpm validate",
+    "unit_tests": 44,
+    "web_unit_tests": 37,
+    "shared_package_unit_tests": 7,
+    "format_lint_typecheck_build": "passed"
+  }
+}

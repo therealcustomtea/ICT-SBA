@@ -26,12 +26,14 @@ def test_installer_archives_contain_launchers_and_sanitized_payload(tmp_path: Pa
         assert "payload/apps/web/package.json" in names
         assert "payload/apps/api/mastermind_api/main.py" in names
         release_note = archive.read("RELEASE.txt").decode("utf-8")
-        assert "Cipherboard v1.0.0" in release_note
+        assert "Cipherboard v1.1.0" in release_note
         assert "Source commit:" in release_note
         duel_router = archive.read("payload/apps/api/mastermind_api/routers/rooms.py").decode(
             "utf-8"
         )
         assert 'f"mastermind:room:{room_id}:attempt"' in duel_router
+        assert "payload/apps/cli/mastermind_cli/online.py" in names
+        assert "payload/apps/cli/mastermind_cli/online_client.py" in names
         mode = archive.getinfo("Install Cipherboard.command").external_attr >> 16
         assert mode & stat.S_IXUSR
 

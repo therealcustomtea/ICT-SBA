@@ -41,6 +41,8 @@ Run the CLI in Terminal, Command Prompt, or PowerShell:
 cipherboard
 ```
 
+Select option 6 for account-backed features after `cipherboard-services start`. The packaged CLI connects to the internal API service and persists private CLI session state under the installation's data directory. See [the CLI guide](CLI.md) for email sign-in, live duels, and account controls.
+
 Manage the GUI stack with:
 
 ```text

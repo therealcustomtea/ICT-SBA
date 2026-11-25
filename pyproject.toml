@@ -10,7 +10,7 @@ build-backend = "setuptools.build_meta"
 # Configures `name` because the surrounding service or tool depends on it.
 name = "mastermind-logic-lab"
 # Configures `version` because the surrounding service or tool depends on it.
-version = "1.0.0"
+version = "1.1.0"
 # Configures `description` because the surrounding service or tool depends on it.
 description = "Canonical Mastermind engine, development API, and SBA command-line application"
 # Configures `requires-python` because the surrounding service or tool depends on it.
@@ -39,6 +39,7 @@ dependencies = [
   "structlog==25.4.0",
   # Configures `uvicorn[standard]` because the surrounding service or tool depends on it.
   "uvicorn[standard]==0.35.0",
+  "websockets==16.1",
 # Closes the configuration collection opened above.
 ]
 

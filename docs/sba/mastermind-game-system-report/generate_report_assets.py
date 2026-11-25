@@ -133,7 +133,7 @@ def architecture() -> None:
         draw,
         (545, 230, 975, 530),
         "mastermind_cli",
-        "menu + game loop\nvalidation prompts\nboard history",
+        "offline core + CSV\nonline HTTP + WebSocket\nkeyboard menus",
         accent=BROWN,
     )
     card(
@@ -156,14 +156,16 @@ def architecture() -> None:
         draw,
         (1090, 675, 1705, 930),
         "FastAPI product",
-        "imports the same core\nadds auth, database, realtime",
+        "same rules + account data\nauth, MongoDB, Redis",
         accent=YELLOW,
         fill=PALE_YELLOW,
     )
     arrow(draw, (445, 380), (545, 380))
     arrow(draw, (975, 380), (1090, 380))
     arrow(draw, (755, 530), (755, 675))
-    arrow(draw, (1395, 530), (1395, 675))
+    arrow(draw, (1395, 675), (1395, 530))
+    arrow(draw, (975, 500), (1090, 675), colour=CORAL)
+    draw.text((1010, 570), "online", font=font(22), fill=CORAL)
     save(image, "architecture.png")
 
 
@@ -173,25 +175,24 @@ def cli_flow() -> None:
         "The menu remains responsive after valid, invalid, and failed operations",
     )
     nodes = [
-        ((690, 215, 1110, 315), "Start CLI", BLUE),
-        ((690, 365, 1110, 465), "Display five-option menu", BROWN),
-        ((120, 580, 420, 735), "Start game", CORAL),
-        ((480, 580, 780, 735), "View scores", GREEN),
-        ((840, 580, 1140, 735), "View rules", YELLOW),
-        ((1200, 580, 1500, 735), "Export CSV", BLUE),
-        ((1515, 580, 1715, 735), "Exit", BROWN),
-        ((120, 825, 420, 965), "Game loop", CORAL),
-        ((690, 825, 1110, 965), "Invalid choice -> explain", RED),
+        ((680, 215, 1120, 315), "Start / parse arguments", BLUE),
+        ((580, 370, 1220, 490), "Local menu or --online", BROWN),
+        ((90, 620, 500, 810), "1 Play / 2 Scores", CORAL),
+        ((580, 620, 990, 810), "3 Rules / 4 Export", GREEN),
+        ((1070, 620, 1690, 810), "6 Online workflows / 0 Back", BLUE),
     ]
     for box, text, colour in nodes:
         draw.rounded_rectangle(box, radius=24, fill=PAPER, outline=colour, width=5)
         centered(draw, box, text, 27, bold=True)
-    arrow(draw, (900, 315), (900, 365))
-    for target_x in (270, 630, 990, 1350, 1615):
-        arrow(draw, (900, 465), (target_x, 580), colour=MUTED, width=4)
-    arrow(draw, (270, 735), (270, 825))
-    arrow(draw, (900, 465), (900, 825), colour=RED, width=4)
-    draw.text((1085, 475), "choice 1-5", font=font(22), fill=MUTED)
+    arrow(draw, (900, 315), (900, 370))
+    for target_x in (295, 785, 1380):
+        arrow(draw, (900, 490), (target_x, 620), colour=MUTED, width=4)
+    draw.text(
+        (150, 900),
+        "5 Exit locally | 0 Exit online | invalid input explains the range",
+        font=font(28),
+        fill=MUTED,
+    )
     save(image, "cli_flow.png")
 
 
@@ -411,6 +412,7 @@ def horizontal_bars(
 
 
 def charts() -> None:
+    evidence = json.loads((Path(__file__).resolve().parent / "verification.json").read_text())
     horizontal_bars(
         "presets_chart.png",
         "Official difficulty presets",
@@ -426,25 +428,38 @@ def charts() -> None:
     horizontal_bars(
         "coverage_chart.png",
         "Measured branch-aware coverage",
-        "59 focused core/CLI tests; overall selected-package coverage is 92%",
+        f"{evidence['tests']} tests; selected core/CLI coverage {evidence['combined_coverage_percent']}% including branches",
         [
-            ("mastermind_core", 99, GREEN),
-            ("CLI storage", 97, BLUE),
-            ("CLI entry point", 83, YELLOW),
-            ("CLI application", 76, CORAL),
+            ("Core engine", evidence["core_coverage_percent"], GREEN),
+            (
+                "CSV storage",
+                evidence["module_coverage_percent"]["apps/cli/mastermind_cli/storage.py"],
+                BLUE,
+            ),
+            (
+                "Online transport",
+                evidence["module_coverage_percent"]["apps/cli/mastermind_cli/online_client.py"],
+                YELLOW,
+            ),
+            (
+                "Online menus",
+                evidence["module_coverage_percent"]["apps/cli/mastermind_cli/online.py"],
+                CORAL,
+            ),
         ],
         100,
         "%",
     )
     image, draw = canvas(
-        "Verification evidence", "Results measured on 1 September 2026 using Python 3.13.14"
+        "Verification evidence",
+        f"Measured on {evidence['date']}; isolated MongoDB replica set and Redis",
     )
     metrics = [
-        ("Python suite", "120 passed", GREEN),
-        ("Browser E2E", "36 passed", BLUE),
-        ("Browser cases", "8 skipped", YELLOW),
-        ("Core + CLI", "59 passed", BLUE),
-        ("Focused coverage", "92%", CORAL),
+        ("Python suite", f"{evidence['tests']} passed", GREEN),
+        ("CLI cases", f"{evidence['tests_by_area']['cli']} passed", BLUE),
+        ("API cases", f"{evidence['tests_by_area']['api']} passed", YELLOW),
+        ("Core coverage", f"{evidence['core_coverage_percent']}%", BLUE),
+        ("Core + CLI coverage", f"{evidence['combined_coverage_percent']}%", CORAL),
         ("Ruff + mypy", "passed", GREEN),
     ]
     for index, (label, value, colour) in enumerate(metrics):
@@ -518,22 +533,28 @@ def module_graph() -> None:
         "The CLI depends inward on pure rules; persistence remains at the edge",
     )
     nodes = {
-        "app.py": (280, 500, CORAL),
-        "terminal.py": (310, 760, YELLOW),
-        "storage.py": (650, 760, GREEN),
-        "models.py": (940, 300, BLUE),
-        "validation.py": (1310, 250, YELLOW),
-        "feedback.py": (1510, 520, CORAL),
-        "engine.py": (1110, 640, BROWN),
-        "scoring.py": (850, 850, GREEN),
-        "presets.py": (580, 280, BLUE),
+        "app.py": (300, 300, CORAL),
+        "online.py": (300, 560, CORAL),
+        "online_client.py": (300, 850, BLUE),
+        "terminal.py": (750, 300, YELLOW),
+        "storage.py": (750, 560, GREEN),
+        "API + realtime": (750, 850, BLUE),
+        "engine.py": (1200, 560, BROWN),
+        "presets.py": (1200, 300, BLUE),
+        "models.py": (1560, 300, BLUE),
+        "feedback.py": (1560, 560, CORAL),
+        "scoring.py": (1560, 850, GREEN),
+        "validation.py": (1200, 850, YELLOW),
     }
     edges = [
         ("app.py", "storage.py"),
         ("app.py", "terminal.py"),
         ("app.py", "presets.py"),
         ("app.py", "engine.py"),
-        ("app.py", "models.py"),
+        ("online.py", "terminal.py"),
+        ("online.py", "online_client.py"),
+        ("online_client.py", "API + realtime"),
+        ("API + realtime", "engine.py"),
         ("engine.py", "models.py"),
         ("engine.py", "validation.py"),
         ("engine.py", "feedback.py"),
@@ -545,8 +566,15 @@ def module_graph() -> None:
         tx, ty, _ = nodes[target]
         arrow(draw, (sx, sy), (tx, ty), colour="#B7AAA0", width=4)
     for label, (x, y, colour) in nodes.items():
-        draw.ellipse((x - 105, y - 54, x + 105, y + 54), fill=PAPER, outline=colour, width=5)
-        centered(draw, (x - 100, y - 49, x + 100, y + 49), label, 23, bold=True)
+        box = (x - 145, y - 50, x + 145, y + 50)
+        draw.rounded_rectangle(box, radius=22, fill=PAPER, outline=colour, width=4)
+        centered(draw, box, label, 24, bold=True)
+    draw.text(
+        (115, 960),
+        "localization.py translates offline prompts; online.py holds bilingual menu labels",
+        font=font(25),
+        fill=MUTED,
+    )
     save(image, "module_graph.png")
 
 
@@ -561,14 +589,18 @@ def code_image(source: Path, start: int, end: int, name: str, title: str) -> Non
     draw.ellipse((90, 52, 110, 72), fill=YELLOW)
     draw.ellipse((122, 52, 142, 72), fill=GREEN)
     draw.text((175, 44), title, font=font(28, bold=True), fill="#E8EEF2")
+    label = f"{source.name}:{start}-{end}"
+    label_font = font(20, mono=True)
     draw.text(
-        (1510, 48), f"{source.relative_to(ROOT)}:{start}", font=font(20, mono=True), fill="#90A4AE"
+        (1840 - draw.textlength(label, font=label_font), 48), label, font=label_font, fill="#90A4AE"
     )
     mono = font(22, mono=True)
     y = 105
     keywords = set(keyword.kwlist) | {"True", "False", "None"}
     token_re = re.compile(r"(#[^\n]*|'[^']*'|\"[^\"]*\"|\b\d+\b|\b[A-Za-z_][A-Za-z0-9_]*\b)")
     for number, line in enumerate(lines, start=start):
+        if not line.strip() or line.lstrip().startswith("#"):
+            continue
         draw.text((58, y), f"{number:>4}", font=mono, fill="#607D8B")
         x = 135
         cursor = 0
@@ -629,8 +661,8 @@ def terminal_image(
                 "B": "#64A8FF",
                 "G": "#6ADB91",
                 "Y": "#F4D35E",
-                "W": "#FFFFFF",
-                "K": "#111111",
+                "W": "#111111",
+                "K": "#FFFFFF",
                 "O": "#F59E0B",
                 "P": "#C084FC",
                 "C": "#4ADEDE",
@@ -655,43 +687,43 @@ def terminal_image(
 def code_and_terminal_assets() -> None:
     code_image(
         ROOT / "packages/mastermind_core/mastermind_core/feedback.py",
-        8,
-        25,
+        18,
+        55,
         "code_feedback.png",
         "Duplicate-safe feedback function",
     )
     code_image(
         ROOT / "apps/cli/mastermind_cli/terminal.py",
-        10,
-        62,
+        34,
+        80,
         "code_cli_menu.png",
         "Accessible ANSI peg rendering",
     )
     code_image(
         ROOT / "packages/mastermind_core/mastermind_core/validation.py",
-        9,
-        50,
+        22,
+        69,
         "code_validation.png",
         "Input normalization and rule validation",
     )
     code_image(
         ROOT / "packages/mastermind_core/mastermind_core/engine.py",
-        29,
-        81,
+        88,
+        137,
         "code_submit_guess.png",
         "Immutable attempt transition",
     )
     code_image(
         ROOT / "apps/cli/mastermind_cli/storage.py",
-        89,
-        137,
+        254,
+        291,
         "code_storage.png",
         "Defensive CSV read and atomic export",
     )
     terminal_image(
         "terminal_menu.png",
         "Cipherboard CLI - menu validation",
-        "$ uv run python -m mastermind_cli\nMastermind Logic Lab\n\n1. Start game\n2. View local high scores\n3. View rules\n4. Export scores\n5. Exit\nChoose an option: 9\nEnter a number from 1 to 5.\nChoose an option: 3\nMastermind rules\nA black peg means the right colour is in the right position.\nA white peg means the right colour is in a different position.",
+        "$ uv run python -m mastermind_cli\nMastermind Logic Lab\n\n1. Start game\n2. View local high scores\n3. View rules\n4. Export scores\n5. Exit\n6. Online features\nChoose an option: 9\nEnter a number from 1 to 6.\nChoose an option: 3\nMastermind rules\nA black peg means the right colour is in the right position.\nA white peg means the right colour is in a different position.",
     )
     terminal_image(
         "terminal_game.png",
@@ -701,8 +733,8 @@ def code_and_terminal_assets() -> None:
     )
     terminal_image(
         "terminal_tests.png",
-        "Verification run - 1 September 2026",
-        "$ CI: uv run pytest --cov=mastermind_core --cov-branch\n120 passed | core coverage 99.72%\n\n$ pnpm test:e2e\n36 passed, 8 skipped\n\n$ uv run pytest tests/core tests/cli --cov=mastermind_core --cov=mastermind_cli\n59 passed in 0.57s\nTOTAL  551 statements  36 missed  124 branches  92%\n\n$ uv run ruff check apps/cli packages/mastermind_core tests/cli tests/core\nAll checks passed!\n\n$ uv run mypy apps/cli packages/mastermind_core\nSuccess: no issues found in 14 source files",
+        "Verification run - 25 November 2026",
+        "$ uv run pytest --cov=mastermind_core --cov=mastermind_cli --cov-branch\n142 passed | 0 skipped | 27.736 seconds\nCore 99.72% | combined core + CLI 75.87%\nIncludes real API authentication and two-client WebSocket rooms\n\n$ uv run ruff check .\nAll checks passed!\n\n$ uv run mypy .\nSuccess: no issues found in 83 source files\n\n$ pnpm validate\nFormatting, lint, types, 44 unit tests and production build passed",
     )
 
 

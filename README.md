@@ -27,7 +27,11 @@ tests/                    API, core, load, and integration tests
 docs/                     Architecture, security, privacy, and operations
 ```
 
-## Requirements
+## Command-line play
+
+Run `uv run python -m mastermind_cli` for local play, or select option 6 for the GUI's online workflows. Start the API stack and use `uv run python -m mastermind_cli --online` to open them directly. See the [CLI guide](docs/operations/CLI.md) for sign-in, daily and friend challenges, live duels, accounts, settings, and administration.
+
+## Development requirements
 
 - Python 3.13 and uv 0.11.23
 - Node 24.18 and pnpm 10.28.2

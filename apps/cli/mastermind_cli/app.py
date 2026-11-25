@@ -5,7 +5,7 @@ from __future__ import annotations
 import csv
 
 # Imports selected names from `collections.abc` for use in this module.
-from collections.abc import Callable
+from collections.abc import Callable, Sequence
 
 # Imports selected names from `getpass` for use in this module.
 from getpass import getpass
@@ -44,6 +44,8 @@ from mastermind_core import (
     # Closes the multiline call or collection started on an earlier line.
 )
 
+from .localization import translate_local
+
 # Imports selected names from `.storage` for use in this module.
 from .storage import CSVScoreStore, ScoreRecord
 from .terminal import format_code, supports_colour
@@ -81,15 +83,20 @@ class MastermindCLI:
         colour_output: bool | None = None,
         # Provides `None` as the `store` parameter or argument.
         store: CSVScoreStore | None = None,
+        online_fn: Callable[[], None] | None = None,
+        locale: str = "en",
+        theme: str = "system",
+        peg_style: str = "symbols",
+        sound: bool = False,
         # Completes the function signature and declares the type returned to callers.
     ) -> None:
         # Stores `input_fn` on this instance as `self.input` for later method calls.
-        self.input = input_fn
+        self.input: Input = lambda prompt: input_fn(translate_local(prompt, locale))
         # Stores `secret_input_fn` on this instance as `self.secret_input` for later method
         # calls.
-        self.secret_input = secret_input_fn
+        self.secret_input: Input = lambda prompt: secret_input_fn(translate_local(prompt, locale))
         # Stores `output_fn` on this instance as `self.output` for later method calls.
-        self.output = output_fn
+        self.output: Output = lambda message: output_fn(translate_local(message, locale))
         # Captured or redirected output stays plain unless colour is explicitly requested.
         self.colour_output = (
             supports_colour()
@@ -99,6 +106,8 @@ class MastermindCLI:
         # Stores `store or CSVScoreStore()` on this instance as `self.store` for later method
         # calls.
         self.store = store or CSVScoreStore()
+        self.online = online_fn
+        self.theme, self.peg_style, self.sound = theme, peg_style, sound
 
     # Defines the `run` function and begins its typed parameter list.
     def run(self) -> int:
@@ -116,6 +125,7 @@ class MastermindCLI:
             self.output("4. Export scores")
             # Sends this user-facing message through the configured output function.
             self.output("5. Exit")
+            self.output("6. Online features (same account as the GUI)")
             # Computes `self.input("Choose an option: ").strip()` and stores the result in
             # `choice` for later use.
             choice = self.input("Choose an option: ").strip()
@@ -141,10 +151,15 @@ class MastermindCLI:
                 self.output("Thanks for playing.")
                 # Returns `0` to the caller as this function's result.
                 return 0
+            elif choice == "6":
+                if self.online is not None:
+                    self.online()
+                else:
+                    self.output("Use mastermind --online to connect to the API.")
             # Handles the remaining case when the preceding conditions were false.
             else:
                 # Sends this user-facing message through the configured output function.
-                self.output("Enter a number from 1 to 5.")
+                self.output("Enter a number from 1 to 6.")
 
     # Defines the `play_game` function and begins its typed parameter list.
     def play_game(self) -> None:
@@ -201,7 +216,7 @@ class MastermindCLI:
         # Sends this user-facing message through the configured output function.
         self.output(
             # Adds this formatted text segment to the message being constructed.
-            f"Available colours: {format_code(config.colours, enabled=self.colour_output)} | "
+            f"Available colours: {self._format_code(config.colours)} | "
             # Adds this formatted text segment to the message being constructed.
             f"Code length: {config.code_length} | Attempts: {config.max_attempts}"
             # Closes the multiline call or collection started on an earlier line.
@@ -231,6 +246,8 @@ class MastermindCLI:
             # Calls `self._show_attempt_history` to perform this step with the supplied
             # arguments.
             self._show_attempt_history(state)
+            if self.sound:
+                self.output("\a")
 
         # Tests `state.status is GameStatus.WON` before running the nested branch.
         if state.status is GameStatus.WON:
@@ -239,10 +256,7 @@ class MastermindCLI:
         # Tests the next condition when earlier branches did not run.
         elif state.status is GameStatus.LOST:
             # Sends this user-facing message through the configured output function.
-            self.output(
-                f"No attempts remain. The code was "
-                f"{format_code(secret, enabled=self.colour_output)}."
-            )
+            self.output(f"No attempts remain. The code was {self._format_code(secret)}.")
         # Handles the remaining case when the preceding conditions were false.
         else:
             # Sends this user-facing message through the configured output function.
@@ -297,15 +311,24 @@ class MastermindCLI:
             # Sends this user-facing message through the configured output function.
             self.output(f"Warning: the result could not be saved ({exc}).")
 
+    def _format_code(self, code: Sequence[str]) -> str:
+        return format_code(
+            code,
+            enabled=self.colour_output and self.peg_style != "highContrast",
+            theme=self.theme,
+            peg_style=self.peg_style,
+        )
+
     # Defines the `_show_attempt_history` function and begins its typed parameter list.
     def _show_attempt_history(self, state: GameState) -> None:
         # Sends this user-facing message through the configured output function.
-        self.output("Attempt  Guess               Black  White")
+        column_width = 26 if self.peg_style in {"patterns", "highContrast"} else 18
+        self.output(f"Attempt  {'Guess':<{column_width}}  Black  White")
         # Iterates through `attempt in state.attempts` for the nested operation.
         for attempt in state.attempts:
-            plain_guess = " ".join(attempt.guess)
-            coloured_guess = format_code(attempt.guess, enabled=self.colour_output)
-            guess_padding = " " * max(0, 18 - len(plain_guess))
+            plain_guess = format_code(attempt.guess, enabled=False, peg_style=self.peg_style)
+            coloured_guess = self._format_code(attempt.guess)
+            guess_padding = " " * max(0, column_width - len(plain_guess))
             # Sends this user-facing message through the configured output function.
             self.output(
                 # Adds this formatted text segment to the message being constructed.

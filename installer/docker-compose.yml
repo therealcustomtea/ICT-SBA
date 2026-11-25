@@ -49,7 +49,7 @@ services:
     build: *api-build
     environment:
       MASTERMIND_ENVIRONMENT: development
-      MASTERMIND_RELEASE: ${MASTERMIND_RELEASE:-desktop-1.0.0}
+      MASTERMIND_RELEASE: ${MASTERMIND_RELEASE:-desktop-1.1.0}
       MASTERMIND_MONGODB_URL: mongodb://mongo:27017/?replicaSet=rs0
       MASTERMIND_MONGODB_DATABASE: mastermind
       MASTERMIND_REDIS_URL: redis://redis:6379/0
@@ -119,7 +119,7 @@ services:
 
   cli:
     build: *api-build
-    command: ['mastermind']
+    command: ['mastermind', '--api-url', 'http://api:8000', '--product-origin', 'http://127.0.0.1:3000', '--allow-http', '--state-dir', '/app/data/cli-state']
     profiles: ['cli']
     stdin_open: true
     tty: true

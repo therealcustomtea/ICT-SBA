@@ -48,15 +48,25 @@ def supports_colour(
         return False
 
 
-def format_colour(identifier: str, *, enabled: bool) -> str:
+def format_colour(identifier: str, *, enabled: bool, theme: str = "system") -> str:
     """Style one known colour identifier, or return it unchanged."""
 
     if not enabled or identifier not in ANSI_COLOURS:
         return identifier
-    return f"{ANSI_COLOURS[identifier]}{identifier}{RESET}"
+    colour = ANSI_COLOURS[identifier]
+    if theme == "light" and identifier in {"R", "B", "G", "Y", "C", "M"}:
+        colour = colour.replace("[9", "[3")
+    return f"{colour}{identifier}{RESET}"
 
 
-def format_code(code: Sequence[str], *, enabled: bool) -> str:
+def format_code(
+    code: Sequence[str], *, enabled: bool, theme: str = "system", peg_style: str = "symbols"
+) -> str:
     """Format a sequence without changing its visible width."""
 
-    return " ".join(format_colour(identifier, enabled=enabled) for identifier in code)
+    symbols = {identifier: str(index) for index, identifier in enumerate(ANSI_COLOURS)}
+    return " ".join(
+        format_colour(identifier, enabled=enabled and theme != "plain", theme=theme)
+        + (f"/{symbols.get(identifier, '?')}" if peg_style in {"patterns", "highContrast"} else "")
+        for identifier in code
+    )

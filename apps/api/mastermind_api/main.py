@@ -433,7 +433,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
         # Provides the `description` parameter or keyword argument.
         description="Server-authoritative code-breaking gameplay API.",
         # Provides the `version` parameter or keyword argument.
-        version="1.0.0",
+        version="1.1.0",
         # Provides the `lifespan` parameter or keyword argument.
         lifespan=lifespan,
         # Provides the `docs_url` parameter or keyword argument.

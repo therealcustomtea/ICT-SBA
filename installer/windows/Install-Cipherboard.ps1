@@ -136,7 +136,7 @@ if (-not (Test-Path $environmentFile)) {
         "MASTERMIND_SECRET_ENCRYPTION_KEYS={`"v1`":`"$encryptionKey`"}",
         "MASTERMIND_DAILY_HMAC_KEY=$dailyKey",
         "MASTERMIND_PUBLIC_IDENTIFIER_HMAC_KEY=$identifierKey",
-        'MASTERMIND_RELEASE=desktop-1.0.0'
+        'MASTERMIND_RELEASE=desktop-1.1.0'
     )
     [System.IO.File]::WriteAllLines($environmentFile, $environment, (New-Object System.Text.UTF8Encoding($false)))
 }
