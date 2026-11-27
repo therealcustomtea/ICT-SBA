@@ -6,6 +6,7 @@ import base64
 
 # Imports `json` because this module uses that dependency.
 import json
+from datetime import UTC, datetime, timedelta
 
 # Imports `jwt` because this module uses that dependency.
 import jwt
@@ -144,6 +145,54 @@ def test_access_token_verifier_rejects_wrong_audience_and_tampering() -> None:
     with pytest.raises(APIError):
         # Supplies this required nested value.
         verifier.verify(f"{wrong_audience[:-1]}x")
+
+
+@pytest.mark.parametrize(
+    "mutation",
+    ["audience", "issuer", "expired", "future_issued", "missing_session", "algorithm", "signature"],
+)
+def test_access_token_verifier_preserves_claim_and_signature_checks(mutation: str) -> None:
+    settings = Settings(
+        environment="test",
+        auth_issuer="https://api.example.test",
+        auth_audience="cipherboard-web",
+        auth_signing_key="s" * 64,
+    )
+    verifier = AccessTokenVerifier(settings)
+    now = datetime.now(UTC)
+    claims: dict[str, str | int] = {
+        "sub": "bc6b03a1-3e6f-4812-b0e5-e4ec3108551f",
+        "session_id": "bf6d8b03-e19b-42f4-85f1-b46cb021904a",
+        "iss": settings.auth_issuer,
+        "aud": settings.auth_audience,
+        "iat": int(now.timestamp()),
+        "exp": int((now + timedelta(minutes=5)).timestamp()),
+    }
+    valid = jwt.encode(claims, settings.auth_signing_key, algorithm="HS256")
+    assert str(verifier.verify(valid).user_id) == claims["sub"]
+
+    algorithm, key = "HS256", settings.auth_signing_key
+    if mutation == "audience":
+        claims["aud"] = "another-app"
+    elif mutation == "issuer":
+        claims["iss"] = "https://other.example.test"
+    elif mutation == "expired":
+        claims["exp"] = int((now - timedelta(minutes=5)).timestamp())
+    elif mutation == "future_issued":
+        claims["iat"] = int((now + timedelta(minutes=5)).timestamp())
+    elif mutation == "missing_session":
+        claims.pop("session_id")
+    elif mutation == "algorithm":
+        algorithm = "HS512"
+    else:
+        key = "t" * 64
+
+    invalid = jwt.encode(claims, key, algorithm=algorithm)
+    with pytest.raises(APIError) as error:
+        verifier.verify(invalid)
+    assert error.value.status_code == 401
+    assert error.value.code == "INVALID_ACCESS_TOKEN"
+    assert verifier.verify(valid).session_id == "bf6d8b03-e19b-42f4-85f1-b46cb021904a"
 
 
 # Defines this callable to implement the operation described by its name.

@@ -26,13 +26,13 @@ dependencies = [
   # Configures `prometheus-client` because the surrounding service or tool depends on it.
   "prometheus-client==0.22.1",
   # Configures `pymongo` because the surrounding service or tool depends on it.
-  "pymongo==4.17.0",
+  "pymongo==4.18.3",
   # Configures `pydantic` because the surrounding service or tool depends on it.
   "pydantic==2.11.7",
   # Configures `pydantic-settings` because the surrounding service or tool depends on it.
   "pydantic-settings==2.10.1",
   # Configures `pyjwt[crypto]` because the surrounding service or tool depends on it.
-  "pyjwt[crypto]==2.13.0",
+  "pyjwt[crypto]==2.15.0",
   # Configures `redis` because the surrounding service or tool depends on it.
   "redis==6.2.0",
   # Configures `structlog` because the surrounding service or tool depends on it.
