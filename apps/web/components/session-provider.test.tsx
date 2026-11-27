@@ -3,7 +3,7 @@ import { cleanup, render, screen, waitFor } from '@testing-library/react';
 // Imports the dependency required by the module implementation below.
 import userEvent from '@testing-library/user-event';
 // Imports the dependency required by the module implementation below.
-import { useEffect, useState } from 'react';
+import { StrictMode, useEffect, useState } from 'react';
 // Imports the dependency required by the module implementation below.
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 // Imports the dependency required by the module implementation below.
@@ -149,6 +149,27 @@ describe('SessionProvider', () => {
       // Closes the expression, call, or declaration opened above.
     );
     // Closes the expression, call, or declaration opened above.
+  });
+
+  it('creates one guest when StrictMode replays session initialization', async () => {
+    fetchMock
+      .mockResolvedValueOnce(response(401))
+      .mockImplementation(async () => response(201, guestPayload));
+
+    render(
+      <StrictMode>
+        <SessionProvider>
+          <Probe />
+        </SessionProvider>
+      </StrictMode>,
+    );
+
+    expect(await screen.findByText('ready:guest:guest-access-token')).toBeInTheDocument();
+    expect(await screen.findByText('guest-access-token')).toBeInTheDocument();
+    expect(fetchMock.mock.calls.map(([url]) => url)).toEqual([
+      `${apiOrigin}/v1/auth/refresh`,
+      `${apiOrigin}/v1/auth/guest`,
+    ]);
   });
 
   // Continues the surrounding operation with this required value or expression.

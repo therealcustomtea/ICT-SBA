@@ -205,6 +205,8 @@ export function SessionProvider({ children }: { children: React.ReactNode }) {
           nextSession = await refresh();
           // Closes the expression, call, or declaration opened above.
         } catch {
+          // An obsolete effect must not create a guest and overwrite the refresh cookie.
+          if (!active) return null;
           // Continues the surrounding operation with this required value or expression.
           nextSession = await sessionRequest('/v1/auth/guest');
           // Closes the expression, call, or declaration opened above.
