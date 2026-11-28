@@ -157,7 +157,7 @@ export function SessionProvider({ children }: { children: React.ReactNode }) {
   // Stores `sessionRef` because subsequent operations depend on this value.
   const sessionRef = useRef<Session | null>(null);
   // Stores `initializationRef` because subsequent operations depend on this value.
-  const initializationRef = useRef<Promise<Session | null> | null>(null);
+  const initializationRef = useRef<Promise<Session> | null>(null);
   // Stores `refreshRef` because subsequent operations depend on this value.
   const refreshRef = useRef<Promise<Session> | null>(null);
 
@@ -193,24 +193,16 @@ export function SessionProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     // Stores `active` because subsequent operations depend on this value.
     let active = true;
+    // Share the full bootstrap so every eager caller receives the same guest and cookie.
+    const initialization = (initializationRef.current ??= refresh().catch(() =>
+      sessionRequest('/v1/auth/guest'),
+    ));
     // Stores `initialize` because subsequent operations depend on this value.
     const initialize = async () => {
       // Starts an operation whose expected failures are handled below.
       try {
         // Stores `nextSession` because subsequent operations depend on this value.
-        let nextSession: Session;
-        // Starts an operation whose expected failures are handled below.
-        try {
-          // Continues the surrounding operation with this required value or expression.
-          nextSession = await refresh();
-          // Closes the expression, call, or declaration opened above.
-        } catch {
-          // An obsolete effect must not create a guest and overwrite the refresh cookie.
-          if (!active) return null;
-          // Continues the surrounding operation with this required value or expression.
-          nextSession = await sessionRequest('/v1/auth/guest');
-          // Closes the expression, call, or declaration opened above.
-        }
+        const nextSession = await initialization;
         // Guards the nested operation so it runs only when this condition is satisfied.
         if (active) {
           // Continues the surrounding operation with this required value or expression.
@@ -242,7 +234,7 @@ export function SessionProvider({ children }: { children: React.ReactNode }) {
       // Closes the expression, call, or declaration opened above.
     };
     // Continues the surrounding operation with this required value or expression.
-    initializationRef.current = initialize();
+    void initialize();
     // Returns the computed result and ends the current callable.
     return () => {
       // Continues the surrounding operation with this required value or expression.
@@ -282,7 +274,13 @@ export function SessionProvider({ children }: { children: React.ReactNode }) {
     // Guards the nested operation so it runs only when this condition is satisfied.
     if (!current && !initializationRef.current) await Promise.resolve();
     // Guards the nested operation so it runs only when this condition is satisfied.
-    if (!current && initializationRef.current) current = await initializationRef.current;
+    if (!current && initializationRef.current) {
+      try {
+        current = await initializationRef.current;
+      } catch {
+        return null;
+      }
+    }
     // Guards the nested operation so it runs only when this condition is satisfied.
     if (!current) return null;
     // Guards the nested operation so it runs only when this condition is satisfied.

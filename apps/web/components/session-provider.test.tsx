@@ -36,7 +36,7 @@ function response(status: number, body?: object): Response {
 }
 
 // Defines `Probe` as the callable responsible for this operation.
-function Probe() {
+function Probe({ onToken }: { onToken?: (token: string | null) => void }) {
   // Continues the surrounding operation with this required value or expression.
   const { getAccessToken, isGuest, sendMagicLink, session, signOut, status } = useSession();
   // Continues the surrounding operation with this required value or expression.
@@ -44,9 +44,12 @@ function Probe() {
   // Continues the surrounding operation with this required value or expression.
   useEffect(() => {
     // Runs this required asynchronous effect without leaving it implicit.
-    void getAccessToken().then((value) => setToken(value ?? 'missing'));
+    void getAccessToken().then((value) => {
+      setToken(value ?? 'missing');
+      onToken?.(value);
+    });
     // Closes the expression, call, or declaration opened above.
-  }, [getAccessToken]);
+  }, [getAccessToken, onToken]);
   // Returns the computed result and ends the current callable.
   return (
     // Groups these sibling interface elements without adding a wrapper node.
@@ -152,6 +155,7 @@ describe('SessionProvider', () => {
   });
 
   it('creates one guest when StrictMode replays session initialization', async () => {
+    const onToken = vi.fn();
     fetchMock
       .mockResolvedValueOnce(response(401))
       .mockImplementation(async () => response(201, guestPayload));
@@ -159,17 +163,35 @@ describe('SessionProvider', () => {
     render(
       <StrictMode>
         <SessionProvider>
-          <Probe />
+          <Probe onToken={onToken} />
         </SessionProvider>
       </StrictMode>,
     );
 
     expect(await screen.findByText('ready:guest:guest-access-token')).toBeInTheDocument();
     expect(await screen.findByText('guest-access-token')).toBeInTheDocument();
+    expect(onToken.mock.calls).toEqual([['guest-access-token'], ['guest-access-token']]);
     expect(fetchMock.mock.calls.map(([url]) => url)).toEqual([
       `${apiOrigin}/v1/auth/refresh`,
       `${apiOrigin}/v1/auth/guest`,
     ]);
+  });
+
+  it('reports a shared bootstrap failure without rejecting eager token requests', async () => {
+    const onToken = vi.fn();
+    fetchMock.mockResolvedValueOnce(response(401)).mockImplementation(async () => response(503));
+
+    render(
+      <StrictMode>
+        <SessionProvider>
+          <Probe onToken={onToken} />
+        </SessionProvider>
+      </StrictMode>,
+    );
+
+    expect(await screen.findByText('error:registered:missing')).toBeInTheDocument();
+    expect(onToken.mock.calls).toEqual([[null], [null]]);
+    expect(fetchMock).toHaveBeenCalledTimes(2);
   });
 
   // Continues the surrounding operation with this required value or expression.
